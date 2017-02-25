@@ -14,7 +14,7 @@ public class Player extends Tank {
     private int timeItem = 0;
     private int maxTimeItem = 10;
     private boolean useItem = false; //item en uso
-        
+    
     
     public Player(int lifes) {
 		this.setLifes(lifes);
@@ -44,7 +44,7 @@ public class Player extends Tank {
 	        score = score + sco;
 	}
 	
-	public void shieldControl() {		
+	public void shieldControl() {	
 		if(shieldActivate){
             if(0<shieldTime){
             	shieldTime--;
