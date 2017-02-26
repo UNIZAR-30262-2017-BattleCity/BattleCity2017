@@ -1,4 +1,4 @@
-package model;
+package elements;
 
 public class Stage {
 

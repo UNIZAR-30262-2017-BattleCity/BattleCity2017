@@ -1,1 +1,1 @@
-"# BattleCity2017" 
+# BattleCity 2017 
