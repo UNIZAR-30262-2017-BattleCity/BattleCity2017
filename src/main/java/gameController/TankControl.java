@@ -8,8 +8,8 @@ public abstract class TankControl {
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
 	protected int velocity;
 	protected int direction; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
-	protected int positionX;
-	protected int positionY;
+	protected int posX;
+	protected int posY;
 	
 	//balas
 	protected int velocityBullet;	
@@ -30,7 +30,7 @@ public abstract class TankControl {
 	
 	public void shoot(int type) {
 		if (numBulletsInProgres<maxBulletsInProgres) {
-			bulletsInProgres[numBulletsInProgres] = new Bullet(positionX, positionY, direction, type);
+			bulletsInProgres[numBulletsInProgres] = new Bullet(posX, posY, direction, type);
 			numBulletsInProgres++;
 		}
 	}
@@ -61,21 +61,21 @@ public abstract class TankControl {
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
-
-	public int getPositionX() {
-		return positionX;
+	
+	public int getPosX() {
+		return posX;
 	}
 
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
+	public void setPosX(int posX) {
+		this.posX = posX;
 	}
 
-	public int getPositionY() {
-		return positionY;
+	public int getPosY() {
+		return posY;
 	}
 
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
+	public void setPosY(int posY) {
+		this.posY = posY;
 	}
 
 	public int getTypeTank() {

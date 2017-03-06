@@ -2,12 +2,12 @@ package gameController;
 
 import javax.swing.JFrame;
 
-public class mainGame {
+public class MainGame {
 
 	public static void main(String[] args) {
 		
 		JFrame jf = new JFrame ("BattleCity 2017 Unizar");
-		gameControl game = new gameControl();
+		GameControl game = new GameControl();
 		jf.add(game);
 		int kx = 2;
         int ky = 2;
@@ -15,8 +15,11 @@ public class mainGame {
         jf.setResizable(false);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLocationRelativeTo(null);
-        jf.setVisible(true);
+        jf.setVisible(true);        
+        game.start();
 
 	}
+
+	
 
 }
