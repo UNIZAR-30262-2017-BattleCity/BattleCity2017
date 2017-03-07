@@ -18,6 +18,7 @@ public abstract class TankControl {
 	//balas	
 	protected int maxBulletsInProgres;
 	protected LinkedList<Bullet> bulletsInProgres;
+	protected Bullet tmpBullet;
 	
 	
 	public void shoot(Bullet b) {
@@ -27,19 +28,22 @@ public abstract class TankControl {
 	}
 	
 	public void updateDrawBullet() {
-		for (Bullet bullet : bulletsInProgres) {
-			bullet.updateDraw();
-			if(bullet.getPosX()<Properties.xInitStage) deleteBullet(bullet);
-	    	if(bullet.getPosX()>Properties.xFinalStage) deleteBullet(bullet);
-	    	if(bullet.getPosY()<Properties.yInitStage) deleteBullet(bullet);
-	    	if(bullet.getPosY()>Properties.yFinalStage) deleteBullet(bullet);
-	    	bullet.updateDraw();
+		for(int i=0;i<bulletsInProgres.size();i++) {
+			
+			tmpBullet = bulletsInProgres.get(i);
+			
+			if(tmpBullet.getPosX()<Properties.xInitStage) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosX()>Properties.xFinalStage) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()<Properties.yInitStage) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()>Properties.yFinalStage) deleteBullet(tmpBullet);
+	    	tmpBullet.updateDraw();
 		}
 	}
 	
 	public void drawBullet(Graphics g){
-		for (Bullet bullet : bulletsInProgres) {
-			bullet.draw(g);
+		for(int i=0;i<bulletsInProgres.size();i++) {
+			tmpBullet = bulletsInProgres.get(i);
+			tmpBullet.draw(g);
 		}
 	}
 	

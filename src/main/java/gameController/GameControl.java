@@ -100,9 +100,23 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
+		//int key = e.getKeyCode();
 		
 		player.setVelX(0);
 		player.setVelY(0);
+		
+		/*if (key == KeyEvent.VK_UP) {
+			player.setVelX(0);
+		}
+		if (key == KeyEvent.VK_DOWN) {
+			player.setVelX(0);
+		}
+		if (key == KeyEvent.VK_RIGHT) {
+			player.setVelY(0);
+		}
+		if (key == KeyEvent.VK_LEFT) {
+			player.setVelY(0);
+		}*/
 	}	
 	
 	@Override
@@ -137,7 +151,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,sscTank));
 		}
 		
-	}
-	
+	}	
 
 }

@@ -18,7 +18,7 @@ public final class Properties {
 	public final static int yFinalStage = 440;
 	
 	//Bullets
-	public final static int velBullet = 1;
+	public final static int velBullet = 3;
 	public static int maxBulletsPLayer = 5;
 	
 }
