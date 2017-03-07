@@ -1,57 +1,76 @@
 package gameController;
 
+import java.awt.Graphics;
+import java.util.LinkedList;
+
 import elements.Bullet;
 
 public abstract class TankControl {
 	
 	//tank
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
-	protected int velocity;
+	protected double velX;
+	protected double velY;
 	protected int direction; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
-	protected int posX;
-	protected int posY;
+	protected double posX;
+	protected double posY;
 	
-	//balas
-	protected int velocityBullet;	
-	protected int numBulletsInProgres;
+	//balas	
 	protected int maxBulletsInProgres;
-	protected Bullet[] bulletsInProgres;
+	protected LinkedList<Bullet> bulletsInProgres;
 	
-	public void init(){
-		direction = 0;
-		velocity = 1;
-		
-		velocityBullet = 1; 
-		numBulletsInProgres = 0;
-  		maxBulletsInProgres = 2;
-		bulletsInProgres = new Bullet[maxBulletsInProgres];
-		
+	
+	public void shoot(Bullet b) {
+		if (bulletsInProgres.size()<maxBulletsInProgres) {
+			bulletsInProgres.add(b);
+		}		
 	}
 	
-	public void shoot(int type) {
-		if (numBulletsInProgres<maxBulletsInProgres) {
-			bulletsInProgres[numBulletsInProgres] = new Bullet(posX, posY, direction, type);
-			numBulletsInProgres++;
+	public void updateDrawBullet() {
+		for (Bullet bullet : bulletsInProgres) {
+			bullet.updateDraw();
+			if(bullet.getPosX()<Properties.xInitStage) deleteBullet(bullet);
+	    	if(bullet.getPosX()>Properties.xFinalStage) deleteBullet(bullet);
+	    	if(bullet.getPosY()<Properties.yInitStage) deleteBullet(bullet);
+	    	if(bullet.getPosY()>Properties.yFinalStage) deleteBullet(bullet);
+	    	bullet.updateDraw();
 		}
 	}
 	
-	public void deleteBullet(int numberBullet){
-        if(0<numBulletsInProgres){
-            for(int i=numberBullet;i<numBulletsInProgres-1;i++){
-            	bulletsInProgres[i]=bulletsInProgres[i+1];
-            }
-            numBulletsInProgres--;
-        }
+	public void drawBullet(Graphics g){
+		for (Bullet bullet : bulletsInProgres) {
+			bullet.draw(g);
+		}
+	}
+	
+	public void deleteBullet(Bullet b){
+       bulletsInProgres.remove(b);
     }
 	
 	public abstract void moveControl();
-	
-	public int getVelocity() {
-		return velocity;
+			
+	public LinkedList<Bullet> getBulletsInProgres() {
+		return bulletsInProgres;
 	}
 
-	public void setVelocity(int velocity) {
-		this.velocity = velocity;
+	public void setBulletsInProgres(LinkedList<Bullet> bulletsInProgres) {
+		this.bulletsInProgres = bulletsInProgres;
+	}
+
+	public double getVelX() {
+		return velX;
+	}
+
+	public void setVelX(double velX) {
+		this.velX = velX;
+	}
+
+	public double getVelY() {
+		return velY;
+	}
+
+	public void setVelY(double velY) {
+		this.velY = velY;
 	}
 
 	public int getDirection() {
@@ -62,19 +81,19 @@ public abstract class TankControl {
 		this.direction = direction;
 	}
 	
-	public int getPosX() {
+	public double getPosX() {
 		return posX;
 	}
 
-	public void setPosX(int posX) {
+	public void setPosX(double posX) {
 		this.posX = posX;
 	}
 
-	public int getPosY() {
+	public double getPosY() {
 		return posY;
 	}
 
-	public void setPosY(int posY) {
+	public void setPosY(double posY) {
 		this.posY = posY;
 	}
 
@@ -86,22 +105,6 @@ public abstract class TankControl {
 		this.typeTank = typeTank;
 	}
 
-	public int getVelocityBullet() {
-		return velocityBullet;
-	}
-
-	public void setVelocityBullet(int velocityBullet) {
-		this.velocityBullet = velocityBullet;
-	}
-
-	public int getNumBulletsInProgres() {
-		return numBulletsInProgres;
-	}
-
-	public void setNumBulletsInProgres(int numBulletsInProgres) {
-		this.numBulletsInProgres = numBulletsInProgres;
-	}
-
 	public int getMaxBulletsInProgres() {
 		return maxBulletsInProgres;
 	}
@@ -110,16 +113,5 @@ public abstract class TankControl {
 		this.maxBulletsInProgres = maxBulletsInProgres;
 	}
 
-	public Bullet[] getBulletsInProgres() {
-		return bulletsInProgres;
-	}
-
-	public void setBulletsInProgres(Bullet[] bulletsInProgres) {
-		this.bulletsInProgres = bulletsInProgres;
-	}
 	
 }
-
-
-
-

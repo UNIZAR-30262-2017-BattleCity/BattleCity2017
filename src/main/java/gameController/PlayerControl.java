@@ -2,6 +2,9 @@ package gameController;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+
+import elements.Bullet;
 
 public class PlayerControl extends TankControl{
 
@@ -15,20 +18,30 @@ public class PlayerControl extends TankControl{
     private boolean shieldActivate = false;
     private int shieldTime = 0;
 	
-    public PlayerControl(int x, int y, int lifes, SpriteSheetControl ssc) {
+    public PlayerControl(double x, double y, int lifes, SpriteSheetControl ssc) {
 		this.setLifes(lifes);
-		super.setTypeTank(0);
-		super.setPosX(x);
-		super.setPosY(y);
+		setTypeTank(0);
+		setPosX(x);
+		setPosY(y);
 		img = ssc.getSprite(1, 1, 16, 16);
+		
+		this.setDirection(0);		
+		this.maxBulletsInProgres = Properties.maxBulletsPLayer;
+		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
     
     public void draw(Graphics g) {
-		g.drawImage(img,getPosX(), getPosY(), null);
-
+		g.drawImage(img, (int) getPosX(), (int)getPosY(), null);
 	}
     
     public void updateDraw(){    	
+    	setPosX(getPosX()+velX);
+    	setPosY(getPosY()+velY);
+    	
+    	if(getPosX()<Properties.xInitStage) setPosX(Properties.xInitStage);
+    	if(getPosX()>Properties.xFinalStage) setPosX(Properties.xFinalStage);
+    	if(getPosY()<Properties.yInitStage) setPosY(Properties.yInitStage);
+    	if(getPosY()>Properties.yFinalStage) setPosY(Properties.yFinalStage);
     	
     }
     
