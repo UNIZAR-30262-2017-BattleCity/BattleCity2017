@@ -1,12 +1,13 @@
-package gameController;
+package elements;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import elements.Bullet;
+import gameController.Properties;
+import gameController.SpriteSheetControl;
 
-public class PlayerControl extends TankControl{
+public class Player extends Tank{
 
 	private int userName;
 	private int lifes;
@@ -18,7 +19,7 @@ public class PlayerControl extends TankControl{
     private boolean shieldActivate = false;
     private int shieldTime = 0;
 	
-    public PlayerControl(double x, double y, int lifes, SpriteSheetControl ssc) {
+    public Player(double x, double y, int lifes, SpriteSheetControl ssc) {
 		this.setLifes(lifes);
 		setTypeTank(0);
 		setPosX(x);
@@ -28,7 +29,7 @@ public class PlayerControl extends TankControl{
 		imgPlayerLeft = ssc.getPlayerLeft();
 		imgPlayerRight = ssc.getPlayerRight();
 		this.direction = 0;		
-		this.maxBulletsInProgres = Properties.maxBulletsPLayer;
+		this.maxBulletsInProgres = Properties.MAX_BULLETS_PLAYER;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
     
@@ -56,10 +57,10 @@ public class PlayerControl extends TankControl{
     	setPosX(getPosX()+velX);
     	setPosY(getPosY()+velY);
     	
-    	if(getPosX()<Properties.xInitStage) setPosX(Properties.xInitStage);
-    	if(getPosX()>Properties.xFinalStage) setPosX(Properties.xFinalStage);
-    	if(getPosY()<Properties.yInitStage) setPosY(Properties.yInitStage);
-    	if(getPosY()>Properties.yFinalStage) setPosY(Properties.yFinalStage);
+    	if(getPosX()<Properties.X_INIT_STAGE) setPosX(Properties.X_INIT_STAGE);
+    	if(getPosX()>Properties.X_FINAL_STAGE) setPosX(Properties.X_FINAL_STAGE);
+    	if(getPosY()<Properties.Y_INIT_STAGE) setPosY(Properties.Y_INIT_STAGE);
+    	if(getPosY()>Properties.Y_FINAL_STAGE) setPosY(Properties.Y_FINAL_STAGE);
     	
     }
     

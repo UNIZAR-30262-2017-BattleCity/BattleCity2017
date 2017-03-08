@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 public class SpriteSheetControl {
 
 	private BufferedImage spriteSheet;
+	private BufferedImage item1, item2;
 	private BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
 	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
 	private BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
@@ -41,21 +42,23 @@ public class SpriteSheetControl {
 	}
 	
 	public void generateTextures(){
-		playerUp = getSprite(1, 1, Properties.widthTank, Properties.heighTank);
-		playerDowm = getSprite(5, 1, Properties.widthTank, Properties.heighTank);
-		playerLeft = getSprite(3, 1, Properties.widthTank, Properties.heighTank);
-		playerRight = getSprite(7, 1, Properties.widthTank, Properties.heighTank);
+		playerUp = getSprite(1, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		playerDowm = getSprite(5, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		playerLeft = getSprite(3, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		playerRight = getSprite(7, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		
-		enemyUp = getSprite(9, 1, Properties.widthTank, Properties.heighTank);
-		enemyDowm = getSprite(5, 1, Properties.widthTank, Properties.heighTank);
-		enemyLeft = getSprite(3, 1, Properties.widthTank, Properties.heighTank);
-		enemyRight = getSprite(7, 1, Properties.widthTank, Properties.heighTank);
+		enemyUp = getSprite(9, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		enemyDowm = getSprite(5, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		enemyLeft = getSprite(3, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		enemyRight = getSprite(7, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		
-		bulletUp = getSprite(21, 7, Properties.widthTank, Properties.heighTank);
-		bulletLeft = getSprite(22, 7, Properties.widthTank, Properties.heighTank);
-		bulletDowm = getSprite(23, 7, Properties.widthTank, Properties.heighTank);
-		bulletRight = getSprite(24, 7, Properties.widthTank, Properties.heighTank);
+		bulletUp = getSprite(21, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		bulletLeft = getSprite(22, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		bulletDowm = getSprite(23, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		bulletRight = getSprite(24, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		
+		item1 = getSprite(24, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		item2 = getSprite(24, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 	}
 
 	public BufferedImage getSpriteSheet() {
@@ -161,5 +164,22 @@ public class SpriteSheetControl {
 	public void setEnemyRight(BufferedImage enemyRight) {
 		this.enemyRight = enemyRight;
 	}
-			
+
+	public BufferedImage getItem1() {
+		return item1;
+	}
+
+	public void setItem1(BufferedImage item1) {
+		this.item1 = item1;
+	}
+
+	public BufferedImage getItem2() {
+		return item2;
+	}
+
+	public void setItem2(BufferedImage item2) {
+		this.item2 = item2;
+	}
+	
+				
 }

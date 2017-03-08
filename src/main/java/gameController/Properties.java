@@ -3,25 +3,25 @@ package gameController;
 public final class Properties {
 
 	//Frame
-	public final static int width = 640;
-	public final static int height = 480;
-	public final static int scale = 2;
+	public final static int WIDTH = 640;
+	public final static int HEIGHT = 480;
+	public final static int SCALE = 2;
 	
 	//Tank
-	public final static int widthTank = 16;
-	public final static int heighTank = 16;
-	public final static int velEnemy = 1;
+	public final static int WIDTH_TANK = 16;
+	public final static int HEIGH_TANK = 16;
+	public final static int VELENEMY = 1;
 	
-	//Stage
-	public final static int widthStage = 500;
-	public final static int heightStage = 400;
-	public final static int xInitStage = 100;
-	public final static int xFinalStage = 600;
-	public final static int yInitStage = 40;
-	public final static int yFinalStage = 440;
+	//_STAGE
+	public final static int WIDTH_STAGE = 500;
+	public final static int HEIGHT_STAGE = 400;
+	public final static int X_INIT_STAGE = 100;
+	public final static int X_FINAL_STAGE = 600;
+	public final static int Y_INIT_STAGE = 40;
+	public final static int Y_FINAL_STAGE = 440;
 	
 	//Bullets
-	public final static int velBullet = 3;
-	public static int maxBulletsPLayer = 5;
+	public final static int VELBULLET = 3;
+	public final static int MAX_BULLETS_PLAYER = 5;
 	
 }

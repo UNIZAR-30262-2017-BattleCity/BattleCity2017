@@ -20,12 +20,11 @@ public class Bullet {
 		this.posX = posX;
 		this.posY = posY;
 		this.direction = direction;
-		this.type = type;	
+		this.type = type;
 		this.ssc = ssc;
-		this.velBullet = Properties.velBullet;
+		this.velBullet = Properties.VELBULLET;
 	}
-	
-    
+	    
     public void draw(Graphics g) {
 		
     	switch (type) {

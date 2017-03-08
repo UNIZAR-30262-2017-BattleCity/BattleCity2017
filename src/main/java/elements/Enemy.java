@@ -1,9 +1,12 @@
-package gameController;
+package elements;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class EnemysControl extends TankControl{
+import gameController.Properties;
+import gameController.SpriteSheetControl;
+
+public class Enemy extends Tank{
 
 	private int id;
 	private int maxEnemysSimul;
@@ -11,7 +14,7 @@ public class EnemysControl extends TankControl{
     private BufferedImage imgEnemyUp, imgEnemyDowm, imgEnemyLeft, imgEnemyRight;
     private double velEnemy;
     
-	public EnemysControl(double posX, double posY, int id, int maxEnemysSimul, int maxEnemysForLevel, SpriteSheetControl ssc) {
+	public Enemy(double posX, double posY, int id, int maxEnemysSimul, int maxEnemysForLevel, SpriteSheetControl ssc) {
 		this.posX = posX;
 		this.posY = posY;
 		this.maxEnemysSimul = maxEnemysSimul;
@@ -21,7 +24,7 @@ public class EnemysControl extends TankControl{
 		imgEnemyDowm = ssc.getEnemyDowm();
 		imgEnemyLeft = ssc.getEnemyLeft();
 		imgEnemyRight = ssc.getEnemyRight();
-		velEnemy = Properties.velEnemy;
+		velEnemy = Properties.VELENEMY;
 	}		
 
 	@Override

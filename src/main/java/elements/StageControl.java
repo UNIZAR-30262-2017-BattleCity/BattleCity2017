@@ -1,11 +1,8 @@
-package gameController;
-
-import elements.Stage;
+package elements;
 
 public class StageControl {
 	
-	private Stage stage;
-	
+		
 	//items/poderes
 	private int maxItems;
     private int timeItem = 0;
@@ -34,14 +31,6 @@ public class StageControl {
 
 	public void setUseItem(boolean useItem) {
 		this.useItem = useItem;
-	}
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
 	}
 
 	public int getMaxItems() {

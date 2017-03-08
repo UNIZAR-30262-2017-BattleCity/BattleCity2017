@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import elements.Bullet;
+import elements.Player;
 
 
 public class GameControl extends Canvas implements Runnable, KeyListener{
@@ -20,12 +21,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private boolean running;
 	private Thread thread;
 	private SpriteSheetControl sscTank;
-	private PlayerControl player;
+	private Player player;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
 		sscTank = new SpriteSheetControl("/Sprites/SpriteSheet.png", 16, 16);
-		player = new PlayerControl(100, 100, 5, sscTank);
+		player = new Player(100, 100, 5, sscTank);
 		jf.addKeyListener(this);	
 	}
 

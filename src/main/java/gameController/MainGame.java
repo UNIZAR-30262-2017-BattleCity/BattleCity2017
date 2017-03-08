@@ -9,7 +9,7 @@ public class MainGame {
 		JFrame jf = new JFrame ("BattleCity 2017 Unizar");
 		GameControl game = new GameControl(jf);
 		jf.add(game);
-		jf.setSize(Properties.width, Properties.height);
+		jf.setSize(Properties.WIDTH, Properties.HEIGHT);
         jf.setResizable(false);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLocationRelativeTo(null);

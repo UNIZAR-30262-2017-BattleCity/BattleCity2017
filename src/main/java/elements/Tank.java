@@ -1,11 +1,11 @@
-package gameController;
+package elements;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-import elements.Bullet;
+import gameController.Properties;
 
-public abstract class TankControl {
+public abstract class Tank {
 	
 	//tank
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
@@ -32,10 +32,10 @@ public abstract class TankControl {
 			
 			tmpBullet = bulletsInProgres.get(i);
 			
-			if(tmpBullet.getPosX()<Properties.xInitStage) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosX()>Properties.xFinalStage) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()<Properties.yInitStage) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()>Properties.yFinalStage) deleteBullet(tmpBullet);
+			if(tmpBullet.getPosX()<Properties.X_INIT_STAGE) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosX()>Properties.X_FINAL_STAGE) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()<Properties.Y_INIT_STAGE) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()>Properties.Y_FINAL_STAGE) deleteBullet(tmpBullet);
 	    	tmpBullet.updateDraw();
 		}
 	}
