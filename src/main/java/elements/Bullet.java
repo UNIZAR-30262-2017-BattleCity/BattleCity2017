@@ -13,7 +13,7 @@ public class Bullet {
     private double velBullet;
     private int direction;
     private int type;	//tipo A=0 , tipo B=1
-    private BufferedImage img;
+    private BufferedImage imgBulletUp, imgBulletDowm, imgBulletLeft, imgBulletRight;
     private SpriteSheetControl ssc;
     
 	public Bullet(double posX, double posY, int direction, int type, SpriteSheetControl ssc) {
@@ -30,17 +30,39 @@ public class Bullet {
 		
     	switch (type) {
 		case 0://regular bullet
-			img = ssc.getSprite(1, 1, 16, 16);
+			imgBulletUp = ssc.getBulletUp();
+			imgBulletDowm = ssc.getBulletDowm();
+			imgBulletLeft = ssc.getBulletLeft();
+			imgBulletRight = ssc.getBulletRight();
 			break;
 		case 1://hard bullet
-			img = ssc.getSprite(1, 1, 16, 16);
+			imgBulletUp = ssc.getBulletUp();
+			imgBulletDowm = ssc.getBulletDowm();
+			imgBulletLeft = ssc.getBulletLeft();
+			imgBulletRight = ssc.getBulletRight();
 			break;
 		default:
-			img = ssc.getSprite(1, 1, 16, 16);
+			imgBulletUp = ssc.getBulletUp();
+			imgBulletDowm = ssc.getBulletDowm();
+			imgBulletLeft = ssc.getBulletLeft();
+			imgBulletRight = ssc.getBulletRight();
 			break;
 		}
     	
-    	g.drawImage(img, (int) posX, (int) posY, null);
+    	switch (this.direction) {
+		case 0:
+			g.drawImage(imgBulletUp, (int) getPosX(), (int)getPosY(), null);
+			break;
+		case 1:
+			g.drawImage(imgBulletDowm, (int) getPosX(), (int)getPosY(), null);
+			break;
+		case 2:
+			g.drawImage(imgBulletLeft, (int) getPosX(), (int)getPosY(), null);
+			break;
+		case 3:
+			g.drawImage(imgBulletRight, (int) getPosX(), (int)getPosY(), null);
+			break;
+		}
 
 	}
     

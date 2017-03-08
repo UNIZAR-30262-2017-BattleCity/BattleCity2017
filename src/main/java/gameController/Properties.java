@@ -5,9 +5,12 @@ public final class Properties {
 	//Frame
 	public final static int width = 640;
 	public final static int height = 480;
+	public final static int scale = 2;
 	
-	//Player
-	
+	//Tank
+	public final static int widthTank = 16;
+	public final static int heighTank = 16;
+	public final static int velEnemy = 1;
 	
 	//Stage
 	public final static int widthStage = 500;

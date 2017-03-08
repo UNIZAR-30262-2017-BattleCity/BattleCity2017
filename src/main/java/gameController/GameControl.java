@@ -70,7 +70,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			frames++;			
 			if (System.currentTimeMillis() - timer > s) {
 				timer += s;
-				System.out.println("Updates: "+ updates + " FPS: " + frames);
+				//System.out.println("Updates: "+ updates + " FPS: " + frames);
 				updates=0;
 				frames=0;				
 			}			
@@ -128,24 +128,24 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		int key = e.getKeyCode();
 		
 		if (key == KeyEvent.VK_UP) {
-			player.setVelY(-1);
-			player.setVelX(0);
 			player.setDirection(0);
+			player.setVelY(-1);
+			player.setVelX(0);			
 		}
 		if (key == KeyEvent.VK_DOWN) {
-			player.setVelY(1);
-			player.setVelX(0);
 			player.setDirection(1);
+			player.setVelY(1);
+			player.setVelX(0);			
 		}
 		if (key == KeyEvent.VK_RIGHT) {
-			player.setVelX(1);
-			player.setVelY(0);
 			player.setDirection(3);
+			player.setVelX(1);
+			player.setVelY(0);	
 		}
 		if (key == KeyEvent.VK_LEFT) {
+			player.setDirection(2);
 			player.setVelX(-1);
 			player.setVelY(0);
-			player.setDirection(2);
 		}
 		if (key == KeyEvent.VK_SPACE) {
 			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,sscTank));

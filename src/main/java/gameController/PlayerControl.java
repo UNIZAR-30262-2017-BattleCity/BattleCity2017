@@ -11,7 +11,7 @@ public class PlayerControl extends TankControl{
 	private int userName;
 	private int lifes;
 	private int score;
-	private BufferedImage img;
+	private BufferedImage imgPlayerUp, imgPlayerDowm, imgPlayerLeft, imgPlayerRight;
     
 	//escudo
     //private int shieldStatus = 0;
@@ -23,17 +23,35 @@ public class PlayerControl extends TankControl{
 		setTypeTank(0);
 		setPosX(x);
 		setPosY(y);
-		img = ssc.getSprite(1, 1, 16, 16);
-		
-		this.setDirection(0);		
+		imgPlayerUp = ssc.getPlayerUP();
+		imgPlayerDowm = ssc.getPlayerDowm();
+		imgPlayerLeft = ssc.getPlayerLeft();
+		imgPlayerRight = ssc.getPlayerRight();
+		this.direction = 0;		
 		this.maxBulletsInProgres = Properties.maxBulletsPLayer;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
     
+    @Override
     public void draw(Graphics g) {
-		g.drawImage(img, (int) getPosX(), (int)getPosY(), null);
+    	switch (this.direction) {
+		case 0:
+			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), null);
+			break;
+		case 1:
+			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), null);
+			break;
+		case 2:
+			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), null);
+			break;
+		case 3:
+			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(), null);
+			break;
+		}
+		
 	}
     
+    @Override
     public void updateDraw(){    	
     	setPosX(getPosX()+velX);
     	setPosY(getPosY()+velY);
@@ -66,12 +84,6 @@ public class PlayerControl extends TankControl{
 	public void efectItemShield(int time) {
 		shieldActivate = true;
 		shieldTime = time;
-	}
-
-	@Override
-	public void moveControl() {
-		// TODO Auto-generated method stub
-		
 	}
     	
 	public int getScore() {

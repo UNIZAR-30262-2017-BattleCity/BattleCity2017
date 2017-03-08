@@ -50,8 +50,10 @@ public abstract class TankControl {
 	public void deleteBullet(Bullet b){
        bulletsInProgres.remove(b);
     }
+		
+	public abstract void updateDraw();
 	
-	public abstract void moveControl();
+	public abstract void draw(Graphics g);
 			
 	public LinkedList<Bullet> getBulletsInProgres() {
 		return bulletsInProgres;
