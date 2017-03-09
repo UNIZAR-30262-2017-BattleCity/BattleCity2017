@@ -9,8 +9,12 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import application.Properties;
 import elements.Bullet;
+import elements.Enemy;
+import elements.Item;
 import elements.Player;
+import elements.Stage;
 
 
 public class GameControl extends Canvas implements Runnable, KeyListener{
@@ -22,12 +26,21 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Thread thread;
 	private SpriteSheetControl sscTank;
 	private Player player;
+	private Stage stage;
+	private int level;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
 		sscTank = new SpriteSheetControl("/Sprites/SpriteSheet.png", 16, 16);
 		player = new Player(100, 100, 5, sscTank);
-		jf.addKeyListener(this);	
+		level = 1;
+		createStage();
+		jf.addKeyListener(this);
+	}
+	
+	public void createStage(){
+		stage = new Stage(level);
+		level++;
 	}
 
 	public synchronized void start(){
@@ -51,11 +64,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	@Override
 	public void run() {
 		long lastime = System.nanoTime();
-		double amountIstant = 60.0;
-		double ns = 1000000000/amountIstant;
+		double frec = 60.0;
+		double ns = 1000000000/frec;
 		double delta=0;
 		double frames=0;
-		double updates=0;
+		double hz=0;
 		long timer = System.currentTimeMillis();
 		int s=1000;
 		while(running){
@@ -64,16 +77,16 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			lastime = now;
 			if (delta >= 1) {
 				updateDraw();
-				updates++;
+				hz++;
 				delta--;				
 			}			
 			render();
 			frames++;			
 			if (System.currentTimeMillis() - timer > s) {
 				timer += s;
-				//System.out.println("Updates: "+ updates + " FPS: " + frames);
-				updates=0;
-				frames=0;				
+				//System.out.println("Hz: "+ hz + " FPS: " + frames);
+				hz=0;
+				frames=0;			
 			}			
 		}
 		stop();		
@@ -82,6 +95,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void updateDraw(){
 		player.updateDraw();
 		player.updateDrawBullet();
+		stage.updateDraw();
 	}
 	
 	public void render(){
@@ -94,10 +108,36 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		player.draw(g);
 		player.drawBullet(g);
+		stage.draw(g);
 		g.dispose();
 		bs.show();
 	}
 	
+
+	public void ItemTaked(Item it){
+		player.setItemTaked(true);
+		
+		switch (it.getId()) {
+		case 1://pala
+			stage.eagleWallEfect();
+			break;
+		case 2://estrella
+			player.starEfect();
+			break;
+		case 3://casco
+			player.cascoEfect();
+			break;
+		case 4://bomba
+			stage.bombEfect();
+			break;
+		case 5://reloj
+			stage.relojEfect();
+			break;
+		case 6://tanque
+			player.setLifes(player.getLifes()+1);
+			break;
+		}
+    }
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -150,6 +190,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}
 		if (key == KeyEvent.VK_SPACE) {
 			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,sscTank));
+		}
+		if (key == KeyEvent.VK_C) {
+			stage.spawnEnemys(new Enemy(Properties.SPAWN_ENEMY_X1, Properties.SPAWN_ENEMY_Y1, 1, sscTank));
+		}
+		if (key == KeyEvent.VK_V) {
+			stage.spawnItems(new Item( 210, 210, 1,sscTank));
 		}
 		
 	}	

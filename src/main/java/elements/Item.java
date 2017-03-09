@@ -5,17 +5,16 @@ import java.awt.image.BufferedImage;
 
 import gameController.SpriteSheetControl;
 
-public class Item {
+public class Item implements StageElement{
 	
-	private String name;
-	private boolean isTake;
 	private int id;
 	private double posX;
 	private double posY;
+	private boolean isTake;
 	private BufferedImage imgItem;
 	private SpriteSheetControl ssc;
 			
-	public Item(int id, double posX, double posY, SpriteSheetControl ssc) {
+	public Item(double posX, double posY, int id, SpriteSheetControl ssc) {
 		this.id = id;
 		this.posX = posX;
 		this.posY = posY;	
@@ -43,12 +42,6 @@ public class Item {
 		
 	}
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public boolean isTake() {
 		return isTake;
 	}

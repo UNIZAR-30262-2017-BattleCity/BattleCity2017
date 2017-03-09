@@ -3,7 +3,7 @@ package elements;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-import gameController.Properties;
+import application.Properties;
 
 public abstract class Tank {
 	

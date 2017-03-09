@@ -3,28 +3,23 @@ package elements;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import gameController.Properties;
+import application.Properties;
 import gameController.SpriteSheetControl;
 
-public class Enemy extends Tank{
+public class Enemy extends Tank implements StageElement{
 
-	private int id;
-	private int maxEnemysSimul;
-    private int maxEnemysForLevel;
+	private int type;
     private BufferedImage imgEnemyUp, imgEnemyDowm, imgEnemyLeft, imgEnemyRight;
     private double velEnemy;
+    SpriteSheetControl ssc;
     
-	public Enemy(double posX, double posY, int id, int maxEnemysSimul, int maxEnemysForLevel, SpriteSheetControl ssc) {
+	public Enemy(double posX, double posY, int type, SpriteSheetControl ssc) {
 		this.posX = posX;
 		this.posY = posY;
-		this.maxEnemysSimul = maxEnemysSimul;
-		this.maxEnemysForLevel = maxEnemysForLevel;
-		this.id = id;
-		imgEnemyUp =  ssc.getEnemyUp();
-		imgEnemyDowm = ssc.getEnemyDowm();
-		imgEnemyLeft = ssc.getEnemyLeft();
-		imgEnemyRight = ssc.getEnemyRight();
-		velEnemy = Properties.VELENEMY;
+		this.ssc = ssc;
+		this.type = type;		
+		this.direction = 0;
+		velEnemy = Properties.VEL_ENEMY;
 	}		
 
 	@Override
@@ -48,6 +43,22 @@ public class Enemy extends Tank{
 
 	@Override
 	public void draw(Graphics g) {
+		
+		switch (type) {
+		case 1:
+			imgEnemyUp =  ssc.getEnemyUp();
+			imgEnemyDowm = ssc.getEnemyDowm();
+			imgEnemyLeft = ssc.getEnemyLeft();
+			imgEnemyRight = ssc.getEnemyRight();
+			break;
+		case 2:
+			imgEnemyUp =  ssc.getEnemyUp();
+			imgEnemyDowm = ssc.getEnemyDowm();
+			imgEnemyLeft = ssc.getEnemyLeft();
+			imgEnemyRight = ssc.getEnemyRight();
+			break;
+		}
+		
 		switch (this.direction) {
 		case 0:
 			g.drawImage(imgEnemyUp, (int) getPosX(), (int)getPosY(), null);
@@ -65,29 +76,11 @@ public class Enemy extends Tank{
 		
 	}
 	
-	public int getId() {
-		return id;
+	public int getType() {
+		return type;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setType(int id) {
+		this.type = id;
 	}
-	
-	public int getMaxEnemysSimul() {
-		return maxEnemysSimul;
-	}
-
-	public void setMaxEnemysSimul(int maxEnemysSimul) {
-		this.maxEnemysSimul = maxEnemysSimul;
-	}
-
-	public int getMaxEnemysForLevel() {
-		return maxEnemysForLevel;
-	}
-
-	public void setMaxEnemysForLevel(int maxEnemysForLevel) {
-		this.maxEnemysForLevel = maxEnemysForLevel;
-	}
-
-
-	
+		
 }

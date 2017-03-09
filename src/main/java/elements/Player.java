@@ -4,26 +4,31 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import gameController.Properties;
+import application.Properties;
 import gameController.SpriteSheetControl;
 
 public class Player extends Tank{
 
 	private int userName;
 	private int lifes;
-	private int score;
+	private int score;	
+    private int timeItem;
+    private int maxTimeItem;
+	private boolean itemTaked;
 	private BufferedImage imgPlayerUp, imgPlayerDowm, imgPlayerLeft, imgPlayerRight;
     
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
-    private int shieldTime = 0;
 	
     public Player(double x, double y, int lifes, SpriteSheetControl ssc) {
 		this.setLifes(lifes);
 		setTypeTank(0);
 		setPosX(x);
 		setPosY(y);
+		itemTaked= false;
+		timeItem = 0;
+		maxTimeItem = Properties.MAX_TIME_ITEM;
 		imgPlayerUp = ssc.getPlayerUP();
 		imgPlayerDowm = ssc.getPlayerDowm();
 		imgPlayerLeft = ssc.getPlayerLeft();
@@ -62,8 +67,19 @@ public class Player extends Tank{
     	if(getPosY()<Properties.Y_INIT_STAGE) setPosY(Properties.Y_INIT_STAGE);
     	if(getPosY()>Properties.Y_FINAL_STAGE) setPosY(Properties.Y_FINAL_STAGE);
     	
+    	
+    	if (itemTaked) {
+			if(timeItem<maxTimeItem){
+				timeItem++;
+			}else{
+				timeItem = 0;
+				itemTaked = false;
+			}
+		}
+        
+    	
     }
-    
+        
     public void addScore(int sco){
 		score = score + sco;
 	}
@@ -72,19 +88,14 @@ public class Player extends Tank{
     	lifes = lifes - 1;
     }
 
-	public void shieldControl() {	
-		if(shieldActivate){
-			if(0<shieldTime){
-				shieldTime--;
-			}else{
-				shieldActivate = false;
-			}
-		}
+	public void starEfect(){
+		
 	}
-
-	public void efectItemShield(int time) {
-		shieldActivate = true;
-		shieldTime = time;
+	
+	public void shieldEfect() {
+		if(shieldActivate){
+			
+		}
 	}
     	
 	public int getScore() {
@@ -111,5 +122,19 @@ public class Player extends Tank{
 		this.userName = userName;
 	}
 
+	public boolean isItemTaked() {
+		return itemTaked;
+	}
+
+	public void setItemTaked(boolean itemTaked) {
+		this.itemTaked = itemTaked;
+	}
+
+	public void cascoEfect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 }

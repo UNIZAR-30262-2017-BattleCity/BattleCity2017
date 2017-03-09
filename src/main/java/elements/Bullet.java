@@ -3,7 +3,7 @@ package elements;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import gameController.Properties;
+import application.Properties;
 import gameController.SpriteSheetControl;
 
 public class Bullet {
@@ -22,7 +22,7 @@ public class Bullet {
 		this.direction = direction;
 		this.type = type;
 		this.ssc = ssc;
-		this.velBullet = Properties.VELBULLET;
+		this.velBullet = Properties.VEL_BULLET;
 	}
 	    
     public void draw(Graphics g) {

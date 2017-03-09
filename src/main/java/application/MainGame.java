@@ -1,6 +1,8 @@
-package gameController;
+package application;
 
 import javax.swing.JFrame;
+
+import gameController.GameControl;
 
 public class MainGame {
 

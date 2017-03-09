@@ -6,9 +6,11 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import application.Properties;
+
 public class SpriteSheetControl {
 
-	private BufferedImage spriteSheet;
+	private BufferedImage spriteSheet, imgEagle, imgEagleDead;
 	private BufferedImage item1, item2;
 	private BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
 	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
@@ -42,6 +44,10 @@ public class SpriteSheetControl {
 	}
 	
 	public void generateTextures(){
+		
+		imgEagle = getSprite(21, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgEagleDead = getSprite(22, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		
 		playerUp = getSprite(1, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		playerDowm = getSprite(5, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		playerLeft = getSprite(3, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
@@ -180,6 +186,17 @@ public class SpriteSheetControl {
 	public void setItem2(BufferedImage item2) {
 		this.item2 = item2;
 	}
+
+	public BufferedImage getImgEagle() {
+		return imgEagle;
+	}
+
+	public void setImgEagle(BufferedImage imgEagle) {
+		this.imgEagle = imgEagle;
+	}
 	
-				
+	public BufferedImage getImgEagleDead() {
+		return imgEagleDead;
+	}
+					
 }
