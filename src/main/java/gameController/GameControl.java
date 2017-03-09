@@ -21,7 +21,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 
 	
 	private static final long serialVersionUID = 1L;
-	private BufferedImage background = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
+	private BufferedImage backgroundStage = new BufferedImage(Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE, BufferedImage.TYPE_INT_RGB);
 	private boolean running;
 	private Thread thread;
 	private SpriteSheetControl sscTank;
@@ -31,8 +31,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	public GameControl(JFrame jf){
 		requestFocus();
-		sscTank = new SpriteSheetControl("/Sprites/SpriteSheet.png", 16, 16);
-		player = new Player(100, 100, 5, sscTank);
+		sscTank = new SpriteSheetControl("/Sprites/SpriteSheet.png", Properties.SIZE_ELEMENTS);
+		player = new Player(150, 150, Properties.INIT_LIVES, sscTank);
 		level = 1;
 		createStage();
 		jf.addKeyListener(this);
@@ -105,7 +105,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			return;
 		}		
 		Graphics g = bs.getDrawGraphics();	
-		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(backgroundStage, Properties.X_INIT_STAGE, Properties.Y_INIT_STAGE, Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE, this);
 		player.draw(g);
 		player.drawBullet(g);
 		stage.draw(g);

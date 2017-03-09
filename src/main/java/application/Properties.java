@@ -3,13 +3,19 @@ package application;
 public final class Properties {
 
 	//Frame
-	public final static int WIDTH = 640;
+	public final static int WIDTH = 720;
 	public final static int HEIGHT = 480;
 	public final static int SCALE = 2;
+	
+	//Textures
+	public final static int SIZE_ELEMENTS =16;
 	
 	//Tank
 	public final static int WIDTH_TANK = 16;
 	public final static int HEIGH_TANK = 16;
+	
+	//Player
+	public final static int INIT_LIVES = 3;
 	
 	//Enemy
 	public final static int VEL_ENEMY = 1;
@@ -23,10 +29,10 @@ public final class Properties {
 	//_STAGE
 	public final static int WIDTH_STAGE = 500;
 	public final static int HEIGHT_STAGE = 400;
-	public final static int X_INIT_STAGE = 100;
-	public final static int X_FINAL_STAGE = 600;
-	public final static int Y_INIT_STAGE = 40;
-	public final static int Y_FINAL_STAGE = 440;
+	public final static int X_INIT_STAGE = 30;
+	public final static int Y_INIT_STAGE = 30;
+	public final static int X_FINAL_STAGE = 510;
+	public final static int Y_FINAL_STAGE = 410;
 	
 	//Bullets
 	public final static int VEL_BULLET = 3;

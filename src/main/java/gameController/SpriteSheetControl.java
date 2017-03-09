@@ -16,13 +16,11 @@ public class SpriteSheetControl {
 	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
 	private BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
 	private String path;
-	private int kX;
-	private int kY;
+	private int k;
 	
-	public SpriteSheetControl(String path, int kX, int kY) {
+	public SpriteSheetControl(String path, int k) {
 		this.path = path;
-		this.kX = kX;
-		this.kY = kY;
+		this.k = k;
 		spriteSheet = loadImage();
 		generateTextures();
 	}
@@ -39,7 +37,7 @@ public class SpriteSheetControl {
 	}
 	
 	public BufferedImage getSprite(int col, int row, int width, int heigth){
-		BufferedImage sprite = spriteSheet.getSubimage((col*kX)-kX, (row*kY)-kY, width, heigth);
+		BufferedImage sprite = spriteSheet.getSubimage((col*k)-k, (row*k)-k, width, heigth);
 		return sprite;
 	}
 	

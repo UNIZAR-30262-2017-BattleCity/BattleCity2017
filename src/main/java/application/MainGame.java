@@ -1,5 +1,7 @@
 package application;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 import gameController.GameControl;
@@ -11,6 +13,7 @@ public class MainGame {
 		JFrame jf = new JFrame ("BattleCity 2017 Unizar");
 		GameControl game = new GameControl(jf);
 		jf.add(game);
+		jf.setForeground(new Color(30, 30, 30));
 		jf.setSize(Properties.WIDTH, Properties.HEIGHT);
         jf.setResizable(false);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
