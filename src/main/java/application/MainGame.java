@@ -19,7 +19,4 @@ public class MainGame {
         game.start();
 
 	}
-
-	
-
 }
