@@ -18,8 +18,6 @@ public class MainGame {
         jf.setVisible(true);
         game.start();
 
-	}
-
-	
+	}	
 
 }
