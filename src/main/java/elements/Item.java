@@ -14,13 +14,17 @@ public class Item implements StageElement{
 	private BufferedImage imgItem;
 	private SpriteSheetControl ssc;
 			
-	public Item(double posX, double posY, int id, SpriteSheetControl ssc) {
-		this.id = id;
-		this.posX = posX;
-		this.posY = posY;	
+	public Item(int col, int row, int id, SpriteSheetControl ssc) {
+		this.id = id;	
 		this.ssc = ssc;
 		isTake = false;
+		setInitPos(col, row);
 	}
+	
+	public void setInitPos(int col, int row){
+    	setPosX(x+(col*k)-k);
+    	setPosY(y+(row*k)-k);
+    }
 
 	public void draw(Graphics g) {
 		switch (id) {

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import application.Properties;
 import elements.Bullet;
+import elements.Eagle;
 import elements.Enemy;
 import elements.Item;
 import elements.Player;
@@ -30,16 +31,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private int level;
 	
 	public GameControl(JFrame jf){
-		requestFocus();
-		sscTank = new SpriteSheetControl("/Sprites/SpriteSheet.png", Properties.SIZE_ELEMENTS);
-		player = new Player(150, 150, Properties.INIT_LIVES, sscTank);
-		level = 1;
-		createStage();
-		jf.addKeyListener(this);
+		requestFocus();		
+		initStage();
+		jf.addKeyListener(this);		
 	}
 	
-	public void createStage(){
+	public void initStage(){
+		sscTank = new SpriteSheetControl(Properties.PATH_SS_TANK);
+		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, sscTank);
+		level = 1;
 		stage = new Stage(level);
+		stage.spawnElements(new Eagle(Properties.POS_INIT_EAGLE[0],Properties.POS_INIT_EAGLE[1],sscTank));
+		stage.spawnEnemys(new Enemy(Properties.POS1_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 1, sscTank));
+		stage.spawnEnemys(new Enemy(Properties.POS2_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 1, sscTank));
+		stage.spawnEnemys(new Enemy(Properties.POS3_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 2, sscTank));
 		level++;
 	}
 
@@ -192,7 +197,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,sscTank));
 		}
 		if (key == KeyEvent.VK_C) {
-			stage.spawnEnemys(new Enemy(Properties.SPAWN_ENEMY_X1, Properties.SPAWN_ENEMY_Y1, 1, sscTank));
 		}
 		if (key == KeyEvent.VK_V) {
 			stage.spawnItems(new Item( 210, 210, 1,sscTank));

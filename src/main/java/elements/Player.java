@@ -21,12 +21,12 @@ public class Player extends Tank{
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
 	
-    public Player(double x, double y, int lifes, SpriteSheetControl ssc) {
+    public Player(int col, int row, int lifes, SpriteSheetControl ssc) {
 		this.setLifes(lifes);
 		setTypeTank(0);
-		setPosX(x);
-		setPosY(y);
 		itemTaked= false;
+		k = Properties.SIZE_SQUARE_STAGE;
+		setInitPos(col, row);
 		timeItem = 0;
 		maxTimeItem = Properties.MAX_TIME_ITEM;
 		imgPlayerUp = ssc.getPlayerUP();
@@ -37,7 +37,7 @@ public class Player extends Tank{
 		this.maxBulletsInProgres = Properties.MAX_BULLETS_PLAYER;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
-    
+        
     @Override
     public void draw(Graphics g) {
     	switch (this.direction) {

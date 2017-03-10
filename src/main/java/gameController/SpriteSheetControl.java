@@ -18,9 +18,9 @@ public class SpriteSheetControl {
 	private String path;
 	private int k;
 	
-	public SpriteSheetControl(String path, int k) {
+	public SpriteSheetControl(String path) {
 		this.path = path;
-		this.k = k;
+		this.k = Properties.SIZE_SQUARE_STAGE;
 		spriteSheet = loadImage();
 		generateTextures();
 	}
@@ -43,8 +43,8 @@ public class SpriteSheetControl {
 	
 	public void generateTextures(){
 		
-		imgEagle = getSprite(21, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		imgEagleDead = getSprite(22, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgEagle = getSprite(20, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgEagleDead = getSprite(21, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		
 		playerUp = getSprite(1, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
 		playerDowm = getSprite(5, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);

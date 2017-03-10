@@ -12,13 +12,17 @@ public class Eagle implements StageElement{
 	private BufferedImage imgEagle, imgEagleDead;
 	private boolean isAlive;
 	
-	public Eagle(double posX, double posY, SpriteSheetControl ssc) {
-		this.posX = posX;
-		this.posY = posY;
+	public Eagle(int row, int col, SpriteSheetControl ssc) {		
 		imgEagle = ssc.getImgEagle();
 		imgEagleDead = ssc.getImgEagleDead();
 		isAlive = true;
+		setInitPos(col, row);
 	}
+	
+	public void setInitPos(int col, int row){
+    	setPosX(x+(col*k)-k);
+    	setPosY(y+(row*k)-k);
+    }
 
 	public void updateDraw() {
 		

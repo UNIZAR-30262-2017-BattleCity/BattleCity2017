@@ -11,17 +11,15 @@ public class Enemy extends Tank implements StageElement{
 	private int type;
     private BufferedImage imgEnemyUp, imgEnemyDowm, imgEnemyLeft, imgEnemyRight;
     private double velEnemy;
-    SpriteSheetControl ssc;
+    private SpriteSheetControl ssc;
     
-	public Enemy(double posX, double posY, int type, SpriteSheetControl ssc) {
-		this.posX = posX;
-		this.posY = posY;
+	public Enemy(int col, int row, int type, SpriteSheetControl ssc) {
+		setInitPos(col, row);
 		this.ssc = ssc;
 		this.type = type;		
 		this.direction = 0;
-		velEnemy = Properties.VEL_ENEMY;
-	}		
-
+	}
+	
 	@Override
 	public void updateDraw() {
 		switch (direction) {
@@ -39,23 +37,41 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
+		if(getPosX()<Properties.X_INIT_STAGE) setDirection(3);
+    	if(getPosX()>Properties.X_FINAL_STAGE) setDirection(2);
+    	if(getPosY()<Properties.Y_INIT_STAGE) setDirection(1);
+    	if(getPosY()>Properties.Y_FINAL_STAGE) setDirection(0);
+		
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		
 		switch (type) {
-		case 1:
+		case 1://regular
 			imgEnemyUp =  ssc.getEnemyUp();
 			imgEnemyDowm = ssc.getEnemyDowm();
 			imgEnemyLeft = ssc.getEnemyLeft();
-			imgEnemyRight = ssc.getEnemyRight();
+			imgEnemyRight = ssc.getEnemyRight();			
+
+			velEnemy = Properties.VEL_ENEMY;			
 			break;
-		case 2:
+		case 2://fast
 			imgEnemyUp =  ssc.getEnemyUp();
 			imgEnemyDowm = ssc.getEnemyDowm();
 			imgEnemyLeft = ssc.getEnemyLeft();
 			imgEnemyRight = ssc.getEnemyRight();
+			
+			velEnemy = Properties.VEL_ENEMY_FAST;
+			break;
+			
+		case 3://hard
+			imgEnemyUp =  ssc.getEnemyUp();
+			imgEnemyDowm = ssc.getEnemyDowm();
+			imgEnemyLeft = ssc.getEnemyLeft();
+			imgEnemyRight = ssc.getEnemyRight();
+			
+			velEnemy = Properties.VEL_ENEMY;
 			break;
 		}
 		

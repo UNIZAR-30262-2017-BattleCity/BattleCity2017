@@ -14,12 +14,18 @@ public abstract class Tank {
 	protected int direction; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
 	protected double posX;
 	protected double posY;
+	protected double k;
 	
 	//balas	
 	protected int maxBulletsInProgres;
 	protected LinkedList<Bullet> bulletsInProgres;
 	protected Bullet tmpBullet;
 	
+	public void setInitPos(int col, int row){
+		int k1 = Properties.SIZE_SQUARE_STAGE;
+    	setPosX(Properties.X_INIT_STAGE+(col*k1)-k1);
+    	setPosY(Properties.Y_INIT_STAGE+(row*k1)-k1);
+    }
 	
 	public void shoot(Bullet b) {
 		if (bulletsInProgres.size()<maxBulletsInProgres) {
@@ -119,5 +125,12 @@ public abstract class Tank {
 		this.maxBulletsInProgres = maxBulletsInProgres;
 	}
 
-	
+	public double getK() {
+		return k;
+	}
+
+	public void setK(double k) {
+		this.k = k;
+	}
+		
 }

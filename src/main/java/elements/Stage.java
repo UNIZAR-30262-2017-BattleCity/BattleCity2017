@@ -23,6 +23,8 @@ public class Stage {
     private int nEnemies;
     private int nEnemiesSimul;
     private int timeBetweenBirth;
+    
+    private Eagle eagle;
 	
     private boolean relojEfect;
             
@@ -60,7 +62,7 @@ public class Stage {
     }
     
     public void spawnElements(StageElement e) {
-				
+    	elements.add(e);
 	}
     
     public void spawnEnemys(Enemy e) {
