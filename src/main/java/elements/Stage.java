@@ -27,7 +27,7 @@ public class Stage {
     private int nEnemiesSimul;
     private int timeBetweenSpawnE;
     	
-    private boolean relojEfect;
+    private boolean clockEfect;
     
     private Maze maze;
     private SpriteSheetControl ssc;
@@ -109,8 +109,7 @@ public class Stage {
 			if (nItemsSimul<maxItemsSimul) {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
-				int id = r.nextInt(5);
-				System.out.println("col " + col + " row " + row + " id " + id);
+				int id = r.nextInt(7)+1;
 				elements.add(new Item(col, row, id, ssc));
 				nItemsSimul++;
 				nItems++;
@@ -130,13 +129,8 @@ public class Stage {
 			spawnItems();
 		}
     	
-    	if (relojEfect) {
-    		if(timeItem<maxTimeItem){
-				timeItem++;
-			}else{
-				timeItem = 0;
-				relojEfect = false;
-			}
+    	if (clockEfect) {
+    		clockEfect();
     	}else{
     		for(int i=0;i<elements.size();i++) {
     			tmpElement = elements.get(i);
@@ -175,8 +169,13 @@ public class Stage {
 		
 	}
 	
-	public void relojEfect() {
-		relojEfect = true;	
+	public void clockEfect() {
+		if(timeItem<maxTimeItem){
+			timeItem++;
+		}else{
+			timeItem = 0;
+			clockEfect = false;
+		}
 		
 	}
 	
@@ -204,12 +203,12 @@ public class Stage {
 		this.maxEnemySimul = maxEnemySimul;
 	}
 
-	public boolean isRelojEfect() {
-		return relojEfect;
+	public boolean isClockEfect() {
+		return clockEfect;
 	}
 
-	public void setRelojEfect(boolean relojEfect) {
-		this.relojEfect = relojEfect;
+	public void setClockEfect(boolean relojEfect) {
+		this.clockEfect = relojEfect;
 	}
 	
 			

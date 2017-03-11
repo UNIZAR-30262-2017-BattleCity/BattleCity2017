@@ -39,16 +39,16 @@ public class Player extends Tank{
     public void draw(Graphics g) {
     	switch (this.direction) {
 		case 0:
-			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), w, h, null);
 			break;
 		case 1:
-			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), w, h, null);
 			break;
 		case 2:
-			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), w, h, null);
 			break;
 		case 3:
-			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(), w, h, null);
 			break;
 		}
 		
@@ -59,10 +59,10 @@ public class Player extends Tank{
     	setPosX(getPosX()+velX);
     	setPosY(getPosY()+velY);
     	
-    	if(getPosX()<Properties.X_INIT_STAGE) setPosX(Properties.X_INIT_STAGE);
-    	if(getPosX()>Properties.X_FINAL_STAGE) setPosX(Properties.X_FINAL_STAGE);
-    	if(getPosY()<Properties.Y_INIT_STAGE) setPosY(Properties.Y_INIT_STAGE);
-    	if(getPosY()>Properties.Y_FINAL_STAGE) setPosY(Properties.Y_FINAL_STAGE);
+    	if(getPosX()<xI) setPosX(xI);
+    	if(getPosX()>xF) setPosX(xF);
+    	if(getPosY()<yI) setPosY(yI);
+    	if(getPosY()>yF) setPosY(yF);
     	
     	
     	if (itemTaked) {

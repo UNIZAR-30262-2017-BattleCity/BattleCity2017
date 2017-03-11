@@ -13,7 +13,7 @@ public class SpriteSheetControl {
 	private BufferedImage spriteSheet, imgForest, imgWater;
 	private BufferedImage imgEagle, imgEagleDead;
 	private BufferedImage imgBrick, imgIron, imgHalfBrick, imgHalfIron;
-	private BufferedImage item1, item2;
+	private BufferedImage itemShield, itemClock, itemShovel, itemStar, itemGranade, itemTank, itemGun;
 	private BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
 	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
 	private BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
@@ -22,7 +22,7 @@ public class SpriteSheetControl {
 	
 	public SpriteSheetControl(String path) {
 		this.path = path;
-		this.k = Properties.SIZE_SQUARE;
+		this.k = Properties.SIZE_SQUARE_SSC;
 		this.w = k;
 		this.h = k;
 		spriteSheet = loadImage();
@@ -74,8 +74,13 @@ public class SpriteSheetControl {
 		bulletDowm = getSprite(7, 22, w, h);
 		bulletRight = getSprite(7, 22, w, h);
 		
-		item1 = getSprite(8, 17, w, h);
-		item2 = getSprite(8, 18, w, h);
+		itemShield = getSprite(8, 17, w, h);
+		itemClock = getSprite(8, 18, w, h);
+		itemShovel = getSprite(8, 19, w, h);
+		itemStar = getSprite(8, 20, w, h);
+		itemGranade = getSprite(8, 21, w, h);
+		itemTank = getSprite(8, 22, w, h);
+		itemGun = getSprite(8, 23, w, h);
 	}
 
 	public BufferedImage getSpriteSheet() {
@@ -182,22 +187,6 @@ public class SpriteSheetControl {
 		this.enemyRight = enemyRight;
 	}
 
-	public BufferedImage getItem1() {
-		return item1;
-	}
-
-	public void setItem1(BufferedImage item1) {
-		this.item1 = item1;
-	}
-
-	public BufferedImage getItem2() {
-		return item2;
-	}
-
-	public void setItem2(BufferedImage item2) {
-		this.item2 = item2;
-	}
-
 	public BufferedImage getImgEagle() {
 		return imgEagle;
 	}
@@ -233,4 +222,61 @@ public class SpriteSheetControl {
 	public BufferedImage getImgHalfIron() {
 		return imgHalfIron;
 	}
+
+	public BufferedImage getItemShield() {
+		return itemShield;
+	}
+
+	public void setItemShield(BufferedImage itemShield) {
+		this.itemShield = itemShield;
+	}
+
+	public BufferedImage getItemClock() {
+		return itemClock;
+	}
+
+	public void setItemClock(BufferedImage itemClock) {
+		this.itemClock = itemClock;
+	}
+
+	public BufferedImage getItemShovel() {
+		return itemShovel;
+	}
+
+	public void setItemShovel(BufferedImage itemShovel) {
+		this.itemShovel = itemShovel;
+	}
+
+	public BufferedImage getItemStar() {
+		return itemStar;
+	}
+
+	public void setItemStar(BufferedImage itemStar) {
+		this.itemStar = itemStar;
+	}
+
+	public BufferedImage getItemGranade() {
+		return itemGranade;
+	}
+
+	public void setItemGranade(BufferedImage itemGranade) {
+		this.itemGranade = itemGranade;
+	}
+
+	public BufferedImage getItemGun() {
+		return itemGun;
+	}
+
+	public void setItemGun(BufferedImage itemGun) {
+		this.itemGun = itemGun;
+	}
+
+	public BufferedImage getItemTank() {
+		return itemTank;
+	}
+
+	public void setItemTank(BufferedImage itemTank) {
+		this.itemTank = itemTank;
+	}
+		
 }

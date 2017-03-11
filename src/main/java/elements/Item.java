@@ -29,23 +29,29 @@ public class Item implements StageElement{
 	public void draw(Graphics g) {
 		switch (id) {
 		case 1:
-			imgItem = ssc.getItem1();
+			imgItem = ssc.getItemShield();
 			break;
 		case 2:
-			imgItem = ssc.getItem2();
+			imgItem = ssc.getItemClock();
 			break;
 		case 3:
-			imgItem = ssc.getItem1();
+			imgItem = ssc.getItemShovel();
 			break;
 		case 4:
-			imgItem = ssc.getItem2();
+			imgItem = ssc.getItemStar();
 			break;
 		case 5:
-			imgItem = ssc.getItem1();
+			imgItem = ssc.getItemGranade();
+			break;
+		case 6:
+			imgItem = ssc.getItemTank();
+			break;
+		case 7:
+			imgItem = ssc.getItemGun();
 			break;
 		}
 		
-		g.drawImage(imgItem, (int) posX,(int) posY, null);
+		g.drawImage(imgItem, (int) posX,(int) posY, w, h, null);
 	}
 	
 	public void updateDraw(){

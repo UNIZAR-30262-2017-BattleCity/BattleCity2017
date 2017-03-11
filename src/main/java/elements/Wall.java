@@ -49,8 +49,10 @@ public class Wall implements StageElement{
 	
 	public void draw(Graphics g) {
 		
-		if (isActive) {
-			g.drawImage(img, (int) posX,(int) posY, null);
+		if (type == 1 || type == 3) {
+			g.drawImage(img, (int) posX,(int) posY, w, h, null);
+		}else{
+			g.drawImage(img, (int) posX,(int) posY, w, h/2, null);
 		}
 		
 	}

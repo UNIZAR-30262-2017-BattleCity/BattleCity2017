@@ -22,24 +22,24 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private BufferedImage backgroundStage = new BufferedImage(Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE, BufferedImage.TYPE_INT_RGB);
 	private boolean running;
 	private Thread thread;
-	private SpriteSheetControl sscTank;
+	private SpriteSheetControl ssc;
 	private Player player;
 	private Stage stage;
 	private int level;
 	private int difficulty;
 	
 	public GameControl(JFrame jf){
-		requestFocus();		
+		requestFocus();
 		initStage();
 		jf.addKeyListener(this);		
 	}
 	
 	public void initStage(){
-		sscTank = new SpriteSheetControl(Properties.PATH_SS_TANK);
-		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, sscTank);
+		ssc = new SpriteSheetControl(Properties.PATH_SS_TANK);
+		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, ssc);
 		level = 1;
 		difficulty = 0;
-		stage = new Stage(sscTank);
+		stage = new Stage(ssc);
 		stage.getLevel(level, difficulty);
 		level++;
 	}
@@ -116,26 +116,28 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 
 	public void ItemTaked(Item it){
-		player.setItemTaked(true);
-		
+		player.setItemTaked(true);		
 		switch (it.getId()) {
-		case 1://pala
+		case 1://shield
+			player.shieldEfect();		
+			break;
+		case 2://clock
+			stage.setClockEfect(true);
+			break;
+		case 3://shovel
 			stage.eagleWallEfect();
 			break;
-		case 2://estrella
+		case 4://star
 			player.starEfect();
 			break;
-		case 3://casco
-			player.cascoEfect();
-			break;
-		case 4://bomba
+		case 5://bomb
 			stage.bombEfect();
 			break;
-		case 5://reloj
-			stage.relojEfect();
-			break;
-		case 6://tanque
+		case 6://tank
 			player.setLifes(player.getLifes()+1);
+			break;
+		case 7://gun
+			player.setMaxBulletsInProgres(player.getMaxBulletsInProgres()+3);
 			break;
 		}
     }
@@ -190,7 +192,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			player.setVelY(0);
 		}
 		if (key == KeyEvent.VK_SPACE) {
-			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,sscTank));
+			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc));
 		}
 		if (key == KeyEvent.VK_C) {
 		}

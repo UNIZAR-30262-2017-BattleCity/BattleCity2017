@@ -31,9 +31,9 @@ public class Eagle implements StageElement{
 	public void draw(Graphics g) {
 		
 		if (isAlive) {
-			g.drawImage(imgEagle, (int) posX,(int) posY, null);
+			g.drawImage(imgEagle, (int) posX,(int) posY,  w, h, null);
 		}else{
-			g.drawImage(imgEagleDead, (int) posX,(int) posY, null);
+			g.drawImage(imgEagleDead, (int) posX,(int) posY,  w, h, null);
 		}
 		
 	}

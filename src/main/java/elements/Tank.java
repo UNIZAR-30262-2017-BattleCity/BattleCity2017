@@ -15,7 +15,8 @@ public abstract class Tank {
 	protected double posX;
 	protected double posY;
 	protected int shieldLevel;
-	protected int k,xI,yI,xF,yF;
+	protected int xI,yI,xF,yF;
+	protected int k,w,h;
 	
 	//balas	
 	protected int maxBulletsInProgres;
@@ -29,6 +30,8 @@ public abstract class Tank {
 		xF = Properties.X_FINAL_STAGE;
 		yF = Properties.Y_FINAL_STAGE;
 		k = Properties.SIZE_SQUARE;
+		w = k;
+		h = k;
 		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
@@ -142,6 +145,22 @@ public abstract class Tank {
 
 	public void setShieldLevel(int shieldLevel) {
 		this.shieldLevel = shieldLevel;
+	}
+
+	public int getW() {
+		return w;
+	}
+
+	public void setW(int w) {
+		this.w = w;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public void setH(int h) {
+		this.h = h;
 	}
 			
 }

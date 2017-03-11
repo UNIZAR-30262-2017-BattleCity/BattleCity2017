@@ -28,7 +28,8 @@ public final class Properties {
 	public final static int[] POS3_SPAWN_ENEMY= {1, 7};
 	
 	//_STAGE
-	public final static int SIZE_SQUARE = 16;
+	public final static int SIZE_SQUARE_SSC = 16;
+	public final static int SIZE_SQUARE = SIZE_SQUARE_SSC*2;
 	public final static int SIZE_STAGE = SIZE_SQUARE * 13;
 	public final static int WIDTH_STAGE = SIZE_STAGE;
 	public final static int HEIGHT_STAGE = SIZE_STAGE;
@@ -53,7 +54,7 @@ public final class Properties {
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 3;
 	public final static int MAX_ITEMS_SIMUL = 3;
-	public final static int MAX_TIME_ITEM = 8;
+	public final static int MAX_TIME_ITEM = 8000;
 	public final static int TIME_BETWEEN_SPAWN_IT = 7000;
 	
 }

@@ -71,10 +71,10 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-		if(getPosX()<Properties.X_INIT_STAGE) setDirection(3);
-    	if(getPosX()>Properties.X_FINAL_STAGE) setDirection(2);
-    	if(getPosY()<Properties.Y_INIT_STAGE) setDirection(1);
-    	if(getPosY()>Properties.Y_FINAL_STAGE) setDirection(0);
+		if(getPosX()<xI) setDirection(3);
+    	if(getPosX()>xF) setDirection(2);
+    	if(getPosY()<yI) setDirection(1);
+    	if(getPosY()>yF) setDirection(0);
 		
 	}
 
@@ -83,16 +83,16 @@ public class Enemy extends Tank implements StageElement{
 		
 		switch (this.direction) {
 		case 0:
-			g.drawImage(imgEnemyUp, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgEnemyUp, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
 		case 1:
-			g.drawImage(imgEnemyDowm, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgEnemyDowm, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
 		case 2:
-			g.drawImage(imgEnemyLeft, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgEnemyLeft, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
 		case 3:
-			g.drawImage(imgEnemyRight, (int) getPosX(), (int)getPosY(), null);
+			g.drawImage(imgEnemyRight, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
 		}
 		
