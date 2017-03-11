@@ -28,7 +28,7 @@ public abstract class Tank {
 		yI = Properties.Y_INIT_STAGE;
 		xF = Properties.X_FINAL_STAGE;
 		yF = Properties.Y_FINAL_STAGE;
-		k = Properties.SIZE_SQUARE_STAGE;
+		k = Properties.SIZE_SQUARE;
 		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}

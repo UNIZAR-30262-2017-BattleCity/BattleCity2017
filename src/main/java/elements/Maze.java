@@ -1,29 +1,43 @@
 package elements;
 
-import java.awt.Graphics;
-
 import gameController.SpriteSheetControl;
 
-public class Maze implements StageElement{
+public class Maze {
 	
-	private double posX;
-	private double posY;
 	private SpriteSheetControl ssc;
 	private Stage stage;
 			
-	public Maze(Stage stage, int level, SpriteSheetControl ssc) {	
+	public Maze(Stage stage, SpriteSheetControl ssc) {	
 		this.stage = stage;
 		this.ssc = ssc;
-		loadMaze(level);
 	}
 		
 	public int[][] createMaze(int level){
 		
 		int[][] matriz = null;
 		
-		switch (level) {//1 ladrillo 2 medio ladrillo 3 iron 4 medio iron
-		case 1:			
-			int[][] m= {
+		switch (level) {//1 brick 2 half brick 3 iron 4 half iron 5 forest 6 water 7 eagle
+		case 1:	
+			int[][] m1= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,3,1,0,1,0,1,0},
+					{0,1,0,1,0,2,0,2,0,1,0,1,0},
+					{0,2,0,2,0,0,0,0,0,2,0,2,0},
+					{0,0,0,0,0,1,0,1,0,0,0,0,0},
+					{2,0,1,1,0,0,0,0,0,1,1,0,2},
+					{4,0,0,0,0,1,0,1,0,0,0,0,4},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,0,0,0,0,1,0,1,0},
+					{0,0,0,0,0,0,7,0,0,0,0,0,0},
+					};			
+			matriz = m1;
+			break;
+
+		case 2:
+			int[][] m2= {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,1,0,1,0,1,0,1,0,1,0,1,0},
 					{0,1,0,1,0,1,0,1,0,1,0,1,0},
@@ -38,71 +52,96 @@ public class Maze implements StageElement{
 					{0,1,0,1,0,0,0,0,0,1,0,1,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0},
 					};			
-			matriz = m;
-			break;
-
-		case 2:
-			stage.spawnElements(new Obstacle(2, 3, 1, ssc));
-			stage.spawnElements(new Obstacle(2, 13, 2, ssc));
+			matriz = m2;
 			break;
 		case 3:
+			int[][] m3= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,3,1,0,1,0,1,0},
+					{0,1,0,1,0,2,0,2,0,1,0,1,0},
+					{0,2,0,2,0,0,0,0,0,2,0,2,0},
+					{0,0,0,0,0,1,0,1,0,0,0,0,0},
+					{2,0,1,1,0,0,0,0,0,1,1,0,2},
+					{4,0,0,0,0,1,0,1,0,0,0,0,4},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,0,0,0,0,1,0,1,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					};			
+			matriz = m3;
 			break;
 		case 4:
+			int[][] m4= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,3,1,0,1,0,1,0},
+					{0,1,0,1,0,2,0,2,0,1,0,1,0},
+					{0,2,0,2,0,0,0,0,0,2,0,2,0},
+					{0,0,0,0,0,1,0,1,0,0,0,0,0},
+					{2,0,1,1,0,0,0,0,0,1,1,0,2},
+					{4,0,0,0,0,1,0,1,0,0,0,0,4},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,0,0,0,0,1,0,1,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					};			
+			matriz = m4;
 			break;
 		case 5:
+			int[][] m5= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,3,1,0,1,0,1,0},
+					{0,1,0,1,0,2,0,2,0,1,0,1,0},
+					{0,2,0,2,0,0,0,0,0,2,0,2,0},
+					{0,0,0,0,0,1,0,1,0,0,0,0,0},
+					{2,0,1,1,0,0,0,0,0,1,1,0,2},
+					{4,0,0,0,0,1,0,1,0,0,0,0,4},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,1,0,1,0,1,0,1,0},
+					{0,1,0,1,0,0,0,0,0,1,0,1,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					};			
+			matriz = m5;
 			break;
 		}
-		
-		
 		
 		return matriz;
 	}
 	
 	public void loadMaze(int level){
     	int[][] m = createMaze(level);
-    	int brick = 1;
     	
     	for (int i = 0; i < m.length; i++) { 
             for (int j = 0; j < m.length; j++) {
-                if (m[i][j] == brick) {
-					stage.spawnElements(new Wall(i,j,brick,ssc));
+                if (m[i][j] == 1) {
+					stage.spawnElements(new Wall(i,j,1,ssc));
+				}
+                if (m[i][j] == 2) {
+					stage.spawnElements(new Wall(i,j,2,ssc));
 				}
                 if (m[i][j] == 3) {
 					stage.spawnElements(new Wall(i,j,3,ssc));
 				}
+                if (m[i][j] == 4) {
+					stage.spawnElements(new Wall(i,j,4,ssc));
+				}
                 if (m[i][j] == 5) {
 					stage.spawnElements(new Obstacle(i,j,1,ssc));
+				}
+                if (m[i][j] == 6) {
+					stage.spawnElements(new Obstacle(i,j,2,ssc));
+				}
+                if (m[i][j] == 7) {
+					stage.spawnElements(new Eagle(i,j,ssc));
 				}
             }
         }    	
     	
     }
 	
-	public void updateDraw() {
-		
-	}
-	
-	public void draw(Graphics g) {
-		
-	}
-
-	public double getPosX() {
-		return posX;
-	}
-
-	public void setPosX(double posX) {
-		this.posX = posX;
-	}
-
-	public double getPosY() {
-		return posY;
-	}
-
-	public void setPosY(double posY) {
-		this.posY = posY;
-	}	
-	
-	public void setInitPos(int col, int row){
-    }
-
 }

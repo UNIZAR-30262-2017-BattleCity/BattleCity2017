@@ -34,7 +34,13 @@ public class Item implements StageElement{
 		case 2:
 			imgItem = ssc.getItem2();
 			break;
-		default:
+		case 3:
+			imgItem = ssc.getItem1();
+			break;
+		case 4:
+			imgItem = ssc.getItem2();
+			break;
+		case 5:
 			imgItem = ssc.getItem1();
 			break;
 		}

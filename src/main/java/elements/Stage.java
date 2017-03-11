@@ -2,6 +2,7 @@ package elements;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Random;
 
 import application.Properties;
 import gameController.SpriteSheetControl;
@@ -9,87 +10,125 @@ import gameController.SpriteSheetControl;
 public class Stage {	
 		
 	//items/poderes
-	private int maxItems;    
+	private int maxItems; 
+	private int maxItemsSimul;  
     private int nItems;
-    private int maxItemsSimul;
     private int nItemsSimul;	
     private int timeItem;
     private int maxTimeItem;
+    private int timeBetweenSpawnIt;
     
     private LinkedList<StageElement> elements;
     private StageElement tmpElement;
     
-    private int cantEnemies;
+    private int cantEnemiesForLevel;
     private int maxEnemySimul;
     private int nEnemies;
     private int nEnemiesSimul;
-    private int timeBetweenBirth;
+    private int timeBetweenSpawnE;
     	
     private boolean relojEfect;
     
     private Maze maze;
     private SpriteSheetControl ssc;
+    private int k,pos,x1,x2,x3, y1,y2,y3;
+    private long timerE, timerIt;
+    private Random r;
             
-    public Stage(int level, SpriteSheetControl ssc) {
+    public Stage(SpriteSheetControl ssc) {
+		initValues();
 		this.ssc = ssc;
-		elements = new LinkedList<>();	
-		level(level);
-		nEnemies = 0;
-		timeItem = 0;
-		maxTimeItem = Properties.MAX_TIME_ITEM;
-		nEnemiesSimul = 0;
-		nItems= 0;
-	    maxItemsSimul = 4;
-	    maxItems=10;
+    	elements = new LinkedList<>();		
+	    maze = new Maze(this, ssc);
 	}
     
-    public void level(int level){
+    public void initValues(){
+    	k = 1;
+    	pos = 1;
+    	nItems= 0;
+		nEnemies = 0;
+		timeItem = 0;
+		nItemsSimul = 0;
+		nEnemiesSimul = 0;
+		r = new Random();
+		timerE = System.currentTimeMillis();
+		timerIt = timerE;
+		x1 = Properties.POS1_SPAWN_ENEMY[0];
+		x2 = Properties.POS2_SPAWN_ENEMY[0];
+		x3 = Properties.POS3_SPAWN_ENEMY[0];
+		y1 = Properties.POS1_SPAWN_ENEMY[1];
+		y2 = Properties.POS2_SPAWN_ENEMY[1];
+		y3 = Properties.POS3_SPAWN_ENEMY[1];
+		maxItems = Properties.MAX_ITEMS_LEVEL;
+		maxTimeItem = Properties.MAX_TIME_ITEM;		
+		maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
+    }
+    
+    public void getLevel(int level, int dif){
+    	//dif: difficulty
     	switch (level) {
 		case 1:			
-			maxEnemySimul = Properties.MAX_ENEMY_SIMUL;
-			cantEnemies = Properties.CANT_ENEMIES_LEVEL;						
-			timeBetweenBirth = Properties.TIME_BETWEEN_BIRTH;
+			maxEnemySimul = Properties.MAX_ENEMY_SIMUL + dif;
+			cantEnemiesForLevel = Properties.CANT_ENEMIES_LEVEL_123;						
+			timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*1000);
 			
-			maze = new Maze(this, 1,ssc);
-			maxItems = Properties.MAX_ITEMS_LEVEL;
-			maxItemsSimul = Properties.MAX_ITEMS_SIMUL;			
+			timeBetweenSpawnIt = Properties.TIME_BETWEEN_SPAWN_IT - dif;
 			break;
-		case 2:			
-			maxEnemySimul = Properties.MAX_ENEMY_SIMUL;
-			cantEnemies = Properties.CANT_ENEMIES_LEVEL;
-			timeBetweenBirth = Properties.TIME_BETWEEN_BIRTH;
+		case 2:
+			maxEnemySimul = Properties.MAX_ENEMY_SIMUL + k + dif;
+			cantEnemiesForLevel = Properties.CANT_ENEMIES_LEVEL_123;
+			timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E;
 			
-			maxItems = Properties.MAX_ITEMS_LEVEL;
-			maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
+			timeBetweenSpawnIt = Properties.TIME_BETWEEN_SPAWN_IT - dif;
 			break;
 		}
+    	
+    	maze.loadMaze(level);
     }
             
     public void spawnElements(StageElement e) {
     	elements.add(e);
 	}
     
-    public void spawnEnemys(Enemy e) {
-		if (nEnemies<cantEnemies) {
-			nEnemies++;
+    public void spawnEnemys() {	
+		if (nEnemies<cantEnemiesForLevel) {			
 			if (nEnemiesSimul<maxEnemySimul) {
-				elements.add(e);
+				if (pos == 1) elements.add(new Enemy(x1, y1, 1, ssc));
+				if (pos == 2) elements.add(new Enemy(x2, y2, 1, ssc));
+				if (pos == 3) elements.add(new Enemy(x3, y3, 1, ssc));
+				if (pos == 3) pos = 0;
+				pos++;
+				nEnemies++;
 				nEnemiesSimul++;
 			}
-		}		
-	}    
+		}
+	}
     
-    public void spawnItems(Item it) {
+    public void spawnItems() {
 		if (nItems<maxItems) {
-			nItems++;
 			if (nItemsSimul<maxItemsSimul) {
-				elements.add(it);
+				int col = r.nextInt(Properties.COL_STAGE)+1;
+				int row = r.nextInt(Properties.ROW_STAGE)+1;
+				int id = r.nextInt(5);
+				System.out.println("col " + col + " row " + row + " id " + id);
+				elements.add(new Item(col, row, id, ssc));
 				nItemsSimul++;
+				nItems++;
 			}
 		}		
 	}
 
     public void updateDraw(){
+    	    	
+    	if (System.currentTimeMillis() - timerE > timeBetweenSpawnE) {
+			timerE += timeBetweenSpawnE;
+			spawnEnemys();
+		}
+    	
+    	if (System.currentTimeMillis() - timerIt > timeBetweenSpawnIt) {
+			timerIt += timeBetweenSpawnIt;
+			spawnItems();
+		}
     	
     	if (relojEfect) {
     		if(timeItem<maxTimeItem){
@@ -163,14 +202,6 @@ public class Stage {
 
 	public void setMaxEnemySimul(int maxEnemySimul) {
 		this.maxEnemySimul = maxEnemySimul;
-	}
-
-	public int getTimeBetweenBirth() {
-		return timeBetweenBirth;
-	}
-
-	public void setTimeBetweenBirth(int timeBetweenBirth) {
-		this.timeBetweenBirth = timeBetweenBirth;
 	}
 
 	public boolean isRelojEfect() {

@@ -21,11 +21,21 @@ public class Wall implements StageElement{
 	}
 	
 	public void initWall(SpriteSheetControl ssc){
-		if (type==1) {
+		switch (type) {
+		case 1:
 			img = ssc.getImgBrick();
-		}else{
+			break;
+		case 2:
+			img = ssc.getImgHalfBrick();
+			break;
+		case 3:
 			img = ssc.getImgIron();
-		}
+			break;
+		case 4:
+			img = ssc.getImgHalfIron();
+			break;
+		}		
+			
 	}
 	
 	public void setInitPos( int row, int col){

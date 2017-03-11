@@ -11,15 +11,12 @@ import javax.swing.JFrame;
 
 import application.Properties;
 import elements.Bullet;
-import elements.Eagle;
-import elements.Enemy;
 import elements.Item;
 import elements.Player;
 import elements.Stage;
 
 
 public class GameControl extends Canvas implements Runnable, KeyListener{
-
 	
 	private static final long serialVersionUID = 1L;
 	private BufferedImage backgroundStage = new BufferedImage(Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE, BufferedImage.TYPE_INT_RGB);
@@ -29,6 +26,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Player player;
 	private Stage stage;
 	private int level;
+	private int difficulty;
 	
 	public GameControl(JFrame jf){
 		requestFocus();		
@@ -40,11 +38,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		sscTank = new SpriteSheetControl(Properties.PATH_SS_TANK);
 		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, sscTank);
 		level = 1;
-		stage = new Stage(level,sscTank);
-		stage.spawnElements(new Eagle(Properties.POS_INIT_EAGLE[0],Properties.POS_INIT_EAGLE[1],sscTank));
-		stage.spawnEnemys(new Enemy(Properties.POS1_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 1, sscTank));
-		stage.spawnEnemys(new Enemy(Properties.POS2_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 1, sscTank));
-		stage.spawnEnemys(new Enemy(Properties.POS3_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 2, sscTank));
+		difficulty = 0;
+		stage = new Stage(sscTank);
+		stage.getLevel(level, difficulty);
 		level++;
 	}
 
@@ -199,7 +195,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		if (key == KeyEvent.VK_C) {
 		}
 		if (key == KeyEvent.VK_V) {
-			stage.spawnItems(new Item( 210, 210, 1,sscTank));
 		}
 		
 	}	

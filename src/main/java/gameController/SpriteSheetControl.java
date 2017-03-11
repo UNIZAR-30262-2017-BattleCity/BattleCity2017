@@ -12,17 +12,19 @@ public class SpriteSheetControl {
 
 	private BufferedImage spriteSheet, imgForest, imgWater;
 	private BufferedImage imgEagle, imgEagleDead;
-	private BufferedImage imgBrick, imgIron;
+	private BufferedImage imgBrick, imgIron, imgHalfBrick, imgHalfIron;
 	private BufferedImage item1, item2;
 	private BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
 	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
 	private BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
 	private String path;
-	private int k;
+	private int k,w,h;
 	
 	public SpriteSheetControl(String path) {
 		this.path = path;
-		this.k = Properties.SIZE_SQUARE_STAGE;
+		this.k = Properties.SIZE_SQUARE;
+		this.w = k;
+		this.h = k;
 		spriteSheet = loadImage();
 		generateTextures();
 	}
@@ -45,32 +47,35 @@ public class SpriteSheetControl {
 	
 	public void generateTextures(){
 		
-		imgEagle = getSprite(3, 20, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		imgEagleDead = getSprite(3, 21, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgEagle = getSprite(3, 20, w, h);
+		imgEagleDead = getSprite(3, 21, w, h);
 		
-		imgForest = getSprite(3, 18, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		imgWater = getSprite(3, 17, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgForest = getSprite(3, 18, w, h);
+		imgWater = getSprite(3, 17, w, h);
 		
-		imgBrick = getSprite(1, 17, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		imgIron = getSprite(2, 17, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgBrick = getSprite(1, 17, w, h);
+		imgIron = getSprite(2, 17, w, h);
 		
-		playerUp = getSprite(1, 1, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		playerDowm = getSprite(1, 5, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		playerLeft = getSprite(1, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		playerRight = getSprite(1, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		imgHalfBrick = getSprite(1, 21, w, h/2);
+		imgHalfIron = getSprite(2, 21, w, h/2);
 		
-		enemyUp = getSprite(1, 9, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		enemyDowm = getSprite(1, 5, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		enemyLeft = getSprite(1, 3, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		enemyRight = getSprite(1, 7, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		playerUp = getSprite(1, 1, w, h);
+		playerDowm = getSprite(1, 5, w, h);
+		playerLeft = getSprite(1, 3, w, h);
+		playerRight = getSprite(1, 7, w, h);
 		
-		bulletUp = getSprite(7, 21, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		bulletLeft = getSprite(7, 21, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		bulletDowm = getSprite(7, 22, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		bulletRight = getSprite(7, 22, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		enemyUp = getSprite(1, 9, w, h);
+		enemyDowm = getSprite(1, 5, w, h);
+		enemyLeft = getSprite(1, 3, w, h);
+		enemyRight = getSprite(1, 7, w, h);
 		
-		item1 = getSprite(8, 17, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
-		item2 = getSprite(8, 18, Properties.WIDTH_TANK, Properties.HEIGH_TANK);
+		bulletUp = getSprite(7, 21, w, h);
+		bulletLeft = getSprite(7, 21, w, h);
+		bulletDowm = getSprite(7, 22, w, h);
+		bulletRight = getSprite(7, 22, w, h);
+		
+		item1 = getSprite(8, 17, w, h);
+		item2 = getSprite(8, 18, w, h);
 	}
 
 	public BufferedImage getSpriteSheet() {
@@ -219,6 +224,13 @@ public class SpriteSheetControl {
 
 	public BufferedImage getImgIron() {
 		return imgIron;
-	}	
-	
+	}
+
+	public BufferedImage getImgHalfBrick() {
+		return imgHalfBrick;
+	}
+
+	public BufferedImage getImgHalfIron() {
+		return imgHalfIron;
+	}
 }
