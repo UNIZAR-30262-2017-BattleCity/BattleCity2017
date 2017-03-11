@@ -2,7 +2,6 @@ package elements;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 import application.Properties;
 import gameController.SpriteSheetControl;
@@ -23,19 +22,17 @@ public class Player extends Tank{
 	
     public Player(int col, int row, int lifes, SpriteSheetControl ssc) {
 		this.setLifes(lifes);
-		setTypeTank(0);
-		itemTaked= false;
-		k = Properties.SIZE_SQUARE_STAGE;
+		setTypeTank(0);		
 		setInitPos(col, row);
 		timeItem = 0;
+		itemTaked= false;
+		score = 0;
 		maxTimeItem = Properties.MAX_TIME_ITEM;
 		imgPlayerUp = ssc.getPlayerUP();
 		imgPlayerDowm = ssc.getPlayerDowm();
 		imgPlayerLeft = ssc.getPlayerLeft();
 		imgPlayerRight = ssc.getPlayerRight();
-		this.direction = 0;		
-		this.maxBulletsInProgres = Properties.MAX_BULLETS_PLAYER;
-		this.bulletsInProgres = new LinkedList<Bullet>();
+		this.shieldLevel = 1;
 	}
         
     @Override

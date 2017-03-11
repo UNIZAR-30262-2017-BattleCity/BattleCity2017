@@ -16,10 +16,10 @@ public class Eagle implements StageElement{
 		imgEagle = ssc.getImgEagle();
 		imgEagleDead = ssc.getImgEagleDead();
 		isAlive = true;
-		setInitPos(col, row);
+		setInitPos(row,col);
 	}
 	
-	public void setInitPos(int col, int row){
+	public void setInitPos(int row, int col){
     	setPosX(x+(col*k)-k);
     	setPosY(y+(row*k)-k);
     }

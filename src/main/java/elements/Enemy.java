@@ -15,9 +15,43 @@ public class Enemy extends Tank implements StageElement{
     
 	public Enemy(int col, int row, int type, SpriteSheetControl ssc) {
 		setInitPos(col, row);
+		setTypeTank(1);
 		this.ssc = ssc;
-		this.type = type;		
-		this.direction = 0;
+		this.type = type;
+		initEnemy();
+	}
+	
+	public void initEnemy(){
+		switch (type) {
+		case 1://regular
+			imgEnemyUp =  ssc.getEnemyUp();
+			imgEnemyDowm = ssc.getEnemyDowm();
+			imgEnemyLeft = ssc.getEnemyLeft();
+			imgEnemyRight = ssc.getEnemyRight();			
+			
+			this.shieldLevel = 1;
+			velEnemy = Properties.VEL_ENEMY;			
+			break;
+		case 2://fast
+			imgEnemyUp =  ssc.getEnemyUp();
+			imgEnemyDowm = ssc.getEnemyDowm();
+			imgEnemyLeft = ssc.getEnemyLeft();
+			imgEnemyRight = ssc.getEnemyRight();
+			
+			this.shieldLevel = 1;
+			velEnemy = Properties.VEL_ENEMY_FAST;
+			break;
+			
+		case 3://hard
+			imgEnemyUp =  ssc.getEnemyUp();
+			imgEnemyDowm = ssc.getEnemyDowm();
+			imgEnemyLeft = ssc.getEnemyLeft();
+			imgEnemyRight = ssc.getEnemyRight();
+			
+			this.shieldLevel = 3;
+			velEnemy = Properties.VEL_ENEMY;
+			break;
+		}
 	}
 	
 	@Override
@@ -46,34 +80,6 @@ public class Enemy extends Tank implements StageElement{
 
 	@Override
 	public void draw(Graphics g) {
-		
-		switch (type) {
-		case 1://regular
-			imgEnemyUp =  ssc.getEnemyUp();
-			imgEnemyDowm = ssc.getEnemyDowm();
-			imgEnemyLeft = ssc.getEnemyLeft();
-			imgEnemyRight = ssc.getEnemyRight();			
-
-			velEnemy = Properties.VEL_ENEMY;			
-			break;
-		case 2://fast
-			imgEnemyUp =  ssc.getEnemyUp();
-			imgEnemyDowm = ssc.getEnemyDowm();
-			imgEnemyLeft = ssc.getEnemyLeft();
-			imgEnemyRight = ssc.getEnemyRight();
-			
-			velEnemy = Properties.VEL_ENEMY_FAST;
-			break;
-			
-		case 3://hard
-			imgEnemyUp =  ssc.getEnemyUp();
-			imgEnemyDowm = ssc.getEnemyDowm();
-			imgEnemyLeft = ssc.getEnemyLeft();
-			imgEnemyRight = ssc.getEnemyRight();
-			
-			velEnemy = Properties.VEL_ENEMY;
-			break;
-		}
 		
 		switch (this.direction) {
 		case 0:

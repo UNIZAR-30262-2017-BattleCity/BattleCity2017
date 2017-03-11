@@ -40,7 +40,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		sscTank = new SpriteSheetControl(Properties.PATH_SS_TANK);
 		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, sscTank);
 		level = 1;
-		stage = new Stage(level);
+		stage = new Stage(level,sscTank);
 		stage.spawnElements(new Eagle(Properties.POS_INIT_EAGLE[0],Properties.POS_INIT_EAGLE[1],sscTank));
 		stage.spawnEnemys(new Enemy(Properties.POS1_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 1, sscTank));
 		stage.spawnEnemys(new Enemy(Properties.POS2_SPAWN_ENEMY[0], Properties.POS1_SPAWN_ENEMY[1], 1, sscTank));

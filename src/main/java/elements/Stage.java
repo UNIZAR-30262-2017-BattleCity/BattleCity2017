@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import application.Properties;
+import gameController.SpriteSheetControl;
 
 public class Stage {	
 		
@@ -23,14 +24,16 @@ public class Stage {
     private int nEnemies;
     private int nEnemiesSimul;
     private int timeBetweenBirth;
-    
-    private Eagle eagle;
-	
+    	
     private boolean relojEfect;
+    
+    private Maze maze;
+    private SpriteSheetControl ssc;
             
-    public Stage(int level) {		
+    public Stage(int level, SpriteSheetControl ssc) {
+		this.ssc = ssc;
+		elements = new LinkedList<>();	
 		level(level);
-		elements = new LinkedList<>();
 		nEnemies = 0;
 		timeItem = 0;
 		maxTimeItem = Properties.MAX_TIME_ITEM;
@@ -47,6 +50,7 @@ public class Stage {
 			cantEnemies = Properties.CANT_ENEMIES_LEVEL;						
 			timeBetweenBirth = Properties.TIME_BETWEEN_BIRTH;
 			
+			maze = new Maze(this, 1,ssc);
 			maxItems = Properties.MAX_ITEMS_LEVEL;
 			maxItemsSimul = Properties.MAX_ITEMS_SIMUL;			
 			break;
@@ -60,7 +64,7 @@ public class Stage {
 			break;
 		}
     }
-    
+            
     public void spawnElements(StageElement e) {
     	elements.add(e);
 	}

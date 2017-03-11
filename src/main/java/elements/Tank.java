@@ -14,17 +14,28 @@ public abstract class Tank {
 	protected int direction; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
 	protected double posX;
 	protected double posY;
-	protected double k;
+	protected int shieldLevel;
+	protected int k,xI,yI,xF,yF;
 	
 	//balas	
 	protected int maxBulletsInProgres;
 	protected LinkedList<Bullet> bulletsInProgres;
 	protected Bullet tmpBullet;
 	
-	public void setInitPos(int col, int row){
-		int k1 = Properties.SIZE_SQUARE_STAGE;
-    	setPosX(Properties.X_INIT_STAGE+(col*k1)-k1);
-    	setPosY(Properties.Y_INIT_STAGE+(row*k1)-k1);
+	public Tank(){
+		direction = 0;				
+		xI = Properties.X_INIT_STAGE;
+		yI = Properties.Y_INIT_STAGE;
+		xF = Properties.X_FINAL_STAGE;
+		yF = Properties.Y_FINAL_STAGE;
+		k = Properties.SIZE_SQUARE_STAGE;
+		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
+		this.bulletsInProgres = new LinkedList<Bullet>();
+	}
+	
+	public void setInitPos(int row, int col){
+    	setPosX(xI+(col*k)-k);
+    	setPosY(yI+(row*k)-k);
     }
 	
 	public void shoot(Bullet b) {
@@ -38,10 +49,10 @@ public abstract class Tank {
 			
 			tmpBullet = bulletsInProgres.get(i);
 			
-			if(tmpBullet.getPosX()<Properties.X_INIT_STAGE) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosX()>Properties.X_FINAL_STAGE) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()<Properties.Y_INIT_STAGE) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()>Properties.Y_FINAL_STAGE) deleteBullet(tmpBullet);
+			if(tmpBullet.getPosX()<xI) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosX()>xF) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()<yI) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()>yF) deleteBullet(tmpBullet);
 	    	tmpBullet.updateDraw();
 		}
 	}
@@ -125,12 +136,12 @@ public abstract class Tank {
 		this.maxBulletsInProgres = maxBulletsInProgres;
 	}
 
-	public double getK() {
-		return k;
+	public int getShieldLevel() {
+		return shieldLevel;
 	}
 
-	public void setK(double k) {
-		this.k = k;
+	public void setShieldLevel(int shieldLevel) {
+		this.shieldLevel = shieldLevel;
 	}
-		
+			
 }

@@ -14,6 +14,10 @@ public final class Properties {
 	//Player
 	public final static int INIT_LIVES = 3;
 	
+	//Bullets
+	public final static int VEL_BULLET = 3;
+	public final static int MAX_BULLETS_TANK = 3;
+	
 	//Enemy
 	public final static int VEL_ENEMY = 1;
 	public final static int VEL_ENEMY_FAST = 2;
@@ -41,8 +45,8 @@ public final class Properties {
 	public final static int ROW_STAGE = SIZE_SQUARE_STAGE;
 	
 	//Elements on stage
-	public final static int[] POS_INIT_PLAYER = {5, 13};
-	public final static int[] POS_INIT_EAGLE = {7, 13};
+	public final static int[] POS_INIT_PLAYER = {13, 5};
+	public final static int[] POS_INIT_EAGLE = {13, 7};
 	
 	//Textures
 	public final static int WIDTH_ELEMENT_STAGE = WIDTH_STAGE/COL_STAGE;
@@ -50,11 +54,7 @@ public final class Properties {
 	
 	//Sprite Sheets
 	public final static String PATH_SS_TANK = "/Sprites/SpriteSheet.png";
-	
-	//Bullets
-	public final static int VEL_BULLET = 3;
-	public final static int MAX_BULLETS_PLAYER = 3;
-	
+			
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 3;
 	public final static int MAX_ITEMS_SIMUL = 3;
