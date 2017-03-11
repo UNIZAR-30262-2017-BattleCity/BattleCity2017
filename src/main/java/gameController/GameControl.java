@@ -39,8 +39,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, ssc);
 		level = 1;
 		difficulty = 0;
-		stage = new Stage(ssc);
-		stage.getLevel(level, difficulty);
+		stage = new Stage(level, difficulty, ssc);
 		level++;
 	}
 
@@ -125,7 +124,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			stage.setClockEfect(true);
 			break;
 		case 3://shovel
-			stage.eagleWallEfect();
+			stage.eagleIronWallEfect();
 			break;
 		case 4://star
 			player.starEfect();

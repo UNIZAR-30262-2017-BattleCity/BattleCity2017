@@ -12,7 +12,7 @@ public class SpriteSheetControl {
 
 	private BufferedImage spriteSheet, imgForest, imgWater;
 	private BufferedImage imgEagle, imgEagleDead;
-	private BufferedImage imgBrick, imgIron, imgHalfBrick, imgHalfIron;
+	private BufferedImage imgBrick, imgIron, imgHalfBrickH, imgHalfIronH, imgHalfBrickV, imgHalfIronV;
 	private BufferedImage itemShield, itemClock, itemShovel, itemStar, itemGranade, itemTank, itemGun;
 	private BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
 	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
@@ -56,8 +56,10 @@ public class SpriteSheetControl {
 		imgBrick = getSprite(1, 17, w, h);
 		imgIron = getSprite(2, 17, w, h);
 		
-		imgHalfBrick = getSprite(1, 21, w, h/2);
-		imgHalfIron = getSprite(2, 21, w, h/2);
+		imgHalfBrickH = getSprite(1, 21, w, h/2);
+		imgHalfIronH = getSprite(2, 21, w, h/2);
+		imgHalfBrickV = getSprite(1, 20, w/2, h);
+		imgHalfIronV = getSprite(2, 20, w/2, h);
 		
 		playerUp = getSprite(1, 1, w, h);
 		playerDowm = getSprite(1, 5, w, h);
@@ -65,9 +67,9 @@ public class SpriteSheetControl {
 		playerRight = getSprite(1, 7, w, h);
 		
 		enemyUp = getSprite(1, 9, w, h);
-		enemyDowm = getSprite(1, 5, w, h);
-		enemyLeft = getSprite(1, 3, w, h);
-		enemyRight = getSprite(1, 7, w, h);
+		enemyDowm = getSprite(1, 13, w, h);
+		enemyLeft = getSprite(1, 11, w, h);
+		enemyRight = getSprite(1, 15, w, h);
 		
 		bulletUp = getSprite(7, 21, w, h);
 		bulletLeft = getSprite(7, 21, w, h);
@@ -215,12 +217,12 @@ public class SpriteSheetControl {
 		return imgIron;
 	}
 
-	public BufferedImage getImgHalfBrick() {
-		return imgHalfBrick;
+	public BufferedImage getImgHalfBrickH() {
+		return imgHalfBrickH;
 	}
 
-	public BufferedImage getImgHalfIron() {
-		return imgHalfIron;
+	public BufferedImage getImgHalfIronH() {
+		return imgHalfIronH;
 	}
 
 	public BufferedImage getItemShield() {
@@ -275,8 +277,16 @@ public class SpriteSheetControl {
 		return itemTank;
 	}
 
-	public void setItemTank(BufferedImage itemTank) {
-		this.itemTank = itemTank;
+	public BufferedImage getImgHalfBrickV() {
+		return imgHalfBrickV;
+	}
+
+	public void setImgHalfBrickV(BufferedImage imgHalfBrickV) {
+		this.imgHalfBrickV = imgHalfBrickV;
+	}
+
+	public BufferedImage getImgHalfIronV() {
+		return imgHalfIronV;
 	}
 		
 }

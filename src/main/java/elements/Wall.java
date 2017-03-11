@@ -13,7 +13,7 @@ public class Wall implements StageElement{
 	private boolean isActive;
 	private int type;
 	
-	public Wall(int row, int col, int type, SpriteSheetControl ssc) {
+	public Wall(double row, double col, int type, SpriteSheetControl ssc) {
 		this.type = type;
 		isActive = true;
 		initWall(ssc);
@@ -26,13 +26,19 @@ public class Wall implements StageElement{
 			img = ssc.getImgBrick();
 			break;
 		case 2:
-			img = ssc.getImgHalfBrick();
+			img = ssc.getImgHalfBrickH();
 			break;
 		case 3:
 			img = ssc.getImgIron();
 			break;
 		case 4:
-			img = ssc.getImgHalfIron();
+			img = ssc.getImgHalfIronH();
+			break;
+		case 5:
+			img = ssc.getImgHalfBrickV();
+			break;
+		case 6:
+			img = ssc.getImgHalfIronV();
 			break;
 		}		
 			
@@ -42,17 +48,23 @@ public class Wall implements StageElement{
     	setPosX(x+(col*k)-k);
     	setPosY(y+(row*k)-k);
     }
+	
+	public void setInitPos( double row, double col){
+    	setPosX(x+(col*k)-k);
+    	setPosY(y+(row*k)-k);
+    }
 
 	public void updateDraw() {
 		
 	}
 	
 	public void draw(Graphics g) {
-		
+						
 		if (type == 1 || type == 3) {
 			g.drawImage(img, (int) posX,(int) posY, w, h, null);
 		}else{
-			g.drawImage(img, (int) posX,(int) posY, w, h/2, null);
+			if (type == 5 || type == 6) g.drawImage(img, (int) posX,(int) posY, w/2, h, null);
+			else g.drawImage(img, (int) posX,(int) posY, w, h/2, null);
 		}
 		
 	}
@@ -72,4 +84,21 @@ public class Wall implements StageElement{
 	public void setPosY(double posY) {
 		this.posY = posY;
 	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 }

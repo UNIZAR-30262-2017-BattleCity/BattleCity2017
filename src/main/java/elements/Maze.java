@@ -16,8 +16,8 @@ public class Maze {
 		
 		int[][] matriz = null;
 		
-		switch (level) {//1 brick 2 half brick 3 iron 4 half iron 5 forest 6 water 7 eagle
-		case 1:	
+		switch (level) {//1 brick 2 half brick 3 iron 4 half iron 
+		case 1:	//5 forest 6 water 7 eagle 8 block half brick & half Iron 9 brick begin before 10 & 11 eagle wall
 			int[][] m1= {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,1,0,1,0,1,0,1,0,1,0,1,0},
@@ -25,15 +25,15 @@ public class Maze {
 					{0,1,0,1,0,1,3,1,0,1,0,1,0},
 					{0,1,0,1,0,2,0,2,0,1,0,1,0},
 					{0,2,0,2,0,0,0,0,0,2,0,2,0},
-					{0,0,0,0,0,1,0,1,0,0,0,0,0},
-					{2,0,1,1,0,0,0,0,0,1,1,0,2},
-					{4,0,0,0,0,1,0,1,0,0,0,0,4},
-					{0,1,0,1,0,1,2,1,0,1,0,1,0},
-					{0,1,0,1,0,1,0,1,0,1,0,1,0},
-					{0,1,0,1,0,0,0,0,0,1,0,1,0},
-					{0,0,0,0,0,0,7,0,0,0,0,0,0},
+					{0,0,0,0,0,9,0,9,0,0,0,0,0},
+					{8,0,9,9,0,0,0,0,0,9,9,0,8},
+					{0,1,0,0,0,9,1,9,0,0,0,1,0},
+					{0,1,0,1,0,9,0,9,0,1,0,1,0},
+					{0,1,0,1,0,9,0,9,0,1,0,1,0},
+					{0,1,0,1,0,11,0,0,0,1,0,1,0},
+					{0,0,0,0,0,10,7,0,0,0,0,0,0},
 					};			
-			matriz = m1;
+			matriz = m1;			
 			break;
 
 		case 2:
@@ -111,6 +111,13 @@ public class Maze {
 		}
 		
 		return matriz;
+	}	
+	
+	public void loadIronWall(){		               	
+    	stage.spawnElements(new Wall(11.5,5.5,4,ssc));
+    	stage.spawnElements(new Wall(11.5,6.5,4,ssc));
+    	stage.spawnElements(new Wall(12,5.5,6,ssc));
+    	stage.spawnElements(new Wall(12,7,6,ssc));
 	}
 	
 	public void loadMaze(int level){
@@ -139,8 +146,23 @@ public class Maze {
                 if (m[i][j] == 7) {
 					stage.spawnElements(new Eagle(i,j,ssc));
 				}
+                if (m[i][j] == 8) {
+					stage.spawnElements(new Wall(i-0.5,j,2,ssc));
+		    		stage.spawnElements(new Wall(i,j,4,ssc));
+				}
+                if (m[i][j] == 9) {
+					stage.spawnElements(new Wall(i-0.5,j,1,ssc));
+				}
+                if (m[i][j] == 10) {
+                	stage.spawnElements(new Wall(i,j+.5,5,ssc));
+                	stage.spawnElements(new Wall(i,j+2,5,ssc));
+				}
+                if (m[i][j] == 11) {                	
+                	stage.spawnElements(new Wall(i+.5,j+.5,2,ssc));
+                	stage.spawnElements(new Wall(i+.5,j+1.5,2,ssc));
+				}
             }
-        }    	
+        }
     	
     }
 	

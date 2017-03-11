@@ -35,12 +35,13 @@ public class Stage {
     private long timerE, timerIt;
     private Random r;
             
-    public Stage(SpriteSheetControl ssc) {
-		initValues();
-		this.ssc = ssc;
+    public Stage(int level, int dif, SpriteSheetControl ssc) {
+    	initValues();
+    	this.ssc = ssc;
     	elements = new LinkedList<>();		
-	    maze = new Maze(this, ssc);
-	}
+    	maze = new Maze(this, ssc);
+    	loadLevel(level, dif);
+    }
     
     public void initValues(){
     	k = 1;
@@ -64,7 +65,7 @@ public class Stage {
 		maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
     }
     
-    public void getLevel(int level, int dif){
+    public void loadLevel(int level, int dif){
     	//dif: difficulty
     	switch (level) {
 		case 1:			
@@ -82,8 +83,8 @@ public class Stage {
 			timeBetweenSpawnIt = Properties.TIME_BETWEEN_SPAWN_IT - dif;
 			break;
 		}
+    	 maze.loadMaze(level);
     	
-    	maze.loadMaze(level);
     }
             
     public void spawnElements(StageElement e) {
@@ -164,8 +165,8 @@ public class Stage {
     }
    
 
-	public void eagleWallEfect() {
-		// TODO Auto-generated method stub
+	public void eagleIronWallEfect() {
+		maze.loadIronWall();
 		
 	}
 	
