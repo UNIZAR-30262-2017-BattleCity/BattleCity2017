@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import gameController.SpriteSheetControl;
 
-public class Wall implements StageElement{
+public class Wall extends GameElement implements StageElement{
 
 	private double posX;
 	private double posY;
@@ -44,14 +44,9 @@ public class Wall implements StageElement{
 			
 	}
 	
-	public void setInitPos( int row, int col){
-    	setPosX(x+(col*k)-k);
-    	setPosY(y+(row*k)-k);
-    }
-	
 	public void setInitPos( double row, double col){
-    	setPosX(x+(col*k)-k);
-    	setPosY(y+(row*k)-k);
+    	setPosX(xI+(col*k)-k);
+    	setPosY(yI+(row*k)-k);
     }
 
 	public void updateDraw() {
@@ -61,10 +56,10 @@ public class Wall implements StageElement{
 	public void draw(Graphics g) {
 						
 		if (type == 1 || type == 3) {
-			g.drawImage(img, (int) posX,(int) posY, w, h, null);
+			g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
 		}else{
-			if (type == 5 || type == 6) g.drawImage(img, (int) posX,(int) posY, w/2, h, null);
-			else g.drawImage(img, (int) posX,(int) posY, w, h/2, null);
+			if (type == 5 || type == 6) g.drawImage(img, (int) posX,(int) posY, width/2, heigth, null);
+			else g.drawImage(img, (int) posX,(int) posY, width, heigth/2, null);
 		}
 		
 	}

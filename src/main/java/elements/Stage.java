@@ -128,15 +128,15 @@ public class Stage {
     	if (System.currentTimeMillis() - timerIt > timeBetweenSpawnIt) {
 			timerIt += timeBetweenSpawnIt;
 			spawnItems();
-		}
+		}   	
     	
     	if (clockEfect) {
     		clockEfect();
     	}else{
     		for(int i=0;i<elements.size();i++) {
-    			tmpElement = elements.get(i);
-    			tmpElement.updateDraw();
-
+    			tmpElement = elements.get(i);	
+    			if (tmpElement.isActive()) tmpElement.updateDraw();
+    			else deleteElement(tmpElement);
     		}
     	}
 
@@ -146,7 +146,8 @@ public class Stage {
     	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);
-    		tmpElement.draw(g);
+    		if (tmpElement.isActive()) tmpElement.draw(g);
+			else deleteElement(tmpElement);
     	}
     }
     
@@ -188,6 +189,14 @@ public class Stage {
 		}	
 	}
 	
+	public LinkedList<StageElement> getElements() {
+		return elements;
+	}
+
+	public void setElements(LinkedList<StageElement> elements) {
+		this.elements = elements;
+	}
+
 	public int getMaxItems() {
 		return maxItems;
 	}

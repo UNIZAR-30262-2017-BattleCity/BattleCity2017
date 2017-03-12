@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import application.Properties;
 import gameController.SpriteSheetControl;
 
-public class Player extends Tank{
+public class Player extends Tank implements StageElement{
 
 	private int userName;
 	private int lifes;
@@ -39,16 +39,16 @@ public class Player extends Tank{
     public void draw(Graphics g) {
     	switch (this.direction) {
 		case 0:
-			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), w, h, null);
+			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
 			break;
 		case 1:
-			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), w, h, null);
+			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), width, heigth, null);
 			break;
 		case 2:
-			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), w, h, null);
+			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), width, heigth, null);
 			break;
 		case 3:
-			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(), w, h, null);
+			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(),width, heigth, null);
 			break;
 		}
 		

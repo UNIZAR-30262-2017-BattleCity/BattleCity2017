@@ -191,7 +191,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			player.setVelY(0);
 		}
 		if (key == KeyEvent.VK_SPACE) {
-			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc));
+			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc,stage));
 		}
 		if (key == KeyEvent.VK_C) {
 		}

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import gameController.SpriteSheetControl;
 
-public class Item implements StageElement{
+public class Item extends GameElement implements StageElement{
 	
 	private int id;
 	private double posX;
@@ -21,11 +21,6 @@ public class Item implements StageElement{
 		setInitPos(col, row);
 	}
 	
-	public void setInitPos(int col, int row){
-    	setPosX(x+(col*k)-k);
-    	setPosY(y+(row*k)-k);
-    }
-
 	public void draw(Graphics g) {
 		switch (id) {
 		case 1:
@@ -51,7 +46,7 @@ public class Item implements StageElement{
 			break;
 		}
 		
-		g.drawImage(imgItem, (int) posX,(int) posY, w, h, null);
+		g.drawImage(imgItem, (int) posX,(int) posY, width, heigth, null);
 	}
 	
 	public void updateDraw(){

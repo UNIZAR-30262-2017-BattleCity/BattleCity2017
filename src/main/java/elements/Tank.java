@@ -5,18 +5,14 @@ import java.util.LinkedList;
 
 import application.Properties;
 
-public abstract class Tank {
+public abstract class Tank extends GameElement{
 	
 	//tank
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
 	protected double velX;
 	protected double velY;
 	protected int direction; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
-	protected double posX;
-	protected double posY;
 	protected int shieldLevel;
-	protected int xI,yI,xF,yF;
-	protected int k,w,h;
 	
 	//balas	
 	protected int maxBulletsInProgres;
@@ -24,23 +20,12 @@ public abstract class Tank {
 	protected Bullet tmpBullet;
 	
 	public Tank(){
-		direction = 0;				
-		xI = Properties.X_INIT_STAGE;
-		yI = Properties.Y_INIT_STAGE;
-		xF = Properties.X_FINAL_STAGE;
-		yF = Properties.Y_FINAL_STAGE;
-		k = Properties.SIZE_SQUARE;
-		w = k;
-		h = k;
+		super();
+		direction = 0;		
 		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
-	
-	public void setInitPos(int row, int col){
-    	setPosX(xI+(col*k)-k);
-    	setPosY(yI+(row*k)-k);
-    }
-	
+		
 	public void shoot(Bullet b) {
 		if (bulletsInProgres.size()<maxBulletsInProgres) {
 			bulletsInProgres.add(b);
@@ -56,7 +41,9 @@ public abstract class Tank {
 	    	if(tmpBullet.getPosX()>xF) deleteBullet(tmpBullet);
 	    	if(tmpBullet.getPosY()<yI) deleteBullet(tmpBullet);
 	    	if(tmpBullet.getPosY()>yF) deleteBullet(tmpBullet);
-	    	tmpBullet.updateDraw();
+	    	
+	    	if (tmpBullet.isActive()) tmpBullet.updateDraw();
+			else deleteBullet(tmpBullet);
 		}
 	}
 	
@@ -70,11 +57,7 @@ public abstract class Tank {
 	public void deleteBullet(Bullet b){
        bulletsInProgres.remove(b);
     }
-		
-	public abstract void updateDraw();
-	
-	public abstract void draw(Graphics g);
-			
+				
 	public LinkedList<Bullet> getBulletsInProgres() {
 		return bulletsInProgres;
 	}
@@ -148,19 +131,19 @@ public abstract class Tank {
 	}
 
 	public int getW() {
-		return w;
+		return width;
 	}
 
 	public void setW(int w) {
-		this.w = w;
+		this.width = w;
 	}
 
 	public int getH() {
-		return h;
+		return heigth;
 	}
 
 	public void setH(int h) {
-		this.h = h;
+		this.heigth = h;
 	}
 			
 }

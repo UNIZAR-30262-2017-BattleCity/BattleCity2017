@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import gameController.SpriteSheetControl;
 
-public class Obstacle implements StageElement{
+public class Obstacle extends GameElement implements StageElement{
 
 	private double posX;
 	private double posY;
@@ -27,11 +27,7 @@ public class Obstacle implements StageElement{
 			img = ssc.getImgWater();
 		}
 	}
-	
-	public void setInitPos( int row, int col){
-    	setPosX(x+(col*k)-k);
-    	setPosY(y+(row*k)-k);
-    }
+		
 
 	public void updateDraw() {
 		
