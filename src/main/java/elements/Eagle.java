@@ -9,7 +9,8 @@ public class Eagle extends GameElement implements StageElement{
 		
 	private BufferedImage imgEagle, imgEagleDead;
 	
-	public Eagle(int row, int col, SpriteSheetControl ssc) {		
+	public Eagle(int row, int col, Stage stage, SpriteSheetControl ssc) {		
+		super(stage);
 		imgEagle = ssc.getImgEagle();
 		imgEagleDead = ssc.getImgEagleDead();
 		setInitPos(row+1,col+1);

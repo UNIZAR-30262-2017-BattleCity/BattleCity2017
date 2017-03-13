@@ -13,8 +13,10 @@ public abstract class GameElement {
 	protected int xI,yI,xF,yF;
 	protected int k;
 	protected boolean isActive;
+	protected Stage stage;
 	
-	public GameElement(){
+	public GameElement(Stage stage){
+		this.stage = stage;
 		xI = Properties.X_INIT_STAGE;
 		yI = Properties.Y_INIT_STAGE;
 		xF = Properties.X_FINAL_STAGE;
@@ -31,7 +33,7 @@ public abstract class GameElement {
     }
 	
 	public Rectangle getBounds(int width, int heigth){
-		return new Rectangle((int) getPosX(), (int) getPosY(), width, heigth);
+		return new Rectangle((int) getPosX()+2, (int) getPosY()+2, width-2, heigth-2);
 	}
 
 
@@ -81,5 +83,13 @@ public abstract class GameElement {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+			
 }

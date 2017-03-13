@@ -20,6 +20,7 @@ public class Bullet extends GameElement implements StageElement{
     private boolean isActive;
     
 	public Bullet(double posX, double posY, int direction, int type, SpriteSheetControl ssc, Stage stage) {
+		super(stage);
 		this.posX = posX;
 		this.posY = posY;
 		this.direction = direction;
@@ -57,16 +58,16 @@ public class Bullet extends GameElement implements StageElement{
     public void draw(Graphics g) {
 		
     	switch (this.direction) {
-		case 0:
+		case 1:
 			g.drawImage(imgBulletUp, (int) getPosX(), (int)getPosY(), null);
 			break;
-		case 1:
+		case -1:
 			g.drawImage(imgBulletDowm, (int) getPosX(), (int)getPosY(), null);
 			break;
-		case 2:
+		case -2:
 			g.drawImage(imgBulletLeft, (int) getPosX(), (int)getPosY(), null);
 			break;
-		case 3:
+		case 2:
 			g.drawImage(imgBulletRight, (int) getPosX(), (int)getPosY(), null);
 			break;
 		}
@@ -75,21 +76,21 @@ public class Bullet extends GameElement implements StageElement{
     
     public void updateDraw(){	
     	switch (direction) {
-		case 0://up
+		case 1://up
 			posY -= velBullet;
 			break;
-		case 1://down
+		case -1://down
 			posY += velBullet;
 			break;
-		case 2://left
+		case -2://left
 			posX -= velBullet;
 			break;
-		case 3://rigth
+		case 2://rigth
 			posX += velBullet;
 			break;
 		}
     	    	 
-    	if (PhysicsContol.collision(this, stage.getElements())) {			
+    	if (PhysicsContol.collision(this, stage.getElements(this))) {	
 			setActive(false);
 		}
     	

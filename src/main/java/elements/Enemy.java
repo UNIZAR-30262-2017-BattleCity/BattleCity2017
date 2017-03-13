@@ -4,20 +4,23 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
+import gameController.PhysicsContol;
 import gameController.SpriteSheetControl;
 
 public class Enemy extends Tank implements StageElement{
 
 	private int type;
     private BufferedImage imgEnemyUp, imgEnemyDowm, imgEnemyLeft, imgEnemyRight;
-    private double velEnemy;
     private SpriteSheetControl ssc;
+    private Stage stage;
     
-	public Enemy(int col, int row, int type, SpriteSheetControl ssc) {
+	public Enemy(int col, int row, int type, Stage stage, SpriteSheetControl ssc) {
+		super(stage);
 		setInitPos(col, row);
 		setTypeTank(1);
 		this.ssc = ssc;
 		this.type = type;
+		this.stage = stage;
 		initEnemy();
 	}
 	
@@ -30,7 +33,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight = ssc.getEnemyRight();			
 			
 			this.shieldLevel = 1;
-			velEnemy = Properties.VEL_ENEMY;			
+			vel = Properties.VEL_ENEMY;			
 			break;
 		case 2://fast
 			imgEnemyUp =  ssc.getEnemyUp();
@@ -39,7 +42,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight = ssc.getEnemyRight();
 			
 			this.shieldLevel = 1;
-			velEnemy = Properties.VEL_ENEMY_FAST;
+			vel = Properties.VEL_ENEMY_FAST;
 			break;
 			
 		case 3://hard
@@ -49,7 +52,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight = ssc.getEnemyRight();
 			
 			this.shieldLevel = 3;
-			velEnemy = Properties.VEL_ENEMY;
+			vel = Properties.VEL_ENEMY;
 			break;
 		}
 	}
@@ -57,24 +60,29 @@ public class Enemy extends Tank implements StageElement{
 	@Override
 	public void updateDraw() {
 		switch (direction) {
-		case 0://up
-			posY -= velEnemy;
+		case 1://up
+			posY -= vel;
 			break;
-		case 1://down
-			posY += velEnemy;
+		case -1://down
+			posY += vel;
 			break;
-		case 2://left
-			posX -= velEnemy;
+		case -2://left
+			posX -= vel;
 			break;
-		case 3://rigth
-			posX += velEnemy;
+		case 2://rigth
+			posX += vel;
 			break;
 		}
 		
-		if(getPosX()<xI) setDirection(3);
-    	if(getPosX()>xF) setDirection(2);
-    	if(getPosY()<yI) setDirection(1);
-    	if(getPosY()>yF) setDirection(0);
+		if (PhysicsContol.collision(this, stage.getElements(this))) {
+			setDirection(getDirection()*-1);
+		}
+		
+		
+		if(getPosX()<xI) setDirection(2);
+    	if(getPosX()>xF) setDirection(-2);
+    	if(getPosY()<yI) setDirection(-1);
+    	if(getPosY()>yF) setDirection(1);
 		
 	}
 
@@ -82,16 +90,16 @@ public class Enemy extends Tank implements StageElement{
 	public void draw(Graphics g) {
 		
 		switch (this.direction) {
-		case 0:
+		case 1:
 			g.drawImage(imgEnemyUp, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
-		case 1:
+		case -1:
 			g.drawImage(imgEnemyDowm, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
-		case 2:
+		case -2:
 			g.drawImage(imgEnemyLeft, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
-		case 3:
+		case 2:
 			g.drawImage(imgEnemyRight, (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
 			break;
 		}

@@ -30,6 +30,7 @@ public class Stage {
     private boolean clockEfect;
     
     private Maze maze;
+    private Player player;
     private SpriteSheetControl ssc;
     private int k,pos,x1,x2,x3, y1,y2,y3;
     private long timerE, timerIt;
@@ -84,7 +85,8 @@ public class Stage {
 			break;
 		}
     	 maze.loadMaze(level);
-    	
+    	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this, ssc);
+		
     }
             
     public void spawnElements(StageElement e) {
@@ -94,9 +96,9 @@ public class Stage {
     public void spawnEnemys() {	
 		if (nEnemies<cantEnemiesForLevel) {			
 			if (nEnemiesSimul<maxEnemySimul) {
-				if (pos == 1) elements.add(new Enemy(x1, y1, 1, ssc));
-				if (pos == 2) elements.add(new Enemy(x2, y2, 1, ssc));
-				if (pos == 3) elements.add(new Enemy(x3, y3, 1, ssc));
+				if (pos == 1) elements.add(new Enemy(x1, y1, 1, this,ssc));
+				if (pos == 2) elements.add(new Enemy(x2, y2, 1, this,ssc));
+				if (pos == 3) elements.add(new Enemy(x3, y3, 1, this,ssc));
 				if (pos == 3) pos = 0;
 				pos++;
 				nEnemies++;
@@ -111,7 +113,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, id, ssc));
+				elements.add(new Item(col, row, id, this,ssc));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -131,12 +133,19 @@ public class Stage {
 		}   	
     	
     	if (clockEfect) {
-    		clockEfect();
+    		clockEfect();//TODO change to systencurrent millis
     	}else{
     		for(int i=0;i<elements.size();i++) {
     			tmpElement = elements.get(i);	
     			if (tmpElement.isActive()) tmpElement.updateDraw();
-    			else deleteElement(tmpElement);
+    			else {    	System.out.println("entra al else simul items = " + nItemsSimul);			
+    			if (tmpElement.getClass().equals(Item.class)) 
+    				nItemsSimul--;
+    			System.out.println("simul items = " + nItemsSimul);
+    			if (tmpElement.getClass().equals(Enemy.class)) 
+    				nEnemiesSimul--;
+    			deleteElement(tmpElement);
+    			}
     		}
     	}
 
@@ -147,7 +156,7 @@ public class Stage {
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);
     		if (tmpElement.isActive()) tmpElement.draw(g);
-			else deleteElement(tmpElement);
+			
     	}
     }
     
@@ -181,6 +190,34 @@ public class Stage {
 		
 	}
 	
+
+	public void ItemTaked(Item it){
+		player.setItemTaked(true);		
+		switch (it.getId()) {
+		case 1://shield
+			player.shieldEfect();		
+			break;
+		case 2://clock
+			setClockEfect(true);
+			break;
+		case 3://shovel
+			eagleIronWallEfect();
+			break;
+		case 4://star
+			player.starEfect();
+			break;
+		case 5://bomb
+			bombEfect();
+			break;
+		case 6://tank
+			player.setLifes(player.getLifes()+1);
+			break;
+		case 7://gun
+			player.setMaxBulletsInProgres(player.getMaxBulletsInProgres()+3);
+			break;
+		}
+    }
+	
 	public void bombEfect() {
 		for (int i = 0; i < elements.size();i++) {
 			if (elements.get(i).getClass().equals(Enemy.class)) {
@@ -189,8 +226,14 @@ public class Stage {
 		}	
 	}
 	
-	public LinkedList<StageElement> getElements() {
-		return elements;
+	public LinkedList<StageElement> getElements(StageElement e) {
+		LinkedList<StageElement> clone = new LinkedList<>();
+		for (StageElement sE : elements) {
+			if (!sE.equals(e)) {
+				clone.add(sE);
+			}
+		}
+		return clone;
 	}
 
 	public void setElements(LinkedList<StageElement> elements) {
@@ -220,6 +263,13 @@ public class Stage {
 	public void setClockEfect(boolean relojEfect) {
 		this.clockEfect = relojEfect;
 	}
-	
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 			
 }

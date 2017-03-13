@@ -14,7 +14,8 @@ public class Item extends GameElement implements StageElement{
 	private BufferedImage imgItem;
 	private SpriteSheetControl ssc;
 			
-	public Item(int col, int row, int id, SpriteSheetControl ssc) {
+	public Item(int col, int row, int id, Stage stage, SpriteSheetControl ssc) {
+		super(stage);
 		this.id = id;	
 		this.ssc = ssc;
 		isTake = false;
@@ -89,7 +90,5 @@ public class Item extends GameElement implements StageElement{
 	public void setImgItem(BufferedImage imgItem) {
 		this.imgItem = imgItem;
 	}
-	
-	
-	
+		
 }

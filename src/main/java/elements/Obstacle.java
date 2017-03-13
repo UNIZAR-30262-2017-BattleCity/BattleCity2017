@@ -13,7 +13,8 @@ public class Obstacle extends GameElement implements StageElement{
 	private boolean isActive;
 	private int type;
 	
-	public Obstacle(int row, int col, int type, SpriteSheetControl ssc) {
+	public Obstacle(int row, int col, int type, Stage stage, SpriteSheetControl ssc) {
+		super(stage);
 		this.type = type;
 		isActive = true;
 		initObstacle(ssc);

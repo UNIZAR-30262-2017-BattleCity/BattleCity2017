@@ -13,7 +13,8 @@ public class Wall extends GameElement implements StageElement{
 	private boolean isActive;
 	private int type;
 	
-	public Wall(double row, double col, int type, SpriteSheetControl ssc) {
+	public Wall(double row, double col, int type, Stage stage, SpriteSheetControl ssc) {
+		super(stage);
 		this.type = type;
 		isActive = true;
 		initWall(ssc);

@@ -52,9 +52,9 @@ public final class Properties {
 	public final static String PATH_SS_TANK = "/Sprites/SpriteSheet.png";
 			
 	//Items
-	public final static int MAX_ITEMS_LEVEL = 3;
+	public final static int MAX_ITEMS_LEVEL = 10;
 	public final static int MAX_ITEMS_SIMUL = 3;
-	public final static int MAX_TIME_ITEM = 8000;
+	public final static int MAX_TIME_ITEM = 2;
 	public final static int TIME_BETWEEN_SPAWN_IT = 7000;
 	
 }

@@ -31,15 +31,15 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public GameControl(JFrame jf){
 		requestFocus();
 		initStage();
-		jf.addKeyListener(this);		
+		jf.addKeyListener(this);
 	}
 	
 	public void initStage(){
 		ssc = new SpriteSheetControl(Properties.PATH_SS_TANK);
-		player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, ssc);
 		level = 1;
 		difficulty = 0;
 		stage = new Stage(level, difficulty, ssc);
+		player = stage.getPlayer();
 		level++;
 	}
 
@@ -113,40 +113,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		bs.show();
 	}
 	
-
-	public void ItemTaked(Item it){
-		player.setItemTaked(true);		
-		switch (it.getId()) {
-		case 1://shield
-			player.shieldEfect();		
-			break;
-		case 2://clock
-			stage.setClockEfect(true);
-			break;
-		case 3://shovel
-			stage.eagleIronWallEfect();
-			break;
-		case 4://star
-			player.starEfect();
-			break;
-		case 5://bomb
-			stage.bombEfect();
-			break;
-		case 6://tank
-			player.setLifes(player.getLifes()+1);
-			break;
-		case 7://gun
-			player.setMaxBulletsInProgres(player.getMaxBulletsInProgres()+3);
-			break;
-		}
-    }
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		//int key = e.getKeyCode();
 		
-		player.setVelX(0);
-		player.setVelY(0);
+		player.setVel(0);
 		
 		/*if (key == KeyEvent.VK_UP) {
 			player.setVelX(0);
@@ -171,24 +143,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		int key = e.getKeyCode();
 		
 		if (key == KeyEvent.VK_UP) {
-			player.setDirection(0);
-			player.setVelY(-1);
-			player.setVelX(0);			
+			player.setDirection(1);
+			player.setVel(1);			
 		}
 		if (key == KeyEvent.VK_DOWN) {
-			player.setDirection(1);
-			player.setVelY(1);
-			player.setVelX(0);			
+			player.setDirection(-1);
+			player.setVel(1);			
 		}
 		if (key == KeyEvent.VK_RIGHT) {
-			player.setDirection(3);
-			player.setVelX(1);
-			player.setVelY(0);	
+			player.setDirection(2);
+			player.setVel(1);	
 		}
 		if (key == KeyEvent.VK_LEFT) {
-			player.setDirection(2);
-			player.setVelX(-1);
-			player.setVelY(0);
+			player.setDirection(-2);
+			player.setVel(1);
 		}
 		if (key == KeyEvent.VK_SPACE) {
 			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc,stage));
