@@ -33,6 +33,7 @@ public class PhysicsContol {
 				if (list.get(i).getClass().equals(Item.class)) {
 					list.get(i).setActive(false);
 					list.get(i).getStage().ItemTaked((Item) list.get(i));
+					list.remove(list.get(i));
 				}else{
 					return getIntersection(p,list.get(i)).getLocation();
 				}

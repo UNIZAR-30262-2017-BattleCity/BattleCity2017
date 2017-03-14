@@ -27,13 +27,13 @@ public class Stage {
     private int nEnemiesSimul;
     private int timeBetweenSpawnE;
     	
-    private boolean clockEfect;
+    private boolean clockEfect, itemTaked;
     
     private Maze maze;
     private Player player;
     private SpriteSheetControl ssc;
     private int k,pos,x1,x2,x3, y1,y2,y3;
-    private long timerE, timerIt;
+    private int timerE, timerIt;
     private Random r;
             
     public Stage(int level, int dif, SpriteSheetControl ssc) {
@@ -53,8 +53,8 @@ public class Stage {
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
 		r = new Random();
-		timerE = System.currentTimeMillis();
-		timerIt = timerE;
+		timerE = 0;
+		timerIt = 0;
 		x1 = Properties.POS1_SPAWN_ENEMY[0];
 		x2 = Properties.POS2_SPAWN_ENEMY[0];
 		x3 = Properties.POS3_SPAWN_ENEMY[0];
@@ -121,27 +121,34 @@ public class Stage {
 	}
 
     public void updateDraw(){
-    	    	
-    	if (System.currentTimeMillis() - timerE > timeBetweenSpawnE) {
-			timerE += timeBetweenSpawnE;
-			spawnEnemys();
+    	    	    	
+    	if(timerIt<timeBetweenSpawnIt){
+			timerIt++;
+		}else{
+			timerIt = 0;
+			spawnItems();
 		}
     	
-    	if (System.currentTimeMillis() - timerIt > timeBetweenSpawnIt) {
-			timerIt += timeBetweenSpawnIt;
-			spawnItems();
-		}   	
+    	if (itemTaked) {
+			
+		}
     	
     	if (clockEfect) {
-    		clockEfect();//TODO change to systencurrent millis
+    		timeEfectItem(clockEfect);
+    		
     	}else{
+    		
+    		if (timerE < timeBetweenSpawnE) {
+			timerE++;
+    		}else{
+    			timerE=0;
+    			spawnEnemys();
+    		}
+    		
     		for(int i=0;i<elements.size();i++) {
     			tmpElement = elements.get(i);	
     			if (tmpElement.isActive()) tmpElement.updateDraw();
-    			else {    	System.out.println("entra al else simul items = " + nItemsSimul);			
-    			if (tmpElement.getClass().equals(Item.class)) 
-    				nItemsSimul--;
-    			System.out.println("simul items = " + nItemsSimul);
+    			else {
     			if (tmpElement.getClass().equals(Enemy.class)) 
     				nEnemiesSimul--;
     			deleteElement(tmpElement);
@@ -180,19 +187,21 @@ public class Stage {
 		
 	}
 	
-	public void clockEfect() {
-		if(timeItem<maxTimeItem){
-			timeItem++;
+	public void timeEfectItem(boolean it) {
+		if(timeItem>0){
+			timeItem--;
 		}else{
-			timeItem = 0;
 			clockEfect = false;
-		}
-		
+		}			
 	}
 	
 
 	public void ItemTaked(Item it){
-		player.setItemTaked(true);		
+		player.setItemTaked(true);	
+		itemTaked = true;
+		timeItem = maxTimeItem;
+		nItems--;
+		nItemsSimul--;
 		switch (it.getId()) {
 		case 1://shield
 			player.shieldEfect();		
@@ -216,6 +225,7 @@ public class Stage {
 			player.setMaxBulletsInProgres(player.getMaxBulletsInProgres()+3);
 			break;
 		}
+		deleteElement(it);
     }
 	
 	public void bombEfect() {

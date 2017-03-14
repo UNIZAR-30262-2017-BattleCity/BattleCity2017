@@ -20,7 +20,7 @@ public final class Properties {
 	public final static int MAX_ENEMY_SIMUL = 5;
 	public final static int CANT_ENEMIES_LEVEL_123 = 10;
 	public final static int MAX_ENEMY_LEVEL = 4;
-	public final static int TIME_BETWEEN_SPAWN_E = 3000;
+	public final static int TIME_BETWEEN_SPAWN_E = 300;
 	
 	//Spawn Enemy Points
 	public final static int[] POS1_SPAWN_ENEMY= {1, 1};
@@ -54,7 +54,7 @@ public final class Properties {
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 10;
 	public final static int MAX_ITEMS_SIMUL = 3;
-	public final static int MAX_TIME_ITEM = 2;
-	public final static int TIME_BETWEEN_SPAWN_IT = 7000;
+	public final static int MAX_TIME_ITEM = 240;
+	public final static int TIME_BETWEEN_SPAWN_IT = 480;
 	
 }
