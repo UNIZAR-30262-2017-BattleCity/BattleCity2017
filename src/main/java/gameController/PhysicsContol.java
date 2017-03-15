@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import elements.Bullet;
 import elements.GameElement;
 import elements.Item;
+import elements.Obstacle;
 import elements.Player;
 import elements.StageElement;
 import elements.Wall;
@@ -44,15 +45,24 @@ public class PhysicsContol {
 	
 	public static void collisionBullet(Bullet b, LinkedList<StageElement> list){
 		
+		StageElement s;		
 		for (int i = 0; i < list.size(); i++) {
-			if (isIntersecs(b,list.get(i))) {		
+			s = list.get(i);
+			if (isIntersecs(b,s)) {	
+				if (!(s.getClass().equals(Obstacle.class)) && !(s.getClass().equals(Item.class))) {
+					b.setActive(false);
+					if (s.getClass().equals(Wall.class)) {
+						int w = list.get(i).getType();
+						if (w == 3 || w == 4 || w == 6) return;
+						else s.setActive(false);
+					}else{
+						s.setActive(false);
+					}
+					if (s.getClass().equals(Player.class)) {
+						
+					}
+				}				
 				
-				//if (list.get(i).getClass().equals(StageElement.class)) {
-				b.setActive(false);	
-				list.get(i).setActive(false);
-				//}else{
-					//return getIntersection(b,list.get(i)).getLocation();
-				//}
 			}
 		}
 	}

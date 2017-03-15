@@ -80,7 +80,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				hz++;
 				delta--;				
 			}			
-			render();
+			draw();
 			frames++;			
 			if (System.currentTimeMillis() - timer > s) {
 				timer += s;
@@ -91,14 +91,14 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}
 		stop();		
 	}
-	
+		
 	public void updateDraw(){
 		player.updateDraw();
 		player.updateDrawBullet();
 		stage.updateDraw();
 	}
 	
-	public void render(){
+	public void draw(){
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);

@@ -12,6 +12,7 @@ public abstract class GameElement {
 	protected int heigth;
 	protected int xI,yI,xF,yF;
 	protected int k;
+	protected int type;
 	protected boolean isActive;
 	protected Stage stage;
 	
@@ -91,5 +92,13 @@ public abstract class GameElement {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-			
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+					
 }

@@ -14,4 +14,5 @@ public interface StageElement {
 	public Stage getStage();
 	public int getWidth();
 	public int getHeigth();
+	public int getType();
 }

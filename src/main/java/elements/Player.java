@@ -32,7 +32,7 @@ public class Player extends Tank implements StageElement{
 		timeItem = 0;
 		itemTaked= false;
 		score = 0;
-		maxTimeItem = Properties.MAX_TIME_ITEM;
+		maxTimeItem = Properties.MAX_TIME_ITEM_EFECT;
 		imgPlayerUp = ssc.getPlayerUP();
 		imgPlayerDowm = ssc.getPlayerDowm();
 		imgPlayerLeft = ssc.getPlayerLeft();

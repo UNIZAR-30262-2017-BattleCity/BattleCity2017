@@ -67,7 +67,7 @@ public class Item extends GameElement implements StageElement{
 			maxTimeItemShow--;
 		}else{			
 			stage.deleteItem(this);
-		}		
+		}
 	}
 	
 	public boolean isTake() {

@@ -14,6 +14,7 @@ public class Eagle extends GameElement implements StageElement{
 		imgEagle = ssc.getImgEagle();
 		imgEagleDead = ssc.getImgEagleDead();
 		setInitPos(row+1,col+1);
+		isActive = true;
 	}
 	
 	public void setInitPos(int row, int col){
@@ -22,7 +23,6 @@ public class Eagle extends GameElement implements StageElement{
     }
 
 	public void updateDraw() {
-		
 	}
 	
 	public void draw(Graphics g) {
@@ -50,6 +50,5 @@ public class Eagle extends GameElement implements StageElement{
 	public void setPosY(double posY) {
 		this.posY = posY;
 	}
-	
-			
+		
 }

@@ -15,9 +15,8 @@ public class Stage {
     private int nItems;
     private int nItemsSimul;	
     private int timeEfectItem;
-    private int timeItemShow;
+    private int maxTimeItemEfect;
     private int maxTimeItem;
-    private int maxTimeItemShow;
     private int timeBetweenSpawnIt;
     
     private LinkedList<StageElement> elements;
@@ -64,9 +63,9 @@ public class Stage {
 		y2 = Properties.POS2_SPAWN_ENEMY[1];
 		y3 = Properties.POS3_SPAWN_ENEMY[1];
 		maxItems = Properties.MAX_ITEMS_LEVEL;
-		maxTimeItem = Properties.MAX_TIME_ITEM;
-		maxTimeItemShow = Properties.MAX_TIME_ITEM_SHOW;
+		maxTimeItem = Properties.MAX_TIME_ITEM_EFECT;
 		maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
+		maxTimeItemEfect  = Properties.MAX_TIME_ITEM_SHOW;
     }
     
     public void loadLevel(int level, int dif){
@@ -89,7 +88,8 @@ public class Stage {
 		}
     	 maze.loadMaze(level);
     	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this, ssc);
-		
+    	 elements.add(player);
+    	 
     }
             
     public void spawnElements(StageElement e) {
@@ -116,7 +116,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, 5, this,ssc));
+				elements.add(new Item(col, row, 3, this,ssc));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -150,9 +150,8 @@ public class Stage {
     		
     		for(int i=0;i<elements.size();i++) {
     			tmpElement = elements.get(i);	
-    			if (tmpElement.isActive()) tmpElement.updateDraw();
+    			if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))) tmpElement.updateDraw();
     			else deleteElement(tmpElement);
-    			
     		}
     	}
 
@@ -162,7 +161,7 @@ public class Stage {
     	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);
-    		if (tmpElement.isActive()) tmpElement.draw(g);
+    		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))) tmpElement.draw(g);
 			
     	}
     }
@@ -195,7 +194,17 @@ public class Stage {
 			clockEfect = false;
 		}			
 	}
+	
+	public boolean item(){
 		
+		if(maxTimeItemEfect>0){
+			maxTimeItemEfect--;
+		}else{
+			maxTimeItemEfect = maxTimeItem ;
+			return true;
+		}
+		return false;
+	}
 
 	public void ItemTaked(Item it){
 		player.setItemTaked(true);	

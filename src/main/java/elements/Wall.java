@@ -3,6 +3,7 @@ package elements;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import application.Properties;
 import gameController.SpriteSheetControl;
 
 public class Wall extends GameElement implements StageElement{
@@ -10,15 +11,16 @@ public class Wall extends GameElement implements StageElement{
 	private double posX;
 	private double posY;
 	private BufferedImage img;
-	private boolean isActive;
-	private int type;
+	private boolean eagleWall;
+	private int maxTimeItemEfect;
 	
-	public Wall(double row, double col, int type, Stage stage, SpriteSheetControl ssc) {
+	public Wall(double row, double col, int type, Stage stage, SpriteSheetControl ssc, boolean eagleWall) {
 		super(stage);
 		this.type = type;
-		isActive = true;
+		this.eagleWall = eagleWall;
 		initWall(ssc);
 		setInitPos(row+1,col+1);
+		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
 	}
 	
 	public void initWall(SpriteSheetControl ssc){
@@ -41,8 +43,13 @@ public class Wall extends GameElement implements StageElement{
 		case 6:
 			img = ssc.getImgHalfIronV();
 			break;
-		}		
-			
+		}	
+
+		if (type == 2 || type == 4)
+			setHeigth(heigth/2);
+		if (type == 5 || type == 6) 
+			setWidth(width/2);
+
 	}
 	
 	public void setInitPos( double row, double col){
@@ -51,20 +58,24 @@ public class Wall extends GameElement implements StageElement{
     }
 
 	public void updateDraw() {
-		
+		if (eagleWall)
+			item();
 	}
 	
 	public void draw(Graphics g) {
-						
-		if (type == 1 || type == 3) {
-			g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
-		}else{
-			if (type == 5 || type == 6) g.drawImage(img, (int) posX,(int) posY, width/2, heigth, null);
-			else g.drawImage(img, (int) posX,(int) posY, width, heigth/2, null);
-		}
+									
+		g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
 		
 	}
-
+	
+	public void item(){		
+		if(maxTimeItemEfect>0){
+			maxTimeItemEfect--;
+		}else{			
+			stage.deleteElement(this);;
+		}
+	}
+	
 	public double getPosX() {
 		return posX;
 	}
