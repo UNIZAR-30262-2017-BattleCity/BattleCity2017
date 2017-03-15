@@ -3,6 +3,7 @@ package elements;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import application.Properties;
 import gameController.SpriteSheetControl;
 
 public class Item extends GameElement implements StageElement{
@@ -12,6 +13,7 @@ public class Item extends GameElement implements StageElement{
 	private double posY;
 	private boolean isTake;
 	private BufferedImage imgItem;
+    private int maxTimeItemShow;
 	private SpriteSheetControl ssc;
 			
 	public Item(int col, int row, int id, Stage stage, SpriteSheetControl ssc) {
@@ -19,10 +21,12 @@ public class Item extends GameElement implements StageElement{
 		this.id = id;	
 		this.ssc = ssc;
 		isTake = false;
+		maxTimeItemShow = Properties.MAX_TIME_ITEM_SHOW;
 		setInitPos(col, row);
+		initItem();
 	}
 	
-	public void draw(Graphics g) {
+	public void initItem(){
 		switch (id) {
 		case 1:
 			imgItem = ssc.getItemShield();
@@ -46,12 +50,24 @@ public class Item extends GameElement implements StageElement{
 			imgItem = ssc.getItemGun();
 			break;
 		}
+	}
+	
+	public void draw(Graphics g) {
 		
 		g.drawImage(imgItem, (int) posX,(int) posY, width, heigth, null);
 	}
 	
 	public void updateDraw(){
+		itemSpawned();
+	}
+	
+	public void itemSpawned(){
 		
+		if(maxTimeItemShow>0){
+			maxTimeItemShow--;
+		}else{			
+			stage.deleteItem(this);
+		}		
 	}
 	
 	public boolean isTake() {

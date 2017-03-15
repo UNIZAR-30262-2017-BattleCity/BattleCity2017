@@ -14,8 +14,10 @@ public class Stage {
 	private int maxItemsSimul;  
     private int nItems;
     private int nItemsSimul;	
-    private int timeItem;
+    private int timeEfectItem;
+    private int timeItemShow;
     private int maxTimeItem;
+    private int maxTimeItemShow;
     private int timeBetweenSpawnIt;
     
     private LinkedList<StageElement> elements;
@@ -49,7 +51,7 @@ public class Stage {
     	pos = 1;
     	nItems= 0;
 		nEnemies = 0;
-		timeItem = 0;
+		timeEfectItem = 0;
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
 		r = new Random();
@@ -62,7 +64,8 @@ public class Stage {
 		y2 = Properties.POS2_SPAWN_ENEMY[1];
 		y3 = Properties.POS3_SPAWN_ENEMY[1];
 		maxItems = Properties.MAX_ITEMS_LEVEL;
-		maxTimeItem = Properties.MAX_TIME_ITEM;		
+		maxTimeItem = Properties.MAX_TIME_ITEM;
+		maxTimeItemShow = Properties.MAX_TIME_ITEM_SHOW;
 		maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
     }
     
@@ -113,7 +116,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, id, this,ssc));
+				elements.add(new Item(col, row, 5, this,ssc));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -148,11 +151,8 @@ public class Stage {
     		for(int i=0;i<elements.size();i++) {
     			tmpElement = elements.get(i);	
     			if (tmpElement.isActive()) tmpElement.updateDraw();
-    			else {
-    			if (tmpElement.getClass().equals(Enemy.class)) 
-    				nEnemiesSimul--;
-    			deleteElement(tmpElement);
-    			}
+    			else deleteElement(tmpElement);
+    			
     		}
     	}
 
@@ -179,6 +179,7 @@ public class Stage {
     public void deleteItem(Item it){
     	elements.remove(it);
     	nItemsSimul--;
+    	nItems--;
     }
    
 
@@ -188,18 +189,18 @@ public class Stage {
 	}
 	
 	public void timeEfectItem(boolean it) {
-		if(timeItem>0){
-			timeItem--;
+		if(timeEfectItem>0){
+			timeEfectItem--;
 		}else{
 			clockEfect = false;
 		}			
 	}
-	
+		
 
 	public void ItemTaked(Item it){
 		player.setItemTaked(true);	
 		itemTaked = true;
-		timeItem = maxTimeItem;
+		timeEfectItem = maxTimeItem;
 		nItems--;
 		nItemsSimul--;
 		switch (it.getId()) {
@@ -231,8 +232,9 @@ public class Stage {
 	public void bombEfect() {
 		for (int i = 0; i < elements.size();i++) {
 			if (elements.get(i).getClass().equals(Enemy.class)) {
-				deleteElement(elements.get(i));
-			}	
+				elements.get(i).setActive(false);
+				nEnemiesSimul--;
+			}
 		}	
 	}
 	

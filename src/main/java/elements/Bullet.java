@@ -90,9 +90,7 @@ public class Bullet extends GameElement implements StageElement{
 			break;
 		}
     	    	 
-    	if (PhysicsContol.collision(this, stage.getElements(this))) {	
-			setActive(false);
-		}
+    	PhysicsContol.collisionBullet(this, stage.getElements(this));
     	
     }
 		

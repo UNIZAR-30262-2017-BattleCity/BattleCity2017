@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
+import elements.Bullet;
 import elements.GameElement;
 import elements.Item;
 import elements.Player;
@@ -33,7 +34,6 @@ public class PhysicsContol {
 				if (list.get(i).getClass().equals(Item.class)) {
 					list.get(i).setActive(false);
 					list.get(i).getStage().ItemTaked((Item) list.get(i));
-					list.remove(list.get(i));
 				}else{
 					return getIntersection(p,list.get(i)).getLocation();
 				}
@@ -42,22 +42,19 @@ public class PhysicsContol {
 		return null;
 	}
 	
-	public static Point collisionBullet(GameElement gE, LinkedList<StageElement> lSE){
+	public static void collisionBullet(Bullet b, LinkedList<StageElement> list){
 		
-		for (int i = 0; i < lSE.size(); i++) {
-			if (gE.getBounds(gE.getWidth(),gE.getHeigth()).intersects(
-					lSE.get(i).getBounds(lSE.get(i).getWidth(),lSE.get(i).getHeigth()))) {			
+		for (int i = 0; i < list.size(); i++) {
+			if (isIntersecs(b,list.get(i))) {		
 				
-				Rectangle r = gE.getBounds(gE.getWidth(),gE.getHeigth()).intersection(
-						lSE.get(i).getBounds(lSE.get(i).getWidth(),lSE.get(i).getHeigth()));
-				
-				Point p = r.getLocation();
-				
-				return p;
+				//if (list.get(i).getClass().equals(StageElement.class)) {
+				b.setActive(false);	
+				list.get(i).setActive(false);
+				//}else{
+					//return getIntersection(b,list.get(i)).getLocation();
+				//}
 			}
 		}
-		
-		return null;
 	}
 	
 	public static boolean isIntersecs(GameElement gE,  StageElement e){
