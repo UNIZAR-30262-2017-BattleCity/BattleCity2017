@@ -61,7 +61,8 @@ public final class Properties {
 	/*Mistakes
 	birth of items over enemies
 	birth of enemies over enemies
-	sprite of bullets
+	size bricks
+	size sprite of bullets
 	*/
 	
 }

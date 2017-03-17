@@ -113,7 +113,7 @@ public class Maze {
 		return matriz;
 	}	
 	
-	public void loadIronWall(){		               	
+	public void loadIronWall(){
     	stage.spawnElements(new Wall(11.5,5.5,4,stage,ssc,true));
     	stage.spawnElements(new Wall(11.5,6.5,4,stage,ssc,true));
     	stage.spawnElements(new Wall(12,5.5,6,stage,ssc,true));

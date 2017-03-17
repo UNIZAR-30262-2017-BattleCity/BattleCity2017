@@ -77,6 +77,22 @@ public class PhysicsContol {
 		}
 	}
 	
+	public static LinkedList<Wall> collisionEagleWall(Wall w, LinkedList<StageElement> list){
+		LinkedList<Wall> listW = new LinkedList<>();
+		StageElement s;
+		for (int i = 0; i < list.size(); i++) {
+			s = list.get(i);
+			if (isIntersecs(w,s)) {
+				if (s.getClass().equals(Wall.class)) {
+					//s.setType(w.getType());
+					listW.add((Wall) s);
+					s.setActive(false);
+				}
+			}
+		}		
+		return listW;
+	}
+	
 	public static boolean isIntersecs(GameElement gE,  StageElement e){
 		 return gE.getBounds(gE.getWidth(),gE.getHeigth()).intersects(
 				 		e.getBounds(e.getWidth(),e.getHeigth()));

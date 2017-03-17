@@ -2,8 +2,10 @@ package elements;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 import application.Properties;
+import gameController.PhysicsContol;
 import gameController.SpriteSheetControl;
 
 public class Wall extends GameElement implements StageElement{
@@ -13,6 +15,7 @@ public class Wall extends GameElement implements StageElement{
 	private BufferedImage img;
 	private boolean eagleWall;
 	private int maxTimeItemEfect;
+	private LinkedList<Wall> listEagleBrick;
 	
 	public Wall(double row, double col, int type, Stage stage, SpriteSheetControl ssc, boolean eagleWall) {
 		super(stage);
@@ -48,18 +51,22 @@ public class Wall extends GameElement implements StageElement{
 		if (type == 2 || type == 4)
 			setHeigth(heigth/2);
 		if (type == 5 || type == 6) 
-			setWidth(width/2);
+			setWidth(width/2);		
 
 	}
 	
 	public void setInitPos( double row, double col){
     	setPosX(xI+(col*k)-k);
     	setPosY(yI+(row*k)-k);
+    	
+    	if (eagleWall)
+    	listEagleBrick =  PhysicsContol.collisionEagleWall(this, stage.getElements(this));
     }
 
 	public void updateDraw() {
-		if (eagleWall)
-			item();
+		if (eagleWall){
+			item();			
+		}
 	}
 	
 	public void draw(Graphics g) {
@@ -71,7 +78,13 @@ public class Wall extends GameElement implements StageElement{
 	public void item(){		
 		if(maxTimeItemEfect>0){
 			maxTimeItemEfect--;
-		}else{			
+		}else{
+			if (listEagleBrick.size()>0) {				
+				for (Wall wall : listEagleBrick) {
+					wall.setActive(true);
+					stage.spawnElements(wall);
+				}
+			}
 			stage.deleteElement(this);
 			stage.setItemTaked(false);
 		}

@@ -111,7 +111,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, 2, this,ssc));
+				elements.add(new Item(col, row, 3, this,ssc));
 				nItemsSimul++;
 				nItems++;
 			}
