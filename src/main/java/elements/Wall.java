@@ -72,7 +72,8 @@ public class Wall extends GameElement implements StageElement{
 		if(maxTimeItemEfect>0){
 			maxTimeItemEfect--;
 		}else{			
-			stage.deleteElement(this);;
+			stage.deleteElement(this);
+			stage.setItemTaked(false);
 		}
 	}
 	

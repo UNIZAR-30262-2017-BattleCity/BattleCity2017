@@ -54,15 +54,14 @@ public final class Properties {
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 10;
 	public final static int MAX_ITEMS_SIMUL = 3;
-	public final static int MAX_TIME_ITEM_EFECT = 240;
+	public final static int MAX_TIME_ITEM_EFECT = 480;
 	public final static int MAX_TIME_ITEM_SHOW = 480;
-	public final static int TIME_BETWEEN_SPAWN_IT = 600;
+	public final static int TIME_BETWEEN_SPAWN_IT = 700;
 	
 	/*Mistakes
-	size of rectangles to collision
 	birth of items over enemies
 	birth of enemies over enemies
-	sprite of bullets 
+	sprite of bullets
 	*/
 	
 }

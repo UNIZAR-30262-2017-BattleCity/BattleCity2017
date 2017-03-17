@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.util.LinkedList;
 
 import elements.Bullet;
+import elements.Enemy;
 import elements.GameElement;
 import elements.Item;
 import elements.Obstacle;
@@ -14,29 +15,38 @@ import elements.Wall;
 
 public class PhysicsContol {
 
-	public static boolean collision(GameElement gE, LinkedList<StageElement> lSE){
-		
-		for (int i = 0; i < lSE.size(); i++) {
-			if (gE.getBounds(gE.getWidth(),gE.getHeigth()).intersects(lSE.get(i).getBounds(gE.getWidth(),gE.getHeigth()))) {
-				//System.out.println("collision");
-				//System.out.println(gE.getClass() + " collision with " + lSE.get(i).getClass());
+	public static boolean collisionEnemy(Enemy e, LinkedList<StageElement> list){
+		StageElement s;
+		for (int i = 0; i < list.size(); i++) {
+			s = list.get(i);
+			if (isIntersecs(e,s)) {
+				if (s.getClass().equals(Item.class)) {
+					return false;
+				}
+				if (s.getClass().equals(Obstacle.class)) {
+					int o = list.get(i).getType();
+					if (o != 1) return true;
+				}
 				return true;
 			}
-		}
-		
+		}		
 		return false;
 	}
 	
 	public static Point collisionPlayer(Player p, LinkedList<StageElement> list){
-		
+		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
-			if (isIntersecs(p,list.get(i))) {
-				
-				if (list.get(i).getClass().equals(Item.class)) {
-					list.get(i).setActive(false);
-					list.get(i).getStage().ItemTaked((Item) list.get(i));
+			s = list.get(i);
+			if (isIntersecs(p,s)) {				
+				if (s.getClass().equals(Item.class)) {
+					s.setActive(false);
+					s.getStage().ItemTaked((Item) s);
 				}else{
-					return getIntersection(p,list.get(i)).getLocation();
+					if (s.getClass().equals(Obstacle.class)) {
+						int o = list.get(i).getType();
+						if (o == 1) return null;
+					}
+					return getIntersection(p,s).getLocation();
 				}
 			}
 		}		
@@ -58,8 +68,8 @@ public class PhysicsContol {
 					}else{
 						s.setActive(false);
 					}
-					if (s.getClass().equals(Player.class)) {
-						
+					if (s.getClass().equals(Enemy.class)) {
+						s.getStage().deleteEnemy((Enemy) s);
 					}
 				}				
 				

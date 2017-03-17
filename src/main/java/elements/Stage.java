@@ -13,10 +13,8 @@ public class Stage {
 	private int maxItems; 
 	private int maxItemsSimul;  
     private int nItems;
-    private int nItemsSimul;	
-    private int timeEfectItem;
+    private int nItemsSimul;
     private int maxTimeItemEfect;
-    private int maxTimeItem;
     private int timeBetweenSpawnIt;
     
     private LinkedList<StageElement> elements;
@@ -47,15 +45,14 @@ public class Stage {
     
     public void initValues(){
     	k = 1;
-    	pos = 1;
+    	pos = 1;    	
     	nItems= 0;
+    	timerE = 0;
+		timerIt = 0;
 		nEnemies = 0;
-		timeEfectItem = 0;
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
-		r = new Random();
-		timerE = 0;
-		timerIt = 0;
+		r = new Random();		
 		x1 = Properties.POS1_SPAWN_ENEMY[0];
 		x2 = Properties.POS2_SPAWN_ENEMY[0];
 		x3 = Properties.POS3_SPAWN_ENEMY[0];
@@ -63,9 +60,8 @@ public class Stage {
 		y2 = Properties.POS2_SPAWN_ENEMY[1];
 		y3 = Properties.POS3_SPAWN_ENEMY[1];
 		maxItems = Properties.MAX_ITEMS_LEVEL;
-		maxTimeItem = Properties.MAX_TIME_ITEM_EFECT;
 		maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
-		maxTimeItemEfect  = Properties.MAX_TIME_ITEM_SHOW;
+		maxTimeItemEfect  = Properties.MAX_TIME_ITEM_EFECT;
     }
     
     public void loadLevel(int level, int dif){
@@ -86,10 +82,9 @@ public class Stage {
 			timeBetweenSpawnIt = Properties.TIME_BETWEEN_SPAWN_IT - dif;
 			break;
 		}
-    	 maze.loadMaze(level);
-    	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this, ssc);
-    	 elements.add(player);
     	 
+    	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this, ssc);
+    	 maze.loadMaze(level);
     }
             
     public void spawnElements(StageElement e) {
@@ -116,7 +111,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, 3, this,ssc));
+				elements.add(new Item(col, row, 2, this,ssc));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -124,7 +119,7 @@ public class Stage {
 	}
 
     public void updateDraw(){
-    	    	    	
+
     	if(timerIt<timeBetweenSpawnIt){
 			timerIt++;
 		}else{
@@ -133,26 +128,29 @@ public class Stage {
 		}
     	
     	if (itemTaked) {
-			
-		}
-    	
-    	if (clockEfect) {
-    		timeEfectItem(clockEfect);
-    		
-    	}else{
+    		item();
+    	}
+
+    	if (!clockEfect) {
     		
     		if (timerE < timeBetweenSpawnE) {
-			timerE++;
+    			timerE++;
     		}else{
     			timerE=0;
     			spawnEnemys();
-    		}
-    		
-    		for(int i=0;i<elements.size();i++) {
-    			tmpElement = elements.get(i);	
-    			if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))) tmpElement.updateDraw();
-    			else deleteElement(tmpElement);
-    		}
+    		}    		
+    		for (StageElement stageElement : elements) {
+    			if (stageElement.getClass().equals(Enemy.class)) {
+					stageElement.updateDraw();
+				}
+			}
+    	}
+    	
+    	for(int i=0;i<elements.size();i++) {
+    		tmpElement = elements.get(i);	
+    		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))){
+    			if(!tmpElement.getClass().equals(Enemy.class)) tmpElement.updateDraw();
+    		}else deleteElement(tmpElement);
     	}
 
     }
@@ -181,49 +179,38 @@ public class Stage {
     	nItems--;
     }
    
-
 	public void eagleIronWallEfect() {
 		maze.loadIronWall();
 		
 	}
-	
-	public void timeEfectItem(boolean it) {
-		if(timeEfectItem>0){
-			timeEfectItem--;
-		}else{
-			clockEfect = false;
-		}			
-	}
-	
-	public boolean item(){
 		
+	public void item(){		
 		if(maxTimeItemEfect>0){
 			maxTimeItemEfect--;
 		}else{
-			maxTimeItemEfect = maxTimeItem ;
-			return true;
+			maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
+			clockEfect = false;
+			itemTaked = false;
 		}
-		return false;
 	}
 
-	public void ItemTaked(Item it){
-		player.setItemTaked(true);	
-		itemTaked = true;
-		timeEfectItem = maxTimeItem;
-		nItems--;
+	public void ItemTaked(Item it){		
 		nItemsSimul--;
 		switch (it.getId()) {
 		case 1://shield
+			player.setItemTaked(true);
 			player.shieldEfect();		
 			break;
 		case 2://clock
+			itemTaked = true;
 			setClockEfect(true);
 			break;
 		case 3://shovel
 			eagleIronWallEfect();
 			break;
 		case 4://star
-			player.starEfect();
+			player.setItemTaked(true);
+			player.starEfect(true);
 			break;
 		case 5://bomb
 			bombEfect();
@@ -232,7 +219,9 @@ public class Stage {
 			player.setLifes(player.getLifes()+1);
 			break;
 		case 7://gun
-			player.setMaxBulletsInProgres(player.getMaxBulletsInProgres()+3);
+			player.setItemTaked(true);
+			player.setGunEfectActivate(true);
+			player.gunEfect();
 			break;
 		}
 		deleteElement(it);
@@ -291,6 +280,14 @@ public class Stage {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public boolean isItemTaked() {
+		return itemTaked;
+	}
+
+	public void setItemTaked(boolean itemTaked) {
+		this.itemTaked = itemTaked;
 	}
 			
 }

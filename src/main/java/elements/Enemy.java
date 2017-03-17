@@ -74,10 +74,9 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-		if (PhysicsContol.collision(this, stage.getElements(this))) {
+		if (PhysicsContol.collisionEnemy(this, stage.getElements(this))) {
 			setDirection(getDirection()*-1);
-		}
-		
+		}		
 		
 		if(getPosX()<xI) setDirection(2);
     	if(getPosX()>xF) setDirection(-2);

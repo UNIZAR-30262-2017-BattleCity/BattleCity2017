@@ -13,9 +13,9 @@ public class Player extends Tank implements StageElement{
 	private int userName;
 	private int lifes;
 	private int score;
-    private int timeItem;
-    private int maxTimeItem;
+    private int maxTimeItemEfect;
 	private boolean itemTaked;
+	private boolean gunEfectActivate;
 	private Stage stage;
 	private BufferedImage imgPlayerUp, imgPlayerDowm, imgPlayerLeft, imgPlayerRight;
     
@@ -29,10 +29,10 @@ public class Player extends Tank implements StageElement{
 		this.stage = stage;
 		setTypeTank(0);		
 		setInitPos(col, row);
-		timeItem = 0;
 		itemTaked= false;
+		gunEfectActivate = false;
 		score = 0;
-		maxTimeItem = Properties.MAX_TIME_ITEM_EFECT;
+		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
 		imgPlayerUp = ssc.getPlayerUP();
 		imgPlayerDowm = ssc.getPlayerDowm();
 		imgPlayerLeft = ssc.getPlayerLeft();
@@ -105,12 +105,13 @@ public class Player extends Tank implements StageElement{
     	
     	
     	if (itemTaked) {
-			if(timeItem<maxTimeItem){
-				timeItem++;
-			}else{
-				timeItem = 0;
-				itemTaked = false;
-			}
+			item();
+		}
+    	
+    	if(shieldActivate){
+			
+		}else{
+			
 		}
         
     	
@@ -124,13 +125,38 @@ public class Player extends Tank implements StageElement{
     	lifes = lifes - 1;
     }
 
-	public void starEfect(){
-		
+	
+	public void starEfect(boolean star){		
+		if (star) {
+			setVel(getVel()+2);
+		}else{
+			setVel(getVel()-2);
+		}
+	}
+	
+	public void gunEfect(){
+		if (gunEfectActivate) {
+			setMaxBulletsInProgres(getMaxBulletsInProgres()+3);
+		}else{
+			setMaxBulletsInProgres(getMaxBulletsInProgres()-3);
+		}		
 	}
 	
 	public void shieldEfect() {
-		if(shieldActivate){
-			
+		shieldActivate = true;
+	}
+	
+	public void item(){		
+		if(maxTimeItemEfect>0){
+			maxTimeItemEfect--;
+		}else{
+			maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
+			shieldActivate = false;
+			gunEfectActivate = false;
+			this.itemTaked = false;
+			stage.setItemTaked(false);
+			gunEfect();
+			starEfect(false);
 		}
 	}
     	
@@ -165,4 +191,22 @@ public class Player extends Tank implements StageElement{
 	public void setItemTaked(boolean itemTaked) {
 		this.itemTaked = itemTaked;
 	}
+
+	public boolean isGunEfectActivate() {
+		return gunEfectActivate;
+	}
+
+	public void setGunEfectActivate(boolean gunEfectActivate) {
+		this.gunEfectActivate = gunEfectActivate;
+	}
+
+	public boolean isShieldActivate() {
+		return shieldActivate;
+	}
+
+	public void setShieldActivate(boolean shieldActivate) {
+		this.shieldActivate = shieldActivate;
+	}
+	
+	
 }

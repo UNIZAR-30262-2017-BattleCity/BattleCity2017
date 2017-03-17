@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 
 import application.Properties;
 import elements.Bullet;
-import elements.Item;
 import elements.Player;
 import elements.Stage;
 
