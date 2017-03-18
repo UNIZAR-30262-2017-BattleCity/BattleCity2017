@@ -49,7 +49,8 @@ public final class Properties {
 	public final static int HEIGH_ELEMENT_STAGE =  HEIGHT_STAGE/ROW_STAGE;
 	
 	//Sprite Sheets
-	public final static String PATH_SS_TANK = "/Sprites/SpriteSheet.png";
+	public final static String PATH_SS_TANK = "/images/SpriteSheet.png";
+	public final static String PATH_SS_MENU = "/images/imgMenu.png";
 			
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 10;

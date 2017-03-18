@@ -1,15 +1,17 @@
 package gameController;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import application.Menu;
 import application.Properties;
+import application.Screen;
 import elements.Bullet;
 import elements.Player;
 import elements.Stage;
@@ -18,12 +20,13 @@ import elements.Stage;
 public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
-	private BufferedImage backgroundStage = new BufferedImage(Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE, BufferedImage.TYPE_INT_RGB);
 	private boolean running;
 	private Thread thread;
 	private SpriteSheetControl ssc;
 	private Player player;
 	private Stage stage;
+	private Screen screen;
+	private Menu menu;
 	private int level;
 	private int difficulty;
 	
@@ -39,6 +42,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		difficulty = 0;
 		stage = new Stage(level, difficulty, ssc);
 		player = stage.getPlayer();
+		screen = Screen.STAGE_PLAY;
+		menu = new Menu(ssc);
 		level++;
 	}
 
@@ -103,13 +108,36 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			createBufferStrategy(3);
 			return;
 		}		
-		Graphics g = bs.getDrawGraphics();	
-		g.drawImage(backgroundStage, Properties.X_INIT_STAGE, Properties.Y_INIT_STAGE, Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE, this);
-		player.draw(g);
-		player.drawBullet(g);
-		stage.draw(g);
+		Graphics g = bs.getDrawGraphics();
+		draw(g);
 		g.dispose();
 		bs.show();
+	}
+	
+	
+	public void draw(Graphics g){
+		switch (screen) {
+		case INTRO:
+			
+			break;
+		case MENU:
+			menu.draw(g);
+			break;
+		case OPTIONS:
+			
+			break;
+		case STAGE_PLAY:
+			stage.draw(g);
+			player.draw(g);
+			player.drawBullet(g);			
+			break;
+		case STAGE_PAUSED:
+			
+			break;
+		case SCORE_STAGE:
+			
+			break;
+		}
 	}
 	
 	

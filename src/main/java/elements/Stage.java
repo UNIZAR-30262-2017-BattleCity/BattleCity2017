@@ -1,5 +1,6 @@
 package elements;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
@@ -111,7 +112,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, 3, this,ssc));
+				elements.add(new Item(col, row, id, this,ssc));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -157,6 +158,9 @@ public class Stage {
     
     public void draw(Graphics g){
     	
+    	g.setColor(Color.black);
+        g.fillRect(Properties.X_INIT_STAGE, Properties.Y_INIT_STAGE, Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE);
+		    	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);
     		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))) tmpElement.draw(g);
