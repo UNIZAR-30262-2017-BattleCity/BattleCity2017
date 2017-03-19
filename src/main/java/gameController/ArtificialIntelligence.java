@@ -60,6 +60,7 @@ public class ArtificialIntelligence {
 			nnet.calculate();
 			double[] networkOutput = nnet.getOutput();
 			double[] networkOutputNormalize =  new double[nnet.getOutput().length];
+			
 			for (int i = 0; i < networkOutput.length; i++) {
 				if (networkOutput[i] > 0.5) {
 					networkOutputNormalize[i] = 1;
@@ -71,37 +72,7 @@ public class ArtificialIntelligence {
 			System.out.println("Input: " + Arrays.toString(dataRow.getInput()));
 			System.out.println("Output Normalize: " + Arrays.toString(networkOutputNormalize));
 			
-			for (int i = 0; i < networkOutputNormalize.length; i = i+2) {
-				if (i < 2) {
-					if (networkOutputNormalize[i] < 1 
-							&& networkOutputNormalize[i+1] < 1) {
-						System.out.print("Arriba");
-					} else if (networkOutputNormalize[i] < 1 
-							&& networkOutputNormalize[i+1] > 0) {
-						System.out.print("Abajo");
-					} else if (networkOutputNormalize[i] > 0 
-							&& networkOutputNormalize[i+1] < 1) {
-						System.out.print("Izquierda");
-					} else if (networkOutputNormalize[i] > 0 
-							&& networkOutputNormalize[i+1] > 0) {
-						System.out.print("Derecha");
-					}
-				} else {
-					if (networkOutputNormalize[i] < 1 
-							&& networkOutputNormalize[i+1] < 1) {
-						System.out.println(" -- No disparar");
-					} else if (networkOutputNormalize[i] < 1 
-							&& networkOutputNormalize[i+1] > 0) {
-						System.out.println(" -- Talves disparar");
-					} else if (networkOutputNormalize[i] > 0 
-							&& networkOutputNormalize[i+1] < 1) {
-						System.out.println(" -- Talves disparar");
-					} else if (networkOutputNormalize[i] > 0 
-							&& networkOutputNormalize[i+1] > 0) {
-						System.out.println(" -- Si disparar");
-					}
-				}
-			}
+			generateAction(networkOutputNormalize);
 		}
 
 		Layer l2 = nnet.getLayerAt(1);
@@ -110,15 +81,6 @@ public class ArtificialIntelligence {
 		System.out.println("\nNetwork layers: " + nnet.getLayersCount());
 		System.out.println("Layer hidden neurons: " + l2.getNeuronsCount());
 		System.out.println("Layer output neurons: " + l3.getNeuronsCount());
-
-		Neuron[] neurons2 = l2.getNeurons();
-		Neuron[] neurons3 = l3.getNeurons();
-
-		Weight[] w2 = neurons2[1].getWeights();
-		Weight[] w3 = neurons3[1].getWeights();
-		
-		System.out.println(Arrays.toString(w2));
-		System.out.println(Arrays.toString(w3));
 	}
 	
 	private void readFileDataSet() {
@@ -152,6 +114,40 @@ public class ArtificialIntelligence {
 			reader.close(); 
 		} catch (Exception e) { 
 			e.printStackTrace(); 
+		}
+	}
+	
+	private void generateAction(double[] networkOutputNormalize) {
+		for (int i = 0; i < networkOutputNormalize.length; i = i+2) {
+			if (i < 2) {
+				if (networkOutputNormalize[i] < 1 
+						&& networkOutputNormalize[i+1] < 1) {
+					System.out.print("Arriba (U)");
+				} else if (networkOutputNormalize[i] < 1 
+						&& networkOutputNormalize[i+1] > 0) {
+					System.out.print("Abajo (D)");
+				} else if (networkOutputNormalize[i] > 0 
+						&& networkOutputNormalize[i+1] < 1) {
+					System.out.print("Izquierda (L)");
+				} else if (networkOutputNormalize[i] > 0 
+						&& networkOutputNormalize[i+1] > 0) {
+					System.out.print("Derecha (R)");
+				}
+			} else {
+				if (networkOutputNormalize[i] < 1 
+						&& networkOutputNormalize[i+1] < 1) {
+					System.out.println(" -- No disparar (NS)");
+				} else if (networkOutputNormalize[i] < 1 
+						&& networkOutputNormalize[i+1] > 0) {
+					System.out.println(" -- Talves disparar (MS)");
+				} else if (networkOutputNormalize[i] > 0 
+						&& networkOutputNormalize[i+1] < 1) {
+					System.out.println(" -- Talves disparar (MS)");
+				} else if (networkOutputNormalize[i] > 0 
+						&& networkOutputNormalize[i+1] > 0) {
+					System.out.println(" -- Si disparar (S)");
+				}
+			}
 		}
 	}
 }

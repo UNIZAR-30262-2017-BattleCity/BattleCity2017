@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import gameController.ArtificialIntelligence;
 import gameController.GameControl;
 
 public class MainGame {
@@ -20,6 +21,8 @@ public class MainGame {
         jf.setLocationRelativeTo(null);
         jf.setVisible(true);
         game.start();
+        
+        //new ArtificialIntelligence(8, 4);
 
 	}	
 
