@@ -21,25 +21,107 @@ public class ArtificialIntelligence {
 
 	public ArtificialIntelligence(int inputNeuronsCount, int outputNeuronsCount) {
 		
-		neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 100, outputNeuronsCount);
+		//neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 50, outputNeuronsCount);
+		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
+		trainingSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
+		testSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
 		
-		createDataSet(inputNeuronsCount, outputNeuronsCount);
-		training();
+		createDataSet();
+		//training();
 		
 		testNeuralNetwork(neuralNetworkMultiLayer, testSet);
 	}
 	
 	private void training() {
 		neuralNetworkMultiLayer.learn(trainingSet);
-		//neuralNetworkMultiLayer.learnInNewThread(trainingSet);
-		
-		//neuralNetworkMultiLayer.save("enemy_IA.nnet");
+		neuralNetworkMultiLayer.save("enemy_IA.nnet");
 	}
 	
-	private void createDataSet(int inputNeuronsCount, int outputNeuronsCount) {
-		trainingSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
-		testSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
+	private void createDataSet() {
 		
+		readFileDataSet();
+
+		testSet.addRow(new DataSetRow(new double[]{2,1,0,0,0,0,0,1}, new double[]{0,0,1,1}));
+		testSet.addRow(new DataSetRow(new double[]{2,2,0,0,0,1,0,0}, new double[]{0,0,0,0}));
+		testSet.addRow(new DataSetRow(new double[]{0,0,2,1,1,0,0,0}, new double[]{0,1,1,1}));
+		testSet.addRow(new DataSetRow(new double[]{0,0,2,2,0,0,1,0}, new double[]{0,1,0,0}));
+		testSet.addRow(new DataSetRow(new double[]{0,0,0,0,2,1,1,0}, new double[]{1,0,1,1}));
+		testSet.addRow(new DataSetRow(new double[]{0,0,1,0,2,2,0,0}, new double[]{1,0,0,0}));
+		testSet.addRow(new DataSetRow(new double[]{0,1,0,0,0,0,2,1}, new double[]{1,1,1,1}));
+		testSet.addRow(new DataSetRow(new double[]{0,0,1,0,0,0,2,2}, new double[]{1,1,0,0}));
+	}
+	
+	private void testNeuralNetwork(NeuralNetwork<?> nnet, DataSet testSet) {
+		for(DataSetRow dataRow : testSet.getRows()) {
+			double[] output = dataRow.getDesiredOutput();
+			System.out.println("\nOutput label : " + Arrays.toString(output));
+
+			nnet.setInput(dataRow.getInput());
+			nnet.calculate();
+			double[] networkOutput = nnet.getOutput();
+			double[] networkOutputNormalize =  new double[nnet.getOutput().length];
+			for (int i = 0; i < networkOutput.length; i++) {
+				if (networkOutput[i] > 0.5) {
+					networkOutputNormalize[i] = 1;
+				} else {
+					networkOutputNormalize[i] = 0;
+				}
+			}
+			
+			System.out.println("Input: " + Arrays.toString(dataRow.getInput()));
+			System.out.println("Output Normalize: " + Arrays.toString(networkOutputNormalize));
+			
+			for (int i = 0; i < networkOutputNormalize.length; i = i+2) {
+				if (i < 2) {
+					if (networkOutputNormalize[i] < 1 
+							&& networkOutputNormalize[i+1] < 1) {
+						System.out.print("Arriba");
+					} else if (networkOutputNormalize[i] < 1 
+							&& networkOutputNormalize[i+1] > 0) {
+						System.out.print("Abajo");
+					} else if (networkOutputNormalize[i] > 0 
+							&& networkOutputNormalize[i+1] < 1) {
+						System.out.print("Izquierda");
+					} else if (networkOutputNormalize[i] > 0 
+							&& networkOutputNormalize[i+1] > 0) {
+						System.out.print("Derecha");
+					}
+				} else {
+					if (networkOutputNormalize[i] < 1 
+							&& networkOutputNormalize[i+1] < 1) {
+						System.out.println(" -- No disparar");
+					} else if (networkOutputNormalize[i] < 1 
+							&& networkOutputNormalize[i+1] > 0) {
+						System.out.println(" -- Talves disparar");
+					} else if (networkOutputNormalize[i] > 0 
+							&& networkOutputNormalize[i+1] < 1) {
+						System.out.println(" -- Talves disparar");
+					} else if (networkOutputNormalize[i] > 0 
+							&& networkOutputNormalize[i+1] > 0) {
+						System.out.println(" -- Si disparar");
+					}
+				}
+			}
+		}
+
+		Layer l2 = nnet.getLayerAt(1);
+		Layer l3 = nnet.getLayerAt(2);
+
+		System.out.println("\nNetwork layers: " + nnet.getLayersCount());
+		System.out.println("Layer hidden neurons: " + l2.getNeuronsCount());
+		System.out.println("Layer output neurons: " + l3.getNeuronsCount());
+
+		Neuron[] neurons2 = l2.getNeurons();
+		Neuron[] neurons3 = l3.getNeurons();
+
+		Weight[] w2 = neurons2[1].getWeights();
+		Weight[] w3 = neurons3[1].getWeights();
+		
+		System.out.println(Arrays.toString(w2));
+		System.out.println(Arrays.toString(w3));
+	}
+	
+	private void readFileDataSet() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("trainingData.txt")); 
 			String line; 
@@ -71,57 +153,5 @@ public class ArtificialIntelligence {
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		}
-
-		testSet.addRow(new DataSetRow(new double[]{2,1,0,0,0,0,0,1}, new double[]{0,0,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{2,2,0,0,0,1,0,0}, new double[]{0,0,0,0}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,2,1,1,0,0,0}, new double[]{0,1,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,2,2,0,0,1,0}, new double[]{0,1,0,0}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,0,0,2,1,1,0}, new double[]{1,0,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,1,0,2,2,0,0}, new double[]{1,0,0,0}));
-		testSet.addRow(new DataSetRow(new double[]{0,1,0,0,0,0,2,1}, new double[]{1,1,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,1,0,0,0,2,2}, new double[]{1,1,0,0}));
-	}
-	
-	private void testNeuralNetwork(NeuralNetwork<?> nnet, DataSet testSet) {
-		double[] output = null;
-		for(DataSetRow dataRow : testSet.getRows()) {
-			output = dataRow.getDesiredOutput();
-			System.out.println("\nOutput label : " + Arrays.toString(output));
-
-			nnet.setInput(dataRow.getInput());
-			nnet.calculate();
-			double[] networkOutput = nnet.getOutput();
-			double[] networkOutputNormalize =  new double[nnet.getOutput().length];
-			for (int i = 0; i < networkOutput.length; i++) {
-				if (networkOutput[i] > 0.5) {
-					networkOutputNormalize[i] = 1;
-				} else {
-					networkOutputNormalize[i] = 0;
-				}
-			}
-			System.out.print("Input: " + Arrays.toString(dataRow.getInput()));
-			System.out.println(" Output: " + Arrays.toString(networkOutput));
-
-			double[] errors = new double[networkOutput.length];
-			for (int j = 0; j < output.length; j++) {
-				double err = output[j] - networkOutput[j];
-				errors[j] = err;
-			}
-			System.out.println("Error: " + Arrays.toString(errors));
-			System.out.println("Output Normalize: " + Arrays.toString(networkOutputNormalize));
-		}
-
-		Layer l2 = nnet.getLayerAt(1);
-		Layer l3 = nnet.getLayerAt(2);
-
-		System.out.println("\nNetwork layers: " + nnet.getLayersCount());
-		System.out.println("Layer hidden neurons: " + l2.getNeuronsCount());
-		System.out.println("Layer output neurons: " + l3.getNeuronsCount());
-
-		Neuron[] neurons2 = l2.getNeurons();
-		Neuron[] neurons3 = l3.getNeurons();
-
-		Weight[] w2 = neurons2[1].getWeights();
-		Weight[] w3 = neurons3[1].getWeights();
 	}
 }
