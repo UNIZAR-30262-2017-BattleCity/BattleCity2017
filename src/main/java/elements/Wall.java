@@ -29,22 +29,22 @@ public class Wall extends GameElement implements StageElement{
 	public void initWall(SpriteSheetControl ssc){
 		switch (type) {
 		case 1:
-			img = ssc.getImgBrick();
+			img = Properties.SSCTANK.getImgBrick();
 			break;
 		case 2:
-			img = ssc.getImgHalfBrickH();
+			img = Properties.SSCTANK.getImgHalfBrickH();
 			break;
 		case 3:
-			img = ssc.getImgIron();
+			img = Properties.SSCTANK.getImgIron();
 			break;
 		case 4:
-			img = ssc.getImgHalfIronH();
+			img = Properties.SSCTANK.getImgHalfIronH();
 			break;
 		case 5:
-			img = ssc.getImgHalfBrickV();
+			img = Properties.SSCTANK.getImgHalfBrickV();
 			break;
 		case 6:
-			img = ssc.getImgHalfIronV();
+			img = Properties.SSCTANK.getImgHalfIronV();
 			break;
 		}	
 
@@ -56,7 +56,10 @@ public class Wall extends GameElement implements StageElement{
 	}
 	
 	public void setInitPos( double row, double col){
-    	setPosX(xI+(col*k)-k);
+    	
+		//if (type == 1)
+			
+		setPosX(xI+(col*k)-k);
     	setPosY(yI+(row*k)-k);
     	
     	if (eagleWall)

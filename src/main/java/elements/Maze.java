@@ -126,7 +126,10 @@ public class Maze {
     	for (int i = 0; i < m.length; i++) { 
             for (int j = 0; j < m.length; j++) {
                 if (m[i][j] == 1) {
-					stage.spawnElements(new Wall(i,j,1,stage,ssc, false));
+                	for (int j2 = 0; j2 < 4; j2++) {
+						stage.spawnElements(new Wall(i,j,1,stage,ssc, false));
+						//TODO incluir otra variable k2 en el construt de wall y hacer otro metodo de initpos y multiprlicar por un k2 
+					}					
 				}
                 if (m[i][j] == 2) {
 					stage.spawnElements(new Wall(i,j,2,stage,ssc, false));

@@ -1,10 +1,12 @@
-package application;
+package userInterface;
 
 public enum Screen {
 
 	INTRO,
 	MENU,
-	OPTIONS,
+	CONFIG,
+	CONTROLS,
+	INIT_STAGE,
 	STAGE_PLAY,
 	STAGE_PAUSED,
 	SCORE_STAGE

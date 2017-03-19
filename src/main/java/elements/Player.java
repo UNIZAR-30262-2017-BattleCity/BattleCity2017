@@ -9,16 +9,18 @@ import gameController.PhysicsContol;
 import gameController.SpriteSheetControl;
 
 public class Player extends Tank implements StageElement{
-
-	private int userName;
+	
+	private final static BufferedImage imgPlayerUp = Properties.SSCTANK.getPlayerUP();
+	private final static BufferedImage imgPlayerDowm = Properties.SSCTANK.getPlayerDowm();
+	private final static BufferedImage imgPlayerLeft = Properties.SSCTANK.getPlayerLeft();
+	private final static BufferedImage imgPlayerRight = Properties.SSCTANK.getPlayerRight();
+    private int userName;
 	private int lifes;
 	private int score;
     private int maxTimeItemEfect;
 	private boolean itemTaked;
 	private boolean gunEfectActivate;
 	private Stage stage;
-	private BufferedImage imgPlayerUp, imgPlayerDowm, imgPlayerLeft, imgPlayerRight;
-    
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
@@ -32,11 +34,7 @@ public class Player extends Tank implements StageElement{
 		itemTaked= false;
 		gunEfectActivate = false;
 		score = 0;
-		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
-		imgPlayerUp = ssc.getPlayerUP();
-		imgPlayerDowm = ssc.getPlayerDowm();
-		imgPlayerLeft = ssc.getPlayerLeft();
-		imgPlayerRight = ssc.getPlayerRight();
+		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;		
 		this.shieldLevel = 1;
 	}
         

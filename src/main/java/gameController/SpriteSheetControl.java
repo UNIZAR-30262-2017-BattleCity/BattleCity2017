@@ -10,13 +10,13 @@ import application.Properties;
 
 public class SpriteSheetControl {
 
-	private BufferedImage spriteSheet, imgForest, imgWater;
-	private BufferedImage imgEagle, imgEagleDead;
-	private BufferedImage imgBrick, imgIron, imgHalfBrickH, imgHalfIronH, imgHalfBrickV, imgHalfIronV;
-	private BufferedImage itemShield, itemClock, itemShovel, itemStar, itemGranade, itemTank, itemGun;
-	private BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
-	private BufferedImage playerUp, playerDowm, playerLeft, playerRight;
-	private BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
+	private static BufferedImage spriteSheet, imgForest, imgWater;
+	private static BufferedImage imgEagle, imgEagleDead;
+	private static BufferedImage imgBrick, imgIron, imgHalfBrickH, imgHalfIronH, imgHalfBrickV, imgHalfIronV;
+	private static BufferedImage itemShield, itemClock, itemShovel, itemStar, itemGranade, itemTank, itemGun;
+	private static BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
+	private static BufferedImage playerRight, playerUp, playerDowm, playerLeft;
+	private static BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
 	private String path;
 	private int k,w,h;
 	
@@ -89,112 +89,56 @@ public class SpriteSheetControl {
 		return spriteSheet;
 	}
 
-	public void setSpriteSheet(BufferedImage spriteSheet) {
-		this.spriteSheet = spriteSheet;
-	}
-
 	public BufferedImage getBulletUp() {
 		return bulletUp;
-	}
-
-	public void setBulletUp(BufferedImage bulletUp) {
-		this.bulletUp = bulletUp;
 	}
 
 	public BufferedImage getBulletDowm() {
 		return bulletDowm;
 	}
-
-	public void setBulletDowm(BufferedImage bulletDowm) {
-		this.bulletDowm = bulletDowm;
-	}
-
+	
 	public BufferedImage getBulletLeft() {
 		return bulletLeft;
-	}
-
-	public void setBulletLeft(BufferedImage bulletLeft) {
-		this.bulletLeft = bulletLeft;
 	}
 
 	public BufferedImage getBulletRight() {
 		return bulletRight;
 	}
 
-	public void setBulletRight(BufferedImage bulletRight) {
-		this.bulletRight = bulletRight;
-	}
-
 	public BufferedImage getPlayerUP() {
 		return playerUp;
-	}
-
-	public void setPlayerUP(BufferedImage playerUP) {
-		this.playerUp = playerUP;
 	}
 
 	public BufferedImage getPlayerDowm() {
 		return playerDowm;
 	}
 
-	public void setPlayerDowm(BufferedImage playerDowm) {
-		this.playerDowm = playerDowm;
-	}
-
 	public BufferedImage getPlayerLeft() {
 		return playerLeft;
-	}
-
-	public void setPlayerLeft(BufferedImage playerLeft) {
-		this.playerLeft = playerLeft;
 	}
 
 	public BufferedImage getPlayerRight() {
 		return playerRight;
 	}
 
-	public void setPlayerRight(BufferedImage playerRight) {
-		this.playerRight = playerRight;
-	}
-
 	public BufferedImage getEnemyUp() {
 		return enemyUp;
 	}
 
-	public void setEnemyUp(BufferedImage enemyUP) {
-		this.enemyUp = enemyUP;
-	}
-
-	public BufferedImage getEnemyDowm() {
+	public  BufferedImage getEnemyDowm() {
 		return enemyDowm;
-	}
-
-	public void setEnemyDowm(BufferedImage enemyDowm) {
-		this.enemyDowm = enemyDowm;
 	}
 
 	public BufferedImage getEnemyLeft() {
 		return enemyLeft;
 	}
 
-	public void setEnemyLeft(BufferedImage enemyLeft) {
-		this.enemyLeft = enemyLeft;
-	}
-
 	public BufferedImage getEnemyRight() {
 		return enemyRight;
 	}
 
-	public void setEnemyRight(BufferedImage enemyRight) {
-		this.enemyRight = enemyRight;
-	}
-
 	public BufferedImage getImgEagle() {
 		return imgEagle;
-	}
-
-	public void setImgEagle(BufferedImage imgEagle) {
-		this.imgEagle = imgEagle;
 	}
 	
 	public BufferedImage getImgEagleDead() {
@@ -205,7 +149,7 @@ public class SpriteSheetControl {
 		return imgForest;
 	}
 
-	public BufferedImage getImgWater() {
+	public  BufferedImage getImgWater() {
 		return imgWater;
 	}
 
@@ -229,48 +173,24 @@ public class SpriteSheetControl {
 		return itemShield;
 	}
 
-	public void setItemShield(BufferedImage itemShield) {
-		this.itemShield = itemShield;
-	}
-
 	public BufferedImage getItemClock() {
 		return itemClock;
-	}
-
-	public void setItemClock(BufferedImage itemClock) {
-		this.itemClock = itemClock;
 	}
 
 	public BufferedImage getItemShovel() {
 		return itemShovel;
 	}
 
-	public void setItemShovel(BufferedImage itemShovel) {
-		this.itemShovel = itemShovel;
-	}
-
 	public BufferedImage getItemStar() {
 		return itemStar;
 	}
-
-	public void setItemStar(BufferedImage itemStar) {
-		this.itemStar = itemStar;
-	}
-
+	
 	public BufferedImage getItemGranade() {
 		return itemGranade;
 	}
 
-	public void setItemGranade(BufferedImage itemGranade) {
-		this.itemGranade = itemGranade;
-	}
-
 	public BufferedImage getItemGun() {
 		return itemGun;
-	}
-
-	public void setItemGun(BufferedImage itemGun) {
-		this.itemGun = itemGun;
 	}
 
 	public BufferedImage getItemTank() {
@@ -279,10 +199,6 @@ public class SpriteSheetControl {
 
 	public BufferedImage getImgHalfBrickV() {
 		return imgHalfBrickV;
-	}
-
-	public void setImgHalfBrickV(BufferedImage imgHalfBrickV) {
-		this.imgHalfBrickV = imgHalfBrickV;
 	}
 
 	public BufferedImage getImgHalfIronV() {

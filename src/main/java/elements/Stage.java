@@ -156,10 +156,10 @@ public class Stage {
 
     }
     
-    public void draw(Graphics g){
+    public void draw(Graphics g){    	
     	
     	g.setColor(Color.black);
-        g.fillRect(Properties.X_INIT_STAGE, Properties.Y_INIT_STAGE, Properties.WIDTH_STAGE, Properties.HEIGHT_STAGE);
+        g.fillRect(Properties.X_INIT_STAGE-1, Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
 		    	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);

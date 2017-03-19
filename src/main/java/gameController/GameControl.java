@@ -9,12 +9,14 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-import application.Menu;
 import application.Properties;
-import application.Screen;
 import elements.Bullet;
 import elements.Player;
 import elements.Stage;
+import userInterface.Configuration;
+import userInterface.Cursor;
+import userInterface.Menu;
+import userInterface.Screen;
 
 
 public class GameControl extends Canvas implements Runnable, KeyListener{
@@ -27,23 +29,27 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Stage stage;
 	private Screen screen;
 	private Menu menu;
+	private Configuration config;
+	private Cursor cursor;
 	private int level;
 	private int difficulty;
+	private int opc;
 	
 	public GameControl(JFrame jf){
-		requestFocus();
-		initStage();
+		requestFocus();		
 		jf.addKeyListener(this);
-	}
-	
-	public void initStage(){
-		ssc = new SpriteSheetControl(Properties.PATH_SS_TANK);
+		screen = Screen.MENU;
 		level = 1;
 		difficulty = 0;
+		opc = 1;
+		ssc = new SpriteSheetControl(Properties.PATH_SS_TANK);
+		menu = new Menu();
+		cursor = new Cursor();
+	}
+	
+	public void initStage(){				
 		stage = new Stage(level, difficulty, ssc);
 		player = stage.getPlayer();
-		screen = Screen.STAGE_PLAY;
-		menu = new Menu(ssc);
 		level++;
 	}
 
@@ -97,9 +103,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	}
 		
 	public void updateDraw(){
-		player.updateDraw();
-		player.updateDrawBullet();
-		stage.updateDraw();
+		if (screen.equals(Screen.STAGE_PLAY)) {
+			player.updateDraw();
+			player.updateDrawBullet();
+			stage.updateDraw();
+		}
+		
 	}
 	
 	public void draw(){
@@ -122,14 +131,22 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case MENU:
 			menu.draw(g);
+			cursor.draw(g);			
 			break;
-		case OPTIONS:
-			
+		case CONFIG:
+			config.draw(g);
+			cursor.draw(g);
+			break;
+		case INIT_STAGE:
+			g.setColor(Color.darkGray);
+	        g.fillRect(0, 0, Properties.WIDTH, Properties.HEIGHT);
+	        initStage();
+	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
 			stage.draw(g);
 			player.draw(g);
-			player.drawBullet(g);			
+			player.drawBullet(g);		
 			break;
 		case STAGE_PAUSED:
 			
@@ -144,8 +161,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		//int key = e.getKeyCode();
-		
-		player.setVel(0);
+		if (screen.equals(Screen.STAGE_PLAY)) {
+			player.setVel(0);
+		}
 		
 		/*if (key == KeyEvent.VK_UP) {
 			player.setVelX(0);
@@ -169,30 +187,118 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
-		if (key == KeyEvent.VK_UP) {
-			player.setDirection(1);
-			player.setVel(1);			
+		switch (screen) {
+		case INTRO:
+			
+			break;
+		case MENU:
+			if (key == KeyEvent.VK_UP) {
+				cursorMove(-1,Properties.N_OPC_MENU);				
+			}
+			if (key == KeyEvent.VK_DOWN) {
+				cursorMove(1,Properties.N_OPC_MENU);
+			}
+			if (key == KeyEvent.VK_ENTER) {				
+				menuOptions();
+			}
+			break;
+		case CONFIG:
+			if (key == KeyEvent.VK_UP) {
+				cursorMove(-1,Properties.N_OPC_CONFIG);				
+			}
+			if (key == KeyEvent.VK_DOWN) {
+				cursorMove(1,Properties.N_OPC_CONFIG);
+			}
+			if (key == KeyEvent.VK_RIGHT) {
+				
+			}
+			if (key == KeyEvent.VK_LEFT) {
+				
+			}
+			if (key == KeyEvent.VK_ENTER) {				
+				configOptions();
+			}
+			break;
+		case STAGE_PLAY:
+			if (key == KeyEvent.VK_UP) {
+				player.setDirection(1);
+				player.setVel(1);			
+			}
+			if (key == KeyEvent.VK_DOWN) {
+				player.setDirection(-1);
+				player.setVel(1);			
+			}
+			if (key == KeyEvent.VK_RIGHT) {
+				player.setDirection(2);
+				player.setVel(1);	
+			}
+			if (key == KeyEvent.VK_LEFT) {
+				player.setDirection(-2);
+				player.setVel(1);
+			}
+			if (key == KeyEvent.VK_SPACE) {
+				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc,stage));
+			}
+			if (key == KeyEvent.VK_ENTER) {				
+				//TODO pause
+			}
+			break;
+		case STAGE_PAUSED:
+			
+			break;
+		case SCORE_STAGE:
+			
+			break;
+		default:
+			break;
+		}		
+		
+	}
+	
+	public void cursorMove(int move, int max){
+		cursor.setY(cursor.getY()+ Properties.DELTA_CURSOR*move);
+		opc = opc + move;
+		if (opc<1) {
+			opc=max;
 		}
-		if (key == KeyEvent.VK_DOWN) {
-			player.setDirection(-1);
-			player.setVel(1);			
-		}
-		if (key == KeyEvent.VK_RIGHT) {
-			player.setDirection(2);
-			player.setVel(1);	
-		}
-		if (key == KeyEvent.VK_LEFT) {
-			player.setDirection(-2);
-			player.setVel(1);
-		}
-		if (key == KeyEvent.VK_SPACE) {
-			player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc,stage));
-		}
-		if (key == KeyEvent.VK_C) {
-		}
-		if (key == KeyEvent.VK_V) {
+		if (opc>max) {
+			opc=1;
 		}
 		
-	}	
+	}
+	
+	public void menuOptions(){
+		switch (opc) {
+		case 1:
+			screen = Screen.INIT_STAGE;
+			break;
+		case 2:
+			screen = Screen.INIT_STAGE;
+			break;
+		case 3:
+			config = new Configuration();
+			cursor.cursorConfig();
+			opc = 1;
+			screen = Screen.CONFIG;
+			break;
+		case 4:
+			System.exit(0);			
+			break;
+
+		}
+	}
+	
+	public void configOptions(){
+		switch (opc) {
+		case 1:
+			screen = Screen.CONTROLS;			
+			break;		
+		case 5:
+			cursor.cursorMenu();
+			opc = 1;
+			screen = Screen.MENU;
+			break;
+		}
+	}
 
 }

@@ -1,5 +1,7 @@
 package application;
 
+import gameController.SpriteSheetControl;
+
 public final class Properties {
 
 	//Frame
@@ -7,6 +9,24 @@ public final class Properties {
 	public final static int HEIGHT = 480;
 	public final static int SCALE = 2;
 		
+	//Menu - Configuration
+	public final static int N_OPC_MENU =  4;
+	public final static int N_OPC_CONFIG =  5;
+	
+	//Font
+	public final static String FONT_PIXEL = "/resources/fonts/Pixel.ttf";
+	
+	//Cursor Menu
+	public final static int X_CURSOR_M =  275;
+	public final static int Y_INIT_CURSOR_M =  264;
+	public final static int DELTA_CURSOR =  34;
+	public final static int Y_FINAL_CURSOR_M =  Y_INIT_CURSOR_M + DELTA_CURSOR * (N_OPC_MENU-1);
+	
+	//Cursor Configuration
+	public final static int X_CURSOR_C = 90;
+	public final static int Y_INIT_CURSOR_C = 192;
+	public final static int Y_FINAL_CURSOR_C =  Y_INIT_CURSOR_C + DELTA_CURSOR * (N_OPC_CONFIG-1);
+	
 	//Player
 	public final static int INIT_LIVES = 3;
 	
@@ -33,8 +53,8 @@ public final class Properties {
 	public final static int SIZE_STAGE = SIZE_SQUARE * 13;
 	public final static int WIDTH_STAGE = SIZE_STAGE;
 	public final static int HEIGHT_STAGE = SIZE_STAGE;
-	public final static int X_INIT_STAGE = 20;
-	public final static int Y_INIT_STAGE = 20;
+	public final static int X_INIT_STAGE = 40;
+	public final static int Y_INIT_STAGE = 30;
 	public final static int X_FINAL_STAGE = X_INIT_STAGE+WIDTH_STAGE - SIZE_SQUARE;
 	public final static int Y_FINAL_STAGE = Y_INIT_STAGE+HEIGHT_STAGE - SIZE_SQUARE;	
 	
@@ -49,8 +69,11 @@ public final class Properties {
 	public final static int HEIGH_ELEMENT_STAGE =  HEIGHT_STAGE/ROW_STAGE;
 	
 	//Sprite Sheets
-	public final static String PATH_SS_TANK = "/images/SpriteSheet.png";
-	public final static String PATH_SS_MENU = "/images/imgMenu.png";
+	public final static String PATH_SS_TANK = "/resources/images/SpriteSheet.png";
+	public final static String PATH_SS_MENU = "/resources/images/Menu.png";
+	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
+	
+	public static final SpriteSheetControl SSCTANK = new SpriteSheetControl(PATH_SS_TANK);
 			
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 10;
