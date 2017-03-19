@@ -2,59 +2,59 @@ package gameController;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
-import org.neuroph.core.Neuron;
-import org.neuroph.core.Weight;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
 import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.learning.LMS;
 import org.neuroph.util.TransferFunctionType;
 
 public class ArtificialIntelligence {
 	
 	private NeuralNetwork<?> neuralNetworkMultiLayer;
-	private DataSet trainingSet;
-	private DataSet testSet;
 
 	public ArtificialIntelligence(int inputNeuronsCount, int outputNeuronsCount) {
 		
 		//neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 50, outputNeuronsCount);
 		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
-		trainingSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
-		testSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
 		
-		createDataSet();
-		//training();
+		DataSet trainingSet = createDataSet(inputNeuronsCount, outputNeuronsCount, "trainingData.txt");
+		DataSet testSet = createDataSet(inputNeuronsCount, outputNeuronsCount, "testData.txt");
+		
+		//training(trainingSet);
 		
 		testNeuralNetwork(neuralNetworkMultiLayer, testSet);
 	}
 	
-	private void training() {
+	private void training(DataSet trainingSet) {
+		System.out.println("Time start training:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
+		
+        ((LMS) neuralNetworkMultiLayer.getLearningRule()).setMaxError(0.001);//0-1
+        ((LMS) neuralNetworkMultiLayer.getLearningRule()).setLearningRate(0.7);//0-1
+        ((LMS) neuralNetworkMultiLayer.getLearningRule()).setMaxIterations(1000);
+        
 		neuralNetworkMultiLayer.learn(trainingSet);
 		neuralNetworkMultiLayer.save("enemy_IA.nnet");
+
+        System.out.println("Time stop training:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
 	}
 	
-	private void createDataSet() {
+	private DataSet createDataSet(int inputNeuronsCount, int outputNeuronsCount, String file) {
+		DataSet dataSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
 		
-		readFileDataSet();
-
-		testSet.addRow(new DataSetRow(new double[]{2,1,0,0,0,0,0,1}, new double[]{0,0,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{2,2,0,0,0,1,0,0}, new double[]{0,0,0,0}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,2,1,1,0,0,0}, new double[]{0,1,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,2,2,0,0,1,0}, new double[]{0,1,0,0}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,0,0,2,1,1,0}, new double[]{1,0,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,1,0,2,2,0,0}, new double[]{1,0,0,0}));
-		testSet.addRow(new DataSetRow(new double[]{0,1,0,0,0,0,2,1}, new double[]{1,1,1,1}));
-		testSet.addRow(new DataSetRow(new double[]{0,0,1,0,0,0,2,2}, new double[]{1,1,0,0}));
+		return dataSet = readFileDataSet(dataSet, file);
 	}
 	
 	private void testNeuralNetwork(NeuralNetwork<?> nnet, DataSet testSet) {
 		for(DataSetRow dataRow : testSet.getRows()) {
 			double[] output = dataRow.getDesiredOutput();
 			System.out.println("\nOutput label : " + Arrays.toString(output));
+			generateAction(output);
 
 			nnet.setInput(dataRow.getInput());
 			nnet.calculate();
@@ -83,9 +83,9 @@ public class ArtificialIntelligence {
 		System.out.println("Layer output neurons: " + l3.getNeuronsCount());
 	}
 	
-	private void readFileDataSet() {
+	private DataSet readFileDataSet(DataSet trainingSet, String file) {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("trainingData.txt")); 
+			BufferedReader reader = new BufferedReader(new FileReader(file)); 
 			String line; 
 			while((line = reader.readLine()) != null){
 				if (line.equalsIgnoreCase("-----------U-----------") ||
@@ -115,6 +115,7 @@ public class ArtificialIntelligence {
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		}
+		return trainingSet;
 	}
 	
 	private void generateAction(double[] networkOutputNormalize) {
