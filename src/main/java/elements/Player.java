@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
@@ -25,7 +25,7 @@ public class Player extends Tank implements StageElement{
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
 	
-    public Player(int col, int row, int lifes, Stage stage, SpriteSheetControl ssc) {
+    public Player(int col, int row, int lifes, Stage stage, ImageControl ssc) {
 		super(stage);
     	this.setLifes(lifes);
 		this.stage = stage;

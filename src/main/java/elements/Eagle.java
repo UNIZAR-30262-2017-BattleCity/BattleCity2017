@@ -3,13 +3,13 @@ package elements;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Eagle extends GameElement implements StageElement{
 		
 	private BufferedImage imgEagle, imgEagleDead;
 	
-	public Eagle(int row, int col, Stage stage, SpriteSheetControl ssc) {		
+	public Eagle(int row, int col, Stage stage, ImageControl ssc) {		
 		super(stage);
 		imgEagle = ssc.getImgEagle();
 		imgEagleDead = ssc.getImgEagleDead();

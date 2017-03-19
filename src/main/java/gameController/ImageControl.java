@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 import application.Properties;
 
-public class SpriteSheetControl {
+public class ImageControl {
 
 	private static BufferedImage spriteSheet, imgForest, imgWater;
 	private static BufferedImage imgEagle, imgEagleDead;
@@ -20,7 +20,7 @@ public class SpriteSheetControl {
 	private String path;
 	private int k,w,h;
 	
-	public SpriteSheetControl(String path) {
+	public ImageControl(String path) {
 		this.path = path;
 		this.k = Properties.SIZE_SQUARE_SSC;
 		this.w = k;

@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Menu {
 	
-	private static final SpriteSheetControl sscMenu = new SpriteSheetControl(Properties.PATH_SS_MENU);
+	private static final ImageControl sscMenu = new ImageControl(Properties.PATH_SS_MENU);
 	private static final BufferedImage imgMenu = sscMenu.loadImage();
 
 	public void draw(Graphics g) {

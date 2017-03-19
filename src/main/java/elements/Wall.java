@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import application.Properties;
 import gameController.PhysicsContol;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Wall extends GameElement implements StageElement{
 
@@ -17,7 +17,7 @@ public class Wall extends GameElement implements StageElement{
 	private int maxTimeItemEfect;
 	private LinkedList<Wall> listEagleBrick;
 	
-	public Wall(double row, double col, int type, Stage stage, SpriteSheetControl ssc, boolean eagleWall) {
+	public Wall(double row, double col, int type, Stage stage, ImageControl ssc, boolean eagleWall) {
 		super(stage);
 		this.type = type;
 		this.eagleWall = eagleWall;
@@ -26,7 +26,7 @@ public class Wall extends GameElement implements StageElement{
 		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
 	}
 	
-	public void initWall(SpriteSheetControl ssc){
+	public void initWall(ImageControl ssc){
 		switch (type) {
 		case 1:
 			img = Properties.SSCTANK.getImgBrick();

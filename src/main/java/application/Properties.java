@@ -1,6 +1,6 @@
 package application;
 
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public final class Properties {
 
@@ -73,7 +73,7 @@ public final class Properties {
 	public final static String PATH_SS_MENU = "/resources/images/Menu.png";
 	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
 	
-	public static final SpriteSheetControl SSCTANK = new SpriteSheetControl(PATH_SS_TANK);
+	public static final ImageControl SSCTANK = new ImageControl(PATH_SS_TANK);
 			
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 10;

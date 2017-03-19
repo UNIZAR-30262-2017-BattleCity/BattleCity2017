@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
@@ -14,11 +15,19 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.LMS;
 import org.neuroph.util.TransferFunctionType;
 
-public class ArtificialIntelligence {
+import application.Properties;
+import elements.StageElement;
+
+public class IAControl {
 	
 	private NeuralNetwork<?> neuralNetworkMultiLayer;
-
-	public ArtificialIntelligence(int inputNeuronsCount, int outputNeuronsCount) {
+	private int inputNeuronsCount;
+	private int outputNeuronsCount;
+	
+	public IAControl() {
+		
+		inputNeuronsCount = 8;
+		outputNeuronsCount = 4;
 		
 		//neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 50, outputNeuronsCount);
 		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
@@ -150,5 +159,26 @@ public class ArtificialIntelligence {
 				}
 			}
 		}
+	}
+
+	public int[] getDir_Shoot(double posX, double posY, LinkedList<StageElement> list) {
+		StageElement s;
+		double sPosX, sPosY;
+		double colE = posX+Properties.SIZE_SQUARE;
+		double rowE = posY+Properties.SIZE_SQUARE;
+		
+		for (int i = 0; i < list.size(); i++) {
+			s = list.get(i);
+			sPosX = s.getPosX();
+			sPosY = s.getPosY();
+			if (sPosX>posX && sPosX<colE ) {
+				
+			}
+			if (sPosY>posY && sPosY<rowE ) {
+				
+			}
+		}
+		
+		return null;
 	}
 }

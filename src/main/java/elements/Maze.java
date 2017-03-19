@@ -1,13 +1,13 @@
 package elements;
 
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Maze {
 	
-	private SpriteSheetControl ssc;
+	private ImageControl ssc;
 	private Stage stage;
 			
-	public Maze(Stage stage, SpriteSheetControl ssc) {	
+	public Maze(Stage stage, ImageControl ssc) {	
 		this.stage = stage;
 		this.ssc = ssc;
 	}

@@ -5,16 +5,16 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Enemy extends Tank implements StageElement{
 
 	private int type;
     private BufferedImage imgEnemyUp, imgEnemyDowm, imgEnemyLeft, imgEnemyRight;
-    private SpriteSheetControl ssc;
+    private ImageControl ssc;
     private Stage stage;
     
-	public Enemy(int col, int row, int type, Stage stage, SpriteSheetControl ssc) {
+	public Enemy(int col, int row, int type, Stage stage, ImageControl ssc) {
 		super(stage);
 		setInitPos(col, row);
 		setTypeTank(1);

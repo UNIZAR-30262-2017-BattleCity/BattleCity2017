@@ -6,7 +6,8 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import application.Properties;
-import gameController.SpriteSheetControl;
+import gameController.IAControl;
+import gameController.ImageControl;
 
 public class Stage {	
 		
@@ -31,14 +32,17 @@ public class Stage {
     
     private Maze maze;
     private Player player;
-    private SpriteSheetControl ssc;
+    private ImageControl ssc;
     private int k,pos,x1,x2,x3, y1,y2,y3;
     private int timerE, timerIt;
     private Random r;
+    
+    private IAControl ia;
             
-    public Stage(int level, int dif, SpriteSheetControl ssc) {
+    public Stage(int level, int dif, ImageControl ssc, IAControl ia) {
     	initValues();
     	this.ssc = ssc;
+    	this.ia = ia;
     	elements = new LinkedList<>();		
     	maze = new Maze(this, ssc);
     	loadLevel(level, dif);
@@ -140,9 +144,12 @@ public class Stage {
     			timerE=0;
     			spawnEnemys();
     		}    		
-    		for (StageElement stageElement : elements) {
-    			if (stageElement.getClass().equals(Enemy.class)) {
-					stageElement.updateDraw();
+    		for (StageElement e : elements) {
+    			if (e.getClass().equals(Enemy.class)) {
+					e.updateDraw();
+					//int dir[] = ia.getDir_Shoot(e.getPosX(),e.getPosY(),elements);
+					//e.setDir(dir[0]);
+					//e.setShoot(dir[1]);
 				}
 			}
     	}

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Bullet extends GameElement implements StageElement{
 	
@@ -15,11 +15,11 @@ public class Bullet extends GameElement implements StageElement{
     private int direction;
     private int type;	//tipo A=0 , tipo B=1
     private BufferedImage imgBulletUp, imgBulletDowm, imgBulletLeft, imgBulletRight;
-    private SpriteSheetControl ssc;
+    private ImageControl ssc;
     private Stage stage;
     private boolean isActive;
     
-	public Bullet(double posX, double posY, int direction, int type, SpriteSheetControl ssc, Stage stage) {
+	public Bullet(double posX, double posY, int direction, int type, ImageControl ssc, Stage stage) {
 		super(stage);
 		this.posX = posX;
 		this.posY = posY;

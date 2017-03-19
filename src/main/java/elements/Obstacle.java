@@ -3,7 +3,7 @@ package elements;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Obstacle extends GameElement implements StageElement{
 
@@ -13,7 +13,7 @@ public class Obstacle extends GameElement implements StageElement{
 	private boolean isActive;
 	private int type;
 	
-	public Obstacle(int row, int col, int type, Stage stage, SpriteSheetControl ssc) {
+	public Obstacle(int row, int col, int type, Stage stage, ImageControl ssc) {
 		super(stage);
 		this.type = type;
 		isActive = true;
@@ -21,7 +21,7 @@ public class Obstacle extends GameElement implements StageElement{
 		setInitPos(row+1,col+1);
 	}
 	
-	public void initObstacle(SpriteSheetControl ssc){
+	public void initObstacle(ImageControl ssc){
 		if (type==1) {
 			img = ssc.getImgForest();
 		}else{

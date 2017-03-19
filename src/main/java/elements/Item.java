@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Item extends GameElement implements StageElement{
 	
@@ -14,9 +14,9 @@ public class Item extends GameElement implements StageElement{
 	private boolean isTake;
 	private BufferedImage imgItem;
     private int maxTimeItemShow;
-	private SpriteSheetControl ssc;
+	private ImageControl ssc;
 			
-	public Item(int col, int row, int id, Stage stage, SpriteSheetControl ssc) {
+	public Item(int col, int row, int id, Stage stage, ImageControl ssc) {
 		super(stage);
 		this.id = id;	
 		this.ssc = ssc;

@@ -24,31 +24,33 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private static final long serialVersionUID = 1L;
 	private boolean running;
 	private Thread thread;
-	private SpriteSheetControl ssc;
+	private ImageControl ssc;
 	private Player player;
 	private Stage stage;
 	private Screen screen;
 	private Menu menu;
 	private Configuration config;
 	private Cursor cursor;
+	private IAControl ia;
 	private int level;
 	private int difficulty;
 	private int opc;
 	
 	public GameControl(JFrame jf){
-		requestFocus();		
+		requestFocus();
 		jf.addKeyListener(this);
 		screen = Screen.MENU;
 		level = 1;
 		difficulty = 0;
 		opc = 1;
-		ssc = new SpriteSheetControl(Properties.PATH_SS_TANK);
+		ssc = new ImageControl(Properties.PATH_SS_TANK);
 		menu = new Menu();
 		cursor = new Cursor();
+		ia = new IAControl();
 	}
 	
 	public void initStage(){				
-		stage = new Stage(level, difficulty, ssc);
+		stage = new Stage(level, difficulty, ssc, ia);
 		player = stage.getPlayer();
 		level++;
 	}
@@ -77,8 +79,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		double frec = 60.0;
 		double ns = 1000000000/frec;
 		double delta=0;
-		double frames=0;
-		double hz=0;
+		//double frames=0;
+		//double hz=0;
 		long timer = System.currentTimeMillis();
 		int s=1000;
 		while(running){
@@ -87,16 +89,16 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			lastime = now;
 			if (delta >= 1) {
 				updateDraw();
-				hz++;
+				//hz++;
 				delta--;				
 			}			
 			draw();
-			frames++;			
+			//frames++;			
 			if (System.currentTimeMillis() - timer > s) {
 				timer += s;
 				//System.out.println("Hz: "+ hz + " FPS: " + frames);
-				hz=0;
-				frames=0;			
+				//hz=0;
+				//frames=0;			
 			}			
 		}
 		stop();		
@@ -153,6 +155,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case SCORE_STAGE:
 			
+			break;
+		default:
 			break;
 		}
 	}

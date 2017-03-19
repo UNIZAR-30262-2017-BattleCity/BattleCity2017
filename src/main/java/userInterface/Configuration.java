@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
-import gameController.SpriteSheetControl;
+import gameController.ImageControl;
 
 public class Configuration {
 	
-	private static SpriteSheetControl sscConfig = new SpriteSheetControl(Properties.PATH_SS_CONFIG);
+	private static ImageControl sscConfig = new ImageControl(Properties.PATH_SS_CONFIG);
 	private static BufferedImage imgConfig = sscConfig.loadImage();
 	
 	public void draw(Graphics g) {
