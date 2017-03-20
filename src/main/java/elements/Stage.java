@@ -253,12 +253,16 @@ public class Stage {
 		}	
 	}
 	
-	public LinkedList<StageElement> getElements(StageElement e) {
+	public LinkedList<StageElement> getElements(StageElement el) {
 		LinkedList<StageElement> clone = new LinkedList<>();
 		for (StageElement sE : elements) {
-			if (!sE.equals(e)) {
+			if (!sE.equals(el)) {
 				clone.add(sE);
 			}
+		}
+		for (Enemy e : enemies) {
+			if (!e.equals(el))
+				clone.add(e);
 		}
 		return clone;
 	}
@@ -269,10 +273,6 @@ public class Stage {
 
 	public int getMaxEnemySimul() {
 		return maxEnemySimul;
-	}
-
-	public void setMaxEnemySimul(int maxEnemySimul) {
-		this.maxEnemySimul = maxEnemySimul;
 	}
 
 	public boolean isClockEfect() {

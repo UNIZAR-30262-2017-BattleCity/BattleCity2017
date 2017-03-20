@@ -63,7 +63,7 @@ public class PhysicsContol {
 					b.setActive(false);
 					if (s.getClass().equals(Wall.class)) {
 						int w = list.get(i).getType();
-						if (w == 3 || w == 4 || w == 6) return;
+						if (w == 2 || w == 4) return;
 						else s.setActive(false);
 					}else{
 						s.setActive(false);

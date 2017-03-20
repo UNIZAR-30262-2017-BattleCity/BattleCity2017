@@ -132,7 +132,9 @@ public class Maze {
 					}
 				}
                 if (m[i][j] == 3) {
-					stage.spawnElements(new Wall(i,j,0,3,stage, false));
+                	for (int j2 = 0; j2 < 4; j2++) {
+						stage.spawnElements(new Wall(i,j,j2,2,stage, false)); 
+					}
 				}
                 if (m[i][j] == 4) {
 					stage.spawnElements(new Wall(i,j,0,4,stage, false));
