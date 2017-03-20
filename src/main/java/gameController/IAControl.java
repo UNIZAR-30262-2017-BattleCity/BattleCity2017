@@ -16,6 +16,8 @@ import org.neuroph.nnet.learning.LMS;
 import org.neuroph.util.TransferFunctionType;
 
 import application.Properties;
+import elements.Player;
+import elements.Stage;
 import elements.StageElement;
 
 public class IAControl {
@@ -30,14 +32,14 @@ public class IAControl {
 		outputNeuronsCount = 4;
 		
 		//neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 50, outputNeuronsCount);
-		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
+		//neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
 		
 		DataSet trainingSet = createDataSet(inputNeuronsCount, outputNeuronsCount, "trainingData.txt");
 		DataSet testSet = createDataSet(inputNeuronsCount, outputNeuronsCount, "testData.txt");
 		
 		//training(trainingSet);
 		
-		testNeuralNetwork(neuralNetworkMultiLayer, testSet);
+		//testNeuralNetwork(neuralNetworkMultiLayer, testSet);
 	}
 	
 	private void training(DataSet trainingSet) {
@@ -161,24 +163,93 @@ public class IAControl {
 		}
 	}
 
-	public int[] getDir_Shoot(double posX, double posY, LinkedList<StageElement> list) {
-		StageElement s;
-		double sPosX, sPosY;
-		double colE = posX+Properties.SIZE_SQUARE;
-		double rowE = posY+Properties.SIZE_SQUARE;
+	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
+		int[] ia = {0,0};
 		
-		for (int i = 0; i < list.size(); i++) {
-			s = list.get(i);
-			sPosX = s.getPosX();
-			sPosY = s.getPosY();
-			if (sPosX>posX && sPosX<colE ) {
+		return ia;
+	}
+	
+	public int[] getDir_Shoot(double posX, double posY, Stage stage) {
+		int[] action = {0,0};
+		double[] inputIA = {0,0,0,0,0,0,0,0};
+		
+		LinkedList<StageElement> elementsList = stage.getElements(null);
+		Player player = stage.getPlayer();
+		
+		StageElement element, temElement;
+		double elementX, elementY, playerX, playerY;
+		double colE = posX + Properties.SIZE_SQUARE;
+		double rowE = posY + Properties.SIZE_SQUARE;
+		double nearUP = -10000;
+		double nearDOWN = 10000;
+		double marge = 1;
+		
+		for (int i = 0; i < elementsList.size(); i++) {
+			element = elementsList.get(i);
+			elementX = element.getPosX();
+			elementY = element.getPosY();
+			playerX = player.getPosX();
+			playerY = player.getPosY();
+			
+			/*if (((elementX+marge) > posX && (elementX-marge) < colE) 
+					|| (((elementX+marge) + Properties.SIZE_SQUARE) > posX 
+					&& ((elementX-marge) + Properties.SIZE_SQUARE) < colE)) {
 				
-			}
-			if (sPosY>posY && sPosY<rowE ) {
+				if (elementY < posY && nearUP < elementY) {
+					nearUP = elementY;
+					temElement = element;
+					System.out.println(" --- IS UP");
+					System.out.println(temElement.getClass().toString() + " --- " + nearUP);
+				} else if (elementY > posY && nearDOWN > elementY) {
+					nearDOWN = elementY;
+					temElement = element;
+					System.out.println(" --- IS DOWN");
+					System.out.println(temElement.getClass().toString() + " --- " + nearDOWN);
+				}
+			}*/
+			
+			if ((playerX+marge) > posX && (playerX-marge) < colE 
+					|| (((playerX+marge) + Properties.SIZE_SQUARE) > posX 
+					&& ((playerX-marge) + Properties.SIZE_SQUARE) < colE)) {
 				
+				if (playerY < posY && nearUP < playerY) {
+					nearUP = playerY;
+					System.out.println(" --- IS UP");
+					inputIA[0] = 2;
+					inputIA[1] = 1;
+				} else if (playerY > posY && nearDOWN > playerY) {
+					nearDOWN = playerY;
+					System.out.println(" --- IS DOWN");
+					inputIA[2] = 2;
+					inputIA[3] = 1;
+				}
 			}
+			
+			/*if (elementY > posY && elementY < rowE
+					|| ((elementY + Properties.SIZE_SQUARE) > posY 
+					&& (elementY + Properties.SIZE_SQUARE) < rowE)) {
+				System.out.println(element.getClass().toString());
+				
+				if (elementX < posX) {
+					System.out.println(" --- IS LEFT");
+				} else {
+					System.out.println(" --- IS RIGHT");
+				}
+			}
+			
+			if (playerY > posY && playerY < rowE
+					|| ((playerY + Properties.SIZE_SQUARE) > posY 
+					&& (playerY + Properties.SIZE_SQUARE) < rowE)) {
+				System.out.println(player.getClass().toString());
+				
+				if (playerX < posX) {
+					System.out.println(" --- IS LEFT");
+				} else {
+					System.out.println(" --- IS RIGHT");
+				}
+			}*/
 		}
 		
-		return null;
+		return action;
 	}
 }

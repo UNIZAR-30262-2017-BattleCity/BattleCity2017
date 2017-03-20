@@ -147,7 +147,7 @@ public class Stage {
     		for (StageElement e : elements) {
     			if (e.getClass().equals(Enemy.class)) {
 					e.updateDraw();
-					//int dir[] = ia.getDir_Shoot(e.getPosX(),e.getPosY(),elements);
+					int dir[] = ia.getDir_Shoot(e.getPosX(),e.getPosY(), this);
 					//e.setDir(dir[0]);
 					//e.setShoot(dir[1]);
 				}
