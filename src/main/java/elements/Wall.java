@@ -30,17 +30,22 @@ public class Wall extends GameElement implements StageElement{
 	public void initWall(){
 		switch (type) {
 		case 1:
-			img = ImageControl.getImgBrick();			
+			img = ImageControl.getImgBrick();
+			setHeigth(heigth/2);
+			setWidth(width/2);			
 			break;
 		case 2:
 			img = ImageControl.getImgIron();
 			break;
-		case 4:
+		case 3:
 			img = ImageControl.getImgHalfIronH();
+			setHeigth(heigth/2);
 			break;
-		}
-		setHeigth(heigth/2);
-		setWidth(width/2);
+		case 4:
+			img = ImageControl.getImgHalfIronV();
+			setWidth(width/2);
+			break;
+		}		
 
 	}
 	

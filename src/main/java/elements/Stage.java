@@ -245,9 +245,9 @@ public class Stage {
     }
 	
 	public void bombEfect() {
-		for (int i = 0; i < elements.size();i++) {
-			if (elements.get(i).getClass().equals(Enemy.class)) {
-				elements.get(i).setActive(false);
+		for (int i = 0; i < enemies.size();i++) {
+			if (enemies.get(i).getClass().equals(Enemy.class)) {
+				enemies.get(i).setActive(false);
 				nEnemiesSimul--;
 			}
 		}	
