@@ -8,21 +8,19 @@ public abstract class GameElement {
 
 	protected double posX;
 	protected double posY;
+	protected static final int xI = Properties.X_INIT_STAGE;
+	protected static final int yI = Properties.Y_INIT_STAGE;
+	protected static final int xF = Properties.X_FINAL_STAGE;
+	protected static final int yF = Properties.Y_FINAL_STAGE;
+	protected static final int k = Properties.SIZE_SQUARE;
 	protected int width;
 	protected int heigth;
-	protected int xI,yI,xF,yF;
-	protected int k;
 	protected int type;
 	protected boolean isActive;
 	protected Stage stage;
 	
 	public GameElement(Stage stage){
 		this.stage = stage;
-		xI = Properties.X_INIT_STAGE;
-		yI = Properties.Y_INIT_STAGE;
-		xF = Properties.X_FINAL_STAGE;
-		yF = Properties.Y_FINAL_STAGE;
-		k = Properties.SIZE_SQUARE;
 		width = k;
 		heigth = k;
 		isActive=true;

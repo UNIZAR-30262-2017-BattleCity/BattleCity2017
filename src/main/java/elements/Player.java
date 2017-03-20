@@ -10,10 +10,10 @@ import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
-	private final static BufferedImage imgPlayerUp = Properties.SSCTANK.getPlayerUP();
-	private final static BufferedImage imgPlayerDowm = Properties.SSCTANK.getPlayerDowm();
-	private final static BufferedImage imgPlayerLeft = Properties.SSCTANK.getPlayerLeft();
-	private final static BufferedImage imgPlayerRight = Properties.SSCTANK.getPlayerRight();
+	private final static BufferedImage imgPlayerUp = ImageControl.getPlayerUP();
+	private final static BufferedImage imgPlayerDowm = ImageControl.getPlayerDowm();
+	private final static BufferedImage imgPlayerLeft = ImageControl.getPlayerLeft();
+	private final static BufferedImage imgPlayerRight = ImageControl.getPlayerRight();
     private int userName;
 	private int lifes;
 	private int score;
@@ -25,7 +25,7 @@ public class Player extends Tank implements StageElement{
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
 	
-    public Player(int col, int row, int lifes, Stage stage, ImageControl ssc) {
+    public Player(int col, int row, int lifes, Stage stage) {
 		super(stage);
     	this.setLifes(lifes);
 		this.stage = stage;
@@ -40,7 +40,7 @@ public class Player extends Tank implements StageElement{
         
     @Override
     public void draw(Graphics g) {
-    	switch (this.direction) {
+    	switch (this.dir) {
 		case 1:
 			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
 			break;
@@ -60,7 +60,7 @@ public class Player extends Tank implements StageElement{
     @Override
     public void updateDraw(){
     	
-    	switch (direction) {
+    	switch (dir) {
 		case 1://up
 			posY -= vel;
 			break;
@@ -79,7 +79,7 @@ public class Player extends Tank implements StageElement{
     	
     	if (p!=null) {
     		
-    		switch (direction) {
+    		switch (dir) {
     		case 1://up
     			setPosY(p.getY());
     			break;

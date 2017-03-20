@@ -24,7 +24,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private static final long serialVersionUID = 1L;
 	private boolean running;
 	private Thread thread;
-	private ImageControl ssc;
 	private Player player;
 	private Stage stage;
 	private Screen screen;
@@ -43,14 +42,13 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		level = 1;
 		difficulty = 0;
 		opc = 1;
-		ssc = new ImageControl(Properties.PATH_SS_TANK);
 		menu = new Menu();
 		cursor = new Cursor();
 		ia = new IAControl();
 	}
 	
 	public void initStage(){				
-		stage = new Stage(level, difficulty, ssc, ia);
+		stage = new Stage(level, difficulty, ia);
 		player = stage.getPlayer();
 		level++;
 	}
@@ -225,23 +223,23 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case STAGE_PLAY:
 			if (key == KeyEvent.VK_UP) {
-				player.setDirection(1);
+				player.setDir(1);
 				player.setVel(1);			
 			}
 			if (key == KeyEvent.VK_DOWN) {
-				player.setDirection(-1);
+				player.setDir(-1);
 				player.setVel(1);			
 			}
 			if (key == KeyEvent.VK_RIGHT) {
-				player.setDirection(2);
+				player.setDir(2);
 				player.setVel(1);	
 			}
 			if (key == KeyEvent.VK_LEFT) {
-				player.setDirection(-2);
+				player.setDir(-2);
 				player.setVel(1);
 			}
 			if (key == KeyEvent.VK_SPACE) {
-				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDirection(),0,ssc,stage));
+				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage));
 			}
 			if (key == KeyEvent.VK_ENTER) {				
 				//TODO pause

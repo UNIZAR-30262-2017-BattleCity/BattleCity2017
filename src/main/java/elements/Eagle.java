@@ -7,12 +7,11 @@ import gameController.ImageControl;
 
 public class Eagle extends GameElement implements StageElement{
 		
-	private BufferedImage imgEagle, imgEagleDead;
+	private static final BufferedImage imgEagle = ImageControl.getImgEagle();
+	private static final BufferedImage imgEagleDead = ImageControl.getImgEagleDead();
 	
-	public Eagle(int row, int col, Stage stage, ImageControl ssc) {		
+	public Eagle(int row, int col, Stage stage) {
 		super(stage);
-		imgEagle = ssc.getImgEagle();
-		imgEagleDead = ssc.getImgEagleDead();
 		setInitPos(row+1,col+1);
 		isActive = true;
 	}

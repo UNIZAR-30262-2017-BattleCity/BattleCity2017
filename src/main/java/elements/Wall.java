@@ -16,37 +16,40 @@ public class Wall extends GameElement implements StageElement{
 	private boolean eagleWall;
 	private int maxTimeItemEfect;
 	private LinkedList<Wall> listEagleBrick;
+	private static final int k2 = k/2;
 	
-	public Wall(double row, double col, int type, Stage stage, ImageControl ssc, boolean eagleWall) {
+	public Wall(double row, double col, int key,int type, Stage stage, boolean eagleWall) {
 		super(stage);
 		this.type = type;
 		this.eagleWall = eagleWall;
-		initWall(ssc);
-		setInitPos(row+1,col+1);
+		initWall();
+		setInitPos(row+1,col+1,key);
 		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
 	}
 	
-	public void initWall(ImageControl ssc){
+	public void initWall(){
 		switch (type) {
 		case 1:
-			img = Properties.SSCTANK.getImgBrick();
+			img = ImageControl.getImgBrick();
+			setHeigth(heigth/2);
+			setWidth(width/2);
 			break;
 		case 2:
-			img = Properties.SSCTANK.getImgHalfBrickH();
+			img = ImageControl.getImgHalfBrickH();
 			break;
 		case 3:
-			img = Properties.SSCTANK.getImgIron();
+			img = ImageControl.getImgIron();
 			break;
 		case 4:
-			img = Properties.SSCTANK.getImgHalfIronH();
+			img = ImageControl.getImgHalfIronH();
 			break;
 		case 5:
-			img = Properties.SSCTANK.getImgHalfBrickV();
+			img = ImageControl.getImgHalfBrickV();
 			break;
 		case 6:
-			img = Properties.SSCTANK.getImgHalfIronV();
+			img = ImageControl.getImgHalfIronV();
 			break;
-		}	
+		}
 
 		if (type == 2 || type == 4)
 			setHeigth(heigth/2);
@@ -55,15 +58,38 @@ public class Wall extends GameElement implements StageElement{
 
 	}
 	
-	public void setInitPos( double row, double col){
-    	
-		//if (type == 1)
-			
-		setPosX(xI+(col*k)-k);
-    	setPosY(yI+(row*k)-k);
+	public void setInitPos(double row, double col, int key){    	
+		
+		if (type==1) {
+			int col2 = 0;
+			int row2 = 0;
+			switch (key) {
+			case 0:
+				col2 = 1;
+				row2 = 1;
+				break;
+			case 1:
+				col2 = 2;
+				row2 = 1;
+				break;
+			case 2:
+				col2 = 1;
+				row2 = 2;
+				break;
+			case 3:
+				col2 = 2;
+				row2 = 2;
+				break;
+			}
+			setPosX((xI+(col*k)-k)+((col2*k2)-k2));
+			setPosY((yI+(row*k)-k)+((row2*k2)-k2));
+		}else{
+			setPosX(xI+(col*k)-k);
+			setPosY(yI+(row*k)-k);
+		}
     	
     	if (eagleWall)
-    	listEagleBrick =  PhysicsContol.collisionEagleWall(this, stage.getElements(this));
+    	listEagleBrick = PhysicsContol.collisionEagleWall(this, stage.getElements(this));
     }
 
 	public void updateDraw() {

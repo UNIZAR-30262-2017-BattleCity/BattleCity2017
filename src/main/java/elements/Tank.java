@@ -10,7 +10,7 @@ public abstract class Tank extends GameElement{
 	//tank
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
 	protected double vel;
-	protected int direction; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
+	protected int dir; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
 	protected int shieldLevel;
 	
 	//balas	
@@ -20,7 +20,7 @@ public abstract class Tank extends GameElement{
 	
 	public Tank(Stage stage){
 		super(stage);
-		direction = 1;
+		dir = 1;
 		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
 		this.bulletsInProgres = new LinkedList<Bullet>();
 	}
@@ -73,12 +73,12 @@ public abstract class Tank extends GameElement{
 		this.vel = vel;
 	}
 
-	public int getDirection() {
-		return direction;
+	public int getDir() {
+		return dir;
 	}
 
-	public void setDirection(int direction) {
-		this.direction = direction;
+	public void setDir(int direction) {
+		this.dir = direction;
 	}
 	
 	public double getPosX() {

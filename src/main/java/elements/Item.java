@@ -14,12 +14,10 @@ public class Item extends GameElement implements StageElement{
 	private boolean isTake;
 	private BufferedImage imgItem;
     private int maxTimeItemShow;
-	private ImageControl ssc;
 			
-	public Item(int col, int row, int id, Stage stage, ImageControl ssc) {
+	public Item(int col, int row, int id, Stage stage) {
 		super(stage);
-		this.id = id;	
-		this.ssc = ssc;
+		this.id = id;
 		isTake = false;
 		maxTimeItemShow = Properties.MAX_TIME_ITEM_SHOW;
 		setInitPos(col, row);
@@ -29,25 +27,25 @@ public class Item extends GameElement implements StageElement{
 	public void initItem(){
 		switch (id) {
 		case 1:
-			imgItem = ssc.getItemShield();
+			imgItem = ImageControl.getItemShield();
 			break;
 		case 2:
-			imgItem = ssc.getItemClock();
+			imgItem = ImageControl.getItemClock();
 			break;
 		case 3:
-			imgItem = ssc.getItemShovel();
+			imgItem = ImageControl.getItemShovel();
 			break;
 		case 4:
-			imgItem = ssc.getItemStar();
+			imgItem = ImageControl.getItemStar();
 			break;
 		case 5:
-			imgItem = ssc.getItemGranade();
+			imgItem = ImageControl.getItemGranade();
 			break;
 		case 6:
-			imgItem = ssc.getItemTank();
+			imgItem = ImageControl.getItemTank();
 			break;
 		case 7:
-			imgItem = ssc.getItemGun();
+			imgItem = ImageControl.getItemGun();
 			break;
 		}
 	}

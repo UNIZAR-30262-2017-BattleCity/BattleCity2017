@@ -10,7 +10,7 @@ import gameController.ImageControl;
 public class Menu {
 	
 	private static final ImageControl sscMenu = new ImageControl(Properties.PATH_SS_MENU);
-	private static final BufferedImage imgMenu = sscMenu.loadImage();
+	private static final BufferedImage imgMenu = sscMenu.loadImage(Properties.PATH_SS_MENU);
 
 	public void draw(Graphics g) {
         g.setColor(Color.black);

@@ -13,19 +13,19 @@ public class Obstacle extends GameElement implements StageElement{
 	private boolean isActive;
 	private int type;
 	
-	public Obstacle(int row, int col, int type, Stage stage, ImageControl ssc) {
+	public Obstacle(int row, int col, int type, Stage stage) {
 		super(stage);
 		this.type = type;
 		isActive = true;
-		initObstacle(ssc);
+		initObstacle();
 		setInitPos(row+1,col+1);
 	}
 	
-	public void initObstacle(ImageControl ssc){
+	public void initObstacle(){
 		if (type==1) {
-			img = ssc.getImgForest();
+			img = ImageControl.getImgForest();
 		}else{
-			img = ssc.getImgWater();
+			img = ImageControl.getImgWater();
 		}
 	}
 		

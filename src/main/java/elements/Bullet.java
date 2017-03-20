@@ -15,17 +15,15 @@ public class Bullet extends GameElement implements StageElement{
     private int direction;
     private int type;	//tipo A=0 , tipo B=1
     private BufferedImage imgBulletUp, imgBulletDowm, imgBulletLeft, imgBulletRight;
-    private ImageControl ssc;
     private Stage stage;
     private boolean isActive;
     
-	public Bullet(double posX, double posY, int direction, int type, ImageControl ssc, Stage stage) {
+	public Bullet(double posX, double posY, int direction, int type, Stage stage) {
 		super(stage);
 		this.posX = posX;
 		this.posY = posY;
 		this.direction = direction;
 		this.type = type;
-		this.ssc = ssc;
 		this.stage = stage;
 		this.velBullet = Properties.VEL_BULLET;
 		isActive = true;
@@ -35,22 +33,22 @@ public class Bullet extends GameElement implements StageElement{
 	public void initBullet(){
 		switch (type) {
 		case 0://regular bullet
-			imgBulletUp = ssc.getBulletUp();
-			imgBulletDowm = ssc.getBulletDowm();
-			imgBulletLeft = ssc.getBulletLeft();
-			imgBulletRight = ssc.getBulletRight();
+			imgBulletUp = ImageControl.getBulletUp();
+			imgBulletDowm = ImageControl.getBulletDowm();
+			imgBulletLeft = ImageControl.getBulletLeft();
+			imgBulletRight = ImageControl.getBulletRight();
 			break;
 		case 1://hard bullet
-			imgBulletUp = ssc.getBulletUp();
-			imgBulletDowm = ssc.getBulletDowm();
-			imgBulletLeft = ssc.getBulletLeft();
-			imgBulletRight = ssc.getBulletRight();
+			imgBulletUp = ImageControl.getBulletUp();
+			imgBulletDowm = ImageControl.getBulletDowm();
+			imgBulletLeft = ImageControl.getBulletLeft();
+			imgBulletRight = ImageControl.getBulletRight();
 			break;
 		default:
-			imgBulletUp = ssc.getBulletUp();
-			imgBulletDowm = ssc.getBulletDowm();
-			imgBulletLeft = ssc.getBulletLeft();
-			imgBulletRight = ssc.getBulletRight();
+			imgBulletUp = ImageControl.getBulletUp();
+			imgBulletDowm = ImageControl.getBulletDowm();
+			imgBulletLeft = ImageControl.getBulletLeft();
+			imgBulletRight = ImageControl.getBulletRight();
 			break;
 		}
 	}	

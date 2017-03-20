@@ -8,28 +8,18 @@ import javax.imageio.ImageIO;
 
 import application.Properties;
 
-public class ImageControl {
+public final class ImageControl {
 
-	private static BufferedImage spriteSheet, imgForest, imgWater;
-	private static BufferedImage imgEagle, imgEagleDead;
-	private static BufferedImage imgBrick, imgIron, imgHalfBrickH, imgHalfIronH, imgHalfBrickV, imgHalfIronV;
-	private static BufferedImage itemShield, itemClock, itemShovel, itemStar, itemGranade, itemTank, itemGun;
-	private static BufferedImage bulletUp, bulletDowm, bulletLeft, bulletRight;
-	private static BufferedImage playerRight, playerUp, playerDowm, playerLeft;
-	private static BufferedImage enemyUp, enemyDowm, enemyLeft, enemyRight;
-	private String path;
-	private int k,w,h;
+	private static BufferedImage spriteSheet;
+	private static final int k = Properties.SIZE_SQUARE_SSC;
+	private static final int w = k;
+	private static final int h = k;
 	
 	public ImageControl(String path) {
-		this.path = path;
-		this.k = Properties.SIZE_SQUARE_SSC;
-		this.w = k;
-		this.h = k;
-		spriteSheet = loadImage();
-		generateTextures();
+		spriteSheet = loadImage(path);
 	}
 
-	public BufferedImage loadImage(){
+	public BufferedImage loadImage(String path){
 		URL url = this.getClass().getResource(path);
 		BufferedImage img = null;
 		try {
@@ -40,169 +30,129 @@ public class ImageControl {
 		return img;		
 	}
 	
-	public BufferedImage getSprite(int row, int col, int width, int heigth){
+	public static BufferedImage getSprite(int row, int col, int width, int heigth){
 		BufferedImage sprite = spriteSheet.getSubimage((col*k)-k, (row*k)-k, width, heigth);
 		return sprite;
-	}
-	
-	public void generateTextures(){
-		
-		imgEagle = getSprite(3, 20, w, h);
-		imgEagleDead = getSprite(3, 21, w, h);
-		
-		imgForest = getSprite(3, 18, w, h);
-		imgWater = getSprite(3, 17, w, h);
-		
-		imgBrick = getSprite(1, 17, w, h);
-		imgIron = getSprite(2, 17, w, h);
-		
-		imgHalfBrickH = getSprite(1, 21, w, h/2);
-		imgHalfIronH = getSprite(2, 21, w, h/2);
-		imgHalfBrickV = getSprite(1, 20, w/2, h);
-		imgHalfIronV = getSprite(2, 20, w/2, h);
-		
-		playerUp = getSprite(1, 1, w, h);
-		playerDowm = getSprite(1, 5, w, h);
-		playerLeft = getSprite(1, 3, w, h);
-		playerRight = getSprite(1, 7, w, h);
-		
-		enemyUp = getSprite(1, 9, w, h);
-		enemyDowm = getSprite(1, 13, w, h);
-		enemyLeft = getSprite(1, 11, w, h);
-		enemyRight = getSprite(1, 15, w, h);
-		
-		bulletUp = getSprite(7, 21, w, h);
-		bulletLeft = getSprite(7, 21, w, h);
-		bulletDowm = getSprite(7, 22, w, h);
-		bulletRight = getSprite(7, 22, w, h);
-		
-		itemShield = getSprite(8, 17, w, h);
-		itemClock = getSprite(8, 18, w, h);
-		itemShovel = getSprite(8, 19, w, h);
-		itemStar = getSprite(8, 20, w, h);
-		itemGranade = getSprite(8, 21, w, h);
-		itemTank = getSprite(8, 22, w, h);
-		itemGun = getSprite(8, 23, w, h);
 	}
 
 	public BufferedImage getSpriteSheet() {
 		return spriteSheet;
 	}
 
-	public BufferedImage getBulletUp() {
-		return bulletUp;
+	public static BufferedImage getBulletUp() {
+		return getSprite(7, 21, w, h);
 	}
 
-	public BufferedImage getBulletDowm() {
-		return bulletDowm;
+	public static BufferedImage getBulletDowm() {
+		return getSprite(7, 22, w, h);
 	}
 	
-	public BufferedImage getBulletLeft() {
-		return bulletLeft;
+	public static BufferedImage getBulletLeft() {
+		return getSprite(7, 21, w, h);
 	}
 
-	public BufferedImage getBulletRight() {
-		return bulletRight;
+	public static BufferedImage getBulletRight() {
+		return getSprite(7, 22, w, h);
 	}
 
-	public BufferedImage getPlayerUP() {
-		return playerUp;
+	public static BufferedImage getPlayerUP() {
+		return getSprite(1, 1, w, h);
 	}
 
-	public BufferedImage getPlayerDowm() {
-		return playerDowm;
+	public static BufferedImage getPlayerDowm() {
+		return getSprite(1, 5, w, h);
 	}
 
-	public BufferedImage getPlayerLeft() {
-		return playerLeft;
+	public static BufferedImage getPlayerLeft() {
+		return getSprite(1, 3, w, h);
 	}
 
-	public BufferedImage getPlayerRight() {
-		return playerRight;
+	public static BufferedImage getPlayerRight() {
+		return getSprite(1, 7, w, h);
 	}
 
-	public BufferedImage getEnemyUp() {
-		return enemyUp;
+	public static BufferedImage getEnemyUp() {
+		return getSprite(1, 9, w, h);
 	}
 
-	public  BufferedImage getEnemyDowm() {
-		return enemyDowm;
+	public static BufferedImage getEnemyDowm() {
+		return getSprite(1, 13, w, h);
 	}
 
-	public BufferedImage getEnemyLeft() {
-		return enemyLeft;
+	public static BufferedImage getEnemyLeft() {
+		return getSprite(1, 11, w, h);
 	}
 
-	public BufferedImage getEnemyRight() {
-		return enemyRight;
+	public static BufferedImage getEnemyRight() {
+		return getSprite(1, 15, w, h);
 	}
 
-	public BufferedImage getImgEagle() {
-		return imgEagle;
+	public static BufferedImage getImgEagle() {
+		return getSprite(3, 20, w, h);
 	}
 	
-	public BufferedImage getImgEagleDead() {
-		return imgEagleDead;
+	public static BufferedImage getImgEagleDead() {
+		return getSprite(3, 21, w, h);
 	}
 	
-	public BufferedImage getImgForest() {
-		return imgForest;
+	public static BufferedImage getImgForest() {
+		return getSprite(3, 18, w, h);
 	}
 
-	public  BufferedImage getImgWater() {
-		return imgWater;
+	public static BufferedImage getImgWater() {
+		return getSprite(3, 17, w, h);
 	}
 
-	public BufferedImage getImgBrick() {
-		return imgBrick;
+	public static BufferedImage getImgBrick() {
+		return getSprite(1, 17, w, h);
 	}
 
-	public BufferedImage getImgIron() {
-		return imgIron;
+	public static BufferedImage getImgIron() {
+		return getSprite(2, 17, w, h);
 	}
 
-	public BufferedImage getImgHalfBrickH() {
-		return imgHalfBrickH;
+	public static BufferedImage getImgHalfBrickH() {
+		return getSprite(1, 21, w, h/2);
 	}
 
-	public BufferedImage getImgHalfIronH() {
-		return imgHalfIronH;
+	public static BufferedImage getImgHalfIronH() {
+		return getSprite(2, 21, w, h/2);
 	}
 
-	public BufferedImage getItemShield() {
-		return itemShield;
+	public static BufferedImage getItemShield() {
+		return getSprite(8, 17, w, h);
 	}
 
-	public BufferedImage getItemClock() {
-		return itemClock;
+	public static BufferedImage getItemClock() {
+		return getSprite(8, 18, w, h);
 	}
 
-	public BufferedImage getItemShovel() {
-		return itemShovel;
+	public static BufferedImage getItemShovel() {
+		return getSprite(8, 19, w, h);
 	}
 
-	public BufferedImage getItemStar() {
-		return itemStar;
+	public static BufferedImage getItemStar() {
+		return getSprite(8, 20, w, h);
 	}
 	
-	public BufferedImage getItemGranade() {
-		return itemGranade;
+	public static BufferedImage getItemGranade() {
+		return getSprite(8, 21, w, h);
 	}
 
-	public BufferedImage getItemGun() {
-		return itemGun;
+	public static BufferedImage getItemGun() {
+		return getSprite(8, 22, w, h);
 	}
 
-	public BufferedImage getItemTank() {
-		return itemTank;
+	public static BufferedImage getItemTank() {
+		return getSprite(8, 23, w, h);
 	}
 
-	public BufferedImage getImgHalfBrickV() {
-		return imgHalfBrickV;
+	public static BufferedImage getImgHalfBrickV() {
+		return getSprite(1, 20, w/2, h);
 	}
 
-	public BufferedImage getImgHalfIronV() {
-		return imgHalfIronV;
+	public static BufferedImage getImgHalfIronV() {
+		return getSprite(2, 20, w/2, h);
 	}
 		
 }

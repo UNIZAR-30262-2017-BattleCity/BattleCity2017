@@ -10,7 +10,7 @@ import gameController.ImageControl;
 public class Configuration {
 	
 	private static ImageControl sscConfig = new ImageControl(Properties.PATH_SS_CONFIG);
-	private static BufferedImage imgConfig = sscConfig.loadImage();
+	private static BufferedImage imgConfig = sscConfig.loadImage(Properties.PATH_SS_CONFIG);
 	
 	public void draw(Graphics g) {
         g.setColor(Color.black);
