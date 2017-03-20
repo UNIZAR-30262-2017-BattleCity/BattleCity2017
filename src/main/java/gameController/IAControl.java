@@ -16,9 +16,11 @@ import org.neuroph.nnet.learning.LMS;
 import org.neuroph.util.TransferFunctionType;
 
 import application.Properties;
+import elements.Eagle;
 import elements.Player;
 import elements.Stage;
 import elements.StageElement;
+import elements.Wall;
 
 public class IAControl {
 	
@@ -28,29 +30,29 @@ public class IAControl {
 	
 	public IAControl() {
 		
-		inputNeuronsCount = 8;
-		outputNeuronsCount = 4;
+		inputNeuronsCount = 4;
+		outputNeuronsCount = 3;
+		//training("enemy_IA2.nnet", "trainingData3.txt", "testData2.txt");
 		
-		//neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 50, outputNeuronsCount);
-		//neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
-		
-		DataSet trainingSet = createDataSet(inputNeuronsCount, outputNeuronsCount, "trainingData.txt");
-		DataSet testSet = createDataSet(inputNeuronsCount, outputNeuronsCount, "testData.txt");
-		
-		//training(trainingSet);
-		
-		//testNeuralNetwork(neuralNetworkMultiLayer, testSet);
+		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA2.nnet");
 	}
 	
-	private void training(DataSet trainingSet) {
+	private void training(String nameToSave, String trainingData, String testData) {
 		System.out.println("Time start training:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
+		
+		neuralNetworkMultiLayer = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputNeuronsCount, 50, outputNeuronsCount);
+		
+		DataSet trainingSet = createDataSet(inputNeuronsCount, outputNeuronsCount, trainingData);
+		DataSet testSet = createDataSet(inputNeuronsCount, outputNeuronsCount, testData);
 		
         ((LMS) neuralNetworkMultiLayer.getLearningRule()).setMaxError(0.001);//0-1
         ((LMS) neuralNetworkMultiLayer.getLearningRule()).setLearningRate(0.7);//0-1
-        ((LMS) neuralNetworkMultiLayer.getLearningRule()).setMaxIterations(1000);
+        //((LMS) neuralNetworkMultiLayer.getLearningRule()).setMaxIterations(10000);
         
 		neuralNetworkMultiLayer.learn(trainingSet);
-		neuralNetworkMultiLayer.save("enemy_IA.nnet");
+		neuralNetworkMultiLayer.save(nameToSave);
+		
+		testNeuralNetwork(neuralNetworkMultiLayer, testSet);
 
         System.out.println("Time stop training:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
 	}
@@ -58,7 +60,39 @@ public class IAControl {
 	private DataSet createDataSet(int inputNeuronsCount, int outputNeuronsCount, String file) {
 		DataSet dataSet = new DataSet(inputNeuronsCount, outputNeuronsCount);
 		
-		return dataSet = readFileDataSet(dataSet, file);
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file)); 
+			String line; 
+			while((line = reader.readLine()) != null){
+				if (line.equalsIgnoreCase("-----------U-----------") ||
+						line.equalsIgnoreCase("-----------D-----------") ||
+						line.equalsIgnoreCase("-----------L-----------") ||
+						line.equalsIgnoreCase("-----------R-----------")) {
+					System.out.println(line);
+				} else {
+					String[] data = line.split("-");
+					String[] in = data[0].split(",");
+					String[] out = data[1].split(",");
+					
+					double[] input = new double[in.length];
+					for (int i = 0; i < input.length; i++) {
+						input[i] = Double.parseDouble(in[i]);
+					}
+					
+					double[] output = new double[out.length];
+					for (int i = 0; i < output.length; i++) {
+						output[i] = Double.parseDouble(out[i]);
+					}
+					
+					dataSet.addRow(new DataSetRow(input, output));
+				}
+			}
+			reader.close(); 
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+		}
+		
+		return dataSet;
 	}
 	
 	private void testNeuralNetwork(NeuralNetwork<?> nnet, DataSet testSet) {
@@ -94,41 +128,6 @@ public class IAControl {
 		System.out.println("Layer output neurons: " + l3.getNeuronsCount());
 	}
 	
-	private DataSet readFileDataSet(DataSet trainingSet, String file) {
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file)); 
-			String line; 
-			while((line = reader.readLine()) != null){
-				if (line.equalsIgnoreCase("-----------U-----------") ||
-						line.equalsIgnoreCase("-----------D-----------") ||
-						line.equalsIgnoreCase("-----------L-----------") ||
-						line.equalsIgnoreCase("-----------R-----------")) {
-					System.out.println(line);
-				} else {
-					String[] data = line.split("-");
-					String[] in = data[0].split(",");
-					String[] out = data[1].split(",");
-					
-					double[] input = new double[in.length];
-					for (int i = 0; i < input.length; i++) {
-						input[i] = Double.parseDouble(in[i]);
-					}
-					
-					double[] output = new double[out.length];
-					for (int i = 0; i < output.length; i++) {
-						output[i] = Double.parseDouble(out[i]);
-					}
-					
-					trainingSet.addRow(new DataSetRow(input, output));
-				}
-			}
-			reader.close(); 
-		} catch (Exception e) { 
-			e.printStackTrace(); 
-		}
-		return trainingSet;
-	}
-	
 	private void generateAction(double[] networkOutputNormalize) {
 		for (int i = 0; i < networkOutputNormalize.length; i = i+2) {
 			if (i < 2) {
@@ -146,110 +145,161 @@ public class IAControl {
 					System.out.print("Derecha (R)");
 				}
 			} else {
-				if (networkOutputNormalize[i] < 1 
-						&& networkOutputNormalize[i+1] < 1) {
+				if (networkOutputNormalize[i] < 1) {
 					System.out.println(" -- No disparar (NS)");
-				} else if (networkOutputNormalize[i] < 1 
-						&& networkOutputNormalize[i+1] > 0) {
-					System.out.println(" -- Talves disparar (MS)");
-				} else if (networkOutputNormalize[i] > 0 
-						&& networkOutputNormalize[i+1] < 1) {
-					System.out.println(" -- Talves disparar (MS)");
-				} else if (networkOutputNormalize[i] > 0 
-						&& networkOutputNormalize[i+1] > 0) {
+				} else if (networkOutputNormalize[i] > 0) {
 					System.out.println(" -- Si disparar (S)");
 				}
 			}
 		}
 	}
 
-	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
-		int[] ia = {0,0};
-		
-		return ia;
-	}
+// ------------------------------------------------------------------------------- //
+// ---------------------------- GAME IMPLEMENTATION ------------------------------ //
+// ------------------------------------------------------------------------------- //
 	
 	public int[] getDir_Shoot(double posX, double posY, Stage stage) {
-		int[] action = {0,0};
-		double[] inputIA = {0,0,0,0,0,0,0,0};
+		double[] inputIA = {5,5,5,5};
+		
+		System.out.println("Position X = " + posX);
+		System.out.println("Position Y = " + posY);
 		
 		LinkedList<StageElement> elementsList = stage.getElements(null);
 		Player player = stage.getPlayer();
+		elementsList.add(player);
 		
-		StageElement element, temElement;
-		double elementX, elementY, playerX, playerY;
+		StageElement element, temElementUP1 = null, temElementDOWN1 = null, 
+				temElementLEFT1 = null, temElementRIGHT1 = null;
+		double elementX, elementY;
 		double colE = posX + Properties.SIZE_SQUARE;
 		double rowE = posY + Properties.SIZE_SQUARE;
-		double nearUP = -10000;
-		double nearDOWN = 10000;
-		double marge = 1;
+		double nearUP1 = -10000;
+		double nearDOWN1 = 10000;
+		double nearLEFT1 = -10000;
+		double nearRIGHT1 = 10000;
 		
 		for (int i = 0; i < elementsList.size(); i++) {
 			element = elementsList.get(i);
 			elementX = element.getPosX();
 			elementY = element.getPosY();
-			playerX = player.getPosX();
-			playerY = player.getPosY();
 			
-			/*if (((elementX+marge) > posX && (elementX-marge) < colE) 
-					|| (((elementX+marge) + Properties.SIZE_SQUARE) > posX 
-					&& ((elementX-marge) + Properties.SIZE_SQUARE) < colE)) {
+			if ((elementX+5 > posX && elementX <= colE-5) 
+					|| ((elementX + Properties.SIZE_SQUARE) >= posX+5 
+					&& (elementX + Properties.SIZE_SQUARE)-5 < colE)) {
 				
-				if (elementY < posY && nearUP < elementY) {
-					nearUP = elementY;
-					temElement = element;
-					System.out.println(" --- IS UP");
-					System.out.println(temElement.getClass().toString() + " --- " + nearUP);
-				} else if (elementY > posY && nearDOWN > elementY) {
-					nearDOWN = elementY;
-					temElement = element;
-					System.out.println(" --- IS DOWN");
-					System.out.println(temElement.getClass().toString() + " --- " + nearDOWN);
+				if (elementY < posY && nearUP1 < elementY) {
+					nearUP1 = elementY;
+					temElementUP1 = element; // UP
+				} else if (elementY > posY && nearDOWN1 > elementY) {
+					nearDOWN1 = elementY;
+					temElementDOWN1 = element; // DOWN
 				}
-			}*/
-			
-			if ((playerX+marge) > posX && (playerX-marge) < colE 
-					|| (((playerX+marge) + Properties.SIZE_SQUARE) > posX 
-					&& ((playerX-marge) + Properties.SIZE_SQUARE) < colE)) {
 				
-				if (playerY < posY && nearUP < playerY) {
-					nearUP = playerY;
-					System.out.println(" --- IS UP");
-					inputIA[0] = 2;
-					inputIA[1] = 1;
-				} else if (playerY > posY && nearDOWN > playerY) {
-					nearDOWN = playerY;
-					System.out.println(" --- IS DOWN");
-					inputIA[2] = 2;
-					inputIA[3] = 1;
+			} 
+			
+			else if ((elementY+5 > posY && elementY <= rowE-5)
+					|| ((elementY + Properties.SIZE_SQUARE) >= posY+5
+					&& (elementY + Properties.SIZE_SQUARE)-5 < rowE)) {
+				
+				if (elementX < posX && nearLEFT1 < elementX) {
+					nearLEFT1 = elementX;
+					temElementLEFT1 = element; // LEFT
+				} else if (elementX > posX && nearRIGHT1 > elementX) {
+					nearRIGHT1 = elementX;
+					temElementRIGHT1 = element; // RIGHT
+				}
+				
+			}
+		}
+		
+		inputIA[0] = generateInputValue(temElementUP1, posX, posY);
+		
+		inputIA[1] = generateInputValue(temElementDOWN1, posX, posY);
+		
+		inputIA[2] = generateInputValue(temElementLEFT1, posX, posY);
+		
+		inputIA[3] = generateInputValue(temElementRIGHT1, posX, posY);
+		
+		System.out.println(Arrays.toString(inputIA));
+		System.out.println(Arrays.toString(calculateIA(neuralNetworkMultiLayer, inputIA)));
+		
+		return calculateIA(neuralNetworkMultiLayer, inputIA);
+	}
+	
+	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
+		int[] action = {0,0};
+		
+		nnet.setInput(input);
+		nnet.calculate();
+		double[] networkOutput = nnet.getOutput();
+		double[] networkOutputNormalize =  new double[nnet.getOutput().length];
+		
+		for (int i = 0; i < networkOutput.length; i++) {
+			if (networkOutput[i] > 0.5) {
+				networkOutputNormalize[i] = 1;
+			} else {
+				networkOutputNormalize[i] = 0;
+			}
+		}
+		
+		for (int i = 0; i < networkOutputNormalize.length; i = i+2) {
+			if (i < 2) {
+				if (networkOutputNormalize[i] < 1 
+						&& networkOutputNormalize[i+1] < 1) {
+					action[0] = 1; // Up
+				} else if (networkOutputNormalize[i] < 1 
+						&& networkOutputNormalize[i+1] > 0) {
+					action[0] = -1; // Down
+				} else if (networkOutputNormalize[i] > 0 
+						&& networkOutputNormalize[i+1] < 1) {
+					action[0] = -2; // Left
+				} else if (networkOutputNormalize[i] > 0 
+						&& networkOutputNormalize[i+1] > 0) {
+					action[0] = 2; // Right
+				}
+			} else {
+				if (networkOutputNormalize[i] < 1) {
+					action[1] = 0; // No shoot
+				} else if (networkOutputNormalize[i] > 0) {
+					action[1] = 1; // Shoot
 				}
 			}
-			
-			/*if (elementY > posY && elementY < rowE
-					|| ((elementY + Properties.SIZE_SQUARE) > posY 
-					&& (elementY + Properties.SIZE_SQUARE) < rowE)) {
-				System.out.println(element.getClass().toString());
-				
-				if (elementX < posX) {
-					System.out.println(" --- IS LEFT");
-				} else {
-					System.out.println(" --- IS RIGHT");
-				}
-			}
-			
-			if (playerY > posY && playerY < rowE
-					|| ((playerY + Properties.SIZE_SQUARE) > posY 
-					&& (playerY + Properties.SIZE_SQUARE) < rowE)) {
-				System.out.println(player.getClass().toString());
-				
-				if (playerX < posX) {
-					System.out.println(" --- IS LEFT");
-				} else {
-					System.out.println(" --- IS RIGHT");
-				}
-			}*/
 		}
 		
 		return action;
+	}
+	
+	public double generateInputValue(StageElement element, double posX, double posY) {
+		double value = 5;
+		
+		if (element != null) {
+			
+			if (element.getClass().equals(Wall.class)
+					&& element.getType() == 2) {
+				value = 0;
+			}
+			
+			else if (element.getClass().equals(Wall.class)
+					&& element.getType() == 1) {
+				value = 1;
+			}
+			
+			else if (element.getClass().equals(Player.class)) {
+				value = 2;
+			}
+			
+			else if (element.getClass().equals(Eagle.class)) {
+				value = 3;
+			}
+		} else {
+			if (posX == Properties.X_INIT_STAGE 
+					|| posX == (Properties.X_FINAL_STAGE - Properties.SIZE_SQUARE)
+					|| posY == Properties.Y_INIT_STAGE
+					|| posY == (Properties.Y_FINAL_STAGE - Properties.SIZE_SQUARE)) {
+				value = 4;
+			}
+		}
+		
+		return value;
 	}
 }
