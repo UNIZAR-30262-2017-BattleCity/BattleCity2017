@@ -32,9 +32,9 @@ public class IAControl {
 		
 		inputNeuronsCount = 4;
 		outputNeuronsCount = 3;
-		//training("enemy_IA2.nnet", "trainingData3.txt", "testData2.txt");
+		training("enemy_IA.nnet", "trainingData3.txt", "testData2.txt");
 		
-		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA2.nnet");
+		//neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
 	}
 	
 	private void training(String nameToSave, String trainingData, String testData) {
