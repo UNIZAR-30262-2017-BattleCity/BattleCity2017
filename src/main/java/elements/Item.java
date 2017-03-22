@@ -7,17 +7,14 @@ import application.Properties;
 import gameController.ImageControl;
 
 public class Item extends GameElement implements StageElement{
-	
-	private int id;
-	private double posX;
-	private double posY;
+
 	private boolean isTake;
 	private BufferedImage imgItem;
     private int maxTimeItemShow;
 			
-	public Item(int col, int row, int id, Stage stage) {
+	public Item(int col, int row, int type, Stage stage) {
 		super(stage);
-		this.id = id;
+		this.type = type;
 		isTake = false;
 		maxTimeItemShow = Properties.MAX_TIME_ITEM_SHOW;
 		setInitPos(col, row);
@@ -25,7 +22,7 @@ public class Item extends GameElement implements StageElement{
 	}
 	
 	public void initItem(){
-		switch (id) {
+		switch (type) {
 		case 1:
 			imgItem = ImageControl.getItemShield();
 			break;
@@ -73,12 +70,6 @@ public class Item extends GameElement implements StageElement{
 	}
 	public void setTake(boolean isTake) {
 		this.isTake = isTake;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public double getPosX() {

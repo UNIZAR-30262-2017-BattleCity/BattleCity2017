@@ -10,7 +10,7 @@ public abstract class Tank extends GameElement{
 	//tank
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
 	protected double vel;
-	protected int dir; //direccion hacia donde esta mirando 0=arriba, 1=abajo, 2=izquierda, 3=derecha
+	protected int dir;
 	protected int shieldLevel;
 	
 	//balas	

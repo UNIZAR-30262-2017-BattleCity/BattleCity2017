@@ -44,7 +44,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		opc = 1;
 		menu = new Menu();
 		cursor = new Cursor();
-		ia = new IAControl();
+		//ia = new IAControl();
+		ia=null;
 	}
 	
 	public void initStage(){				
@@ -239,7 +240,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				player.setVel(1);
 			}
 			if (key == KeyEvent.VK_SPACE) {
-				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage));
+				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage,null));
 			}
 			if (key == KeyEvent.VK_ENTER) {				
 				//TODO pause

@@ -2,10 +2,10 @@ package elements;
 
 public class Maze {
 
-	private Stage stage;
+	private static Stage stage;
 			
 	public Maze(Stage stage) {	
-		this.stage = stage;
+		Maze.stage = stage;
 	}
 		
 	public int[][] createMaze(int level){
@@ -116,8 +116,27 @@ public class Maze {
     	stage.spawnElements(new Wall(12,7,0,4,stage,true));
 	}
 	
+	public void loadEagleWall(){
+
+		stage.spawnElements(new Wall(13,6,1,1,stage, false));
+		stage.spawnElements(new Wall(13,6,3,1,stage, false));
+		
+		stage.spawnElements(new Wall(12,6,3,1,stage, false));
+
+		stage.spawnElements(new Wall(12,7,2,1,stage, false));
+		stage.spawnElements(new Wall(12,7,3,1,stage, false));
+
+		stage.spawnElements(new Wall(12,8,2,1,stage, false));
+
+		stage.spawnElements(new Wall(13,8,0,1,stage, false));
+		stage.spawnElements(new Wall(13,8,2,1,stage, false));
+
+	}
+	
 	public void loadMaze(int level){
     	int[][] m = createMaze(level);
+    	
+    	loadEagleWall();
     	
     	for (int i = 0; i < m.length; i++) { 
             for (int j = 0; j < m.length; j++) {
@@ -158,24 +177,7 @@ public class Maze {
 						stage.spawnElements(new Wall(i-0.5,j,j2,1,stage, false));
 					}
 				}
-                if (m[i][j] == 10) {
-                	stage.spawnElements(new Wall(i,j,1,1,stage, false));
-                	stage.spawnElements(new Wall(i,j,3,1,stage, false));
-				}
-                if (m[i][j] == 11) {
-                	stage.spawnElements(new Wall(i,j,3,1,stage, false));
-				}
-                if (m[i][j] == 12) {                	
-                	stage.spawnElements(new Wall(i,j,2,1,stage, false));
-                	stage.spawnElements(new Wall(i,j,3,1,stage, false));
-				}
-                if (m[i][j] == 13) {             	
-                	stage.spawnElements(new Wall(i,j,2,1,stage, false));
-				}
-                if (m[i][j] == 14) {        	
-                	stage.spawnElements(new Wall(i,j,0,1,stage, false));
-                	stage.spawnElements(new Wall(i,j,2,1,stage, false));
-				}
+               
             }
         }
     	

@@ -20,7 +20,6 @@ public class Player extends Tank implements StageElement{
     private int maxTimeItemEfect;
 	private boolean itemTaked;
 	private boolean gunEfectActivate;
-	private Stage stage;
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;

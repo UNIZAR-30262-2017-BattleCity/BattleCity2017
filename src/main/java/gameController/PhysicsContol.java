@@ -53,12 +53,12 @@ public class PhysicsContol {
 		return null;
 	}
 	
-	public static void collisionBullet(Bullet b, LinkedList<StageElement> list){
+	public static void collisionBullet(Bullet b, GameElement gE, LinkedList<StageElement> list){
 		
 		StageElement s;		
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (isIntersecs(b,s)) {	
+			if (isIntersecs(b,s)) {
 				if (!(s.getClass().equals(Obstacle.class)) && !(s.getClass().equals(Item.class))) {
 					b.setActive(false);
 					if (s.getClass().equals(Wall.class)) {
@@ -68,7 +68,7 @@ public class PhysicsContol {
 					}else{
 						s.setActive(false);
 					}
-					if (s.getClass().equals(Enemy.class)) {
+					if (s.getClass().equals(Enemy.class) && !s.equals(gE)) {
 						s.getStage().deleteEnemy((Enemy) s);
 					}
 				}				
@@ -82,14 +82,16 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (isIntersecs(w,s)) {
-				if (s.getClass().equals(Wall.class)) {
+			if (s.getClass().equals(Wall.class)) {
+				System.out.println("entra al si wall " + i);
+				if (isIntersecs(w,s)) {
 					//s.setType(w.getType());
+					System.out.println("entra a llenar la lista " + i);
 					listW.add((Wall) s);
 					s.setActive(false);
 				}
 			}
-		}		
+		}
 		return listW;
 	}
 	

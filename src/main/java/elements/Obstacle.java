@@ -7,11 +7,7 @@ import gameController.ImageControl;
 
 public class Obstacle extends GameElement implements StageElement{
 
-	private double posX;
-	private double posY;
 	private BufferedImage img;
-	private boolean isActive;
-	private int type;
 	
 	public Obstacle(int row, int col, int type, Stage stage) {
 		super(stage);

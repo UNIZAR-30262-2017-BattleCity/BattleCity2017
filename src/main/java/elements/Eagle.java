@@ -13,13 +13,7 @@ public class Eagle extends GameElement implements StageElement{
 	public Eagle(int row, int col, Stage stage) {
 		super(stage);
 		setInitPos(row+1,col+1);
-		isActive = true;
 	}
-	
-	public void setInitPos(int row, int col){
-    	setPosX(xI+(col*k)-k);
-    	setPosY(yI+(row*k)-k);
-    }
 
 	public void updateDraw() {
 	}
@@ -32,22 +26,6 @@ public class Eagle extends GameElement implements StageElement{
 			g.drawImage(imgEagleDead, (int) posX,(int) posY,  width, heigth, null);
 		}
 		
-	}
-
-	public double getPosX() {
-		return posX;
-	}
-
-	public void setPosX(double posX) {
-		this.posX = posX;
-	}
-
-	public double getPosY() {
-		return posY;
-	}
-
-	public void setPosY(double posY) {
-		this.posY = posY;
 	}
 		
 }

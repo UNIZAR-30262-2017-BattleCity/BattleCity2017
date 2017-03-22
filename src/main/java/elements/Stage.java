@@ -114,7 +114,7 @@ public class Stage {
 				int col = r.nextInt(Properties.COL_STAGE)+1;
 				int row = r.nextInt(Properties.ROW_STAGE)+1;
 				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, id, this));
+				elements.add(new Item(col, row, 3, this));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -148,10 +148,13 @@ public class Stage {
         		if (tmpEnemy.isActive()){
         			//int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX(),tmpEnemy.getPosY(), this);
     				//tmpEnemy.setDir(dir[0]);
-    				//tmpEnemy.setShoot(dir[1]);
+        			//if (dir[1] == 1) {
+						//tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
+					//}
+    				
         			tmpEnemy.updateDraw();
         		}
-        		else enemies.remove(tmpEnemy);
+        		else deleteEnemy(tmpEnemy);
 			}
     		
     	}
@@ -159,7 +162,7 @@ public class Stage {
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);	
     		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))){
-    			if(!tmpElement.getClass().equals(Enemy.class)) tmpElement.updateDraw();
+    			tmpElement.updateDraw();
     		}else deleteElement(tmpElement);
     	}
 
@@ -186,7 +189,7 @@ public class Stage {
     }
     
     public void deleteEnemy(Enemy e){
-        elements.remove(e);
+        enemies.remove(e);
         nEnemiesSimul--;
     }
     
@@ -213,7 +216,7 @@ public class Stage {
 
 	public void ItemTaked(Item it){		
 		nItemsSimul--;
-		switch (it.getId()) {
+		switch (it.getType()) {
 		case 1://shield
 			player.setItemTaked(true);
 			player.shieldEfect();		

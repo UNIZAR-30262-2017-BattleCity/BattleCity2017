@@ -10,8 +10,6 @@ import gameController.ImageControl;
 
 public class Wall extends GameElement implements StageElement{
 
-	private double posX;
-	private double posY;
 	private BufferedImage img;
 	private boolean eagleWall;
 	private int maxTimeItemEfect;
@@ -45,7 +43,11 @@ public class Wall extends GameElement implements StageElement{
 			img = ImageControl.getImgHalfIronV();
 			setWidth(width/2);
 			break;
-		}		
+		}
+
+    	if (eagleWall)
+    	listEagleBrick = PhysicsContol.collisionEagleWall(this, stage.getElements(this));
+    	System.out.println("la lista " + listEagleBrick);
 
 	}
 	
@@ -79,8 +81,6 @@ public class Wall extends GameElement implements StageElement{
 			setPosY(yI+(row*k)-k);
 		}
     	
-    	if (eagleWall)
-    	listEagleBrick = PhysicsContol.collisionEagleWall(this, stage.getElements(this));
     }
 
 	public void updateDraw() {
@@ -102,44 +102,13 @@ public class Wall extends GameElement implements StageElement{
 			if (listEagleBrick.size()>0) {				
 				for (Wall wall : listEagleBrick) {
 					wall.setActive(true);
+					System.out.println("la lista si");
 					stage.spawnElements(wall);
 				}
 			}
 			stage.deleteElement(this);
 			stage.setItemTaked(false);
 		}
-	}
-	
-	public double getPosX() {
-		return posX;
-	}
-
-	public void setPosX(double posX) {
-		this.posX = posX;
-	}
-
-	public double getPosY() {
-		return posY;
-	}
-
-	public void setPosY(double posY) {
-		this.posY = posY;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
 	}
 	
 }

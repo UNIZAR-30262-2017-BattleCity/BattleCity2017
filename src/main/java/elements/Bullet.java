@@ -8,26 +8,22 @@ import gameController.PhysicsContol;
 import gameController.ImageControl;
 
 public class Bullet extends GameElement implements StageElement{
-	
-	private double posX;
-    private double posY;
+
     private double velBullet;
-    private int direction;
-    private int type;	//tipo A=0 , tipo B=1
+    private int dir;
     private BufferedImage imgBulletUp, imgBulletDowm, imgBulletLeft, imgBulletRight;
-    private Stage stage;
-    private boolean isActive;
+    private GameElement gE;
     
-	public Bullet(double posX, double posY, int direction, int type, Stage stage) {
+	public Bullet(double posX, double posY, int dir, int type, Stage stage, GameElement gE) {
 		super(stage);
 		this.posX = posX;
 		this.posY = posY;
-		this.direction = direction;
+		this.dir = dir;
 		this.type = type;
-		this.stage = stage;
 		this.velBullet = Properties.VEL_BULLET;
 		isActive = true;
 		initBullet();
+		this.gE = gE;
 	}
 	
 	public void initBullet(){
@@ -55,7 +51,7 @@ public class Bullet extends GameElement implements StageElement{
 	
     public void draw(Graphics g) {
 		
-    	switch (this.direction) {
+    	switch (this.dir) {
 		case 1:
 			g.drawImage(imgBulletUp, (int) getPosX(), (int)getPosY(), null);
 			break;
@@ -73,7 +69,7 @@ public class Bullet extends GameElement implements StageElement{
 	}
     
     public void updateDraw(){	
-    	switch (direction) {
+    	switch (dir) {
 		case 1://up
 			posY -= velBullet;
 			break;
@@ -88,47 +84,8 @@ public class Bullet extends GameElement implements StageElement{
 			break;
 		}
     	    	 
-    	PhysicsContol.collisionBullet(this, stage.getElements(this));
+    	PhysicsContol.collisionBullet(this, gE,stage.getElements(this));
     	
     }
-		
-	public double getPosX() {
-		return posX;
-	}
-
-	public void setPosX(double posX) {
-		this.posX = posX;
-	}
-
-	public double getPosY() {
-		return posY;
-	}
-
-	public void setPosY(double posY) {
-		this.posY = posY;
-	}
-
-	public int getDirection() {
-		return direction;
-	}
-	public void setDirection(int direction) {
-		this.direction = direction;
-	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-      
-    
     
 }

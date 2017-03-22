@@ -9,16 +9,13 @@ import gameController.ImageControl;
 
 public class Enemy extends Tank implements StageElement{
 
-	private int type;
     private BufferedImage imgEnemyUp, imgEnemyDowm, imgEnemyLeft, imgEnemyRight;
-    private Stage stage;
     
 	public Enemy(int col, int row, int type, Stage stage) {
 		super(stage);
 		setInitPos(col, row);
 		setTypeTank(1);
 		this.type = type;
-		this.stage = stage;
 		dir=-1;
 		initEnemy();
 		
@@ -84,6 +81,8 @@ public class Enemy extends Tank implements StageElement{
     	if(getPosY()>yF) setDir(1);
 		
 	}
+	
+	
 
 	@Override
 	public void draw(Graphics g) {
@@ -103,13 +102,6 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-	}
-	
-	public int getType() {
-		return type;
-	}
-	public void setType(int id) {
-		this.type = id;
 	}
 		
 }
