@@ -58,43 +58,28 @@ public class PhysicsContol {
 		StageElement s;		
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (isIntersecs(b,s)) {
-				if (!(s.getClass().equals(Obstacle.class)) && !(s.getClass().equals(Item.class))) {
-					b.setActive(false);
-					if (s.getClass().equals(Wall.class)) {
-						int w = list.get(i).getType();
-						if (w !=1) return;
-						else s.setActive(false);
-					}else{
-						s.setActive(false);
+			if (!s.equals(gE)) {
+				if (isIntersecs(b,s)) {
+					if (!(s.getClass().equals(Obstacle.class)) && !(s.getClass().equals(Item.class))) {
+						b.setActive(false);
+						if (s.getClass().equals(Wall.class)) {
+							int w = list.get(i).getType();
+							if (w !=1) return;
+							else s.setActive(false);
+						}else{
+							s.setActive(false);
+						}
+						if (s.getClass().equals(Enemy.class)) {
+							s.getStage().deleteEnemy((Enemy) s);
+						}
 					}
-					if (s.getClass().equals(Enemy.class) && !s.equals(gE)) {
-						s.getStage().deleteEnemy((Enemy) s);
-					}
+					
 				}				
 				
 			}
 		}
 	}
-	
-	public static LinkedList<Wall> collisionEagleWall(Wall w, LinkedList<StageElement> list){
-		LinkedList<Wall> listW = new LinkedList<>();
-		StageElement s;
-		for (int i = 0; i < list.size(); i++) {
-			s = list.get(i);
-			if (s.getClass().equals(Wall.class)) {
-				System.out.println("entra al si wall " + i);
-				if (isIntersecs(w,s)) {
-					//s.setType(w.getType());
-					System.out.println("entra a llenar la lista " + i);
-					listW.add((Wall) s);
-					s.setActive(false);
-				}
-			}
-		}
-		return listW;
-	}
-	
+
 	public static boolean isIntersecs(GameElement gE,  StageElement e){
 		 return gE.getBounds(gE.getWidth(),gE.getHeigth()).intersects(
 				 		e.getBounds(e.getWidth(),e.getHeigth()));

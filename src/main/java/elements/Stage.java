@@ -20,8 +20,10 @@ public class Stage {
     
     private LinkedList<StageElement> elements;
     private LinkedList<Enemy> enemies;
+    private LinkedList<Wall> eagleBricks;
     private StageElement tmpElement;
     private Enemy tmpEnemy;
+    private Wall tmpWall;
     
     private static int cantEnemiesForLevel;
     private static int maxEnemySimul;
@@ -88,6 +90,7 @@ public class Stage {
     	 
     	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this);
     	 maze.loadMaze(level);
+    	 eagleBricks = maze.loadEagleWall();
     }
             
     public void spawnElements(StageElement e) {
@@ -165,6 +168,11 @@ public class Stage {
     			tmpElement.updateDraw();
     		}else deleteElement(tmpElement);
     	}
+    	
+    	for (int i = 0; i < eagleBricks.size(); i++) {
+			tmpWall = eagleBricks.get(i);
+    		if (!tmpWall.isActive()) eagleBricks.remove(tmpWall);
+		}
 
     }
     
@@ -172,12 +180,14 @@ public class Stage {
     	
     	g.setColor(Color.black);
         g.fillRect(Properties.X_INIT_STAGE-1, Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
-		    	
-    	for(int i=0;i<elements.size();i++) {
-    		tmpElement = elements.get(i);
-    		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))) tmpElement.draw(g);
-			
-    	}
+	    	
+    	for (StageElement sE : elements) {
+    		if (sE.isActive() || (sE.getClass().equals(Eagle.class))) sE.draw(g);
+		}
+    	
+    	for (Wall wall : eagleBricks) {
+			wall.draw(g);
+		}
     	
     	for (Enemy e : enemies) {		
 			e.draw(g);
@@ -199,9 +209,19 @@ public class Stage {
     	nItems--;
     }
    
-	public void eagleIronWallEfect() {
-		maze.loadIronWall();
-		
+	public void eagleIronWallEfect(boolean efect) {
+		if (efect) {
+			maze.loadIronWall();
+			for (Wall wall : eagleBricks) {
+				wall.setType(2);
+				wall.setEagleBrick(false);
+			}		
+		}else{
+			for (Wall wall : eagleBricks) {
+				wall.setType(1);
+				wall.setEagleBrick(true);
+			}
+		}
 	}
 		
 	public void item(){		
@@ -226,7 +246,7 @@ public class Stage {
 			setClockEfect(true);
 			break;
 		case 3://shovel
-			eagleIronWallEfect();
+			eagleIronWallEfect(true);
 			break;
 		case 4://star
 			player.setItemTaked(true);

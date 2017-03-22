@@ -1,5 +1,7 @@
 package elements;
 
+import java.util.LinkedList;
+
 public class Maze {
 
 	private static Stage stage;
@@ -26,8 +28,8 @@ public class Maze {
 					{0,1,0,0,0,9,1,9,0,0,0,1,0},
 					{0,1,0,1,0,9,0,9,0,1,0,1,0},
 					{0,1,0,1,0,9,0,9,0,1,0,1,0},
-					{0,1,0,1,0,11,12,13,0,1,0,1,0},
-					{0,0,0,0,0,10,7,14,0,0,0,0,0},
+					{0,1,0,1,0,0,0,0,0,1,0,1,0},
+					{0,0,0,0,0,0,7,0,0,0,0,0,0},
 					};
 			matriz = m1;			
 			break;
@@ -116,28 +118,36 @@ public class Maze {
     	stage.spawnElements(new Wall(12,7,0,4,stage,true));
 	}
 	
-	public void loadEagleWall(){
-
-		stage.spawnElements(new Wall(13,6,1,1,stage, false));
-		stage.spawnElements(new Wall(13,6,3,1,stage, false));
+	public LinkedList<Wall> loadEagleWall(){
 		
-		stage.spawnElements(new Wall(12,6,3,1,stage, false));
+		LinkedList<Wall> listEagleWall = new LinkedList<>();
+		
+		listEagleWall.add(new Wall(12,5,1,1,stage, false));
+		
+		listEagleWall.add(new Wall(12,5,1,1,stage, false));
+		listEagleWall.add(new Wall(12,5,3,1,stage, false));
+		
+		listEagleWall.add(new Wall(11,5,3,1,stage, false));
 
-		stage.spawnElements(new Wall(12,7,2,1,stage, false));
-		stage.spawnElements(new Wall(12,7,3,1,stage, false));
+		listEagleWall.add(new Wall(11,6,2,1,stage, false));
+		listEagleWall.add(new Wall(11,6,3,1,stage, false));
 
-		stage.spawnElements(new Wall(12,8,2,1,stage, false));
+		listEagleWall.add(new Wall(11,7,2,1,stage, false));
 
-		stage.spawnElements(new Wall(13,8,0,1,stage, false));
-		stage.spawnElements(new Wall(13,8,2,1,stage, false));
+		listEagleWall.add(new Wall(12,7,0,1,stage, false));
+		listEagleWall.add(new Wall(12,7,2,1,stage, false));
+		
+		for (Wall wall : listEagleWall) {
+			stage.spawnElements(wall);
+		}
+		
+		return listEagleWall;		
 
 	}
 	
 	public void loadMaze(int level){
     	int[][] m = createMaze(level);
-    	
-    	loadEagleWall();
-    	
+    	    	
     	for (int i = 0; i < m.length; i++) { 
             for (int j = 0; j < m.length; j++) {
                 if (m[i][j] == 1) {
