@@ -145,12 +145,8 @@ public class Player extends Tank implements StageElement{
     }
 
 	
-	public void starEfect(boolean star){		
-		if (star) {
-			setVel(getVel()+2);
-		}else{
-			setVel(getVel()-2);
-		}
+	public void starEfect(){		
+		addScore(500);
 	}
 	
 	public void gunEfect(){
@@ -158,7 +154,7 @@ public class Player extends Tank implements StageElement{
 			setMaxBulletsInProgres(getMaxBulletsInProgres()+3);
 		}else{
 			setMaxBulletsInProgres(getMaxBulletsInProgres()-3);
-		}		
+		}
 	}
 	
 	public void shieldEfect() {
@@ -175,7 +171,6 @@ public class Player extends Tank implements StageElement{
 			this.itemTaked = false;
 			stage.setItemTaked(false);
 			gunEfect();
-			starEfect(false);
 		}
 	}
     	

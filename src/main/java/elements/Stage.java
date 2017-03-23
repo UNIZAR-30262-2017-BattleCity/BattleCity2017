@@ -240,7 +240,7 @@ public class Stage {
 		switch (it.getType()) {
 		case 1://shield
 			player.setItemTaked(true);
-			player.shieldEfect();		
+			player.shieldEfect();	
 			break;
 		case 2://clock
 			itemTaked = true;
@@ -250,8 +250,7 @@ public class Stage {
 			eagleIronWallEfect(true);
 			break;
 		case 4://star
-			player.setItemTaked(true);
-			player.starEfect(true);
+			player.starEfect();
 			break;
 		case 5://bomb
 			bombEfect();
