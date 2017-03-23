@@ -32,9 +32,9 @@ public class IAControl {
 		
 		inputNeuronsCount = 4;
 		outputNeuronsCount = 3;
-		training("enemy_IA.nnet", "trainingData3.txt", "testData2.txt");
 		
-		//neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
+		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
+		//training("enemy_IA.nnet", "trainingData3.txt", "testData2.txt");
 	}
 	
 	private void training(String nameToSave, String trainingData, String testData) {
@@ -49,11 +49,13 @@ public class IAControl {
         ((LMS) neuralNetworkMultiLayer.getLearningRule()).setLearningRate(0.7);//0-1
         //((LMS) neuralNetworkMultiLayer.getLearningRule()).setMaxIterations(10000);
         
+        System.out.println(trainingSet.toString());
+        
 		neuralNetworkMultiLayer.learn(trainingSet);
 		neuralNetworkMultiLayer.save(nameToSave);
 		
 		testNeuralNetwork(neuralNetworkMultiLayer, testSet);
-
+		System.out.println(Arrays.toString(neuralNetworkMultiLayer.getWeights()));
         System.out.println("Time stop training:" + new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss:MM").format(new Date()));
 	}
 	
@@ -161,9 +163,6 @@ public class IAControl {
 	public int[] getDir_Shoot(double posX, double posY, Stage stage) {
 		double[] inputIA = {5,5,5,5};
 		
-		System.out.println("Position X = " + posX);
-		System.out.println("Position Y = " + posY);
-		
 		LinkedList<StageElement> elementsList = stage.getElements(null);
 		Player player = stage.getPlayer();
 		elementsList.add(player);
@@ -183,9 +182,9 @@ public class IAControl {
 			elementX = element.getPosX();
 			elementY = element.getPosY();
 			
-			if ((elementX+5 > posX && elementX <= colE-5) 
-					|| ((elementX + Properties.SIZE_SQUARE) >= posX+5 
-					&& (elementX + Properties.SIZE_SQUARE)-5 < colE)) {
+			if ((elementX+32 >= posX && elementX <= colE-32) 
+					|| ((elementX + Properties.SIZE_SQUARE + 32) >= posX 
+					&& (elementX + Properties.SIZE_SQUARE) <= colE-32)) {
 				
 				if (elementY < posY && nearUP1 < elementY) {
 					nearUP1 = elementY;
@@ -197,9 +196,9 @@ public class IAControl {
 				
 			} 
 			
-			else if ((elementY+5 > posY && elementY <= rowE-5)
-					|| ((elementY + Properties.SIZE_SQUARE) >= posY+5
-					&& (elementY + Properties.SIZE_SQUARE)-5 < rowE)) {
+			else if ((elementY+32 >= posY && elementY <= rowE-32)
+					|| ((elementY + Properties.SIZE_SQUARE + 32) >= posY
+					&& (elementY + Properties.SIZE_SQUARE) <= rowE-32)) {
 				
 				if (elementX < posX && nearLEFT1 < elementX) {
 					nearLEFT1 = elementX;
@@ -220,10 +219,13 @@ public class IAControl {
 		
 		inputIA[3] = generateInputValue(temElementRIGHT1, posX, posY);
 		
-		System.out.println(Arrays.toString(inputIA));
-		System.out.println(Arrays.toString(calculateIA(neuralNetworkMultiLayer, inputIA)));
-		
-		return calculateIA(neuralNetworkMultiLayer, inputIA);
+		int[] action = {-1,0};
+		if (inputIA[0] == 5 && inputIA[1] == 5
+				&& inputIA[2] == 5 && inputIA[3] == 5) {
+			return action;
+		} else {
+			return calculateIA(neuralNetworkMultiLayer, inputIA);
+		}
 	}
 	
 	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
@@ -265,6 +267,9 @@ public class IAControl {
 				}
 			}
 		}
+		
+		System.out.println(Arrays.toString(input));
+		System.out.println(Arrays.toString(action));
 		
 		return action;
 	}
