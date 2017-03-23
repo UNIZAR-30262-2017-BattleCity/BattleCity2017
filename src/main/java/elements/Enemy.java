@@ -102,6 +102,8 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
+		drawBullet(g);
+		
 	}
 		
 }

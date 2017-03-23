@@ -17,6 +17,10 @@ public abstract class Tank extends GameElement{
 	protected int maxBulletsInProgres;
 	protected LinkedList<Bullet> bulletsInProgres;
 	protected Bullet tmpBullet;
+	private static final int yIB = yI+2;
+	private static final int xIB = xI+2;
+	private static final int yFB = yF+k-8;
+	private static final int xFB = xF+k-8;
 	
 	public Tank(Stage stage){
 		super(stage);
@@ -36,10 +40,10 @@ public abstract class Tank extends GameElement{
 			
 			tmpBullet = bulletsInProgres.get(i);
 			
-			if(tmpBullet.getPosX()<xI) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosX()>xF) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()<yI) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()>yF) deleteBullet(tmpBullet);
+			if(tmpBullet.getPosX()<xIB) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosX()>xFB) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()<yIB) deleteBullet(tmpBullet);
+	    	if(tmpBullet.getPosY()>yFB) deleteBullet(tmpBullet);
 	    	
 	    	if (tmpBullet.isActive()) tmpBullet.updateDraw();
 			else deleteBullet(tmpBullet);

@@ -13,6 +13,7 @@ public class Bullet extends GameElement implements StageElement{
     private int dir;
     private BufferedImage imgBulletUp, imgBulletDowm, imgBulletLeft, imgBulletRight;
     private GameElement gE;
+    private static final int DELTA = Properties.SIZE_SQUARE/2 -4;
     
 	public Bullet(double posX, double posY, int dir, int type, Stage stage, GameElement gE) {
 		super(stage);
@@ -32,7 +33,7 @@ public class Bullet extends GameElement implements StageElement{
 			imgBulletUp = ImageControl.getBulletUp();
 			imgBulletDowm = ImageControl.getBulletDowm();
 			imgBulletLeft = ImageControl.getBulletLeft();
-			imgBulletRight = ImageControl.getBulletRight();
+			imgBulletRight = ImageControl.getBulletRight();			
 			break;
 		case 1://hard bullet
 			imgBulletUp = ImageControl.getBulletUp();
@@ -47,11 +48,38 @@ public class Bullet extends GameElement implements StageElement{
 			imgBulletRight = ImageControl.getBulletRight();
 			break;
 		}
+		
+		switch (dir) {
+		case 1:			
+			setHeigth(heigth/4);
+			setWidth(width/4+1);
+			setPosX(getPosX() + DELTA);
+			break;
+		case -1:
+			setHeigth(heigth/4);
+			setWidth(width/4+1);
+			setPosX(getPosX() + DELTA);
+			setPosY(getPosY() + Properties.SIZE_SQUARE);
+			break;
+		case -2:
+			setHeigth(heigth/4+1);
+			setWidth(width/4);
+			setPosX(getPosX() + 1);
+			setPosY(getPosY() + DELTA);
+			break;
+		case 2:
+			setHeigth(heigth/4+1);
+			setWidth(width/4);
+			setPosX(getPosX() + Properties.SIZE_SQUARE);
+			setPosY(getPosY() + DELTA);
+			break;
+		}		
+		
 	}	
 	
     public void draw(Graphics g) {
 		
-    	switch (this.dir) {
+    	switch (dir) {
 		case 1:
 			g.drawImage(imgBulletUp, (int) getPosX(), (int)getPosY(), null);
 			break;

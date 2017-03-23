@@ -40,19 +40,19 @@ public final class ImageControl {
 	}
 
 	public static BufferedImage getBulletUp() {
-		return getSprite(7, 21, w, h);
+		return getSprite(1, 22, w/4-1, h/4);
 	}
 
 	public static BufferedImage getBulletDowm() {
-		return getSprite(7, 22, w, h);
+		return getSprite(1, 23,  w/4-1, h/4);
 	}
 	
 	public static BufferedImage getBulletLeft() {
-		return getSprite(7, 21, w, h);
+		return getSprite(1, 25,  w/4, h/4-1);
 	}
 
 	public static BufferedImage getBulletRight() {
-		return getSprite(7, 22, w, h);
+		return getSprite(1, 24,  w/4, h/4-1);
 	}
 
 	public static BufferedImage getPlayerUP() {
