@@ -35,7 +35,7 @@ public class Stage {
     
     private Maze maze;
     private Player player;
-    private int k,pos;
+    private int k,pos,col,row,typeItem,typeEnemy;
     private int timerE, timerIt;
     private Random r;    
     private static final int x1 = Properties.POS1_SPAWN_ENEMY[0];
@@ -100,9 +100,10 @@ public class Stage {
     public void spawnEnemys() {	
 		if (nEnemies<cantEnemiesForLevel) {			
 			if (nEnemiesSimul<maxEnemySimul) {
-				if (pos == 1) enemies.add(new Enemy(x1, y1, 1, this));
-				if (pos == 2) enemies.add(new Enemy(x2, y2, 1, this));
-				if (pos == 3) enemies.add(new Enemy(x3, y3, 1, this));
+				typeEnemy = r.nextInt(3)+1;
+				if (pos == 1) enemies.add(new Enemy(x1, y1, typeEnemy, this));
+				if (pos == 2) enemies.add(new Enemy(x2, y2, typeEnemy, this));
+				if (pos == 3) enemies.add(new Enemy(x3, y3, typeEnemy, this));
 				if (pos == 3) pos = 0;
 				pos++;
 				nEnemies++;
@@ -114,10 +115,10 @@ public class Stage {
     public void spawnItems() {
 		if (nItems<maxItems) {
 			if (nItemsSimul<maxItemsSimul) {
-				int col = r.nextInt(Properties.COL_STAGE)+1;
-				int row = r.nextInt(Properties.ROW_STAGE)+1;
-				int id = r.nextInt(7)+1;
-				elements.add(new Item(col, row, 3, this));
+				col = r.nextInt(Properties.COL_STAGE)+1;
+				row = r.nextInt(Properties.ROW_STAGE)+1;
+				typeItem = r.nextInt(7)+1;
+				elements.add(new Item(col, row, typeItem, this));
 				nItemsSimul++;
 				nItems++;
 			}

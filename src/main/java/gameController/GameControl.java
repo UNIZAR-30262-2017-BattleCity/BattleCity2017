@@ -240,7 +240,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				player.setVel(1);
 			}
 			if (key == KeyEvent.VK_SPACE) {
-				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage,null));
+				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage,player));
 			}
 			if (key == KeyEvent.VK_ENTER) {				
 				//TODO pause

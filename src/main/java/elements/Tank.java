@@ -57,6 +57,16 @@ public abstract class Tank extends GameElement{
 		}
 	}
 	
+	public void anim(){
+		if(timeAnim>0){
+			timeAnim--;
+			anim = 0;
+		}else{
+			timeAnim = Properties.TIME_ANIM;
+			anim = 1;
+		}
+	}
+	
 	public void deleteBullet(Bullet b){
        bulletsInProgres.remove(b);
     }

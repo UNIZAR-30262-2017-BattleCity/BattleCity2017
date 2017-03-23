@@ -18,12 +18,15 @@ public abstract class GameElement {
 	protected int type;
 	protected boolean isActive;
 	protected Stage stage;
+	protected int timeAnim, anim;
 	
 	public GameElement(Stage stage){
 		this.stage = stage;
 		width = k;
 		heigth = k;
 		isActive=true;
+		timeAnim = Properties.TIME_ANIM;
+		anim = 0;
 	}
 	
 	public void setInitPos(int row, int col){

@@ -5,9 +5,9 @@ import gameController.ImageControl;
 public final class Properties {
 
 	//Frame
-	public final static int WIDTH = 720;
-	public final static int HEIGHT = 480;
-	public final static int SCALE = 2;
+	public final static int WIDTH = 730;
+	public final static int HEIGHT = 580;
+	public final static int SCALE = 3;
 		
 	//Menu - Configuration
 	public final static int N_OPC_MENU =  4;
@@ -49,7 +49,7 @@ public final class Properties {
 	
 	//_STAGE
 	public final static int SIZE_SQUARE_SSC = 16;
-	public final static int SIZE_SQUARE = SIZE_SQUARE_SSC*SCALE;
+	public final static int SIZE_SQUARE = SIZE_SQUARE_SSC*SCALE-8;
 	public final static int SIZE_STAGE = SIZE_SQUARE * 13;
 	public final static int WIDTH_STAGE = SIZE_STAGE;
 	public final static int HEIGHT_STAGE = SIZE_STAGE;
@@ -82,11 +82,12 @@ public final class Properties {
 	public final static int MAX_TIME_ITEM_SHOW = 480;
 	public final static int TIME_BETWEEN_SPAWN_IT = 700;
 	
+	
+	public final static int TIME_ANIM = 5;
+	
 	/*Mistakes
 	birth of items over enemies
 	birth of enemies over enemies
-	size bricks
-	size sprite of bullets
 	*/
 	
 }

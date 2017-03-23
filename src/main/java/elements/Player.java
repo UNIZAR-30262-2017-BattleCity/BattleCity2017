@@ -10,17 +10,17 @@ import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
-	private final static BufferedImage imgPlayerUp = ImageControl.getPlayerUP();
-	private final static BufferedImage imgPlayerUp1 = ImageControl.getPlayerUP();
-	private final static BufferedImage imgPlayerDowm = ImageControl.getPlayerDowm();
-	private final static BufferedImage imgPlayerLeft = ImageControl.getPlayerLeft();
-	private final static BufferedImage imgPlayerRight = ImageControl.getPlayerRight();
+	private final static BufferedImage[] imgPlayerUp = {ImageControl.getPlayerUP(),ImageControl.getPlayerUP1()};
+	private final static BufferedImage[] imgPlayerDowm = {ImageControl.getPlayerDowm(),ImageControl.getPlayerDowm1()};
+	private final static BufferedImage[] imgPlayerLeft = {ImageControl.getPlayerLeft(),ImageControl.getPlayerLeft1()};
+	private final static BufferedImage[] imgPlayerRight = {ImageControl.getPlayerRight(),ImageControl.getPlayerRight1()};
     private int userName;
 	private int lifes;
 	private int score;
     private int maxTimeItemEfect;
 	private boolean itemTaked;
 	private boolean gunEfectActivate;
+
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
@@ -44,32 +44,31 @@ public class Player extends Tank implements StageElement{
     	if (vel!=0) {
     		switch (this.dir) {
     		case 1:
-    			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
-    			g.drawImage(imgPlayerUp1, (int) getPosX(), (int)getPosY(), width, heigth, null);
+				g.drawImage(imgPlayerUp[anim], (int) getPosX(), (int)getPosY(), width, heigth, null);
     			break;
     		case -1:
-    			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			g.drawImage(imgPlayerDowm[anim], (int) getPosX(), (int)getPosY(), width, heigth, null);
     			break;
     		case -2:
-    			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			g.drawImage(imgPlayerLeft[anim], (int) getPosX(), (int)getPosY(), width, heigth, null);
     			break;
     		case 2:
-    			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(),width, heigth, null);
+    			g.drawImage(imgPlayerRight[anim], (int) getPosX(), (int)getPosY(),width, heigth, null);
     			break;
     		}
     	}else{
     		switch (this.dir) {
     		case 1:
-    			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			g.drawImage(imgPlayerUp[0], (int) getPosX(), (int)getPosY(), width, heigth, null);
     			break;
     		case -1:
-    			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			g.drawImage(imgPlayerDowm[0], (int) getPosX(), (int)getPosY(), width, heigth, null);
     			break;
     		case -2:
-    			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			g.drawImage(imgPlayerLeft[0], (int) getPosX(), (int)getPosY(), width, heigth, null);
     			break;
     		case 2:
-    			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(),width, heigth, null);
+    			g.drawImage(imgPlayerRight[0], (int) getPosX(), (int)getPosY(),width, heigth, null);
     			break;
     		}
     	}
@@ -132,6 +131,9 @@ public class Player extends Tank implements StageElement{
 		}else{
 			
 		}
+    	
+		anim();
+		
         
     	
     }
@@ -143,7 +145,6 @@ public class Player extends Tank implements StageElement{
 	public void reduceLifes(){
     	lifes = lifes - 1;
     }
-
 	
 	public void starEfect(){		
 		addScore(500);
@@ -173,7 +174,7 @@ public class Player extends Tank implements StageElement{
 			gunEfect();
 		}
 	}
-    	
+	    	
 	public int getScore() {
 		return score;
 	}

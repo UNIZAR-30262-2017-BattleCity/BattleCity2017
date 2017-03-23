@@ -54,7 +54,7 @@ public class PhysicsContol {
 	}
 	
 	public static void collisionBullet(Bullet b, GameElement gE, LinkedList<StageElement> list){
-		
+
 		StageElement s;		
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
@@ -66,16 +66,19 @@ public class PhysicsContol {
 							int w = list.get(i).getType();
 							if (w !=1) return;
 							else s.setActive(false);
+						}if (s.getClass().equals(Enemy.class)) {
+							if (gE.getClass().equals(Player.class)) {
+								s.getStage().deleteEnemy((Enemy) s);
+							}							
+						}if (s.getClass().equals(Player.class)) {
+							if (gE.getClass().equals(Enemy.class)) {
+								//TODO kil player
+							}		
 						}else{
 							s.setActive(false);
 						}
-						if (s.getClass().equals(Enemy.class)) {
-							s.getStage().deleteEnemy((Enemy) s);
-						}
 					}
-					
-				}				
-				
+				}
 			}
 		}
 	}
