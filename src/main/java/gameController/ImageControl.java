@@ -58,6 +58,10 @@ public final class ImageControl {
 	public static BufferedImage getPlayerUP() {
 		return getSprite(1, 1, w, h);
 	}
+	
+	public static BufferedImage getPlayerUP1() {
+		return getSprite(1, 2, w, h);
+	}
 
 	public static BufferedImage getPlayerDowm() {
 		return getSprite(1, 5, w, h);

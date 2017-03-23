@@ -11,6 +11,7 @@ import gameController.ImageControl;
 public class Player extends Tank implements StageElement{
 	
 	private final static BufferedImage imgPlayerUp = ImageControl.getPlayerUP();
+	private final static BufferedImage imgPlayerUp1 = ImageControl.getPlayerUP();
 	private final static BufferedImage imgPlayerDowm = ImageControl.getPlayerDowm();
 	private final static BufferedImage imgPlayerLeft = ImageControl.getPlayerLeft();
 	private final static BufferedImage imgPlayerRight = ImageControl.getPlayerRight();
@@ -39,21 +40,42 @@ public class Player extends Tank implements StageElement{
         
     @Override
     public void draw(Graphics g) {
-    	switch (this.dir) {
-		case 1:
-			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
-			break;
-		case -1:
-			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), width, heigth, null);
-			break;
-		case -2:
-			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), width, heigth, null);
-			break;
-		case 2:
-			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(),width, heigth, null);
-			break;
-		}
-		
+
+    	if (vel!=0) {
+    		switch (this.dir) {
+    		case 1:
+    			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			g.drawImage(imgPlayerUp1, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			break;
+    		case -1:
+    			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			break;
+    		case -2:
+    			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			break;
+    		case 2:
+    			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(),width, heigth, null);
+    			break;
+    		}
+    	}else{
+    		switch (this.dir) {
+    		case 1:
+    			g.drawImage(imgPlayerUp, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			break;
+    		case -1:
+    			g.drawImage(imgPlayerDowm, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			break;
+    		case -2:
+    			g.drawImage(imgPlayerLeft, (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			break;
+    		case 2:
+    			g.drawImage(imgPlayerRight, (int) getPosX(), (int)getPosY(),width, heigth, null);
+    			break;
+    		}
+    	}
+
+
+
 	}
     
     @Override
