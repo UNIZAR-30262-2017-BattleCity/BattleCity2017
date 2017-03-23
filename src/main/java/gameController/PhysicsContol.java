@@ -5,11 +5,13 @@ import java.awt.Rectangle;
 import java.util.LinkedList;
 
 import elements.Bullet;
+import elements.Eagle;
 import elements.Enemy;
 import elements.GameElement;
 import elements.Item;
 import elements.Obstacle;
 import elements.Player;
+import elements.Stage;
 import elements.StageElement;
 import elements.Wall;
 
@@ -53,8 +55,8 @@ public class PhysicsContol {
 		return null;
 	}
 	
-	public static void collisionBullet(Bullet b, GameElement gE, LinkedList<StageElement> list){
-
+	public static void collisionBullet(Bullet b, GameElement gE, Stage stage){
+		LinkedList<StageElement> list = stage.getElements(null);
 		StageElement s;		
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
@@ -66,17 +68,20 @@ public class PhysicsContol {
 							int w = list.get(i).getType();
 							if (w !=1) return;
 							else s.setActive(false);
-						}if (s.getClass().equals(Enemy.class)) {
+						}
+						if (s.getClass().equals(Enemy.class)) {
 							if (gE.getClass().equals(Player.class)) {
-								s.getStage().deleteEnemy((Enemy) s);
-							}							
-						}if (s.getClass().equals(Player.class)) {
+								stage.deleteEnemy((Enemy) s);
+							}
+						}
+						if (s.getClass().equals(Player.class)) {
 							if (gE.getClass().equals(Enemy.class)) {
-								//TODO kil player
-							}		
-						}else{
+								stage.getPlayer().reduceLifes();
+							}
+						}if (s.getClass().equals(Eagle.class)) {
 							s.setActive(false);
 						}
+						
 					}
 				}
 			}

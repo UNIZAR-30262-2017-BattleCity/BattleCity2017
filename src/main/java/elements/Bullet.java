@@ -112,7 +112,7 @@ public class Bullet extends GameElement implements StageElement{
 			break;
 		}
     	    	 
-    	PhysicsContol.collisionBullet(this, gE,stage.getElements(this));
+    	PhysicsContol.collisionBullet(this, gE,stage);
     	
     }
     

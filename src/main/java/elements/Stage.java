@@ -91,6 +91,7 @@ public class Stage {
     	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this);
     	 maze.loadMaze(level);
     	 eagleBricks = maze.loadEagleWall();
+    	 elements.add(player);
     }
             
     public void spawnElements(StageElement e) {
@@ -157,7 +158,6 @@ public class Stage {
 					//}
     				
         			tmpEnemy.updateDraw();
-        			tmpEnemy.updateDrawBullet();
         		}
         		else deleteEnemy(tmpEnemy);
 			}
@@ -166,7 +166,8 @@ public class Stage {
     	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);	
-    		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))){
+    		if (tmpElement.isActive() || (tmpElement.getClass().equals(Player.class))
+    				|| (tmpElement.getClass().equals(Eagle.class))){
     			tmpElement.updateDraw();
     		}else deleteElement(tmpElement);
     	}
@@ -184,7 +185,8 @@ public class Stage {
         g.fillRect(Properties.X_INIT_STAGE-1, Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
 	    	
     	for (StageElement sE : elements) {
-    		if (sE.isActive() || (sE.getClass().equals(Eagle.class))) sE.draw(g);
+    		if (sE.isActive() || (tmpElement.getClass().equals(Player.class))
+    				|| (sE.getClass().equals(Eagle.class))) sE.draw(g);
 		}
     	
     	for (Wall wall : eagleBricks) {

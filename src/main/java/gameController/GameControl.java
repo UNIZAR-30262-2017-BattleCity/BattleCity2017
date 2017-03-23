@@ -105,8 +105,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		
 	public void updateDraw(){
 		if (screen.equals(Screen.STAGE_PLAY)) {
-			player.updateDraw();
-			player.updateDrawBullet();
+			//player.updateDraw();
+			//player.updateDrawBullet();
 			stage.updateDraw();
 		}
 		
@@ -146,8 +146,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case STAGE_PLAY:
 			stage.draw(g);
-			player.draw(g);
-			player.drawBullet(g);		
+			//player.draw(g);
+			//player.drawBullet(g);		
 			break;
 		case STAGE_PAUSED:
 			

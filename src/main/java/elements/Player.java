@@ -73,7 +73,7 @@ public class Player extends Tank implements StageElement{
     		}
     	}
 
-
+    	drawBullet(g);
 
 	}
     
@@ -133,7 +133,7 @@ public class Player extends Tank implements StageElement{
 		}
     	
 		anim();
-		
+		updateDrawBullet();
         
     	
     }
@@ -144,6 +144,13 @@ public class Player extends Tank implements StageElement{
 	
 	public void reduceLifes(){
     	lifes = lifes - 1;
+    	if (lifes<0) {
+			
+		}else{
+			setInitPos(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1]);
+			shieldEfect();
+		}
+    	
     }
 	
 	public void starEfect(){		

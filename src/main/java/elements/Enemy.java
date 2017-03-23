@@ -109,6 +109,7 @@ public class Enemy extends Tank implements StageElement{
     	if(getPosY()>yF) setDir(1);
     	
     	anim();
+    	updateDrawBullet();
 		
 	}
 	
