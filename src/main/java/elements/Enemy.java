@@ -99,9 +99,9 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-		if (PhysicsContol.collisionEnemy(this, stage.getElements(this))) {
+		/*if (PhysicsContol.collisionEnemy(this, stage.getElements(this))) {
 			setDir(getDir()*-1);
-		}		
+		}*/	
 		
 		if(getPosX()<xI) setDir(2);
     	if(getPosX()>xF) setDir(-2);

@@ -17,6 +17,7 @@ import org.neuroph.util.TransferFunctionType;
 
 import application.Properties;
 import elements.Eagle;
+import elements.Enemy;
 import elements.Player;
 import elements.Stage;
 import elements.StageElement;
@@ -161,7 +162,7 @@ public class IAControl {
 // ------------------------------------------------------------------------------- //
 	
 	public int[] getDir_Shoot(double posX, double posY, Stage stage) {
-		double[] inputIA = {5,5,5,5};
+		double[] inputIA = {0,0,0,0};
 		
 		LinkedList<StageElement> elementsList = stage.getElements(null);
 		Player player = stage.getPlayer();
@@ -179,31 +180,41 @@ public class IAControl {
 		
 		for (int i = 0; i < elementsList.size(); i++) {
 			element = elementsList.get(i);
-			elementX = element.getPosX();
-			elementY = element.getPosY();
+			elementX = element.getPosX()+18;
+			elementY = element.getPosY()+18;
 			
-			if ((elementX+32 >= posX && elementX <= colE-32) 
-					|| ((elementX + Properties.SIZE_SQUARE + 32) >= posX 
-					&& (elementX + Properties.SIZE_SQUARE) <= colE-32)) {
+			if (element.getClass().equals(Enemy.class)
+					&& element.getType() == 3) {
+				elementX = element.getPosX()+18;
+				elementY = element.getPosY()+4;
+			} else if (element.getClass().equals(Enemy.class)
+					&& element.getType() == 4) {
+    			elementX = element.getPosX()+4;
+    			elementY = element.getPosY()+18;
+			} else if (element.getClass().equals(Enemy.class) 
+					&& (element.getType() == 1 || element.getType() == 2)) {
+    			elementX = element.getPosX()+4;
+    			elementY = element.getPosY()+4;
+			}
+			
+			if (elementX == posX) {
 				
-				if (elementY < posY && nearUP1 < elementY) {
+				if (elementY < posY-18 && nearUP1 < elementY) {
 					nearUP1 = elementY;
 					temElementUP1 = element; // UP
-				} else if (elementY > posY && nearDOWN1 > elementY) {
+				} else if (elementY > posY+18 && nearDOWN1 > elementY) {
 					nearDOWN1 = elementY;
 					temElementDOWN1 = element; // DOWN
 				}
 				
 			} 
 			
-			else if ((elementY+32 >= posY && elementY <= rowE-32)
-					|| ((elementY + Properties.SIZE_SQUARE + 32) >= posY
-					&& (elementY + Properties.SIZE_SQUARE) <= rowE-32)) {
+			else if (elementY == posY) {
 				
-				if (elementX < posX && nearLEFT1 < elementX) {
+				if (elementX < posX-18 && nearLEFT1 < elementX) {
 					nearLEFT1 = elementX;
 					temElementLEFT1 = element; // LEFT
-				} else if (elementX > posX && nearRIGHT1 > elementX) {
+				} else if (elementX > posX+18 && nearRIGHT1 > elementX) {
 					nearRIGHT1 = elementX;
 					temElementRIGHT1 = element; // RIGHT
 				}
@@ -219,13 +230,7 @@ public class IAControl {
 		
 		inputIA[3] = generateInputValue(temElementRIGHT1, posX, posY);
 		
-		int[] action = {-1,0};
-		if (inputIA[0] == 5 && inputIA[1] == 5
-				&& inputIA[2] == 5 && inputIA[3] == 5) {
-			return action;
-		} else {
-			return calculateIA(neuralNetworkMultiLayer, inputIA);
-		}
+		return calculateIA(neuralNetworkMultiLayer, inputIA);
 	}
 	
 	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
@@ -275,35 +280,35 @@ public class IAControl {
 	}
 	
 	public double generateInputValue(StageElement element, double posX, double posY) {
-		double value = 5;
+		double value = 0;
 		
 		if (element != null) {
 			
 			if (element.getClass().equals(Wall.class)
-					&& element.getType() == 2) {
-				value = 0;
+					&& element.getType() != 1) {
+				value = 1;
 			}
 			
 			else if (element.getClass().equals(Wall.class)
 					&& element.getType() == 1) {
-				value = 1;
-			}
-			
-			else if (element.getClass().equals(Player.class)) {
 				value = 2;
 			}
 			
-			else if (element.getClass().equals(Eagle.class)) {
+			else if (element.getClass().equals(Player.class)) {
 				value = 3;
 			}
-		} else {
+			
+			else if (element.getClass().equals(Eagle.class)) {
+				value = 4;
+			}
+		} /*else {
 			if (posX == Properties.X_INIT_STAGE 
 					|| posX == (Properties.X_FINAL_STAGE - Properties.SIZE_SQUARE)
 					|| posY == Properties.Y_INIT_STAGE
 					|| posY == (Properties.Y_FINAL_STAGE - Properties.SIZE_SQUARE)) {
-				value = 4;
+				value = 5;
 			}
-		}
+		}*/
 		
 		return value;
 	}
