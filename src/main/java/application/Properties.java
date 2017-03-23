@@ -49,7 +49,7 @@ public final class Properties {
 	
 	//_STAGE
 	public final static int SIZE_SQUARE_SSC = 16;
-	public final static int SIZE_SQUARE = SIZE_SQUARE_SSC*2;
+	public final static int SIZE_SQUARE = SIZE_SQUARE_SSC*SCALE;
 	public final static int SIZE_STAGE = SIZE_SQUARE * 13;
 	public final static int WIDTH_STAGE = SIZE_STAGE;
 	public final static int HEIGHT_STAGE = SIZE_STAGE;

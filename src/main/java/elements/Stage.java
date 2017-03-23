@@ -152,10 +152,11 @@ public class Stage {
         			//int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX(),tmpEnemy.getPosY(), this);
     				//tmpEnemy.setDir(dir[0]);
         			//if (dir[1] == 1) {
-						//tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
+						tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
 					//}
     				
         			tmpEnemy.updateDraw();
+        			tmpEnemy.updateDrawBullet();
         		}
         		else deleteEnemy(tmpEnemy);
 			}
