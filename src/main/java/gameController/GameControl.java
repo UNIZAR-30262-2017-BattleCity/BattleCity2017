@@ -17,6 +17,7 @@ import userInterface.Configuration;
 import userInterface.Cursor;
 import userInterface.Menu;
 import userInterface.Screen;
+import userInterface.StageGUI;
 
 
 public class GameControl extends Canvas implements Runnable, KeyListener{
@@ -28,6 +29,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Stage stage;
 	private Screen screen;
 	private Menu menu;
+	private StageGUI stageGUI;
 	private Configuration config;
 	private Cursor cursor;
 	private IAControl ia;
@@ -136,9 +138,14 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			config.draw(g);
 			cursor.draw(g);
 			break;
-		case INIT_STAGE:
+		case PRESENT_STAGE:
 			g.setColor(Color.darkGray);
 	        g.fillRect(0, 0, Properties.WIDTH, Properties.HEIGHT);
+	        //TODO 
+			break;
+		case INIT_STAGE:
+	        stageGUI = new StageGUI(level);
+	        stageGUI.draw(level,g);
 	        initStage();
 	        screen = Screen.STAGE_PLAY;
 			break;

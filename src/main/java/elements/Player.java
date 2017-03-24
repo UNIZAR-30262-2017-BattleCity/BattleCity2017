@@ -1,29 +1,33 @@
 package elements;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
+import gameController.FontControl;
 import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
-	private final static BufferedImage[] imgPlayerUp = {ImageControl.getPlayerUP(),ImageControl.getPlayerUP1()};
-	private final static BufferedImage[] imgPlayerDowm = {ImageControl.getPlayerDowm(),ImageControl.getPlayerDowm1()};
-	private final static BufferedImage[] imgPlayerLeft = {ImageControl.getPlayerLeft(),ImageControl.getPlayerLeft1()};
-	private final static BufferedImage[] imgPlayerRight = {ImageControl.getPlayerRight(),ImageControl.getPlayerRight1()};
+	private final static BufferedImage[] imgPlayerUp = {ImageControl.getPlayer1UP(),ImageControl.getPlayer1UPB()};
+	private final static BufferedImage[] imgPlayerDowm = {ImageControl.getPlayer1Dowm(),ImageControl.getPlayer1DowmB()};
+	private final static BufferedImage[] imgPlayerLeft = {ImageControl.getPlayer1Left(),ImageControl.getPlayer1LeftB()};
+	private final static BufferedImage[] imgPlayerRight = {ImageControl.getPlayer1Right(),ImageControl.getPlayer1RightB()};
     private int userName;
 	private int lifes;
 	private int score;
     private int maxTimeItemEfect;
 	private boolean itemTaked;
 	private boolean gunEfectActivate;
-
+	private boolean updateLifes;
+	private boolean updateScore;
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
+	
 	
     public Player(int col, int row, int lifes, Stage stage) {
 		super(stage);
@@ -33,6 +37,8 @@ public class Player extends Tank implements StageElement{
 		setInitPos(col, row);
 		itemTaked= false;
 		gunEfectActivate = false;
+		updateLifes = true;
+		updateScore = true;
 		score = 0;
 		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;		
 		this.shieldLevel = 1;
@@ -74,6 +80,22 @@ public class Player extends Tank implements StageElement{
     	}
 
     	drawBullet(g);
+    	if (updateLifes) {
+    		g.setColor(Color.darkGray);
+	        g.fillRect(Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES-15, 40, 20);
+	        g.setColor(Color.black);
+    		g.setFont( FontControl.ARIAL);
+    		g.drawString(""+lifes, Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES );
+    		updateLifes = false;
+		}
+    	if (updateScore) {
+    		g.setColor(Color.darkGray);
+	        g.fillRect(Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES, 40, 20);
+	        g.setColor(Color.black);
+    		g.setFont( FontControl.ARIAL);
+    		g.drawString(""+score, Properties.X_INIT_INFO+60, Properties.Y_IP_SCORE );
+    		updateScore = false;
+		}
 
 	}
     
@@ -138,12 +160,31 @@ public class Player extends Tank implements StageElement{
     	
     }
         
-    public void addScore(int sco){
-		score = score + sco;
+    public void addScore(int type){		
+		updateScore = true;
+		switch (type) {
+		case 1:
+			score = score + 100;
+			break;
+		case 2:
+			score = score + 200;
+			break;
+		case 3:
+			score = score + 300;
+			break;
+		case 4:
+			score = score + 400;
+			break;
+		case 5:
+			score = score + 500;
+			break;
+		}
 	}
+    
 	
 	public void reduceLifes(){
-    	lifes = lifes - 1;
+    	lifes--;
+    	updateLifes = true;
     	if (lifes<0) {
 			
 		}else{
@@ -154,7 +195,13 @@ public class Player extends Tank implements StageElement{
     }
 	
 	public void starEfect(){		
-		addScore(500);
+		addScore(5);
+		updateScore = true;
+	}
+	
+	public void tankEfect(){		
+		lifes++;
+		updateLifes = true;
 	}
 	
 	public void gunEfect(){

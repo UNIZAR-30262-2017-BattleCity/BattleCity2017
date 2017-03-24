@@ -5,7 +5,8 @@ import java.io.InputStream;
 
 public class FontControl {
 
-	private Font font;
+	public static Font ARIAL = new Font("Arial", Font.PLAIN, 20);
+	private static Font font;
 
 	public FontControl(String fontName) {    	
 		try {
@@ -17,7 +18,7 @@ public class FontControl {
 		}
 	}
 
-	public Font font(int style, float size){
+	public Font getFont(int style, float size){
 		Font tfont = font.deriveFont(style, size);
 		return tfont;
 	}

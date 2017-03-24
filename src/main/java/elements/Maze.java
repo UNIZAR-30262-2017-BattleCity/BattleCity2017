@@ -110,7 +110,7 @@ public class Maze {
 		
 		return matriz;
 	}	
-	
+		
 	public void loadIronWall(){
     	stage.spawnElements(new Wall(11.5,5.5,0,3,stage,true));
     	stage.spawnElements(new Wall(11.5,6.5,0,3,stage,true));
@@ -152,20 +152,20 @@ public class Maze {
             for (int j = 0; j < m.length; j++) {
                 if (m[i][j] == 1) {
                 	for (int j2 = 0; j2 < 4; j2++) {
-						stage.spawnElements(new Wall(i,j,j2,1,stage, false)); 
+						stage.spawnWalls(new Wall(i,j,j2,1,stage, false)); 
 					}					
 				}
                 if (m[i][j] == 2) {
                 	for (int j2 = 0; j2 < 2; j2++) {
-						stage.spawnElements(new Wall(i,j,j2,1,stage, false)); 
+						stage.spawnWalls(new Wall(i,j,j2,1,stage, false)); 
 					}
 				}
                 if (m[i][j] == 3) {                
-					stage.spawnElements(new Wall(i,j,0,2,stage, false)); 
+					stage.spawnWalls(new Wall(i,j,0,2,stage, false)); 
 					
 				}
                 if (m[i][j] == 4) {
-					stage.spawnElements(new Wall(i,j,0,3,stage, false));
+					stage.spawnWalls(new Wall(i,j,0,3,stage, false));
 				}
                 if (m[i][j] == 5) {
 					stage.spawnElements(new Obstacle(i,j,1,stage));
@@ -178,13 +178,13 @@ public class Maze {
 				}
                 if (m[i][j] == 8) {
                 	for (int j2 = 0; j2 < 2; j2++) {
-						stage.spawnElements(new Wall(i-.5,j,j2,1,stage, false)); 
+						stage.spawnWalls(new Wall(i-.5,j,j2,1,stage, false)); 
 					}
-		    		stage.spawnElements(new Wall(i,j,0,3,stage, false));
+		    		stage.spawnWalls(new Wall(i,j,0,3,stage, false));
 				}
                 if (m[i][j] == 9) {
                 	for (int j2 = 0; j2 < 4; j2++) {
-						stage.spawnElements(new Wall(i-0.5,j,j2,1,stage, false));
+						stage.spawnWalls(new Wall(i-0.5,j,j2,1,stage, false));
 					}
 				}
                

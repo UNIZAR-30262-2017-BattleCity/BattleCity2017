@@ -5,7 +5,7 @@ import gameController.ImageControl;
 public final class Properties {
 
 	//Frame
-	public final static int WIDTH = 730;
+	public final static int WIDTH = 680;
 	public final static int HEIGHT = 580;
 	public final static int SCALE = 3;
 		
@@ -14,7 +14,7 @@ public final class Properties {
 	public final static int N_OPC_CONFIG =  5;
 	
 	//Font
-	public final static String FONT_PIXEL = "/resources/fonts/Pixel.ttf";
+	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
 	
 	//Cursor Menu
 	public final static int X_CURSOR_M =  275;
@@ -38,7 +38,7 @@ public final class Properties {
 	public final static int VEL_ENEMY = 1;
 	public final static int VEL_ENEMY_FAST = 2;
 	public final static int MAX_ENEMY_SIMUL = 5;
-	public final static int CANT_ENEMIES_LEVEL_123 = 15;
+	public final static int CANT_ENEMIES_LEVEL = 20;
 	public final static int MAX_ENEMY_LEVEL = 4;
 	public final static int TIME_BETWEEN_SPAWN_E = 300;
 	
@@ -74,17 +74,29 @@ public final class Properties {
 	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
 	
 	public static final ImageControl SSCTANK = new ImageControl(PATH_SS_TANK);
-			
+	
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 10;
 	public final static int MAX_ITEMS_SIMUL = 3;
 	public final static int MAX_TIME_ITEM_EFECT = 480;
 	public final static int MAX_TIME_ITEM_SHOW = 480;
 	public final static int TIME_BETWEEN_SPAWN_IT = 700;
-	
+		
 	
 	public final static int TIME_ANIM = 5;
 	
+	
+	//StageGUI
+	public static final int X_INIT_INFO = X_FINAL_STAGE+60;
+	public static final int Y_INIT_INFO = Y_INIT_STAGE+40;
+	public static final int X_FINAL_INFO = WIDTH -5;
+	public static final int Y_FINAL_INFO = Y_FINAL_STAGE;
+	
+	public static final int Y_IP_LIFES = Y_INIT_INFO+260;
+	public static final int Y_IP_SCORE = Y_IP_LIFES+20;
+	
+	public static final int Y_IIP_LIFES = Y_IP_LIFES+100;
+	public static final int Y_IIP_SCORE = Y_IIP_LIFES+20;
 	/*Mistakes
 	birth of items over enemies
 	birth of enemies over enemies

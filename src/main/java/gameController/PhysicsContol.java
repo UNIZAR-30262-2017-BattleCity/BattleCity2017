@@ -66,12 +66,16 @@ public class PhysicsContol {
 					if (!(s.getClass().equals(Obstacle.class)) && !(s.getClass().equals(Item.class))) {
 						b.setActive(false);
 						if (s.getClass().equals(Wall.class)) {
-							int w = list.get(i).getType();
+							int w = s.getType();
 							if (w !=1) return;
-							else s.setActive(false);
+							else {
+								stage.setUpdteBricks(true);
+								s.setActive(false);
+							}
 						}
 						if (s.getClass().equals(Enemy.class)) {
 							if (gE.getClass().equals(Player.class)) {
+								stage.getPlayer().addScore(s.getType());
 								stage.deleteEnemy((Enemy) s);
 							}
 						}

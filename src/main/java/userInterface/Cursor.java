@@ -8,7 +8,7 @@ import gameController.ImageControl;
 
 public class Cursor {
 	
-	private static final BufferedImage IMG_CURSOR = Properties.SSCTANK.getPlayerRight();
+	private static final BufferedImage IMG_CURSOR = Properties.SSCTANK.getPlayer1Right();
 	private int x, y, initY, finalY;
 
 	public Cursor(){

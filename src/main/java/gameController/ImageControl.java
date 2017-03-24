@@ -38,7 +38,23 @@ public final class ImageControl {
 	public static BufferedImage getPaused(){
 		return spriteSheet.getSubimage(304, 64, 40, 8);
 	}
+	
+	public static BufferedImage getEnemyMini(){
+		return spriteSheet.getSubimage(352, 32, 8, 8);
+	}
+	
+	public static BufferedImage getFlag(){
+		return getSprite(2, 25,  w, h);
+	}
 
+	public static BufferedImage getIP(){
+		return getSprite(2, 23,  w, h/2);
+	}
+	
+	public static BufferedImage getIIP(){
+		return getSprite(2, 24,  w, h/2);
+	}
+	
 	public BufferedImage getSpriteSheet() {
 		return spriteSheet;
 	}
@@ -59,38 +75,70 @@ public final class ImageControl {
 		return getSprite(1, 24,  w/4, h/4-1);
 	}
 
-	public static BufferedImage getPlayerUP() {
+	public static BufferedImage getPlayer1UP() {
 		return getSprite(1, 1, w, h);
 	}
 	
-	public static BufferedImage getPlayerUP1() {
+	public static BufferedImage getPlayer1UPB() {
 		return getSprite(1, 2, w, h);
 	}
 
-	public static BufferedImage getPlayerDowm() {
+	public static BufferedImage getPlayer1Dowm() {
 		return getSprite(1, 5, w, h);
 	}
 	
-	public static BufferedImage getPlayerDowm1() {
+	public static BufferedImage getPlayer1DowmB() {
 		return getSprite(1, 6, w, h);
 	}
 
-	public static BufferedImage getPlayerLeft() {
+	public static BufferedImage getPlayer1Left() {
 		return getSprite(1, 3, w, h);
 	}
 	
-	public static BufferedImage getPlayerLeft1() {
+	public static BufferedImage getPlayer1LeftB() {
 		return getSprite(1, 4, w, h);
 	}
 	
-	public static BufferedImage getPlayerRight() {
+	public static BufferedImage getPlayer1Right() {
 		return getSprite(1, 7, w, h);
 	}
 	
-	public static BufferedImage getPlayerRight1() {
+	public static BufferedImage getPlayer1RightB() {
 		return getSprite(1, 8, w, h);
 	}
 
+	public static BufferedImage getPlayer2UP() {
+		return getSprite(9, 1, w, h);
+	}
+	
+	public static BufferedImage getPlayer2UPB() {
+		return getSprite(9, 2, w, h);
+	}
+
+	public static BufferedImage getPlayer2Dowm() {
+		return getSprite(9, 5, w, h);
+	}
+	
+	public static BufferedImage getPlayer2DowmB() {
+		return getSprite(9, 6, w, h);
+	}
+
+	public static BufferedImage getPlayer2Left() {
+		return getSprite(9, 3, w, h);
+	}
+	
+	public static BufferedImage getPlayer2LeftB() {
+		return getSprite(9, 4, w, h);
+	}
+	
+	public static BufferedImage getPlayer2Right() {
+		return getSprite(9, 7, w, h);
+	}
+	
+	public static BufferedImage getPlayer2RightB() {
+		return getSprite(9, 8, w, h);
+	}
+	
 	public static BufferedImage getEnemy1Up() {
 		return getSprite(1, 9, w, h);
 	}
@@ -188,35 +236,35 @@ public final class ImageControl {
 	}
 
 	public static BufferedImage getEnemy4Up() {
-		return getSprite(8, 9, w, h);
+		return getSprite(4, 9, w, h);
 	}
 	
 	public static BufferedImage getEnemy4UpB() {
-		return getSprite(8, 10, w, h);
+		return getSprite(4, 10, w, h);
 	}
 
 	public static BufferedImage getEnemy4Dowm() {
-		return getSprite(8, 13, w, h);
+		return getSprite(4, 13, w, h);
 	}
 	
 	public static BufferedImage getEnemy4DowmB() {
-		return getSprite(8, 14, w, h);
+		return getSprite(4, 14, w, h);
 	}
 
 	public static BufferedImage getEnemy4Left() {
-		return getSprite(8, 11, w, h);
+		return getSprite(4, 11, w, h);
 	}
 	
 	public static BufferedImage getEnemy4LeftB() {
-		return getSprite(8, 12, w, h);
+		return getSprite(4, 12, w, h);
 	}
 
 	public static BufferedImage getEnemy4Right() {
-		return getSprite(8, 15, w, h);
+		return getSprite(4, 15, w, h);
 	}
 	
 	public static BufferedImage getEnemy4RightB() {
-		return getSprite(8, 16, w, h);
+		return getSprite(4, 16, w, h);
 	}
 	
 	public static BufferedImage getImgEagle() {
@@ -272,11 +320,11 @@ public final class ImageControl {
 	}
 
 	public static BufferedImage getItemGun() {
-		return getSprite(8, 22, w, h);
+		return getSprite(8, 23, w, h);
 	}
 
 	public static BufferedImage getItemTank() {
-		return getSprite(8, 23, w, h);
+		return getSprite(8, 22, w, h);
 	}
 
 	public static BufferedImage getImgHalfBrickV() {
