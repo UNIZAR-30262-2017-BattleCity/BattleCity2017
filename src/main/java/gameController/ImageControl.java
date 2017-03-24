@@ -34,6 +34,10 @@ public final class ImageControl {
 		BufferedImage sprite = spriteSheet.getSubimage((col*k)-k, (row*k)-k, width, heigth);
 		return sprite;
 	}
+	
+	public static BufferedImage getPaused(){
+		return spriteSheet.getSubimage(304, 64, 40, 8);
+	}
 
 	public BufferedImage getSpriteSheet() {
 		return spriteSheet;

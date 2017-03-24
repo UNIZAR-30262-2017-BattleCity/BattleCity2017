@@ -1,6 +1,7 @@
 package elements;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
@@ -99,9 +100,25 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-		/*if (PhysicsContol.collisionEnemy(this, stage.getElements(this))) {
-			setDir(getDir()*-1);
-		}*/	
+		Point p = PhysicsContol.collisionEnemy(this, stage.getElements(this));
+    	
+    	if (p!=null) {
+    		
+    		switch (dir) {
+    		case 1://up
+    			setPosY(p.getY());
+    			break;
+    		case -1://down
+    			setPosY(p.getY()-heigth);
+    			break;
+    		case -2://left
+    			setPosX(p.getX());
+    			break;
+    		case 2://right
+    			setPosX(p.getX()-width);
+    			break;
+    		}
+		}	
 		
 		if(getPosX()<xI) setDir(2);
     	if(getPosX()>xF) setDir(-2);

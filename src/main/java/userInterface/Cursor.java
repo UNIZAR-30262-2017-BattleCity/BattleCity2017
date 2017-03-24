@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
+import gameController.ImageControl;
 
 public class Cursor {
 	

@@ -44,8 +44,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		opc = 1;
 		menu = new Menu();
 		cursor = new Cursor();
-		ia = new IAControl();
-		//ia=null;
+		//ia = new IAControl();
+		ia=null;
 	}
 	
 	public void initStage(){				
@@ -105,8 +105,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		
 	public void updateDraw(){
 		if (screen.equals(Screen.STAGE_PLAY)) {
-			//player.updateDraw();
-			//player.updateDrawBullet();
 			stage.updateDraw();
 		}
 		
@@ -145,12 +143,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
-			stage.draw(g);
-			//player.draw(g);
-			//player.drawBullet(g);		
+			stage.draw(g);	
 			break;
 		case STAGE_PAUSED:
-			
+			g.drawImage(ImageControl.getPaused(), 252, 298, 100, 25, null);
 			break;
 		case SCORE_STAGE:
 			
@@ -243,11 +239,13 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage,player));
 			}
 			if (key == KeyEvent.VK_ENTER) {				
-				//TODO pause
+				screen = Screen.STAGE_PAUSED;
 			}
 			break;
 		case STAGE_PAUSED:
-			
+			if (key == KeyEvent.VK_ENTER) {				
+				screen = Screen.STAGE_PLAY;
+			}
 			break;
 		case SCORE_STAGE:
 			

@@ -17,22 +17,23 @@ import elements.Wall;
 
 public class PhysicsContol {
 
-	public static boolean collisionEnemy(Enemy e, LinkedList<StageElement> list){
+	public static Point collisionEnemy(Enemy e, LinkedList<StageElement> list){
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
 			if (isIntersecs(e,s)) {
 				if (s.getClass().equals(Item.class)) {
-					return false;
-				}
+					return null;
+				}else{
 				if (s.getClass().equals(Obstacle.class)) {
 					int o = list.get(i).getType();
-					if (o != 1) return true;
+					if (o != 1) return null;
 				}
-				return true;
+				return getIntersection(e,s).getLocation();
+				}
 			}
 		}		
-		return false;
+		return null;
 	}
 	
 	public static Point collisionPlayer(Player p, LinkedList<StageElement> list){
