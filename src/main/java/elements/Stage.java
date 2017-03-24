@@ -151,11 +151,13 @@ public class Stage {
     		for (int i = 0; i < enemies.size(); i++) {
     			tmpEnemy = enemies.get(i);	
         		if (tmpEnemy.isActive()){
-        			//int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX()+18,tmpEnemy.getPosY()+18, this);
-    				//tmpEnemy.setDir(dir[0]);
-        			//if (dir[1] == 1) {
+        			/*int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX()+(Properties.SIZE_SQUARE/2),
+        					tmpEnemy.getPosY()+(Properties.SIZE_SQUARE/2), this);
+    				tmpEnemy.setDir(dir[0]);
+        			if (dir[1] == 1) {
 						tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
-					//}	
+					}*/	
+        			tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
         			tmpEnemy.updateDraw();
         		}
         		else deleteEnemy(tmpEnemy);

@@ -171,8 +171,8 @@ public class IAControl {
 		StageElement element, temElementUP1 = null, temElementDOWN1 = null, 
 				temElementLEFT1 = null, temElementRIGHT1 = null;
 		double elementX, elementY;
-		double colE = posX + Properties.SIZE_SQUARE;
-		double rowE = posY + Properties.SIZE_SQUARE;
+		double delta = Properties.SIZE_SQUARE/2;
+		double delta2 = delta/2;
 		double nearUP1 = -10000;
 		double nearDOWN1 = 10000;
 		double nearLEFT1 = -10000;
@@ -180,21 +180,21 @@ public class IAControl {
 		
 		for (int i = 0; i < elementsList.size(); i++) {
 			element = elementsList.get(i);
-			elementX = element.getPosX()+18;
-			elementY = element.getPosY()+18;
+			elementX = element.getPosX() + delta;
+			elementY = element.getPosY() + delta;
 			
 			if (element.getClass().equals(Enemy.class)
 					&& element.getType() == 3) {
-				elementX = element.getPosX()+18;
-				elementY = element.getPosY()+4;
+				elementX = element.getPosX() + delta;
+				elementY = element.getPosY() + delta2;
 			} else if (element.getClass().equals(Enemy.class)
 					&& element.getType() == 4) {
-    			elementX = element.getPosX()+4;
-    			elementY = element.getPosY()+18;
+    			elementX = element.getPosX() + delta2;
+    			elementY = element.getPosY() + delta;
 			} else if (element.getClass().equals(Enemy.class) 
 					&& (element.getType() == 1 || element.getType() == 2)) {
-    			elementX = element.getPosX()+4;
-    			elementY = element.getPosY()+4;
+    			elementX = element.getPosX() + delta2;
+    			elementY = element.getPosY() + delta2;
 			}
 			
 			if (elementX == posX) {
@@ -272,9 +272,6 @@ public class IAControl {
 				}
 			}
 		}
-		
-		System.out.println(Arrays.toString(input));
-		System.out.println(Arrays.toString(action));
 		
 		return action;
 	}
