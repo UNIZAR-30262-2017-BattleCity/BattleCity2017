@@ -20,7 +20,7 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (!s.equals(e)) {
+			if (!s.equals(e)&& !s.getClass().equals(Bullet.class)) {
 				if (isIntersecs(e,s)) {
 					if (s.getClass().equals(Item.class)) {
 						return null;
@@ -41,7 +41,7 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (!s.equals(p)) {
+			if (!s.equals(p)&& !s.getClass().equals(Bullet.class)) {
 				if (isIntersecs(p,s)) {				
 					if (s.getClass().equals(Item.class)) {
 						s.setActive(false);
@@ -67,10 +67,12 @@ public class PhysicsContol {
 			list = stageControl.getMaze_Enemies();
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
-				if (!s.equals(gE)) {
+				if (!s.equals(gE) && !s.equals(b)) {
 					if (isIntersecs(b,s)) {
 						b.setActive(false);
-						actionBullet(true, s, stageControl);							
+						Player pl = (Player) gE;
+						pl.setBulletsInProgres(pl.getBulletsInProgres()-1);
+						actionBullet(true, s, stageControl);						
 					}
 				}
 			}
@@ -80,7 +82,9 @@ public class PhysicsContol {
 				s = list.get(i);
 				if (isIntersecs(b,s)) {
 					b.setActive(false);
-					actionBullet(false, s, stageControl);										
+					Enemy en = (Enemy) gE;
+					en.setBulletsInProgres(en.getBulletsInProgres()-1);
+					actionBullet(false, s, stageControl);									
 				}
 
 			}

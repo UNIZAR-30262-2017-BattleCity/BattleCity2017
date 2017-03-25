@@ -114,6 +114,12 @@ public class Bullet extends GameElement implements StageElement{
 		}
     	    	 
     	PhysicsContol.collisionBullet(this, gE,stageControl);
+    	    	
+		if(getPosX()<Properties.xIB) {setActive(false); return;}
+	    if(getPosX()>Properties.xFB) {setActive(false); return;}
+	    if(getPosY()<Properties.yIB) {setActive(false); return;}
+	    if(getPosY()>Properties.yFB) {setActive(false); return;}
+		   	
     	
     }
     

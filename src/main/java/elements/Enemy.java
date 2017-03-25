@@ -127,7 +127,6 @@ public class Enemy extends Tank implements StageElement{
     	if(getPosY()>yF) setDir(1);
     	
     	anim();
-    	updateDrawBullet();
 		
 	}
 	
@@ -151,7 +150,6 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-		drawBullet(g);
 		
 	}
 		

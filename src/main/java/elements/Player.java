@@ -80,7 +80,6 @@ public class Player extends Tank implements StageElement{
     		}
     	}
 
-    	drawBullet(g);
     	if (updateLifes) {
     		g.setColor(Color.darkGray);
 	        g.fillRect(Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES-15, 40, 20);
@@ -155,9 +154,7 @@ public class Player extends Tank implements StageElement{
 			
 		}
     	
-		anim();
-		updateDrawBullet();
-        
+		anim();        
     	
     }
         
@@ -207,9 +204,9 @@ public class Player extends Tank implements StageElement{
 	
 	public void gunEfect(){
 		if (gunEfectActivate) {
-			setMaxBulletsInProgres(getMaxBulletsInProgres()+3);
+			//TODO
 		}else{
-			setMaxBulletsInProgres(getMaxBulletsInProgres()-3);
+			//TODO
 		}
 	}
 	

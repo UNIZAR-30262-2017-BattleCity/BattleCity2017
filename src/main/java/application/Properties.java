@@ -30,10 +30,6 @@ public final class Properties {
 	//Player
 	public final static int INIT_LIVES = 3;
 	
-	//Bullets
-	public final static int VEL_BULLET = 3;
-	public final static int MAX_BULLETS_TANK = 3;
-	
 	//Enemy
 	public final static int VEL_ENEMY = 1;
 	public final static int VEL_ENEMY_FAST = 2;
@@ -60,6 +56,14 @@ public final class Properties {
 	
 	public final static int COL_STAGE = 13;
 	public final static int ROW_STAGE = 13;
+	
+	//Bullets
+	public final static int VEL_BULLET = 3;
+	public final static int MAX_BULLETS_TANK = 3;
+	public static final int yIB = Y_INIT_STAGE+2;
+	public static final int xIB = X_INIT_STAGE+2;
+	public static final int yFB = Y_FINAL_STAGE+SIZE_SQUARE-8;
+	public static final int xFB = X_FINAL_STAGE+SIZE_SQUARE-8;
 	
 	//Elements on stage
 	public final static int[] POS_INIT_PLAYER = {13, 5};
@@ -100,6 +104,7 @@ public final class Properties {
 	/*Mistakes
 	birth of items over enemies
 	birth of enemies over enemies
+	little enemies not destroy when are 5 and item bomb 
 	*/
 	
 }

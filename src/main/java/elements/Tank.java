@@ -1,8 +1,5 @@
 package elements;
 
-import java.awt.Graphics;
-import java.util.LinkedList;
-
 import application.Properties;
 import gameController.StageControl;
 
@@ -14,47 +11,20 @@ public abstract class Tank extends GameElement{
 	protected int dir;
 	protected int shieldLevel;
 	
-	//balas	
-	protected int maxBulletsInProgres;
-	protected LinkedList<Bullet> bulletsInProgres;
+	//bullets	
+	protected int bulletsInProgres;
 	protected Bullet tmpBullet;
-	private static final int yIB = yI+2;
-	private static final int xIB = xI+2;
-	private static final int yFB = yF+k-8;
-	private static final int xFB = xF+k-8;
 	
 	public Tank(StageControl stageControl){
 		super(stageControl);
 		dir = 1;
-		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
-		this.bulletsInProgres = new LinkedList<Bullet>();
+		bulletsInProgres = 0;
 	}
 		
 	public void shoot(Bullet b) {
-		if (bulletsInProgres.size()<maxBulletsInProgres) {
-			bulletsInProgres.add(b);
-		}		
-	}
-	
-	public void updateDrawBullet() {
-		for(int i=0;i<bulletsInProgres.size();i++) {
-			
-			tmpBullet = bulletsInProgres.get(i);
-			
-			if(tmpBullet.getPosX()<xIB) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosX()>xFB) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()<yIB) deleteBullet(tmpBullet);
-	    	if(tmpBullet.getPosY()>yFB) deleteBullet(tmpBullet);
-	    	
-	    	if (tmpBullet.isActive()) tmpBullet.updateDraw();
-			else deleteBullet(tmpBullet);
-		}
-	}
-	
-	public void drawBullet(Graphics g){
-		for(int i=0;i<bulletsInProgres.size();i++) {
-			tmpBullet = bulletsInProgres.get(i);
-			tmpBullet.draw(g);
+		if (bulletsInProgres<Properties.MAX_BULLETS_TANK) {
+			stageControl.spawnElements(b);
+			bulletsInProgres++;
 		}
 	}
 	
@@ -66,18 +36,6 @@ public abstract class Tank extends GameElement{
 			timeAnim = Properties.TIME_ANIM;
 			anim = 1;
 		}
-	}
-	
-	public void deleteBullet(Bullet b){
-       bulletsInProgres.remove(b);
-    }
-				
-	public LinkedList<Bullet> getBulletsInProgres() {
-		return bulletsInProgres;
-	}
-
-	public void setBulletsInProgres(LinkedList<Bullet> bulletsInProgres) {
-		this.bulletsInProgres = bulletsInProgres;
 	}
 
 	public double getVel() {
@@ -120,14 +78,6 @@ public abstract class Tank extends GameElement{
 		this.typeTank = typeTank;
 	}
 
-	public int getMaxBulletsInProgres() {
-		return maxBulletsInProgres;
-	}
-
-	public void setMaxBulletsInProgres(int maxBulletsInProgres) {
-		this.maxBulletsInProgres = maxBulletsInProgres;
-	}
-
 	public int getShieldLevel() {
 		return shieldLevel;
 	}
@@ -151,5 +101,13 @@ public abstract class Tank extends GameElement{
 	public void setH(int h) {
 		this.heigth = h;
 	}
-			
+
+	public int getBulletsInProgres() {
+		return bulletsInProgres;
+	}
+
+	public void setBulletsInProgres(int bulletsInProgres) {
+		this.bulletsInProgres = bulletsInProgres;
+	}
+				
 }

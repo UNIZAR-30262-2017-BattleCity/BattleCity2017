@@ -183,7 +183,7 @@ public class StageControl {
     	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);
-    		if (tmpElement.isActive()){
+    		if (tmpElement.isActive()){    			
     			tmpElement.updateDraw();
     		}else deleteElement(tmpElement);
     	}
@@ -220,8 +220,9 @@ public class StageControl {
 			e.draw(g);
 		}
     	
-    	for (StageElement sE : elements) {
-    		if (sE.isActive() || (sE.getClass().equals(Eagle.class))) sE.draw(g);
+    	for(int i=0;i<elements.size();i++) {
+    		tmpElement = elements.get(i);
+    		if (tmpElement.isActive() || (tmpElement.getClass().equals(Eagle.class))) tmpElement.draw(g);
 		}
     	
     	if (updateEnemies) {
