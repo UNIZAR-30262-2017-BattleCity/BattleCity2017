@@ -168,7 +168,7 @@ public class IAControl {
 		double[] inputIA = {0,0,0,0};
 		int[] action = {0,0};
 		
-		LinkedList<StageElement> elementsList = stageControl.getElements(null);
+		LinkedList<StageElement> elementsList = stageControl.getElements();
 		Player player = stageControl.getPlayer();
 		elementsList.add(player);
 		
