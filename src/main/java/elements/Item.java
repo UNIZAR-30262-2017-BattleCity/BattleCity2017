@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.ImageControl;
+import gameController.StageControl;
 
 public class Item extends GameElement implements StageElement{
 
@@ -12,8 +13,8 @@ public class Item extends GameElement implements StageElement{
 	private BufferedImage imgItem;
     private int maxTimeItemShow;
 			
-	public Item(int col, int row, int type, Stage stage) {
-		super(stage);
+	public Item(int col, int row, int type, StageControl stageControl) {
+		super(stageControl);
 		this.type = type;
 		isTake = false;
 		maxTimeItemShow = Properties.MAX_TIME_ITEM_SHOW;
@@ -61,7 +62,7 @@ public class Item extends GameElement implements StageElement{
 		if(maxTimeItemShow>0){
 			maxTimeItemShow--;
 		}else{			
-			stage.deleteItem(this);
+			stageControl.deleteItem(this);
 		}
 	}
 	

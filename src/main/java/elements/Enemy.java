@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
+import gameController.StageControl;
 import gameController.ImageControl;
 
 public class Enemy extends Tank implements StageElement{
@@ -15,8 +16,8 @@ public class Enemy extends Tank implements StageElement{
     private BufferedImage imgEnemyLeft[] = new BufferedImage[2]; 
     private BufferedImage imgEnemyRight[] = new BufferedImage[2];
     
-	public Enemy(int col, int row, int type, Stage stage) {
-		super(stage);
+	public Enemy(int col, int row, int type, StageControl stageControl) {
+		super(stageControl);
 		setInitPos(col, row);
 		setTypeTank(1);
 		this.type = type;
@@ -100,7 +101,7 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 		
-		Point p = PhysicsContol.collisionEnemy(this, stage.getElements(this));
+		Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements());
     	
     	if (p!=null) {
     		

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.ImageControl;
+import gameController.StageControl;
 
 public class Wall extends GameElement implements StageElement{
 
@@ -13,8 +14,8 @@ public class Wall extends GameElement implements StageElement{
 	private int maxTimeItemEfect;
 	private static final int k2 = k/2;
 	
-	public Wall(double row, double col, int key,int type, Stage stage, boolean eagleWall) {
-		super(stage);
+	public Wall(double row, double col, int key,int type, StageControl stageControl, boolean eagleWall) {
+		super(stageControl);
 		this.type = type;
 		this.eagleWall = eagleWall;
 		initWall();
@@ -95,9 +96,9 @@ public class Wall extends GameElement implements StageElement{
 			maxTimeItemEfect--;
 		}else{
 			
-			stage.deleteElement(this);
-			stage.setItemTaked(false);
-			stage.eagleIronWallEfect(false);
+			stageControl.deleteElement(this);
+			stageControl.setItemTaked(false);
+			stageControl.eagleIronWallEfect(false);
 		}
 	}
 
