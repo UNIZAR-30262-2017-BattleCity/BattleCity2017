@@ -7,6 +7,7 @@ import org.neuroph.core.NeuralNetwork;
 
 import application.Properties;
 import elements.Eagle;
+import elements.Enemy;
 import elements.Player;
 import elements.StageElement;
 import elements.Wall;
@@ -15,7 +16,9 @@ public class IAControl {
 	
 	private NeuralNetwork<?> neuralNetworkMultiLayer;
 	
-	private static final double delta2 = Properties.DELTA/2;
+	private static final double delta2 = Properties.DELTA/2;    
+    private static int timeUpdateIA;
+	private boolean updateIA;
 	
 	public IAControl() {			
 		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
@@ -24,7 +27,11 @@ public class IAControl {
 // ---------------------------- GAME IMPLEMENTATION ------------------------------ //
 // ------------------------------------------------------------------------------- //
 	
-	public int[] getDir_Shoot(double posX, double posY, StageControl stageControl) {
+	public int[] getDir_Shoot(Enemy e, StageControl stageControl) {
+		
+		double posX = e.getPosX()+Properties.DELTA;
+		double posY = e.getPosY()+Properties.DELTA;
+		
 		double[] inputIA = {0,0,0,0};
 		int[] action = {0,0};
 		
@@ -110,13 +117,29 @@ public class IAControl {
 		inputIA[3] = generateInputValue(temElementRIGHT1);
 		
 		if (inputIA[0] == 0 && inputIA[1] == 0
-				&& inputIA[2] == 0 && inputIA[3] == 0) {
-			action = randomMove();
+				&& inputIA[2] == 0 && inputIA[3] == 0) {					
+			if (updateIA) {				
+				updateIA();	
+				action[0] = e.getDir();
+			}else{
+				action = randomMove();
+			}			
+			
 		} else {
 			action = calculateIA(neuralNetworkMultiLayer, inputIA);
 		}
-		
-		return borderController(action, posX-Properties.DELTA, posY-Properties.DELTA);
+		return action;
+		//return borderController(action, posX-Properties.DELTA, posY-Properties.DELTA);
+	}
+	
+	
+	public void updateIA(){		
+		if(timeUpdateIA>0){
+			timeUpdateIA--;
+		}else{
+			timeUpdateIA = Properties.TIME_UPDATE_IA;
+			updateIA = false;
+		}
 	}
 	
 	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
@@ -181,25 +204,6 @@ public class IAControl {
 
 		return value;
 	}
-	
-	public int[] borderController(int[] action, double posX, double posY) {
-
-		if (posX == Properties.X_INIT_STAGE 
-				&& posY > Properties.Y_INIT_STAGE) {
-			action[0] = 2;
-		} else if (posX == Properties.X_INIT_STAGE 
-				&& posY+Properties.SIZE_SQUARE < Properties.Y_FINAL_STAGE) {
-			action[0] = 2;
-		} else if (posX+Properties.SIZE_SQUARE == Properties.X_FINAL_STAGE
-				&& posY > Properties.Y_INIT_STAGE) {
-			action[0] = -2;
-		} else if (posX+Properties.SIZE_SQUARE == Properties.X_FINAL_STAGE 
-				&& posY+Properties.SIZE_SQUARE < Properties.Y_FINAL_STAGE) {
-			action[0] = -2;
-		}
-		
-		return action;
-	}
 
 	public int[] randomMove() {
 		int[] move = {-1,0};
@@ -218,7 +222,7 @@ public class IAControl {
 		}
 		
 		move[0] = valor;
-		
+		updateIA = true;
 		return move;
 	}
 }

@@ -15,6 +15,7 @@ public class Enemy extends Tank implements StageElement{
     private BufferedImage imgEnemyDowm[] = new BufferedImage[2]; 
     private BufferedImage imgEnemyLeft[] = new BufferedImage[2]; 
     private BufferedImage imgEnemyRight[] = new BufferedImage[2];
+
     
 	public Enemy(int col, int row, int type, StageControl stageControl) {
 		super(stageControl);
@@ -85,7 +86,8 @@ public class Enemy extends Tank implements StageElement{
 	}
 	
 	@Override
-	public void updateDraw() {
+	public void updateDraw() {	
+		
 		switch (dir) {
 		case 1://up
 			posY -= vel;
@@ -119,7 +121,7 @@ public class Enemy extends Tank implements StageElement{
     			setPosX(p.getX()-width);
     			break;
     		}
-		}	
+		}
 		
     	if(getPosX()<xI) setPosX(xI);
     	if(getPosX()>xF) setPosX(xF);
@@ -128,9 +130,7 @@ public class Enemy extends Tank implements StageElement{
     	
     	anim();
 		
-	}
-	
-	
+	}	
 
 	@Override
 	public void draw(Graphics g) {
@@ -152,5 +152,5 @@ public class Enemy extends Tank implements StageElement{
 		
 		
 	}
-		
+	
 }

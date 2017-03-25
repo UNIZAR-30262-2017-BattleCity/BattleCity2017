@@ -35,7 +35,6 @@ public final class Properties {
 	public final static int VEL_ENEMY_FAST = 2;
 	public final static int MAX_ENEMY_SIMUL = 5;
 	public final static int CANT_ENEMIES_LEVEL = 20;
-	public final static int MAX_ENEMY_LEVEL = 4;
 	public final static int TIME_BETWEEN_SPAWN_E = 300;
 	
 	//Spawn Enemy Points
@@ -91,7 +90,7 @@ public final class Properties {
 	
 	
 	public static final double DELTA = Properties.SIZE_SQUARE/2;
-	public static final int TIME_UPDATE_IA = 0;
+	public static final int TIME_UPDATE_IA = 30;
 	
 	//StageGUI
 	public static final int X_INIT_INFO = X_FINAL_STAGE+60;
