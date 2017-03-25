@@ -3,6 +3,8 @@ package elements;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import gameController.StageControl;
+
 
 public interface StageElement {
 	
@@ -11,7 +13,7 @@ public interface StageElement {
 	public Rectangle getBounds(int width, int heigth);
 	public boolean isActive();
 	public void setActive(boolean a);
-	public Stage getStage();
+	public StageControl getStage();
 	public int getWidth();
 	public int getHeigth();
 	public int getType();

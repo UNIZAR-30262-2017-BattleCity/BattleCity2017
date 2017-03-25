@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import application.Properties;
+import gameController.StageControl;
 
 public abstract class Tank extends GameElement{
 	
@@ -22,8 +23,8 @@ public abstract class Tank extends GameElement{
 	private static final int yFB = yF+k-8;
 	private static final int xFB = xF+k-8;
 	
-	public Tank(Stage stage){
-		super(stage);
+	public Tank(StageControl stageControl){
+		super(stageControl);
 		dir = 1;
 		maxBulletsInProgres = Properties.MAX_BULLETS_TANK;
 		this.bulletsInProgres = new LinkedList<Bullet>();

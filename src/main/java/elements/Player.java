@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
+import gameController.StageControl;
 import gameController.FontControl;
 import gameController.ImageControl;
 
@@ -29,10 +30,10 @@ public class Player extends Tank implements StageElement{
     private boolean shieldActivate = false;
 	
 	
-    public Player(int col, int row, int lifes, Stage stage) {
-		super(stage);
+    public Player(int col, int row, int lifes, StageControl stageControl) {
+		super(stageControl);
     	this.setLifes(lifes);
-		this.stage = stage;
+		this.stageControl = stageControl;
 		setTypeTank(0);		
 		setInitPos(col, row);
 		itemTaked= false;
@@ -117,7 +118,7 @@ public class Player extends Tank implements StageElement{
 			break;
 		}
     	
-    	Point p = PhysicsContol.collisionPlayer(this, stage.getElements(this));
+    	Point p = PhysicsContol.collisionPlayer(this, stageControl.getElements());
     	
     	if (p!=null) {
     		
@@ -224,7 +225,7 @@ public class Player extends Tank implements StageElement{
 			shieldActivate = false;
 			gunEfectActivate = false;
 			this.itemTaked = false;
-			stage.setItemTaked(false);
+			stageControl.setItemTaked(false);
 			gunEfect();
 		}
 	}

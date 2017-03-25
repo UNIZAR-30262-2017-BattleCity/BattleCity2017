@@ -4,13 +4,14 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import gameController.ImageControl;
+import gameController.StageControl;
 
 public class Obstacle extends GameElement implements StageElement{
 
 	private BufferedImage img;
 	
-	public Obstacle(int row, int col, int type, Stage stage) {
-		super(stage);
+	public Obstacle(int row, int col, int type, StageControl stageControl) {
+		super(stageControl);
 		this.type = type;
 		isActive = true;
 		initObstacle();

@@ -19,7 +19,6 @@ import org.neuroph.util.TransferFunctionType;
 import application.Properties;
 import elements.Eagle;
 import elements.Player;
-import elements.Stage;
 import elements.StageElement;
 import elements.Wall;
 
@@ -165,12 +164,12 @@ public class IAControl {
 // ---------------------------- GAME IMPLEMENTATION ------------------------------ //
 // ------------------------------------------------------------------------------- //
 	
-	public int[] getDir_Shoot(double posX, double posY, Stage stage) {
+	public int[] getDir_Shoot(double posX, double posY, StageControl stageControl) {
 		double[] inputIA = {0,0,0,0};
 		int[] action = {0,0};
 		
-		LinkedList<StageElement> elementsList = stage.getElements(null);
-		Player player = stage.getPlayer();
+		LinkedList<StageElement> elementsList = stageControl.getElements(null);
+		Player player = stageControl.getPlayer();
 		elementsList.add(player);
 		
 		StageElement element, temElementUP1 = null, temElementDOWN1 = null, 

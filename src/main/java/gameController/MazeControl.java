@@ -1,13 +1,17 @@
-package elements;
+package gameController;
 
 import java.util.LinkedList;
 
-public class Maze {
+import elements.Eagle;
+import elements.Obstacle;
+import elements.Wall;
 
-	private static Stage stage;
+public class MazeControl {
+
+	private static StageControl stageControl;
 			
-	public Maze(Stage stage) {	
-		Maze.stage = stage;
+	public MazeControl(StageControl stageControl) {	
+		MazeControl.stageControl = stageControl;
 	}
 		
 	public int[][] createMaze(int level){
@@ -112,33 +116,33 @@ public class Maze {
 	}	
 		
 	public void loadIronWall(){
-    	stage.spawnElements(new Wall(11.5,5.5,0,3,stage,true));
-    	stage.spawnElements(new Wall(11.5,6.5,0,3,stage,true));
-    	stage.spawnElements(new Wall(12,5.5,0,4,stage,true));
-    	stage.spawnElements(new Wall(12,7,0,4,stage,true));
+    	stageControl.spawnElements(new Wall(11.5,5.5,0,3,stageControl,true));
+    	stageControl.spawnElements(new Wall(11.5,6.5,0,3,stageControl,true));
+    	stageControl.spawnElements(new Wall(12,5.5,0,4,stageControl,true));
+    	stageControl.spawnElements(new Wall(12,7,0,4,stageControl,true));
 	}
 	
 	public LinkedList<Wall> loadEagleWall(){
 		
 		LinkedList<Wall> listEagleWall = new LinkedList<>();
 		
-		listEagleWall.add(new Wall(12,5,1,1,stage, false));
+		listEagleWall.add(new Wall(12,5,1,1,stageControl, false));
 		
-		listEagleWall.add(new Wall(12,5,1,1,stage, false));
-		listEagleWall.add(new Wall(12,5,3,1,stage, false));
+		listEagleWall.add(new Wall(12,5,1,1,stageControl, false));
+		listEagleWall.add(new Wall(12,5,3,1,stageControl, false));
 		
-		listEagleWall.add(new Wall(11,5,3,1,stage, false));
+		listEagleWall.add(new Wall(11,5,3,1,stageControl, false));
 
-		listEagleWall.add(new Wall(11,6,2,1,stage, false));
-		listEagleWall.add(new Wall(11,6,3,1,stage, false));
+		listEagleWall.add(new Wall(11,6,2,1,stageControl, false));
+		listEagleWall.add(new Wall(11,6,3,1,stageControl, false));
 
-		listEagleWall.add(new Wall(11,7,2,1,stage, false));
+		listEagleWall.add(new Wall(11,7,2,1,stageControl, false));
 
-		listEagleWall.add(new Wall(12,7,0,1,stage, false));
-		listEagleWall.add(new Wall(12,7,2,1,stage, false));
+		listEagleWall.add(new Wall(12,7,0,1,stageControl, false));
+		listEagleWall.add(new Wall(12,7,2,1,stageControl, false));
 		
 		for (Wall wall : listEagleWall) {
-			stage.spawnElements(wall);
+			stageControl.spawnElements(wall);
 		}
 		
 		return listEagleWall;		
@@ -152,39 +156,39 @@ public class Maze {
             for (int j = 0; j < m.length; j++) {
                 if (m[i][j] == 1) {
                 	for (int j2 = 0; j2 < 4; j2++) {
-						stage.spawnWalls(new Wall(i,j,j2,1,stage, false)); 
+						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
 					}					
 				}
                 if (m[i][j] == 2) {
                 	for (int j2 = 0; j2 < 2; j2++) {
-						stage.spawnWalls(new Wall(i,j,j2,1,stage, false)); 
+						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
 					}
 				}
                 if (m[i][j] == 3) {                
-					stage.spawnWalls(new Wall(i,j,0,2,stage, false)); 
+					stageControl.spawnWalls(new Wall(i,j,0,2,stageControl, false)); 
 					
 				}
                 if (m[i][j] == 4) {
-					stage.spawnWalls(new Wall(i,j,0,3,stage, false));
+					stageControl.spawnWalls(new Wall(i,j,0,3,stageControl, false));
 				}
                 if (m[i][j] == 5) {
-					stage.spawnElements(new Obstacle(i,j,1,stage));
+					stageControl.spawnElements(new Obstacle(i,j,1,stageControl));
 				}
                 if (m[i][j] == 6) {
-					stage.spawnElements(new Obstacle(i,j,2,stage));
+					stageControl.spawnElements(new Obstacle(i,j,2,stageControl));
 				}
                 if (m[i][j] == 7) {
-					stage.spawnElements(new Eagle(i,j,stage));
+					stageControl.spawnElements(new Eagle(i,j,stageControl));
 				}
                 if (m[i][j] == 8) {
                 	for (int j2 = 0; j2 < 2; j2++) {
-						stage.spawnWalls(new Wall(i-.5,j,j2,1,stage, false)); 
+						stageControl.spawnWalls(new Wall(i-.5,j,j2,1,stageControl, false)); 
 					}
-		    		stage.spawnWalls(new Wall(i,j,0,3,stage, false));
+		    		stageControl.spawnWalls(new Wall(i,j,0,3,stageControl, false));
 				}
                 if (m[i][j] == 9) {
                 	for (int j2 = 0; j2 < 4; j2++) {
-						stage.spawnWalls(new Wall(i-0.5,j,j2,1,stage, false));
+						stageControl.spawnWalls(new Wall(i-0.5,j,j2,1,stageControl, false));
 					}
 				}
                

@@ -11,7 +11,6 @@ import elements.GameElement;
 import elements.Item;
 import elements.Obstacle;
 import elements.Player;
-import elements.Stage;
 import elements.StageElement;
 import elements.Wall;
 
@@ -21,18 +20,20 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (isIntersecs(e,s)) {
-				if (s.getClass().equals(Item.class)) {
-					return null;
-				}else{
-				if (s.getClass().equals(Obstacle.class)) {
-					int o = list.get(i).getType();
-					if (o != 1) return null;
+			if (!s.equals(e)) {
+				if (isIntersecs(e,s)) {
+					if (s.getClass().equals(Item.class)) {
+						return null;
+					}else{
+						if (s.getClass().equals(Obstacle.class)) {
+							int o = list.get(i).getType();
+							if (o != 1) return null;
+						}
+						return getIntersection(e,s).getLocation();
+					}
 				}
-				return getIntersection(e,s).getLocation();
-				}
-			}
-		}		
+			}		
+		}
 		return null;
 	}
 	
@@ -40,65 +41,84 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (isIntersecs(p,s)) {				
-				if (s.getClass().equals(Item.class)) {
-					s.setActive(false);
-					s.getStage().ItemTaked((Item) s);
-				}else{
-					if (s.getClass().equals(Obstacle.class)) {
-						int o = list.get(i).getType();
-						if (o == 1) return null;
+			if (!s.equals(p)) {
+				if (isIntersecs(p,s)) {				
+					if (s.getClass().equals(Item.class)) {
+						s.setActive(false);
+						s.getStage().ItemTaked((Item) s);
+					}else{
+						if (s.getClass().equals(Obstacle.class)) {
+							int o = list.get(i).getType();
+							if (o == 1) return null;
+						}
+						return getIntersection(p,s).getLocation();
 					}
-					return getIntersection(p,s).getLocation();
 				}
-			}
-		}		
+			}		
+		}
 		return null;
 	}
 	
-	public static void collisionBullet(Bullet b, GameElement gE, Stage stage){
-		LinkedList<StageElement> list = stage.getElements(null);
-		StageElement s;		
-		for (int i = 0; i < list.size(); i++) {
-			s = list.get(i);
-			if (!s.equals(gE)) {
-				if (isIntersecs(b,s)) {
-					if (!(s.getClass().equals(Obstacle.class)) && !(s.getClass().equals(Item.class))) {
+	public static void collisionBullet(Bullet b, GameElement gE, StageControl stageControl){
+		LinkedList<StageElement> list;
+		StageElement s;
+
+		if (gE.getClass().equals(Player.class)) {
+			list = stageControl.getMaze_Enemies();
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				if (!s.equals(gE)) {
+					if (isIntersecs(b,s)) {
 						b.setActive(false);
-						if (s.getClass().equals(Wall.class)) {
-							int w = s.getType();
-							if (w !=1) return;
-							else {
-								stage.setUpdteBricks(true);
-								s.setActive(false);
-							}
-						}
-						if (s.getClass().equals(Enemy.class)) {
-							if (gE.getClass().equals(Player.class)) {
-								stage.getPlayer().addScore(s.getType());
-								stage.deleteEnemy((Enemy) s);
-							}
-						}
-						if (s.getClass().equals(Player.class)) {
-							if (gE.getClass().equals(Enemy.class)) {
-								stage.getPlayer().reduceLifes();
-							}
-						}if (s.getClass().equals(Eagle.class)) {
-							s.setActive(false);
-						}
-						
+						actionBullet(true, s, stageControl);							
 					}
 				}
 			}
+		}else{
+			list = stageControl.getMaze_Players();
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				if (isIntersecs(b,s)) {
+					b.setActive(false);
+					actionBullet(false, s, stageControl);										
+				}
+
+			}
 		}
+	}
+	
+	public static void actionBullet(boolean player, StageElement s,StageControl stageControl){
+		if (s.getClass().equals(Wall.class)) {
+			int w = s.getType();
+			if (w !=1) return;
+			else {
+				stageControl.setUpdteBricks(true);
+				s.setActive(false);
+			}
+		}else if (s.getClass().equals(Eagle.class)) {
+			s.setActive(false);
+		}
+		
+		if (player) {
+			if (s.getClass().equals(Enemy.class)) {
+				stageControl.deleteEnemy((Enemy) s);			
+			}
+			if (s.getClass().equals(Player.class)) {
+				//TODO
+			}
+		}else{
+			if (s.getClass().equals(Player.class)) {
+				stageControl.getPlayer().reduceLifes();			
+			}
+		}
+		
 	}
 
 	public static boolean isIntersecs(GameElement gE,  StageElement e){
 		 return gE.getBounds(gE.getWidth(),gE.getHeigth()).intersects(
 				 		e.getBounds(e.getWidth(),e.getHeigth()));
 	}
-	
-	
+		
 	public static Rectangle getIntersection(GameElement gE,  StageElement e2){		
 		return  gE.getBounds(gE.getWidth(),gE.getHeigth()).intersection(
 						e2.getBounds(e2.getWidth(),e2.getHeigth()));		

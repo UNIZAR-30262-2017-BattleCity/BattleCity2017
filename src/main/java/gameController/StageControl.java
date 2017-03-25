@@ -1,4 +1,4 @@
-package elements;
+package gameController;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,10 +6,16 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import application.Properties;
-import gameController.IAControl;
+import elements.Bullet;
+import elements.Eagle;
+import elements.Enemy;
+import elements.Item;
+import elements.Player;
+import elements.StageElement;
+import elements.Wall;
 import userInterface.StageGUI;
 
-public class Stage {	
+public class StageControl {	
 		
 	//items
     private int nItems;
@@ -34,7 +40,7 @@ public class Stage {
     	
     private boolean clockEfect, itemTaked;
     
-    private Maze maze;
+    private MazeControl mazeControl;
     private Player player;
     private int k,pos,col,row,typeItem,typeEnemy;
     private int timerE, timerIt;
@@ -53,13 +59,13 @@ public class Stage {
 	private boolean updateEnemies;
 	private boolean updteBricks;
             
-    public Stage(int level, int dif, IAControl ia) {
+    public StageControl(int level, int dif, IAControl ia) {
     	initValues();
     	this.ia = ia;
     	elements = new LinkedList<>();
     	stageWalls = new LinkedList<>();
     	enemies = new LinkedList<>();
-    	maze = new Maze(this);
+    	mazeControl = new MazeControl(this);
     	loadLevel(level, dif);
     }
     
@@ -96,8 +102,8 @@ public class Stage {
 		}
     	 
     	 player = new Player(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1], Properties.INIT_LIVES, this);
-    	 maze.loadMaze(level);
-    	 eagleBricks = maze.loadEagleWall();    	 
+    	 mazeControl.loadMaze(level);
+    	 eagleBricks = mazeControl.loadEagleWall();    	 
     	 elements.add(player);
     }
             
@@ -130,7 +136,7 @@ public class Stage {
 				col = r.nextInt(Properties.COL_STAGE)+1;
 				row = r.nextInt(Properties.ROW_STAGE)+1;
 				typeItem = r.nextInt(7)+1;
-				elements.add(new Item(col, row, typeItem, this));
+				elements.add(new Item(col, row, 5, this));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -172,12 +178,11 @@ public class Stage {
         			tmpEnemy.updateDraw();
         		}
         		else deleteEnemy(tmpEnemy);
-			}
-    		
+			}    		
     	}
     	
     	for(int i=0;i<elements.size();i++) {
-    		tmpElement = elements.get(i);	
+    		tmpElement = elements.get(i);
     		if (tmpElement.isActive()){
     			tmpElement.updateDraw();
     		}else deleteElement(tmpElement);
@@ -237,6 +242,7 @@ public class Stage {
     }
     
     public void deleteEnemy(Enemy e){
+    	player.addScore(e.getType());
         enemies.remove(e);
         nEnemiesSimul--;
         enemiesKilled++;
@@ -251,7 +257,7 @@ public class Stage {
    
 	public void eagleIronWallEfect(boolean efect) {
 		if (efect) {
-			maze.loadIronWall();
+			mazeControl.loadIronWall();
 			for (Wall wall : eagleBricks) {
 				wall.setType(2);
 				wall.setEagleBrick(false);
@@ -307,27 +313,52 @@ public class Stage {
     }
 	
 	public void bombEfect() {
-		for (int i = 0; i < enemies.size();i++) {
-			if (enemies.get(i).getClass().equals(Enemy.class)) {
-				enemies.get(i).setActive(false);
-				nEnemiesSimul--;
-			}
+		for (int i = 0; i < enemies.size();i++) {			
+			enemies.get(i).setActive(false);
 		}	
 	}
 	
-	public LinkedList<StageElement> getElements(StageElement el) {
+	public LinkedList<StageElement> getElements() {
 		LinkedList<StageElement> clone = new LinkedList<>();
-		for (StageElement sE : elements) {
-			if (!sE.equals(el)) {
-				clone.add(sE);
-			}
-		}
-		for (Enemy e : enemies) {
-			if (!e.equals(el))
-				clone.add(e);
-		}	
+		clone.addAll(elements);
+		clone.addAll(enemies);
 		clone.addAll(stageWalls);
 		return clone;
+	}
+	
+	public LinkedList<StageElement> getMaze() {
+		return elements;
+	}
+	
+	public LinkedList<StageElement> getMaze_Enemies() {
+		LinkedList<StageElement> clone = new LinkedList<>();
+		clone.addAll(eagleBricks);
+		clone.addAll(enemies);
+		clone.add(player);
+		//TODO add player 2
+		clone.addAll(stageWalls);
+		return clone;
+	}
+	
+	public LinkedList<StageElement> getMaze_Players() {
+		LinkedList<StageElement> clone = new LinkedList<>();
+		clone.addAll(eagleBricks);
+		clone.add(player);
+		//TODO add player 2
+		clone.addAll(stageWalls);
+		return clone;
+	}
+
+	public LinkedList<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	public LinkedList<Wall> getEagleBricks() {
+		return eagleBricks;
+	}
+
+	public LinkedList<Wall> getStageWalls() {
+		return stageWalls;
 	}
 
 	public void setElements(LinkedList<StageElement> elements) {

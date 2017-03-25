@@ -4,14 +4,15 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import gameController.ImageControl;
+import gameController.StageControl;
 
 public class Eagle extends GameElement implements StageElement{
 		
 	private static final BufferedImage imgEagle = ImageControl.getImgEagle();
 	private static final BufferedImage imgEagleDead = ImageControl.getImgEagleDead();
 	
-	public Eagle(int row, int col, Stage stage) {
-		super(stage);
+	public Eagle(int row, int col, StageControl stageControl) {
+		super(stageControl);
 		setInitPos(row+1,col+1);
 	}
 

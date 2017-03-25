@@ -3,6 +3,7 @@ package elements;
 import java.awt.Rectangle;
 
 import application.Properties;
+import gameController.StageControl;
 
 public abstract class GameElement {
 
@@ -17,11 +18,11 @@ public abstract class GameElement {
 	protected int heigth;
 	protected int type;
 	protected boolean isActive;
-	protected Stage stage;
+	protected StageControl stageControl;
 	protected int timeAnim, anim;
 	
-	public GameElement(Stage stage){
-		this.stage = stage;
+	public GameElement(StageControl stageControl){
+		this.stageControl = stageControl;
 		width = k;
 		heigth = k;
 		isActive=true;
@@ -86,12 +87,12 @@ public abstract class GameElement {
 		this.isActive = isActive;
 	}
 
-	public Stage getStage() {
-		return stage;
+	public StageControl getStage() {
+		return stageControl;
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
+	public void setStage(StageControl stageControl) {
+		this.stageControl = stageControl;
 	}
 
 	public int getType() {

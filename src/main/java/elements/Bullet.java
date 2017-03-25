@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.PhysicsContol;
+import gameController.StageControl;
 import gameController.ImageControl;
 
 public class Bullet extends GameElement implements StageElement{
@@ -15,8 +16,8 @@ public class Bullet extends GameElement implements StageElement{
     private GameElement gE;
     private static final int DELTA = Properties.SIZE_SQUARE/2 -4;
     
-	public Bullet(double posX, double posY, int dir, int type, Stage stage, GameElement gE) {
-		super(stage);
+	public Bullet(double posX, double posY, int dir, int type, StageControl stageControl, GameElement gE) {
+		super(stageControl);
 		this.posX = posX;
 		this.posY = posY;
 		this.dir = dir;
@@ -112,7 +113,7 @@ public class Bullet extends GameElement implements StageElement{
 			break;
 		}
     	    	 
-    	PhysicsContol.collisionBullet(this, gE,stage);
+    	PhysicsContol.collisionBullet(this, gE,stageControl);
     	
     }
     

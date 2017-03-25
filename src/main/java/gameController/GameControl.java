@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import application.Properties;
 import elements.Bullet;
 import elements.Player;
-import elements.Stage;
 import userInterface.Configuration;
 import userInterface.Cursor;
 import userInterface.Menu;
@@ -26,7 +25,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private boolean running;
 	private Thread thread;
 	private Player player;
-	private Stage stage;
+	private StageControl stageControl;
 	private Screen screen;
 	private Menu menu;
 	private StageGUI stageGUI;
@@ -51,8 +50,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	}
 	
 	public void initStage(){				
-		stage = new Stage(level, difficulty, ia);
-		player = stage.getPlayer();
+		stageControl = new StageControl(level, difficulty, ia);
+		player = stageControl.getPlayer();
 		level++;
 	}
 
@@ -107,7 +106,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		
 	public void updateDraw(){
 		if (screen.equals(Screen.STAGE_PLAY)) {
-			stage.updateDraw();
+			stageControl.updateDraw();
 		}
 		
 	}
@@ -150,7 +149,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
-			stage.draw(g);	
+			stageControl.draw(g);	
 			break;
 		case STAGE_PAUSED:
 			g.drawImage(ImageControl.getPaused(), 252, 298, 100, 25, null);
@@ -243,14 +242,14 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				player.setVel(1);
 			}
 			if (key == KeyEvent.VK_SPACE) {
-				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stage,player));
+				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stageControl,player));
 			}
 			if (key == KeyEvent.VK_ENTER) {				
 				screen = Screen.STAGE_PAUSED;
 			}
 			break;
 		case STAGE_PAUSED:
-			if (key == KeyEvent.VK_ENTER) {				
+			if (key == KeyEvent.VK_ENTER) {			
 				screen = Screen.STAGE_PLAY;
 			}
 			break;
