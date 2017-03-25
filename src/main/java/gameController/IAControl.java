@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
@@ -17,7 +18,6 @@ import org.neuroph.util.TransferFunctionType;
 
 import application.Properties;
 import elements.Eagle;
-import elements.Enemy;
 import elements.Player;
 import elements.Stage;
 import elements.StageElement;
@@ -28,8 +28,12 @@ public class IAControl {
 	private NeuralNetwork<?> neuralNetworkMultiLayer;
 	private int inputNeuronsCount;
 	private int outputNeuronsCount;
+	private double delta;
+	private double delta2;
 	
 	public IAControl() {
+		delta = Properties.SIZE_SQUARE/2;
+		delta2 = delta/2;
 		
 		inputNeuronsCount = 4;
 		outputNeuronsCount = 3;
@@ -163,6 +167,7 @@ public class IAControl {
 	
 	public int[] getDir_Shoot(double posX, double posY, Stage stage) {
 		double[] inputIA = {0,0,0,0};
+		int[] action = {0,0};
 		
 		LinkedList<StageElement> elementsList = stage.getElements(null);
 		Player player = stage.getPlayer();
@@ -171,8 +176,7 @@ public class IAControl {
 		StageElement element, temElementUP1 = null, temElementDOWN1 = null, 
 				temElementLEFT1 = null, temElementRIGHT1 = null;
 		double elementX, elementY;
-		double delta = Properties.SIZE_SQUARE/2;
-		double delta2 = delta/2;
+		double columnInit, columnFin, rowInit, rowFin;
 		double nearUP1 = -10000;
 		double nearDOWN1 = 10000;
 		double nearLEFT1 = -10000;
@@ -183,38 +187,68 @@ public class IAControl {
 			elementX = element.getPosX() + delta;
 			elementY = element.getPosY() + delta;
 			
-			if (element.getClass().equals(Enemy.class)
+			columnInit = elementX - delta;
+			columnFin = elementX + delta;
+			
+			rowInit = elementY - delta;
+			rowFin = elementY + delta;
+			
+			if (element.getClass().equals(Wall.class)
 					&& element.getType() == 3) {
 				elementX = element.getPosX() + delta;
 				elementY = element.getPosY() + delta2;
-			} else if (element.getClass().equals(Enemy.class)
+				
+				columnInit = elementX - delta;
+				columnFin = elementX + delta;
+				
+				rowInit = elementY - delta2;
+				rowFin = elementY + delta2;
+			} else if (element.getClass().equals(Wall.class)
 					&& element.getType() == 4) {
     			elementX = element.getPosX() + delta2;
     			elementY = element.getPosY() + delta;
-			} else if (element.getClass().equals(Enemy.class) 
-					&& (element.getType() == 1 || element.getType() == 2)) {
+    			
+    			columnInit = elementX - delta2;
+    			columnFin = elementX + delta2;
+    			
+    			rowInit = elementY - delta;
+    			rowFin = elementY + delta;
+			} else if (element.getClass().equals(Wall.class) 
+					&& element.getType() == 1) {
     			elementX = element.getPosX() + delta2;
     			elementY = element.getPosY() + delta2;
+    			
+    			columnInit = elementX - delta2;
+    			columnFin = elementX + delta2;
+    			
+    			rowInit = elementY - delta2;
+    			rowFin = elementY + delta2;
+			} else if (element.getClass().equals(Eagle.class)) {
+				columnInit = elementX - delta2;
+				columnFin = elementX + delta2;
+				
+				rowInit = elementY - delta2;
+				rowFin = elementY + delta2;
 			}
 			
-			if (elementX == posX) {
+			if (posX > columnInit && posX < columnFin) {
 				
-				if (elementY < posY-18 && nearUP1 < elementY) {
+				if (elementY < posY && nearUP1 < elementY) {
 					nearUP1 = elementY;
 					temElementUP1 = element; // UP
-				} else if (elementY > posY+18 && nearDOWN1 > elementY) {
+				} else if (elementY > posY && nearDOWN1 > elementY) {
 					nearDOWN1 = elementY;
 					temElementDOWN1 = element; // DOWN
 				}
 				
 			} 
 			
-			else if (elementY == posY) {
+			else if (posY > rowInit && posY < rowFin) {
 				
-				if (elementX < posX-18 && nearLEFT1 < elementX) {
+				if (elementX < posX && nearLEFT1 < elementX) {
 					nearLEFT1 = elementX;
 					temElementLEFT1 = element; // LEFT
-				} else if (elementX > posX+18 && nearRIGHT1 > elementX) {
+				} else if (elementX > posX && nearRIGHT1 > elementX) {
 					nearRIGHT1 = elementX;
 					temElementRIGHT1 = element; // RIGHT
 				}
@@ -222,15 +256,22 @@ public class IAControl {
 			}
 		}
 		
-		inputIA[0] = generateInputValue(temElementUP1, posX, posY);
+		inputIA[0] = generateInputValue(temElementUP1);
 		
-		inputIA[1] = generateInputValue(temElementDOWN1, posX, posY);
+		inputIA[1] = generateInputValue(temElementDOWN1);
 		
-		inputIA[2] = generateInputValue(temElementLEFT1, posX, posY);
+		inputIA[2] = generateInputValue(temElementLEFT1);
 		
-		inputIA[3] = generateInputValue(temElementRIGHT1, posX, posY);
+		inputIA[3] = generateInputValue(temElementRIGHT1);
 		
-		return calculateIA(neuralNetworkMultiLayer, inputIA);
+		if (inputIA[0] == 0 && inputIA[1] == 0
+				&& inputIA[2] == 0 && inputIA[3] == 0) {
+			action = randomMove();
+		} else {
+			action = calculateIA(neuralNetworkMultiLayer, inputIA);
+		}
+		
+		return borderController(action, posX-delta, posY-delta);
 	}
 	
 	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
@@ -276,14 +317,14 @@ public class IAControl {
 		return action;
 	}
 	
-	public double generateInputValue(StageElement element, double posX, double posY) {
+	public double generateInputValue(StageElement element) {
 		double value = 0;
 		
 		if (element != null) {
 			
 			if (element.getClass().equals(Wall.class)
 					&& element.getType() != 1) {
-				value = 1;
+				value = 0;
 			}
 			
 			else if (element.getClass().equals(Wall.class)
@@ -298,15 +339,48 @@ public class IAControl {
 			else if (element.getClass().equals(Eagle.class)) {
 				value = 4;
 			}
-		} /*else {
-			if (posX == Properties.X_INIT_STAGE 
-					|| posX == (Properties.X_FINAL_STAGE - Properties.SIZE_SQUARE)
-					|| posY == Properties.Y_INIT_STAGE
-					|| posY == (Properties.Y_FINAL_STAGE - Properties.SIZE_SQUARE)) {
-				value = 5;
-			}
-		}*/
+		}
 		
 		return value;
+	}
+	
+	public int[] borderController(int[] action, double posX, double posY) {
+
+		if (posX == Properties.X_INIT_STAGE 
+				&& posY > Properties.Y_INIT_STAGE) {
+			action[0] = 2;
+		} else if (posX == Properties.X_INIT_STAGE 
+				&& posY+Properties.SIZE_SQUARE < Properties.Y_FINAL_STAGE) {
+			action[0] = 2;
+		} else if (posX+Properties.SIZE_SQUARE == Properties.X_FINAL_STAGE
+				&& posY > Properties.Y_INIT_STAGE) {
+			action[0] = -2;
+		} else if (posX+Properties.SIZE_SQUARE == Properties.X_FINAL_STAGE 
+				&& posY+Properties.SIZE_SQUARE < Properties.Y_FINAL_STAGE) {
+			action[0] = -2;
+		}
+		
+		return action;
+	}
+
+	public int[] randomMove() {
+		int[] move = {-1,0};
+		
+		Random random = new Random();
+		int valor = random.nextInt(2) + 1; 
+		int direction = random.nextInt(2);
+		
+		switch (direction) {
+			case 0:
+				valor = valor*(-1);
+				break;
+			case 1:
+				valor = valor*(1);
+				break;
+		}
+		
+		move[0] = valor;
+		
+		return move;
 	}
 }
