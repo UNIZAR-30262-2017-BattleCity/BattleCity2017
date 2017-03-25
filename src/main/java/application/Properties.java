@@ -105,6 +105,7 @@ public final class Properties {
 	birth of items over enemies
 	birth of enemies over enemies
 	little enemies not destroy when are 5 and item bomb 
+	R// do a array with mini enemies and refresh when kill then 
 	*/
 	
 }

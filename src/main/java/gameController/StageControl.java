@@ -13,7 +13,7 @@ import elements.Item;
 import elements.Player;
 import elements.StageElement;
 import elements.Wall;
-import userInterface.StageGUI;
+import userInterface.MiniEnemies;
 
 public class StageControl {	
 		
@@ -53,8 +53,11 @@ public class StageControl {
     private static final int y3 = Properties.POS3_SPAWN_ENEMY[1];
     
     
-    private int yMiniE; 
-    
+    private static int yMiniE; 
+	private static final int x = Properties.X_INIT_INFO+25;
+	private static final int xB = x + MiniEnemies.delta;
+	private LinkedList<MiniEnemies> miniEnemies;
+	
     private IAControl ia;
 	private boolean updateEnemies;
 	private boolean updteBricks;
@@ -65,6 +68,7 @@ public class StageControl {
     	elements = new LinkedList<>();
     	stageWalls = new LinkedList<>();
     	enemies = new LinkedList<>();
+    	miniEnemies = new LinkedList<>();
     	mazeControl = new MazeControl(this);
     	loadLevel(level, dif);
     }
@@ -79,8 +83,9 @@ public class StageControl {
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
 		enemiesKilled = -1;
-		yMiniE = 230;
+		yMiniE = Properties.Y_INIT_INFO;
 		r = new Random();
+		updateEnemies = true;
 		maxTimeItemEfect  = Properties.MAX_TIME_ITEM_EFECT;
     }
     
@@ -105,6 +110,18 @@ public class StageControl {
     	 mazeControl.loadMaze(level);
     	 eagleBricks = mazeControl.loadEagleWall();    	 
     	 elements.add(player);
+    	 
+    	yMiniE = Properties.Y_INIT_INFO-20;
+    	
+ 		for (int i = 0; i < Properties.CANT_ENEMIES_LEVEL; i++) {
+ 			if (i%2==0) {
+ 				miniEnemies.add(new MiniEnemies(x, yMiniE));
+ 			}else{
+ 				miniEnemies.add(new MiniEnemies(xB, yMiniE));
+ 				yMiniE = yMiniE+ MiniEnemies.delta;
+ 			}
+ 		}
+    	 
     }
             
     public void spawnElements(StageElement e) {
@@ -183,7 +200,7 @@ public class StageControl {
     	
     	for(int i=0;i<elements.size();i++) {
     		tmpElement = elements.get(i);
-    		if (tmpElement.isActive()){    			
+    		if (tmpElement.isActive()){
     			tmpElement.updateDraw();
     		}else deleteElement(tmpElement);
     	}
@@ -227,12 +244,11 @@ public class StageControl {
     	
     	if (updateEnemies) {
     		g.setColor(Color.darkGray);
-    		if (enemiesKilled%2==0) {
-				g.fillRect(StageGUI.x2, yMiniE, StageGUI.size, StageGUI.size);
-			}else{
-				g.fillRect(StageGUI.x, yMiniE, StageGUI.size, StageGUI.size);
-				yMiniE= yMiniE-StageGUI.delta;
-			}
+            g.fillRect(Properties.X_INIT_INFO, Properties.Y_INIT_INFO-20, Properties.X_FINAL_INFO, 200);
+    	    
+    		for(int i=0;i<miniEnemies.size();i++) {
+    			miniEnemies.get(i).draw(g);
+    		}
 	        updateEnemies = false;
 		}    	
     	
@@ -247,6 +263,7 @@ public class StageControl {
         enemies.remove(e);
         nEnemiesSimul--;
         enemiesKilled++;
+        miniEnemies.remove(miniEnemies.size()-1);
         updateEnemies = true;
     }
     
@@ -316,7 +333,7 @@ public class StageControl {
 	public void bombEfect() {
 		for (int i = 0; i < enemies.size();i++) {			
 			enemies.get(i).setActive(false);
-		}	
+		}
 	}
 	
 	public LinkedList<StageElement> getElements() {

@@ -11,11 +11,6 @@ import gameController.ImageControl;
 public class StageGUI {
 	
 	private static final FontControl FC= new FontControl(Properties.FONT_PIXEL);
-	public static final int size = Properties.WIDTH_ELEMENT_STAGE/2;
-	public static final int delta = 20;
-	public static final int x = Properties.X_INIT_INFO+25;
-	public static final int x2 = x + delta;
-	private static int y;
 
 	
 	public StageGUI(int level){
@@ -42,20 +37,7 @@ public class StageGUI {
         g.setFont( FC.getFont(Font.PLAIN, 50));
         g.drawString(""+level, Properties.X_INIT_INFO, Properties.Y_FINAL_INFO+20);
         g.drawImage(ImageControl.getFlag(), Properties.X_INIT_INFO+50, Properties.Y_FINAL_INFO-28, Properties.WIDTH_ELEMENT_STAGE+10, Properties.HEIGH_ELEMENT_STAGE+10, null);
-       
-        loadMiniEnemies(g);
-	}
-	
-	public void loadMiniEnemies(Graphics g){		
-		y = Properties.Y_INIT_INFO-20;
-		for (int i = 0; i < Properties.CANT_ENEMIES_LEVEL; i++) {
-			if (i%2==0) {
-				g.drawImage(ImageControl.getEnemyMini(), x, y, size, size, null);
-			}else{
-				g.drawImage(ImageControl.getEnemyMini(), x2, y, size, size, null);
-				y = y+delta;
-			}
-		}
+
 	}
 	
 }
