@@ -91,7 +91,7 @@ public final class Properties {
 	
 	
 	public static final double DELTA = Properties.SIZE_SQUARE/2;
-	public static final int TIME_UPDATE_IA = 180;
+	public static final int TIME_UPDATE_IA = 0;
 	
 	//StageGUI
 	public static final int X_INIT_INFO = X_FINAL_STAGE+60;

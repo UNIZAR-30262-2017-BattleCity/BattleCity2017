@@ -45,8 +45,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		opc = 1;
 		menu = new Menu();
 		cursor = new Cursor();
-		//ia = new IAControl();
-		ia=null;
+		ia = new IAControl();
 	}
 	
 	public void initStage(){				

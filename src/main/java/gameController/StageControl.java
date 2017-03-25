@@ -191,20 +191,19 @@ public class StageControl {
     			tmpEnemy = enemies.get(i);	
         		if (tmpEnemy.isActive()){        			
         			if (updateIA) {
-						/*int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX()+Properties.DELTA,
+						int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX()+Properties.DELTA,
         					tmpEnemy.getPosY()+Properties.DELTA, this);
     						tmpEnemy.setDir(dir[0]);
         				if (dir[1] == 1) {
 							tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
-						}*/	
-        				updateIA=false;        				
-					}     			
-        			
+						}        				      				
+					}        			
         			tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
         			tmpEnemy.updateDraw();
         		}
         		else deleteEnemy(tmpEnemy);
-			}    		
+        		
+			} updateIA=false;   		
     	}
     	
     	for(int i=0;i<elements.size();i++) {
@@ -274,6 +273,7 @@ public class StageControl {
         enemiesKilled++;
         miniEnemies.removeLast();
         updateEnemies = true;
+        
     }
     
     public void deleteItem(Item it){

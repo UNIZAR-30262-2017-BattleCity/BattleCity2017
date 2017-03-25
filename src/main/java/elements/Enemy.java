@@ -121,10 +121,10 @@ public class Enemy extends Tank implements StageElement{
     		}
 		}	
 		
-		if(getPosX()<xI) setDir(2);
-    	if(getPosX()>xF) setDir(-2);
-    	if(getPosY()<yI) setDir(-1);
-    	if(getPosY()>yF) setDir(1);
+    	if(getPosX()<xI) setPosX(xI);
+    	if(getPosX()>xF) setPosX(xF);
+    	if(getPosY()<yI) setPosY(yI);
+    	if(getPosY()>yF) setPosY(yF);
     	
     	anim();
 		

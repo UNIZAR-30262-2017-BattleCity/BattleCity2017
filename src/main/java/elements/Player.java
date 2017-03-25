@@ -135,8 +135,7 @@ public class Player extends Tank implements StageElement{
     			setPosX(p.getX()-width);
     			break;
     		}
-		}
-    	
+		}    	
     	
     	if(getPosX()<xI) setPosX(xI);
     	if(getPosX()>xF) setPosX(xF);
