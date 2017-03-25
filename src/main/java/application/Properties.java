@@ -90,6 +90,9 @@ public final class Properties {
 	public final static int TIME_ANIM = 5;
 	
 	
+	public static final double DELTA = Properties.SIZE_SQUARE/2;
+	public static final int TIME_UPDATE_IA = 180;
+	
 	//StageGUI
 	public static final int X_INIT_INFO = X_FINAL_STAGE+60;
 	public static final int Y_INIT_INFO = Y_INIT_STAGE+40;

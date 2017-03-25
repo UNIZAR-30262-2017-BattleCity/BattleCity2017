@@ -24,6 +24,8 @@ public class StageControl {
     private static final int maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
     private static int maxTimeItemEfect;
     
+    private static int timeUpdateIA;
+    
     private LinkedList<StageElement> elements;
     private LinkedList<Enemy> enemies;
     private LinkedList<Wall> eagleBricks;
@@ -61,6 +63,7 @@ public class StageControl {
     private IAControl ia;
 	private boolean updateEnemies;
 	private boolean updteBricks;
+	private boolean updateIA;
             
     public StageControl(int level, int dif, IAControl ia) {
     	initValues();
@@ -153,7 +156,7 @@ public class StageControl {
 				col = r.nextInt(Properties.COL_STAGE)+1;
 				row = r.nextInt(Properties.ROW_STAGE)+1;
 				typeItem = r.nextInt(7)+1;
-				elements.add(new Item(col, row, 5, this));
+				elements.add(new Item(col, row, typeItem, this));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -162,6 +165,8 @@ public class StageControl {
 
     public void updateDraw(){
 
+    	updateIA();
+    	
     	if(timerIt<timeBetweenSpawnIt){
 			timerIt++;
 		}else{
@@ -184,13 +189,17 @@ public class StageControl {
     		
     		for (int i = 0; i < enemies.size(); i++) {
     			tmpEnemy = enemies.get(i);	
-        		if (tmpEnemy.isActive()){
-        			/*int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX()+(Properties.SIZE_SQUARE/2),
-        					tmpEnemy.getPosY()+(Properties.SIZE_SQUARE/2), this);
-    				tmpEnemy.setDir(dir[0]);
-        			if (dir[1] == 1) {
-						tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
-					}*/	
+        		if (tmpEnemy.isActive()){        			
+        			if (updateIA) {
+						/*int dir[] = ia.getDir_Shoot(tmpEnemy.getPosX()+Properties.DELTA,
+        					tmpEnemy.getPosY()+Properties.DELTA, this);
+    						tmpEnemy.setDir(dir[0]);
+        				if (dir[1] == 1) {
+							tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
+						}*/	
+        				updateIA=false;        				
+					}     			
+        			
         			tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
         			tmpEnemy.updateDraw();
         		}
@@ -263,7 +272,7 @@ public class StageControl {
         enemies.remove(e);
         nEnemiesSimul--;
         enemiesKilled++;
-        miniEnemies.remove(miniEnemies.size()-1);
+        miniEnemies.removeLast();
         updateEnemies = true;
     }
     
@@ -295,6 +304,15 @@ public class StageControl {
 			maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
 			clockEfect = false;
 			itemTaked = false;
+		}
+	}
+	
+	public void updateIA(){		
+		if(timeUpdateIA>0){
+			timeUpdateIA--;
+		}else{
+			timeUpdateIA = Properties.MAX_TIME_ITEM_EFECT;
+			updateIA = true;
 		}
 	}
 
@@ -354,6 +372,7 @@ public class StageControl {
 		clone.addAll(enemies);
 		clone.add(player);
 		//TODO add player 2
+		//TODO add eagle create spawn obstacles.
 		clone.addAll(stageWalls);
 		return clone;
 	}

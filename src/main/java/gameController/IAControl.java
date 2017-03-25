@@ -14,13 +14,10 @@ import elements.Wall;
 public class IAControl {
 	
 	private NeuralNetwork<?> neuralNetworkMultiLayer;
-	private double delta;
-	private double delta2;
 	
-	public IAControl() {
-		delta = Properties.SIZE_SQUARE/2;
-		delta2 = delta/2;
-		
+	private static final double delta2 = Properties.DELTA/2;
+	
+	public IAControl() {			
 		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
 	}
 // ------------------------------------------------------------------------------- //
@@ -39,53 +36,39 @@ public class IAControl {
 				temElementLEFT1 = null, temElementRIGHT1 = null;
 		double elementX, elementY;
 		double columnInit, columnFin, rowInit, rowFin;
-		double nearUP1 = -10000;
-		double nearDOWN1 = 10000;
-		double nearLEFT1 = -10000;
-		double nearRIGHT1 = 10000;
+		double nearUP1 = -10;
+		double nearDOWN1 = Properties.HEIGHT;
+		double nearLEFT1 = -10;
+		double nearRIGHT1 = Properties.WIDTH;
 		
 		for (int i = 0; i < elementsList.size(); i++) {
 			element = elementsList.get(i);
-			elementX = element.getPosX() + delta;
-			elementY = element.getPosY() + delta;
+			elementX = element.getPosX() + Properties.DELTA;
+			elementY = element.getPosY() + Properties.DELTA;
 			
-			columnInit = elementX - delta;
-			columnFin = elementX + delta;
+			columnInit = element.getPosX();
+			columnFin = elementX + Properties.DELTA;
 			
-			rowInit = elementY - delta;
-			rowFin = elementY + delta;
+			rowInit = element.getPosY();
+			rowFin = elementY + Properties.DELTA;
 			
-			if (element.getClass().equals(Wall.class)
-					&& element.getType() == 3) {
-				elementX = element.getPosX() + delta;
-				elementY = element.getPosY() + delta2;
-				
-				columnInit = elementX - delta;
-				columnFin = elementX + delta;
-				
-				rowInit = elementY - delta2;
-				rowFin = elementY + delta2;
-			} else if (element.getClass().equals(Wall.class)
-					&& element.getType() == 4) {
-    			elementX = element.getPosX() + delta2;
-    			elementY = element.getPosY() + delta;
+			if (element.getClass().equals(Wall.class)) {				
+				if (element.getType() == 3) {
+					elementY = element.getPosY() + delta2;				
+					rowFin = elementY + delta2;
+				}else if (element.getType() == 4) {
+					elementX = element.getPosX() + delta2;
     			
-    			columnInit = elementX - delta2;
-    			columnFin = elementX + delta2;
+					columnInit = elementX - delta2;
+					columnFin = elementX + delta2;    			
+				}else if (element.getType() == 1) {
+					elementX = element.getPosX() + delta2;
+					elementY = element.getPosY() + delta2;
     			
-    			rowInit = elementY - delta;
-    			rowFin = elementY + delta;
-			} else if (element.getClass().equals(Wall.class) 
-					&& element.getType() == 1) {
-    			elementX = element.getPosX() + delta2;
-    			elementY = element.getPosY() + delta2;
-    			
-    			columnInit = elementX - delta2;
-    			columnFin = elementX + delta2;
-    			
-    			rowInit = elementY - delta2;
-    			rowFin = elementY + delta2;
-			} else if (element.getClass().equals(Eagle.class)) {
+					columnFin = elementX + delta2;    			
+					rowFin = elementY + delta2;
+				}				
+			}else if (element.getClass().equals(Eagle.class)) {
 				columnInit = elementX - delta2;
 				columnFin = elementX + delta2;
 				
@@ -133,7 +116,7 @@ public class IAControl {
 			action = calculateIA(neuralNetworkMultiLayer, inputIA);
 		}
 		
-		return borderController(action, posX-delta, posY-delta);
+		return borderController(action, posX-Properties.DELTA, posY-Properties.DELTA);
 	}
 	
 	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
@@ -181,28 +164,21 @@ public class IAControl {
 	
 	public double generateInputValue(StageElement element) {
 		double value = 0;
-		
+
 		if (element != null) {
-			
-			if (element.getClass().equals(Wall.class)
-					&& element.getType() != 1) {
-				value = 0;
+
+			if (element.getClass().equals(Wall.class)){
+				if(element.getType() == 1) value = 2;
 			}
-			
-			else if (element.getClass().equals(Wall.class)
-					&& element.getType() == 1) {
-				value = 2;
-			}
-			
 			else if (element.getClass().equals(Player.class)) {
 				value = 3;
 			}
-			
+
 			else if (element.getClass().equals(Eagle.class)) {
 				value = 4;
 			}
 		}
-		
+
 		return value;
 	}
 	
