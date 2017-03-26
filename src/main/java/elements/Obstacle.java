@@ -34,7 +34,7 @@ public class Obstacle extends GameElement implements StageElement{
 	public void draw(Graphics g) {
 		
 		if (isActive) {
-			g.drawImage(img, (int) posX,(int) posY, null);
+			g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
 		}
 		
 	}
