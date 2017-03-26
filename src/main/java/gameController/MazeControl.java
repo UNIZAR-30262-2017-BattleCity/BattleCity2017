@@ -2,8 +2,10 @@ package gameController;
 
 import java.util.LinkedList;
 
+import application.Properties;
 import elements.Eagle;
 import elements.Obstacle;
+import elements.Player;
 import elements.Wall;
 
 public class MazeControl {
@@ -68,7 +70,7 @@ public class MazeControl {
 					{0,1,0,1,0,1,1,1,0,1,6,1,0},
 					{0,1,0,1,0,1,1,1,0,0,0,0,0},
 					{0,1,0,0,0,0,0,0,0,1,0,1,0},
-					{0,1,0,1,0,0,13,0,0,1,1,1,0},
+					{0,1,0,1,15,0,13,0,0,1,1,1,0},
 					};			
 			matriz = m2;
 			break;
@@ -144,6 +146,78 @@ public class MazeControl {
 					};			
 			matriz = m6;
 			break;
+		case 7:
+			int[][] m7= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,13,0,0,0,0,0,0},
+					};			
+			matriz = m7;
+			break;
+		case 8:
+			int[][] m8= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,13,0,0,0,0,0,0},
+					};			
+			matriz = m8;
+			break;
+		case 9:
+			int[][] m9= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,13,0,0,0,0,0,0},
+					};			
+			matriz = m9;
+			break;
+		case 10:
+			int[][] m10= {
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,13,0,0,0,0,0,0},
+					};	
+			matriz = m10;
+			break;
 		}
 		
 		return matriz;
@@ -183,65 +257,101 @@ public class MazeControl {
 
 	}
 	
-	public void loadMaze(int level){
+	public void loadMaze(int level, boolean player1, boolean player2){
     	int[][] m = createMaze(level);
+    	
+    	if (player1) {
+    		m[12][4] = 15;
+		}
+    	if (player2) {
+			m[12][8] = 16;
+		}
     	    	
     	for (int i = 0; i < m.length; i++) { 
             for (int j = 0; j < m.length; j++) {
-                if (m[i][j] == 1) {
-                	for (int j2 = 0; j2 < 4; j2++) {
-						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
-					}					
-				}
-                if (m[i][j] == 2) {
-                	for (int j2 = 0; j2 < 2; j2++) {
+            	
+            	switch (m[i][j]) {
+				case 1:
+					for (int j2 = 0; j2 < 4; j2++) {
 						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
 					}
-				}
-                if (m[i][j] == 3) {
-                	for (int j2 = 2; j2 < 4; j2++) {
+					break;
+						
+				case 2:
+					for (int j2 = 0; j2 < 2; j2++) {
 						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
 					}
-				}
-                if (m[i][j] == 4) {
-                	for (int j2 = 0; j2 < 4; j2 = j2+2) {
+					break;
+					
+				case 3:
+					for (int j2 = 2; j2 < 4; j2++) {
 						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
 					}
-				}
-                if (m[i][j] == 5) {
-                	for (int j2 = 1; j2 < 4; j2 = j2+2) {
+					break;
+
+				case 4:
+					for (int j2 = 0; j2 < 4; j2 = j2+2) {
 						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
 					}
-				}
-                if (m[i][j] == 6) {
+					break;
+					
+				case 5:
+					for (int j2 = 1; j2 < 4; j2 = j2+2) {
+						stageControl.spawnWalls(new Wall(i,j,j2,1,stageControl, false)); 
+					}
+					break;
+
+				case 6:
 					stageControl.spawnWalls(new Wall(i,j,0,2,stageControl, false));
-				}
-                if (m[i][j] == 7) {
+					break;
+					
+				case 7:
 					stageControl.spawnWalls(new Wall(i,j,0,3,stageControl, false));
-				}
-                if (m[i][j] == 8) {
-		    		stageControl.spawnWalls(new Wall(i+.5,j,0,3,stageControl, false));
-				}
-                if (m[i][j] == 9) {
-		    		stageControl.spawnWalls(new Wall(i,j,0,4,stageControl, false));
-				}
-                if (m[i][j] == 10) {
-		    		stageControl.spawnWalls(new Wall(i,j+.5,0,4,stageControl, false));
-                }
-                if (m[i][j] == 11) {
-					stageControl.spawnElements(new Obstacle(i,j,1,stageControl));
-                }
-                if (m[i][j] == 12) {
-					stageControl.spawnElements(new Obstacle(i,j,2,stageControl));
-                }
-                if (m[i][j] == 13) {
-					stageControl.spawnElements(new Eagle(i,j,stageControl));
-                }
-                if (m[i][j] == 14) {
+					break;
+
+				case 8:
+					stageControl.spawnWalls(new Wall(i+.5,j,0,3,stageControl, false));
+					break;
+					
+				case 9:
+					stageControl.spawnWalls(new Wall(i,j,0,4,stageControl, false));
+					break;
+
+				case 10:
+					stageControl.spawnWalls(new Wall(i,j+.5,0,4,stageControl, false));
+					break;
+					
+				case 11:
+					stageControl.spawnForest(new Obstacle(i,j,1,stageControl));
+					break;
+
+				case 12:
+					stageControl.spawnStaticElements(new Obstacle(i,j,2,stageControl));
+					break;
+					
+				case 13:
+                	Eagle e = new Eagle(i,j,stageControl);
+					stageControl.spawnStaticElements(e);
+					stageControl.setEagle(e);
+					break;
+
+				case 14:
                 	for (int j2 = 0; j2 < 2; j2++) {
 						stageControl.spawnWalls(new Wall(i-.5,j,j2,1,stageControl, false)); 
 					}
-                }
+					break;
+					
+				case 15:			
+					StageControl.players[0] = new Player(i+1, j+1, Properties.INIT_LIFES,1, stageControl);
+					stageControl.spawnElements(StageControl.players[0]);
+					break;
+
+				case 16:
+					StageControl.players[1] = new Player(i+1, j+1, Properties.INIT_LIFES,2, stageControl);
+					stageControl.spawnElements(StageControl.players[1]);
+					break;
+				}
+
             }
         }
     	

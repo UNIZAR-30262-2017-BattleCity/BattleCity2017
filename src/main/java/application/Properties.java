@@ -28,13 +28,13 @@ public final class Properties {
 	public final static int Y_FINAL_CURSOR_C =  Y_INIT_CURSOR_C + DELTA_CURSOR * (N_OPC_CONFIG-1);
 	
 	//Player
-	public final static int INIT_LIVES = 3;
+	public final static int INIT_LIFES = 3;
 	
 	//Enemy
 	public final static int VEL_ENEMY = 1;
 	public final static int VEL_ENEMY_FAST = 2;
 	public final static int MAX_ENEMY_SIMUL = 5;
-	public final static int CANT_ENEMIES_LEVEL = 1;
+	public final static int CANT_ENEMIES_LEVEL = 20;
 	public final static int TIME_BETWEEN_SPAWN_E = 300;
 	
 	//Spawn Enemy Points
@@ -58,7 +58,7 @@ public final class Properties {
 	
 	//Bullets
 	public final static int VEL_BULLET = 3;
-	public final static int MAX_BULLETS_TANK = 3;
+	public final static int MAX_BULLETS_TANK = 1;
 	public static final int yIB = Y_INIT_STAGE+2;
 	public static final int xIB = X_INIT_STAGE+2;
 	public static final int yFB = Y_FINAL_STAGE+SIZE_SQUARE-8;
@@ -98,16 +98,19 @@ public final class Properties {
 	public static final int X_FINAL_INFO = WIDTH -5;
 	public static final int Y_FINAL_INFO = Y_FINAL_STAGE;
 	
+	
+	public static final int X_LIFES = X_INIT_INFO+60;
+	public static final int X_SCORE = X_LIFES;
+	
 	public static final int Y_IP_LIFES = Y_INIT_INFO+260;
 	public static final int Y_IP_SCORE = Y_IP_LIFES+20;
-	
+		
 	public static final int Y_IIP_LIFES = Y_IP_LIFES+100;
 	public static final int Y_IIP_SCORE = Y_IIP_LIFES+20;
+	
 	/*Mistakes
 	birth of items over enemies
 	birth of enemies over enemies
-	little enemies not destroy when are 5 and item bomb 
-	R// do a array with mini enemies and refresh when kill then 
 	*/
 	
 }

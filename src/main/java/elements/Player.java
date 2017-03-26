@@ -13,13 +13,18 @@ import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
-	private final static BufferedImage[] imgPlayerUp = {ImageControl.getPlayer1UP(),ImageControl.getPlayer1UPB()};
-	private final static BufferedImage[] imgPlayerDowm = {ImageControl.getPlayer1Dowm(),ImageControl.getPlayer1DowmB()};
-	private final static BufferedImage[] imgPlayerLeft = {ImageControl.getPlayer1Left(),ImageControl.getPlayer1LeftB()};
-	private final static BufferedImage[] imgPlayerRight = {ImageControl.getPlayer1Right(),ImageControl.getPlayer1RightB()};
+	private BufferedImage[] imgPlayer1Up = new BufferedImage[2];
+	private BufferedImage[] imgPlayer1Dowm = new BufferedImage[2];
+	private BufferedImage[] imgPlayer1Left = new BufferedImage[2];
+	private BufferedImage[] imgPlayer1Right = new BufferedImage[2];
+	private BufferedImage[] imgPlayer2Up = new BufferedImage[2];
+	private BufferedImage[] imgPlayer2Dowm = new BufferedImage[2];
+	private BufferedImage[] imgPlayer2Left = new BufferedImage[2];
+	private BufferedImage[] imgPlayer2Right = new BufferedImage[2];
     private int userName;
 	private int lifes;
 	private int score;
+	private int player;
     private int maxTimeItemEfect;
 	private boolean itemTaked;
 	private boolean gunEfectActivate;
@@ -30,12 +35,14 @@ public class Player extends Tank implements StageElement{
     private boolean shieldActivate = false;
 	
 	
-    public Player(int col, int row, int lifes, StageControl stageControl) {
+    public Player(int col, int row, int lifes, int player, StageControl stageControl) {
 		super(stageControl);
     	this.setLifes(lifes);
 		this.stageControl = stageControl;
 		setTypeTank(0);		
 		setInitPos(col, row);
+		this.player = player;
+		initPlayer();
 		itemTaked= false;
 		gunEfectActivate = false;
 		updateLifes = true;
@@ -44,60 +51,88 @@ public class Player extends Tank implements StageElement{
 		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;		
 		this.shieldLevel = 1;
 	}
-        
+    
+    public void initPlayer(){
+    	if (player==1) {
+    		imgPlayer1Up[0] = ImageControl.getPlayer1UP();
+    		imgPlayer1Dowm[0] = ImageControl.getPlayer1Dowm();
+    		imgPlayer1Left[0] = ImageControl.getPlayer1Left();
+    		imgPlayer1Right[0] = ImageControl.getPlayer1Right();
+    		imgPlayer1Up[1] = ImageControl.getPlayer1UPB();
+    		imgPlayer1Dowm[1] = ImageControl.getPlayer1DowmB();
+    		imgPlayer1Left[1] = ImageControl.getPlayer1LeftB();
+    		imgPlayer1Right[1] = ImageControl.getPlayer1RightB();
+		}else{
+    		imgPlayer2Up[0] = ImageControl.getPlayer2UP();
+    		imgPlayer2Dowm[0] = ImageControl.getPlayer2Dowm();
+    		imgPlayer2Left[0] = ImageControl.getPlayer2Left();
+    		imgPlayer2Right[0] = ImageControl.getPlayer2Right();
+    		imgPlayer2Up[1] = ImageControl.getPlayer2UPB();
+    		imgPlayer2Dowm[1] = ImageControl.getPlayer2DowmB();
+    		imgPlayer2Left[1] = ImageControl.getPlayer2LeftB();
+    		imgPlayer2Right[1] = ImageControl.getPlayer2RightB();
+		}
+    }
+    
     @Override
     public void draw(Graphics g) {
 
     	if (vel!=0) {
     		switch (this.dir) {
     		case 1:
-				g.drawImage(imgPlayerUp[anim], (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			drawPlayer(g, imgPlayer1Up[anim],imgPlayer2Up[anim]);
     			break;
     		case -1:
-    			g.drawImage(imgPlayerDowm[anim], (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			drawPlayer(g, imgPlayer1Dowm[anim],imgPlayer2Dowm[anim]);
     			break;
     		case -2:
-    			g.drawImage(imgPlayerLeft[anim], (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			drawPlayer(g, imgPlayer1Left[anim],imgPlayer2Left[anim]);
     			break;
     		case 2:
-    			g.drawImage(imgPlayerRight[anim], (int) getPosX(), (int)getPosY(),width, heigth, null);
+    			drawPlayer(g, imgPlayer1Right[anim],imgPlayer2Right[anim]);
     			break;
     		}
     	}else{
     		switch (this.dir) {
     		case 1:
-    			g.drawImage(imgPlayerUp[0], (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			drawPlayer(g, imgPlayer1Up[0],imgPlayer2Up[0]);
     			break;
     		case -1:
-    			g.drawImage(imgPlayerDowm[0], (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			drawPlayer(g, imgPlayer1Dowm[0],imgPlayer2Dowm[0]);
     			break;
     		case -2:
-    			g.drawImage(imgPlayerLeft[0], (int) getPosX(), (int)getPosY(), width, heigth, null);
+    			drawPlayer(g, imgPlayer1Left[0],imgPlayer2Left[0]);
     			break;
     		case 2:
-    			g.drawImage(imgPlayerRight[0], (int) getPosX(), (int)getPosY(),width, heigth, null);
+    			drawPlayer(g, imgPlayer1Right[0],imgPlayer2Right[0]);
     			break;
     		}
     	}
 
     	if (updateLifes) {
-    		g.setColor(Color.darkGray);
-	        g.fillRect(Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES-15, 40, 20);
-	        g.setColor(Color.black);
-    		g.setFont( FontControl.ARIAL);
-    		g.drawString(""+lifes, Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES );
-    		updateLifes = false;
+    		if (player==1) {
+				updateLifes(g, Properties.Y_IP_LIFES);
+			}else{
+				updateLifes(g, Properties.Y_IIP_LIFES);
+			}
 		}
     	if (updateScore) {
-    		g.setColor(Color.darkGray);
-	        g.fillRect(Properties.X_INIT_INFO+60, Properties.Y_IP_LIFES, 40, 20);
-	        g.setColor(Color.black);
-    		g.setFont( FontControl.ARIAL);
-    		g.drawString(""+score, Properties.X_INIT_INFO+60, Properties.Y_IP_SCORE );
-    		updateScore = false;
+    		if (player==1) {
+				updateScore(g, Properties.Y_IP_SCORE);
+			}else{
+				updateScore(g, Properties.Y_IIP_SCORE);
+			}
 		}
 
 	}
+    
+    public void drawPlayer(Graphics g, BufferedImage p1, BufferedImage p2){
+    	if (player==1) {
+    		g.drawImage(p1, (int) getPosX(), (int)getPosY(), width, heigth, null);
+		}else{
+			g.drawImage(p2, (int) getPosX(), (int)getPosY(), width, heigth, null);
+		}
+    }
     
     @Override
     public void updateDraw(){
@@ -178,6 +213,23 @@ public class Player extends Tank implements StageElement{
 		}
 	}
     
+    public void updateScore(Graphics g, int y){
+    	g.setColor(Color.darkGray);
+        g.fillRect(Properties.X_SCORE, y, 40, 20);
+        g.setColor(Color.black);
+		g.setFont( FontControl.ARIAL);
+		g.drawString(""+score, Properties.X_SCORE, y);
+		updateScore = false;
+    }
+    
+    public void updateLifes(Graphics g, int y){
+    	g.setColor(Color.darkGray);
+        g.fillRect(Properties.X_LIFES, y, 40, 20);
+        g.setColor(Color.black);
+		g.setFont( FontControl.ARIAL);
+		g.drawString(""+lifes, Properties.X_LIFES, y);
+		updateLifes = false;
+    }
 	
 	public void reduceLifes(){
     	lifes--;

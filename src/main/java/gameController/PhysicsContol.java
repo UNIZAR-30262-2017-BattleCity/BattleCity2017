@@ -12,6 +12,7 @@ import elements.Item;
 import elements.Obstacle;
 import elements.Player;
 import elements.StageElement;
+import elements.Tank;
 import elements.Wall;
 
 public class PhysicsContol {
@@ -45,7 +46,7 @@ public class PhysicsContol {
 				if (isIntersecs(p,s)) {				
 					if (s.getClass().equals(Item.class)) {
 						s.setActive(false);
-						s.getStage().ItemTaked((Item) s);
+						s.getStage().ItemTaked(p,(Item) s);
 					}else{
 						if (s.getClass().equals(Obstacle.class)) {
 							int o = list.get(i).getType();
@@ -59,19 +60,18 @@ public class PhysicsContol {
 		return null;
 	}
 	
-	public static void collisionBullet(Bullet b, GameElement gE, StageControl stageControl){
+	public static void collisionBullet(Bullet b, Tank t, StageControl stageControl){
 		LinkedList<StageElement> list;
 		StageElement s;
 
-		if (gE.getClass().equals(Player.class)) {
+		if (t.getClass().equals(Player.class)) {
 			list = stageControl.getMaze_Enemies();
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
-				if (!s.equals(gE) && !s.equals(b)) {
+				if (!s.equals(t) && !s.equals(b)) {
 					if (isIntersecs(b,s)) {
 						b.setActive(false);
-						Player pl = (Player) gE;
-						pl.setBulletsInProgres(pl.getBulletsInProgres()-1);
+						t.setBulletsInProgres(t.getBulletsInProgres()-1);
 						actionBullet(true, s, stageControl);						
 					}
 				}
@@ -82,8 +82,7 @@ public class PhysicsContol {
 				s = list.get(i);
 				if (isIntersecs(b,s)) {
 					b.setActive(false);
-					Enemy en = (Enemy) gE;
-					en.setBulletsInProgres(en.getBulletsInProgres()-1);
+					t.setBulletsInProgres(t.getBulletsInProgres()-1);
 					actionBullet(false, s, stageControl);									
 				}
 
@@ -110,9 +109,14 @@ public class PhysicsContol {
 			if (s.getClass().equals(Player.class)) {
 				//TODO
 			}
-		}else{
-			if (s.getClass().equals(Player.class)) {
-				stageControl.getPlayer().reduceLifes();			
+		}else{			
+			if (s.getClass().equals(Player.class)) {				
+				if (s.equals(StageControl.getPlayers()[0])) {
+					StageControl.getPlayers()[0].reduceLifes();
+				}else{
+					StageControl.getPlayers()[1].reduceLifes();
+				}
+						
 			}
 		}
 		

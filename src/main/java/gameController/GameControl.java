@@ -25,7 +25,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private static final long serialVersionUID = 1L;
 	private boolean running;
 	private Thread thread;
-	private Player player;
+	private Player[] players;
+	private boolean isPlayer1,isPlayer2;
 	private StageControl stageControl;
 	private Screen screen;
 	private Menu menu;
@@ -52,7 +53,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	public void initStage(){				
 		stageControl = new StageControl(this);
-		player = stageControl.getPlayer();
+		players = StageControl.getPlayers();
 		level++;
 	}
 
@@ -187,23 +188,43 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//int key = e.getKeyCode();
+		int key = e.getKeyCode();
 		if (screen.equals(Screen.STAGE_PLAY)) {
-			player.setVel(0);
-		}
-		
-		/*if (key == KeyEvent.VK_UP) {
-			player.setVelX(0);
-		}
-		if (key == KeyEvent.VK_DOWN) {
-			player.setVelX(0);
-		}
-		if (key == KeyEvent.VK_RIGHT) {
-			player.setVelY(0);
-		}
-		if (key == KeyEvent.VK_LEFT) {
-			player.setVelY(0);
-		}*/
+			if (isPlayer1) {
+				switch (key) {
+				case KeyEvent.VK_UP:
+					players[0].setVel(0);
+					break;
+				case KeyEvent.VK_DOWN:
+					players[0].setVel(0);
+					break;
+				case KeyEvent.VK_RIGHT:
+					players[0].setVel(0);
+					break;
+				case KeyEvent.VK_LEFT:
+					players[0].setVel(0);
+					break;
+				}
+			}
+			if (isPlayer2) {
+				switch (key) {
+				case KeyEvent.VK_W:
+					players[1].setVel(0);
+					break;
+				case KeyEvent.VK_S:
+					players[1].setVel(0);
+					break;
+				case KeyEvent.VK_D:
+					players[1].setVel(0);
+					break;
+				case KeyEvent.VK_A:
+					players[1].setVel(0);
+					break;
+				}
+			}	
+
+		}		
+
 	}	
 	
 	@Override
@@ -225,7 +246,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			if (key == KeyEvent.VK_DOWN) {
 				cursorMove(1,Properties.N_OPC_MENU);
 			}
-			if (key == KeyEvent.VK_ENTER) {				
+			if (key == KeyEvent.VK_ENTER) {		
 				menuOptions();
 			}
 			break;
@@ -247,31 +268,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			}
 			break;
 		case STAGE_PLAY:
-			if (key == KeyEvent.VK_UP) {
-				player.setDir(1);
-				player.setVel(1);			
-			}
-			if (key == KeyEvent.VK_DOWN) {
-				player.setDir(-1);
-				player.setVel(1);			
-			}
-			if (key == KeyEvent.VK_RIGHT) {
-				player.setDir(2);
-				player.setVel(1);	
-			}
-			if (key == KeyEvent.VK_LEFT) {
-				player.setDir(-2);
-				player.setVel(1);
-			}
-			if (key == KeyEvent.VK_SPACE) {
-				player.shoot(new Bullet(player.getPosX(),player.getPosY(),player.getDir(),0,stageControl,player));
-			}
-			if (key == KeyEvent.VK_ENTER) {				
-				screen = Screen.STAGE_PAUSED;
-			}
-			break;
+			playerMove(key);
 		case STAGE_PAUSED:
-			if (key == KeyEvent.VK_ENTER) {			
+			if (key == KeyEvent.VK_ENTER ||
+					key == KeyEvent.VK_G) {		
 				screen = Screen.STAGE_PLAY;
 			}
 			break;
@@ -300,8 +300,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		switch (opc) {
 		case 1:
 			screen = Screen.INIT_STAGE;
+			isPlayer1 = true;
 			break;
 		case 2:
+			isPlayer1 = true;
+			isPlayer2 = true;
 			screen = Screen.INIT_STAGE;
 			break;
 		case 3:
@@ -329,6 +332,66 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		}
 	}
+	
+	public void playerMove(int key){
+
+		if (isPlayer1) {
+			switch (key) {
+			case KeyEvent.VK_UP:
+				players[0].setDir(1);
+				players[0].setVel(1);
+				break;
+
+			case KeyEvent.VK_DOWN:
+				players[0].setDir(-1);
+				players[0].setVel(1);
+				break;
+			case KeyEvent.VK_RIGHT:
+				players[0].setDir(2);
+				players[0].setVel(1);
+				break;
+			case KeyEvent.VK_LEFT:
+				players[0].setDir(-2);
+				players[0].setVel(1);
+				break;
+			case KeyEvent.VK_SPACE :
+				players[0].shoot(new Bullet(players[0].getPosX(),players[0].getPosY(),players[0].getDir(),0,stageControl,players[0]));
+				break;
+			case KeyEvent.VK_ENTER:
+				screen = Screen.STAGE_PAUSED;
+				break;
+			}
+		}
+		if (isPlayer2) {
+			switch (key) {
+			case KeyEvent.VK_W:
+				players[1].setDir(1);
+				players[1].setVel(1);
+				break;
+
+			case KeyEvent.VK_S:
+				players[1].setDir(-1);
+				players[1].setVel(1);
+				break;
+			case KeyEvent.VK_D:
+				players[1].setDir(2);
+				players[1].setVel(1);
+				break;
+			case KeyEvent.VK_A:
+				players[1].setDir(-2);
+				players[1].setVel(1);
+				break;
+			case KeyEvent.VK_F :
+				players[1].shoot(new Bullet(players[1].getPosX(),players[1].getPosY(),players[1].getDir(),0,stageControl,players[1]));
+				break;
+			case KeyEvent.VK_G:
+				screen = Screen.STAGE_PAUSED;
+				break;
+			}
+		}
+		
+
+	}
 
 	public IAControl getIa() {
 		return ia;
@@ -352,6 +415,22 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public boolean isPlayer2() {
+		return isPlayer2;
+	}
+
+	public void setPlayer2(boolean isPlayer2) {
+		this.isPlayer2 = isPlayer2;
+	}
+
+	public boolean isPlayer1() {
+		return isPlayer1;
+	}
+
+	public void setPlayer1(boolean isPlayer1) {
+		this.isPlayer1 = isPlayer1;
 	}
 	
 }

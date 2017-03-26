@@ -14,7 +14,7 @@ public class Menu {
 
 	public void draw(Graphics g) {
         g.setColor(Color.black);
-        g.fillRect(0, 0, Properties.WIDTH, Properties.HEIGHT);
+        g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
         g.drawImage(imgMenu, 0, 0, Properties.WIDTH, Properties.HEIGHT, null);
     }
 

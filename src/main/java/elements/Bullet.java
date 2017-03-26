@@ -13,10 +13,10 @@ public class Bullet extends GameElement implements StageElement{
     private double velBullet;
     private int dir;
     private BufferedImage imgBulletUp, imgBulletDowm, imgBulletLeft, imgBulletRight;
-    private GameElement gE;
+    private Tank t;
     private static final int DELTA = Properties.SIZE_SQUARE/2 -4;
     
-	public Bullet(double posX, double posY, int dir, int type, StageControl stageControl, GameElement gE) {
+	public Bullet(double posX, double posY, int dir, int type, StageControl stageControl, Tank t) {
 		super(stageControl);
 		this.posX = posX;
 		this.posY = posY;
@@ -25,7 +25,7 @@ public class Bullet extends GameElement implements StageElement{
 		this.velBullet = Properties.VEL_BULLET;
 		isActive = true;
 		initBullet();
-		this.gE = gE;
+		this.t = t;
 	}
 	
 	public void initBullet(){
@@ -113,12 +113,24 @@ public class Bullet extends GameElement implements StageElement{
 			break;
 		}
     	    	 
-    	PhysicsContol.collisionBullet(this, gE,stageControl);
+    	PhysicsContol.collisionBullet(this, t,stageControl);
     	    	
-		if(getPosX()<Properties.xIB) {setActive(false); return;}
-	    if(getPosX()>Properties.xFB) {setActive(false); return;}
-	    if(getPosY()<Properties.yIB) {setActive(false); return;}
-	    if(getPosY()>Properties.yFB) {setActive(false); return;}
+		if(getPosX()<Properties.xIB) {
+			setActive(false); 
+			t.setBulletsInProgres(t.getBulletsInProgres()-1);
+			return;}
+	    if(getPosX()>Properties.xFB) {
+	    	setActive(false); 
+	    	t.setBulletsInProgres(t.getBulletsInProgres()-1);
+	    	return;}
+	    if(getPosY()<Properties.yIB) {
+	    	setActive(false); 
+	    	t.setBulletsInProgres(t.getBulletsInProgres()-1);
+	    	return;}
+	    if(getPosY()>Properties.yFB) {
+	    	setActive(false); 
+	    	t.setBulletsInProgres(t.getBulletsInProgres()-1);
+	    	return;}
 		   	
     	
     }
