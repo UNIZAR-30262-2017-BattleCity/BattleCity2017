@@ -20,10 +20,10 @@ public class StageGUI {
 	public void draw(int level, Graphics g) {
 		g.setColor(Color.darkGray);
         g.fillRect(0, 0, 
-        		(int) (Properties.WIDTH+(Properties.WIDTH*0.029325)), 
+        		(int) (Properties.WIDTH+(Properties.WIDTH*0.05)), 
         		Properties.HEIGHT);
         
-        g.setFont( new Font("Arial",Font.PLAIN, 20));
+        g.setFont( new Font("Arial",Font.PLAIN, 7*Properties.SCALE));
         g.setColor(Color.black);
         
         g.drawImage(ImageControl.getIP(), 
@@ -55,14 +55,14 @@ public class StageGUI {
         g.drawString("Score:", Properties.X_INIT_INFO, 
         		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.653)));
         
-        g.setFont( FC.getFont(Font.PLAIN, 50));
+        g.setFont( FC.getFont(Font.PLAIN, 17*Properties.SCALE));
         g.drawString(""+level, Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_FINAL_INFO+(Properties.HEIGHT*0.0344)));
+        		(int) (Properties.Y_FINAL_INFO+(Properties.HEIGHT*0.06)));
         g.drawImage(ImageControl.getFlag(), 
-        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.07343)), 
-        		(int) (Properties.Y_FINAL_INFO-(Properties.HEIGHT*0.0482)), 
+        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.08)), 
+        		(int) (Properties.Y_FINAL_INFO-(Properties.HEIGHT*0.016)), 
         		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
-        		(int) (Properties.HEIGH_ELEMENT_STAGE+(Properties.HEIGHT*0.0172)), null);
+        		(int) (Properties.HEIGH_ELEMENT_STAGE+(Properties.HEIGHT*0.017)), null);
 
 	}
 	
