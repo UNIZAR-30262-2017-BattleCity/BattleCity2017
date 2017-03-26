@@ -10,6 +10,7 @@ public enum Screen {
 	INIT_STAGE,
 	STAGE_PLAY,
 	STAGE_PAUSED,
-	SCORE_STAGE, 
+	SCORE_STAGE,
+	GAMEOVER
 	
 }

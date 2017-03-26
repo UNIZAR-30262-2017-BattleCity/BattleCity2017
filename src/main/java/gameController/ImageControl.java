@@ -43,6 +43,10 @@ public final class ImageControl {
 		return spriteSheet.getSubimage(352, 32, 8, 8);
 	}
 	
+	public static BufferedImage getGameOver(){
+		return spriteSheet.getSubimage(304, 72, 34, 16);
+	}
+	
 	public static BufferedImage getFlag(){
 		return getSprite(2, 25,  w, h);
 	}

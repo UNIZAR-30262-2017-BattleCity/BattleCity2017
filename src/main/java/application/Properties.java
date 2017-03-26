@@ -34,7 +34,7 @@ public final class Properties {
 	public final static int VEL_ENEMY = 1;
 	public final static int VEL_ENEMY_FAST = 2;
 	public final static int MAX_ENEMY_SIMUL = 5;
-	public final static int CANT_ENEMIES_LEVEL = 20;
+	public final static int CANT_ENEMIES_LEVEL = 1;
 	public final static int TIME_BETWEEN_SPAWN_E = 300;
 	
 	//Spawn Enemy Points

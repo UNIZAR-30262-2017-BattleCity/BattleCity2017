@@ -61,16 +61,19 @@ public class StageControl {
     private IAControl ia;
 	private boolean updateEnemies;
 	private boolean updteBricks;
+	
+	private GameControl gC;
             
-    public StageControl(int level, int dif, IAControl ia) {
+    public StageControl(GameControl gC) {
     	initValues();
-    	this.ia = ia;
+    	this.gC= gC;
+    	this.ia = gC.getIa();
     	elements = new LinkedList<>();
     	stageWalls = new LinkedList<>();
     	enemies = new LinkedList<>();
     	miniEnemies = new LinkedList<>();
     	mazeControl = new MazeControl(this);
-    	loadLevel(level, dif);
+    	loadLevel(gC.getLevel(), gC.getDifficulty());
     }
     
     public void initValues(){
@@ -82,7 +85,7 @@ public class StageControl {
 		nEnemies = 0;
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
-		enemiesKilled = -1;
+		enemiesKilled = 0;
 		yMiniE = Properties.Y_INIT_INFO;
 		r = new Random();
 		updateEnemies = true;
@@ -267,7 +270,7 @@ public class StageControl {
         miniEnemies.removeLast();
         updateEnemies = true;
         if (enemiesKilled==Properties.CANT_ENEMIES_LEVEL) {
-			
+			gC.resultStage(2);
 		}
     }
     

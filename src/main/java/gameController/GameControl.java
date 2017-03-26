@@ -14,6 +14,7 @@ import elements.Bullet;
 import elements.Player;
 import userInterface.Configuration;
 import userInterface.Cursor;
+import userInterface.GameOver;
 import userInterface.Menu;
 import userInterface.Screen;
 import userInterface.StageGUI;
@@ -28,6 +29,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private StageControl stageControl;
 	private Screen screen;
 	private Menu menu;
+	private GameOver gameOver;
 	private StageGUI stageGUI;
 	private Configuration config;
 	private Cursor cursor;
@@ -49,7 +51,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	}
 	
 	public void initStage(){				
-		stageControl = new StageControl(level, difficulty, ia);
+		stageControl = new StageControl(this);
 		player = stageControl.getPlayer();
 		level++;
 	}
@@ -106,9 +108,26 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void updateDraw(){
 		if (screen.equals(Screen.STAGE_PLAY)) {
 			stageControl.updateDraw();
+		}else if (screen.equals(Screen.GAMEOVER)) {
+			stageControl.updateDraw();
+			gameOver.updateDraw();
 		}
 		
 	}
+		
+	public void resultStage(int result){
+		switch (result) {
+		case 1:
+			gameOver = new GameOver();
+			screen = Screen.SCORE_STAGE;
+			break;
+		case 2:
+			gameOver = new GameOver();
+			screen = Screen.GAMEOVER;
+			break;
+		}
+		
+	}	
 	
 	public void draw(){
 		BufferStrategy bs = this.getBufferStrategy();
@@ -155,6 +174,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case SCORE_STAGE:
 			
+			break;
+		case GAMEOVER:
+			stageControl.draw(g);
+			gameOver.draw(g);
 			break;
 		default:
 			break;
@@ -307,4 +330,28 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}
 	}
 
+	public IAControl getIa() {
+		return ia;
+	}
+
+	public void setIa(IAControl ia) {
+		this.ia = ia;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+	
 }
