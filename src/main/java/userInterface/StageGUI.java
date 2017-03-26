@@ -19,24 +19,50 @@ public class StageGUI {
 
 	public void draw(int level, Graphics g) {
 		g.setColor(Color.darkGray);
-        g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
+        g.fillRect(0, 0, 
+        		(int) (Properties.WIDTH+(Properties.WIDTH*0.029325)), 
+        		Properties.HEIGHT);
         
         g.setFont( new Font("Arial",Font.PLAIN, 20));
         g.setColor(Color.black);
         
-        g.drawImage(ImageControl.getIP(), Properties.X_INIT_INFO+40, Properties.Y_INIT_INFO+200, Properties.WIDTH_ELEMENT_STAGE+10, Properties.HEIGH_ELEMENT_STAGE/2+20, null);
-        g.drawImage(ImageControl.getPlayer1UP(), Properties.X_INIT_INFO, Properties.Y_INIT_INFO+200, Properties.WIDTH_ELEMENT_STAGE, Properties.HEIGH_ELEMENT_STAGE/2+20, null);
-        g.drawString("Lifes:", Properties.X_INIT_INFO, Properties.Y_INIT_INFO+260);
-        g.drawString("Score:", Properties.X_INIT_INFO, Properties.Y_INIT_INFO+280);
+        g.drawImage(ImageControl.getIP(), 
+        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.06)), 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.344)), 
+        		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
+        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
+        g.drawImage(ImageControl.getPlayer1UP(), Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.344)), 
+        		Properties.WIDTH_ELEMENT_STAGE, 
+        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
+        g.drawString("Lifes:", Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.4468)));
+        g.drawString("Score:", Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.4812)));
         
-        g.drawImage(ImageControl.getIIP(), Properties.X_INIT_INFO+40, Properties.Y_INIT_INFO+300, Properties.WIDTH_ELEMENT_STAGE+10, Properties.HEIGH_ELEMENT_STAGE/2+20, null);
-        g.drawImage(ImageControl.getPlayer2UP(), Properties.X_INIT_INFO, Properties.Y_INIT_INFO+296, Properties.WIDTH_ELEMENT_STAGE, Properties.HEIGH_ELEMENT_STAGE/2+20, null);
-        g.drawString("Lifes:", Properties.X_INIT_INFO, Properties.Y_INIT_INFO+360);
-        g.drawString("Score:", Properties.X_INIT_INFO, Properties.Y_INIT_INFO+380);
+        g.drawImage(ImageControl.getIIP(), 
+        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.0588)), 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.5155)), 
+        		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
+        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
+        g.drawImage(ImageControl.getPlayer2UP(), 
+        		Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.509)), 
+        		Properties.WIDTH_ELEMENT_STAGE, 
+        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
+        g.drawString("Lifes:", Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.619)));
+        g.drawString("Score:", Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.653)));
         
         g.setFont( FC.getFont(Font.PLAIN, 50));
-        g.drawString(""+level, Properties.X_INIT_INFO, Properties.Y_FINAL_INFO+20);
-        g.drawImage(ImageControl.getFlag(), Properties.X_INIT_INFO+50, Properties.Y_FINAL_INFO-28, Properties.WIDTH_ELEMENT_STAGE+10, Properties.HEIGH_ELEMENT_STAGE+10, null);
+        g.drawString(""+level, Properties.X_INIT_INFO, 
+        		(int) (Properties.Y_FINAL_INFO+(Properties.HEIGHT*0.0344)));
+        g.drawImage(ImageControl.getFlag(), 
+        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.07343)), 
+        		(int) (Properties.Y_FINAL_INFO-(Properties.HEIGHT*0.0482)), 
+        		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
+        		(int) (Properties.HEIGH_ELEMENT_STAGE+(Properties.HEIGHT*0.0172)), null);
 
 	}
 	

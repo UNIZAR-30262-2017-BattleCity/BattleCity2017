@@ -5,9 +5,9 @@ import gameController.ImageControl;
 public final class Properties {
 
 	//Frame
-	public final static int WIDTH = 680;
-	public final static int HEIGHT = 580;
 	public final static int SCALE = 3;
+	public final static int WIDTH = 227 * SCALE;
+	public final static int HEIGHT = 194 * SCALE;
 		
 	//Menu - Configuration
 	public final static int N_OPC_MENU =  4;
@@ -17,14 +17,14 @@ public final class Properties {
 	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
 	
 	//Cursor Menu
-	public final static int X_CURSOR_M =  275;
-	public final static int Y_INIT_CURSOR_M =  264;
-	public final static int DELTA_CURSOR =  34;
+	public final static int X_CURSOR_M =  (int) (WIDTH / 2 - (WIDTH * 0.14));;
+	public final static int Y_INIT_CURSOR_M = (int) (HEIGHT / 2 + (HEIGHT * 0.045));
+	public final static int DELTA_CURSOR =  (int) (WIDTH*0.0632353);
 	public final static int Y_FINAL_CURSOR_M =  Y_INIT_CURSOR_M + DELTA_CURSOR * (N_OPC_MENU-1);
 	
 	//Cursor Configuration
-	public final static int X_CURSOR_C = 90;
-	public final static int Y_INIT_CURSOR_C = 192;
+	public final static int X_CURSOR_C = (int) (WIDTH / 2 - (WIDTH * 0.41));
+	public final static int Y_INIT_CURSOR_C = (int) (HEIGHT / 2 - (HEIGHT * 0.105));
 	public final static int Y_FINAL_CURSOR_C =  Y_INIT_CURSOR_C + DELTA_CURSOR * (N_OPC_CONFIG-1);
 	
 	//Player
@@ -93,8 +93,8 @@ public final class Properties {
 	public static final int TIME_UPDATE_IA = 30;
 	
 	//StageGUI
-	public static final int X_INIT_INFO = X_FINAL_STAGE+60;
-	public static final int Y_INIT_INFO = Y_INIT_STAGE+40;
+	public static final int X_INIT_INFO = (int) (X_FINAL_STAGE + (WIDTH*0.07));
+	public static final int Y_INIT_INFO = (int) (HEIGHT * 0.120275);
 	public static final int X_FINAL_INFO = WIDTH -5;
 	public static final int Y_FINAL_INFO = Y_FINAL_STAGE;
 	
