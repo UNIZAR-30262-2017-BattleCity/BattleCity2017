@@ -72,7 +72,7 @@ public class PhysicsContol {
 					if (isIntersecs(b,s)) {
 						b.setActive(false);
 						t.setBulletsInProgres(t.getBulletsInProgres()-1);
-						actionBullet(true, s, stageControl);						
+						actionBullet(t,true, s, stageControl);						
 					}
 				}
 			}
@@ -83,14 +83,14 @@ public class PhysicsContol {
 				if (isIntersecs(b,s)) {
 					b.setActive(false);
 					t.setBulletsInProgres(t.getBulletsInProgres()-1);
-					actionBullet(false, s, stageControl);									
+					actionBullet(t,false, s, stageControl);									
 				}
 
 			}
 		}
 	}
 	
-	public static void actionBullet(boolean player, StageElement s,StageControl stageControl){
+	public static void actionBullet(Tank t,boolean player, StageElement s,StageControl stageControl){
 		if (s.getClass().equals(Wall.class)) {
 			int w = s.getType();
 			if (w !=1) return;
@@ -103,8 +103,8 @@ public class PhysicsContol {
 		}
 		
 		if (player) {
-			if (s.getClass().equals(Enemy.class)) {
-				stageControl.deleteEnemy((Enemy) s);			
+			if (s.getClass().equals(Enemy.class)) {	
+					stageControl.deleteEnemy((Player) t,(Enemy) s);
 			}
 			if (s.getClass().equals(Player.class)) {
 				//TODO

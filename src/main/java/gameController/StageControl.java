@@ -202,7 +202,7 @@ public class StageControl {
     				tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
     				tmpEnemy.updateDraw();
     			}
-    			else deleteEnemy(tmpEnemy);
+    			else deleteEnemy(null,tmpEnemy);
 
     		}  		
     	}
@@ -271,8 +271,10 @@ public class StageControl {
         elements.remove(e);
     }
     
-    public void deleteEnemy(Enemy e){
-    	//player.addScore(e.getType());
+    public void deleteEnemy(Player p,Enemy e){
+    	if (p!=null) {
+			p.addScore(e.getType());
+		} 	
         enemies.remove(e);
         nEnemiesSimul--;
         enemiesKilled++;

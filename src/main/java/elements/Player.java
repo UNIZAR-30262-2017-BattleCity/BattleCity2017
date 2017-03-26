@@ -215,7 +215,7 @@ public class Player extends Tank implements StageElement{
     
     public void updateScore(Graphics g, int y){
     	g.setColor(Color.darkGray);
-        g.fillRect(Properties.X_SCORE, y, 40, 20);
+        g.fillRect(Properties.X_SCORE, y-15, 40, 20);
         g.setColor(Color.black);
 		g.setFont( FontControl.ARIAL);
 		g.drawString(""+score, Properties.X_SCORE, y);
@@ -224,7 +224,7 @@ public class Player extends Tank implements StageElement{
     
     public void updateLifes(Graphics g, int y){
     	g.setColor(Color.darkGray);
-        g.fillRect(Properties.X_LIFES, y, 40, 20);
+        g.fillRect(Properties.X_LIFES, y-15, 40, 20);
         g.setColor(Color.black);
 		g.setFont( FontControl.ARIAL);
 		g.drawString(""+lifes, Properties.X_LIFES, y);
@@ -237,7 +237,11 @@ public class Player extends Tank implements StageElement{
     	if (lifes<0) {
 			
 		}else{
-			setInitPos(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1]);
+			if (player==1) {
+				setInitPos(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1]);
+			}else{
+				setInitPos(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1]);
+			}
 			shieldEfect();
 		}
     	
