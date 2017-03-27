@@ -2,6 +2,7 @@ package gameController;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,7 +17,6 @@ import userInterface.Configuration;
 import userInterface.Controls;
 import userInterface.Cursor;
 import userInterface.GameOver;
-import userInterface.Menu;
 import userInterface.Screen;
 import userInterface.StageGUI;
 
@@ -28,9 +28,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Thread thread;
 	private Player[] players;
 	private boolean isPlayer1,isPlayer2;
+	private boolean next;
 	private StageControl stageControl;
 	private Screen screen;
-	private Menu menu;
 	private GameOver gameOver;
 	private StageGUI stageGUI;
 	private Configuration config;
@@ -40,15 +40,15 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private int level;
 	private int difficulty;
 	private int opc;
+	private int timeToNext;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
 		jf.addKeyListener(this);
 		screen = Screen.MENU;
 		level = 4;
-		difficulty = 0;
+		difficulty = 1;
 		opc = 1;
-		menu = new Menu();
 		cursor = new Cursor();
 		ia = new IAControl();
 	}
@@ -121,8 +121,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void resultStage(int result){
 		switch (result) {
 		case 1:
-			gameOver = new GameOver();
-			screen = Screen.SCORE_STAGE;
+			screen = Screen.SCORE_STAGE;			
 			break;
 		case 2:
 			gameOver = new GameOver();
@@ -151,8 +150,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			
 			break;
 		case MENU:
-			menu.draw(g);
-			cursor.draw(g);			
+			menu(g);
+			cursor.draw(g);
 			break;
 		case CONFIG:
 			config.draw(g);
@@ -163,12 +162,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			cursor.draw(g);
 			break;
 		case PRESENT_STAGE:
-			g.setColor(Color.darkGray);
-	        g.fillRect(0, 0, Properties.WIDTH, Properties.HEIGHT);
-	        //TODO 
+			presentStage(g);
 			break;
 		case INIT_STAGE:
-	        stageGUI = new StageGUI(level);
+	        stageGUI = new StageGUI();
 	        stageGUI.draw(level,g);
 	        initStage();
 	        screen = Screen.STAGE_PLAY;
@@ -180,17 +177,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			g.drawImage(ImageControl.getPaused(Properties.SSTANK), 252, 298, 100, 25, null);
 			break;
 		case SCORE_STAGE:
-			
+			g.setColor(Color.darkGray);
+	        g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
+	        if (next(Properties.TIME_TO_MENU)) screen = Screen.MENU;
 			break;
 		case GAMEOVER:
 			stageControl.draw(g);
 			gameOver.draw(g);
+			if (next(Properties.TIME_TO_SCORE)) screen = Screen.SCORE_STAGE;
 			break;
 		default:
 			break;
 		}
 	}
-	
+
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -322,7 +322,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void menuOptions(){
 		switch (opc) {
 		case 1:
-			screen = Screen.INIT_STAGE;
+			screen = Screen.PRESENT_STAGE;
 			isPlayer1 = true;
 			break;
 		case 2:
@@ -429,6 +429,33 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}
 		
 
+	}
+	
+	private void menu(Graphics g) {
+        g.setColor(Color.black);
+        g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
+        g.drawImage(ImageControl.loadImage(Properties.PATH_SS_MENU),
+        		0, 0, Properties.WIDTH, Properties.HEIGHT, null);
+		
+	}
+
+	private void presentStage(Graphics g) {
+		g.setColor(Color.darkGray);
+        g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
+        g.setColor(Color.black);
+        g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
+        g.drawString("NIVEL "+level, Properties.WIDTH/2-180, Properties.HEIGHT/2);
+        if (next(Properties.TIME_TO_INIT_STAGE)) screen = Screen.INIT_STAGE;
+		
+	}
+
+	public boolean next(int time){
+		if(timeToNext<time){
+			timeToNext++;
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	public IAControl getIa() {

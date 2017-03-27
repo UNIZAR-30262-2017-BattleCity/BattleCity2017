@@ -8,12 +8,9 @@ import application.Properties;
 import gameController.FontControl;
 import gameController.ImageControl;
 
-public class StageGUI {
+public class StageGUI {	
 	
-	private static final FontControl FC= new FontControl(Properties.FONT_PIXEL);
-
-	
-	public StageGUI(int level){
+	public StageGUI(){
 		
 	}
 
@@ -57,7 +54,7 @@ public class StageGUI {
         g.drawString("Score:", Properties.X_INIT_INFO, 
         		Properties.Y_IIP_SCORE);
         
-        g.setFont( FC.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
+        g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString(""+level, Properties.X_INIT_INFO, 
         		Properties.Y_LEVEL);
         g.drawImage(ImageControl.getFlag(), 

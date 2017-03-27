@@ -2,6 +2,7 @@ package application;
 
 import java.awt.image.BufferedImage;
 
+import gameController.FontControl;
 import gameController.ImageControl;
 
 public final class Properties {
@@ -18,6 +19,7 @@ public final class Properties {
 	
 	//Font
 	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
+	public static final FontControl FC_PIXEL= new FontControl(Properties.FONT_PIXEL);
 	
 	//Cursor Menu
 	public final static int X_CURSOR_M =  (int) (WIDTH / 2 - (WIDTH * 0.14));;
@@ -42,7 +44,7 @@ public final class Properties {
 	public final static double VEL_ENEMY = 0.33;
 	public final static double VEL_ENEMY_FAST = 0.66;
 	public final static int MIN_ENEMY_SIMUL = 3;
-	public final static int CANT_ENEMIES_LEVEL = 20;
+	public final static int CANT_ENEMIES_LEVEL = 1;
 	public final static int TIME_BETWEEN_SPAWN_E = 350;
 	
 	//Spawn Enemy Points
@@ -97,7 +99,9 @@ public final class Properties {
 		
 	
 	public final static int TIME_ANIM = 5;
-	
+	public final static int TIME_TO_INIT_STAGE = 1000;
+	public final static int TIME_TO_SCORE = 2000;
+	public final static int TIME_TO_MENU = 2000;
 	
 	public static final double DELTA = SIZE_SQUARE/2;
 	public static final int TIME_UPDATE_IA = 30;

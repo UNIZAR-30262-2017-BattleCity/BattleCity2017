@@ -37,11 +37,11 @@ public class StageControl {
     private Enemy tmpEnemy;
     private Wall tmpWall;
     
-    private static int enemiesKilled;
-    private static int maxEnemySimul;
-    private static int nEnemies;
-    private static int nEnemiesSimul;
-    private static int timeBetweenSpawnE;
+    private int enemiesKilled;
+    private int maxEnemySimul;
+    private int nEnemies;
+    private int nEnemiesSimul;
+    private int timeBetweenSpawnE;
     	
     private boolean clockEfect, itemTaked;
     
