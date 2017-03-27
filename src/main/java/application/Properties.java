@@ -1,5 +1,7 @@
 package application;
 
+import java.awt.image.BufferedImage;
+
 import gameController.ImageControl;
 
 public final class Properties {
@@ -37,11 +39,11 @@ public final class Properties {
 	public final static int INIT_LIFES = 3;
 	
 	//Enemy
-	public final static int VEL_ENEMY = 1;
-	public final static int VEL_ENEMY_FAST = 2;
-	public final static int MAX_ENEMY_SIMUL = 5;
+	public final static double VEL_ENEMY = 0.33;
+	public final static double VEL_ENEMY_FAST = 0.66;
+	public final static int MIN_ENEMY_SIMUL = 3;
 	public final static int CANT_ENEMIES_LEVEL = 20;
-	public final static int TIME_BETWEEN_SPAWN_E = 300;
+	public final static int TIME_BETWEEN_SPAWN_E = 350;
 	
 	//Spawn Enemy Points
 	public final static int[] POS1_SPAWN_ENEMY= {1, 1};
@@ -71,7 +73,8 @@ public final class Properties {
 	public static final int xFB = X_FINAL_STAGE+SIZE_SQUARE-8;
 	
 	//Elements on stage
-	public final static int[] POS_INIT_PLAYER = {13, 5};
+	public final static int[] POS_INIT_PLAYER1 = {13, 5};
+	public final static int[] POS_INIT_PLAYER2 = {13, 9};
 	
 	//Textures
 	public final static int WIDTH_ELEMENT_STAGE = WIDTH_STAGE/COL_STAGE;
@@ -83,14 +86,14 @@ public final class Properties {
 	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
 	public final static String PATH_SS_CONTROLS = "/resources/images/Controls.png";
 	
-	public static final ImageControl SSCTANK = new ImageControl(PATH_SS_TANK);
+	public static final BufferedImage SSTANK = ImageControl.loadImage(PATH_SS_TANK);
 	
 	//Items
-	public final static int MAX_ITEMS_LEVEL = 10;
+	public final static int MAX_ITEMS_LEVEL = 20;
 	public final static int MAX_ITEMS_SIMUL = 3;
 	public final static int MAX_TIME_ITEM_EFECT = 480;
 	public final static int MAX_TIME_ITEM_SHOW = 480;
-	public final static int TIME_BETWEEN_SPAWN_IT = 700;
+	public final static int MIN_TIME_BETWEEN_SPAWN_IT = 240;
 		
 	
 	public final static int TIME_ANIM = 5;

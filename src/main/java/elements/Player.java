@@ -242,9 +242,9 @@ public class Player extends Tank implements StageElement{
 			
 		}else{
 			if (player==1) {
-				setInitPos(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1]);
+				setInitPos(Properties.POS_INIT_PLAYER1[0], Properties.POS_INIT_PLAYER1[1]);
 			}else{
-				setInitPos(Properties.POS_INIT_PLAYER[0], Properties.POS_INIT_PLAYER[1]);
+				setInitPos(Properties.POS_INIT_PLAYER2[0], Properties.POS_INIT_PLAYER2[1]);
 			}
 			shieldEfect();
 		}

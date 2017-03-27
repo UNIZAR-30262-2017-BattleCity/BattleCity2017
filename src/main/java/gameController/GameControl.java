@@ -45,7 +45,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		requestFocus();
 		jf.addKeyListener(this);
 		screen = Screen.MENU;
-		level = 1;
+		level = 4;
 		difficulty = 0;
 		opc = 1;
 		menu = new Menu();
@@ -177,7 +177,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			stageControl.draw(g);	
 			break;
 		case STAGE_PAUSED:
-			g.drawImage(ImageControl.getPaused(), 252, 298, 100, 25, null);
+			g.drawImage(ImageControl.getPaused(Properties.SSTANK), 252, 298, 100, 25, null);
 			break;
 		case SCORE_STAGE:
 			

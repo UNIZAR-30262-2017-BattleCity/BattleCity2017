@@ -6,24 +6,18 @@ import java.awt.image.BufferedImage;
 import gameController.ImageControl;
 import gameController.StageControl;
 
-public class Obstacle extends GameElement implements StageElement{
+public class Forest extends GameElement implements StageElement{
 
 	private BufferedImage img;
 	
-	public Obstacle(int row, int col, int type, StageControl stageControl) {
+	public Forest(int row, int col, StageControl stageControl) {
 		super(stageControl);
-		this.type = type;
-		isActive = true;
 		initObstacle();
 		setInitPos(row+1,col+1);
 	}
 	
 	public void initObstacle(){
-		if (type==1) {
-			img = ImageControl.getImgForest();
-		}else{
-			img = ImageControl.getImgWater();
-		}
+		img = ImageControl.getImgForest();
 	}
 		
 
@@ -32,10 +26,9 @@ public class Obstacle extends GameElement implements StageElement{
 	}
 	
 	public void draw(Graphics g) {
-		
-		if (isActive) {
-			g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
-		}
+
+		g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
+
 		
 	}
 

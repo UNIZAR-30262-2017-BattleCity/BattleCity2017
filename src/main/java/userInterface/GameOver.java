@@ -22,7 +22,7 @@ public class GameOver {
 	}
 
 	public void draw(Graphics g){
-		g.drawImage(ImageControl.getGameOver(), 
+		g.drawImage(ImageControl.getGameOver(Properties.SSTANK), 
 				Properties.X_GO, (int) y, 
 				Properties.GO_WIDTH, 
 				Properties.GO_HEIGHT, null);

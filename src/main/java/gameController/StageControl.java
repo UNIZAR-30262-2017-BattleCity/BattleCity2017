@@ -2,6 +2,7 @@ package gameController;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ import elements.Bullet;
 import elements.Eagle;
 import elements.Enemy;
 import elements.Item;
-import elements.Obstacle;
+import elements.Forest;
 import elements.Player;
 import elements.StageElement;
 import elements.Wall;
@@ -22,6 +23,7 @@ public class StageControl {
     private int nItems;
     private int nItemsSimul;
     private int timeBetweenSpawnIt;
+    private int cantItemsLevel;
     private static final int maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
     private static int maxTimeItemEfect;
     
@@ -30,7 +32,7 @@ public class StageControl {
     private LinkedList<Enemy> enemies;
     private LinkedList<Wall> eagleBricks;
     private LinkedList<Wall> stageWalls;
-    private LinkedList<Obstacle> stageForest;
+    private LinkedList<Forest> stageForest;
     private StageElement tmpElement;
     private Enemy tmpEnemy;
     private Wall tmpWall;
@@ -68,6 +70,7 @@ public class StageControl {
 	private boolean init;
 	
 	private GameControl gC;
+	private BufferedImage[] imgBackStage = new BufferedImage[2];
             
     public StageControl(GameControl gC) {
     	initValues();
@@ -105,21 +108,24 @@ public class StageControl {
     	//dif: difficulty
     	switch (level) {
 		case 1:			
-			maxEnemySimul = Properties.MAX_ENEMY_SIMUL + dif;					
-			timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*1000);
 			
-			timeBetweenSpawnIt = Properties.TIME_BETWEEN_SPAWN_IT - dif;
 			break;
 		case 2:
-			maxEnemySimul = Properties.MAX_ENEMY_SIMUL + k + dif;
-			timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E;
-			
-			timeBetweenSpawnIt = Properties.TIME_BETWEEN_SPAWN_IT - dif;
+
 			break;
 		}
-    	 
+    	// dif = 1 easy / 2 normal  3 hard
+    	
+		maxEnemySimul = Properties.MIN_ENEMY_SIMUL*dif;					
+		timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*50);
+		
+		
+    	cantItemsLevel = Properties.MAX_ITEMS_LEVEL - (dif*5);
+    	timeBetweenSpawnIt = Properties.MIN_TIME_BETWEEN_SPAWN_IT * dif;
+    	
     	 mazeControl.loadMaze(level,isPlayer1,isPlayer2);
     	 eagleBricks = mazeControl.loadEagleWall(); 
+    	 imgBackStage = mazeControl.loadBackground(level);
     	 loadMiniEnemies();
     	 
     }
@@ -136,7 +142,7 @@ public class StageControl {
     	stageWalls.add(w);
 	}
     
-    public void spawnForest(Obstacle o) {
+    public void spawnForest(Forest o) {
     	stageForest.add(o);
 	}
     
@@ -156,7 +162,7 @@ public class StageControl {
 	}
     
     public void spawnItems() {
-		if (nItems<Properties.MAX_ITEMS_LEVEL) {
+		if (nItems<cantItemsLevel) {
 			if (nItemsSimul<maxItemsSimul) {
 				col = r.nextInt(Properties.COL_STAGE)+1;
 				row = r.nextInt(Properties.ROW_STAGE)+1;
@@ -230,13 +236,10 @@ public class StageControl {
     
     public void draw(Graphics g){    	
     	
-    	g.setColor(Color.black);
-        g.fillRect(Properties.X_INIT_STAGE-1, Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
-	    
+    	g.drawImage(imgBackStage[1], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
+    	    	
         if (init) {
-			for (StageElement s : staticElements) {
-				s.draw(g);
-			}
+			g.drawImage(imgBackStage[0], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
 			init = false;
 		}
     	    	
@@ -257,7 +260,7 @@ public class StageControl {
     		if (tmpElement.isActive()) tmpElement.draw(g);
 		}
     	
-    	for (Obstacle obs : stageForest) {
+    	for (Forest obs : stageForest) {
 			obs.draw(g);
 		}
     	
@@ -359,6 +362,7 @@ public class StageControl {
 		clone.addAll(elements);
 		clone.addAll(enemies);
 		clone.addAll(stageWalls);
+		clone.addAll(staticElements);
 		return clone;
 	}
 	

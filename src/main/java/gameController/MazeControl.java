@@ -1,16 +1,20 @@
 package gameController;
 
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 import application.Properties;
 import elements.Eagle;
-import elements.Obstacle;
+import elements.Forest;
+import elements.Ice;
 import elements.Player;
 import elements.Wall;
+import elements.Water;
 
 public class MazeControl {
 
 	private static StageControl stageControl;
+	private BufferedImage[] img = new BufferedImage[2];
 			
 	public MazeControl(StageControl stageControl) {	
 		MazeControl.stageControl = stageControl;
@@ -32,6 +36,9 @@ public class MazeControl {
 		 * 11 - Forest.
 		 * 12 - Water.
 		 * 13 - Eagle.
+		 * 14 - Ice
+		 * 15 - Player 1
+		 * 16 - Player 2
 		 */
 		
 		int[][] matriz = null;
@@ -257,6 +264,65 @@ public class MazeControl {
 
 	}
 	
+	public BufferedImage[] loadBackground(int level){
+		switch (level) {
+		case 4:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage04_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage04_B.png");
+			break;
+		case 5:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage05_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage05_B.png");
+			break;
+		case 8:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage08_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage08_B.png");
+			break;
+		case 10:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage10_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage10_B.png");
+			break;
+		case 12:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage12_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage12_B.png");
+			break;
+		case 14:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage14_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage14_B.png");
+			break;
+		case 20:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage20_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage20_B.png");
+			break;
+		case 26:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage26_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage26_B.png");
+			break;
+		case 29:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage29_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage29_B.png");
+			break;
+		case 30:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage30_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage30_B.png");
+			break;
+		case 31:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage31_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage31_B.png");
+			break;
+		case 35:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage35_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage35_B.png");
+			break;
+		default:
+			img[0] = ImageControl.loadImage("/resources/images/background/Stage_A.png");
+			img[1] = ImageControl.loadImage("/resources/images/background/Stage_B.png");
+			break;
+		}
+		
+		return img;
+	}
+	
 	public void loadMaze(int level, boolean player1, boolean player2){
     	int[][] m = createMaze(level);
     	
@@ -322,11 +388,11 @@ public class MazeControl {
 					break;
 					
 				case 11:
-					stageControl.spawnForest(new Obstacle(i,j,1,stageControl));
+					stageControl.spawnForest(new Forest(i,j,stageControl));
 					break;
 
 				case 12:
-					stageControl.spawnStaticElements(new Obstacle(i,j,2,stageControl));
+					stageControl.spawnStaticElements(new Water(i,j,stageControl));
 					break;
 					
 				case 13:
@@ -336,12 +402,10 @@ public class MazeControl {
 					break;
 
 				case 14:
-                	for (int j2 = 0; j2 < 2; j2++) {
-						stageControl.spawnWalls(new Wall(i-.5,j,j2,1,stageControl, false)); 
-					}
+					stageControl.spawnStaticElements(new Ice(i,j,stageControl));
 					break;
 					
-				case 15:			
+				case 15:
 					StageControl.players[0] = new Player(i+1, j+1, Properties.INIT_LIFES,1, stageControl);
 					stageControl.spawnElements(StageControl.players[0]);
 					break;

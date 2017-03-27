@@ -17,7 +17,7 @@ public class MiniEnemies {
 	}
 
 	public void draw(Graphics g){
-		g.drawImage(ImageControl.getEnemyMini(), x, y, size, size, null);
+		g.drawImage(ImageControl.getEnemyMini(Properties.SSTANK), x, y, size, size, null);
 	}
 	
 }

@@ -9,7 +9,7 @@ import elements.Eagle;
 import elements.Enemy;
 import elements.GameElement;
 import elements.Item;
-import elements.Obstacle;
+import elements.Forest;
 import elements.Player;
 import elements.StageElement;
 import elements.Tank;
@@ -26,7 +26,7 @@ public class PhysicsContol {
 					if (s.getClass().equals(Item.class)) {
 						return null;
 					}else{
-						if (s.getClass().equals(Obstacle.class)) {
+						if (s.getClass().equals(Forest.class)) {
 							int o = list.get(i).getType();
 							if (o != 1) return null;
 						}
@@ -48,7 +48,7 @@ public class PhysicsContol {
 						s.setActive(false);
 						s.getStage().ItemTaked(p,(Item) s);
 					}else{
-						if (s.getClass().equals(Obstacle.class)) {
+						if (s.getClass().equals(Forest.class)) {
 							int o = list.get(i).getType();
 							if (o == 1) return null;
 						}
