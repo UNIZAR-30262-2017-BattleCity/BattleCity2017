@@ -29,6 +29,13 @@ public class Cursor {
 		y = initY;
 	}
 	
+	public void cursorControls(){
+		initY = Properties.Y_INIT_CURSOR_CT;
+		finalY = Properties.Y_FINAL_CURSOR_CT;
+		x = Properties.X_CURSOR_CT;
+		y = initY;
+	}
+	
 	public void updateDraw(){
 		if (y>finalY) {
 			y = initY;

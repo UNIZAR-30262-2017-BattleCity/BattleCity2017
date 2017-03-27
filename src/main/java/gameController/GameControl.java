@@ -13,6 +13,7 @@ import application.Properties;
 import elements.Bullet;
 import elements.Player;
 import userInterface.Configuration;
+import userInterface.Controls;
 import userInterface.Cursor;
 import userInterface.GameOver;
 import userInterface.Menu;
@@ -33,6 +34,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private GameOver gameOver;
 	private StageGUI stageGUI;
 	private Configuration config;
+	private Controls controls;
 	private Cursor cursor;
 	private IAControl ia;
 	private int level;
@@ -156,6 +158,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			config.draw(g);
 			cursor.draw(g);
 			break;
+		case CONTROLS:
+			controls.draw(g);
+			cursor.draw(g);
+			break;
 		case PRESENT_STAGE:
 			g.setColor(Color.darkGray);
 	        g.fillRect(0, 0, Properties.WIDTH, Properties.HEIGHT);
@@ -267,6 +273,23 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				configOptions();
 			}
 			break;
+		case CONTROLS:
+			if (key == KeyEvent.VK_UP) {
+				cursorMove(-1,Properties.N_OPC_CONTROLS);				
+			}
+			if (key == KeyEvent.VK_DOWN) {
+				cursorMove(1,Properties.N_OPC_CONTROLS);
+			}
+			if (key == KeyEvent.VK_RIGHT) {
+				
+			}
+			if (key == KeyEvent.VK_LEFT) {
+				
+			}
+			if (key == KeyEvent.VK_ENTER) {				
+				controlsOptions();
+			}
+			break;
 		case STAGE_PLAY:
 			playerMove(key);
 		case STAGE_PAUSED:
@@ -323,12 +346,27 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void configOptions(){
 		switch (opc) {
 		case 1:
+			controls = new Controls();
+			cursor.cursorControls();
+			opc = 1;
 			screen = Screen.CONTROLS;			
 			break;		
 		case 5:
 			cursor.cursorMenu();
 			opc = 1;
 			screen = Screen.MENU;
+			break;
+		}
+	}
+	
+	public void controlsOptions(){
+		switch (opc) {
+		case 1:			
+			break;		
+		case 7:
+			cursor.cursorConfig();
+			opc = 1;
+			screen = Screen.CONFIG;
 			break;
 		}
 	}

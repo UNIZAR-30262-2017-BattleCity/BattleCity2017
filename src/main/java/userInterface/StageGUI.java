@@ -38,9 +38,9 @@ public class StageGUI {
         		Properties.ICON_HEIGHT, null);
         g.drawString("Lifes:", 
         		Properties.X_INIT_INFO, 
-        		Properties.Y_LABEL_LIFE_IP );
+        		Properties.Y_IP_LIFES );
         g.drawString("Score:", Properties.X_INIT_INFO, 
-        		Properties.Y_LABEL_SCORE_IP);
+        		Properties.Y_IP_SCORE);
         
         g.drawImage(ImageControl.getIIP(), 
         		Properties.X_ICON_IIP, 
@@ -53,9 +53,9 @@ public class StageGUI {
         		Properties.WIDTH_ELEMENT_STAGE, 
         		Properties.ICON_HEIGHT, null);
         g.drawString("Lifes:", Properties.X_INIT_INFO, 
-        		Properties.Y_LABEL_LIFE_IIP);
+        		Properties.Y_IIP_LIFES);
         g.drawString("Score:", Properties.X_INIT_INFO, 
-        		Properties.Y_LABEL_SCORE_IIP);
+        		Properties.Y_IIP_SCORE);
         
         g.setFont( FC.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString(""+level, Properties.X_INIT_INFO, 

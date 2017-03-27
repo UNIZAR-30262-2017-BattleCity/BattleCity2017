@@ -12,6 +12,7 @@ public final class Properties {
 	//Menu - Configuration
 	public final static int N_OPC_MENU =  4;
 	public final static int N_OPC_CONFIG =  5;
+	public final static int N_OPC_CONTROLS =  7;
 	
 	//Font
 	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
@@ -26,6 +27,11 @@ public final class Properties {
 	public final static int X_CURSOR_C = (int) (WIDTH / 2 - (WIDTH * 0.41));
 	public final static int Y_INIT_CURSOR_C = (int) (HEIGHT / 2 - (HEIGHT * 0.105));
 	public final static int Y_FINAL_CURSOR_C =  Y_INIT_CURSOR_C + DELTA_CURSOR * (N_OPC_CONFIG-1);
+	
+	//Cursor Controls
+	public final static int X_CURSOR_CT = (int) (WIDTH / 2 - (WIDTH * 0.41));
+	public final static int Y_INIT_CURSOR_CT = (int) (HEIGHT / 2 - (HEIGHT * 0.21));
+	public final static int Y_FINAL_CURSOR_CT =  Y_INIT_CURSOR_CT + DELTA_CURSOR * (N_OPC_CONTROLS-1);
 	
 	//Player
 	public final static int INIT_LIFES = 3;
@@ -75,6 +81,7 @@ public final class Properties {
 	public final static String PATH_SS_TANK = "/resources/images/SpriteSheet.png";
 	public final static String PATH_SS_MENU = "/resources/images/Menu.png";
 	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
+	public final static String PATH_SS_CONTROLS = "/resources/images/Controls.png";
 	
 	public static final ImageControl SSCTANK = new ImageControl(PATH_SS_TANK);
 	
@@ -117,15 +124,11 @@ public final class Properties {
 	public static final int Y_IP_SCORE = (int) (Y_IP_LIFES+(HEIGHT*0.035));
 	public static final int X_ICON_IP = (int) (X_INIT_INFO+(WIDTH*0.06));
 	public static final int Y_ICON_IP = (int) (Y_INIT_INFO+(HEIGHT*0.344));
-	public static final int Y_LABEL_LIFE_IP = (int) (Y_INIT_INFO+(HEIGHT*0.4468));
-	public static final int Y_LABEL_SCORE_IP = (int) (Y_INIT_INFO+(HEIGHT*0.4812));
 	
 	public static final int Y_IIP_LIFES = (int) (Y_IP_LIFES+(HEIGHT*0.172));
 	public static final int Y_IIP_SCORE = (int) (Y_IIP_LIFES+(HEIGHT*0.035));
-	public static final int X_ICON_IIP = (int) (X_INIT_INFO+(WIDTH*0.0588));
+	public static final int X_ICON_IIP = X_ICON_IP;
 	public static final int Y_ICON_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.5155));
-	public static final int Y_LABEL_LIFE_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.619));
-	public static final int Y_LABEL_SCORE_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.653));
 	
 	public static final int FONT_LEVEL_SIZE = 17*SCALE;
 	public static final int Y_LEVEL = (int) (Y_FINAL_INFO+(HEIGHT*0.06));
