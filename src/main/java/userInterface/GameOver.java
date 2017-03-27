@@ -7,14 +7,14 @@ import gameController.ImageControl;
 
 public class GameOver {
 
-	private double y = Properties.HEIGHT_STAGE-20;
+	private double y = Properties.Y_GO;
 	
 	public GameOver(){
 	}
 	
 	public void updateDraw(){
 		
-		if (y==Properties.HEIGHT/2) {
+		if (y<Properties.HEIGHT/2) {
 			//TODO continue to score
 		}else{
 			y--;
@@ -22,6 +22,9 @@ public class GameOver {
 	}
 
 	public void draw(Graphics g){
-		g.drawImage(ImageControl.getGameOver(), Properties.WIDTH/2-90, (int) y , 120, 35, null);
+		g.drawImage(ImageControl.getGameOver(), 
+				Properties.X_GO, (int) y, 
+				Properties.GO_WIDTH, 
+				Properties.GO_HEIGHT, null);
 	}
 }

@@ -20,49 +20,51 @@ public class StageGUI {
 	public void draw(int level, Graphics g) {
 		g.setColor(Color.darkGray);
         g.fillRect(0, 0, 
-        		(int) (Properties.WIDTH+(Properties.WIDTH*0.05)), 
+        		Properties.INFO_BACKGROUND_WIDTH, 
         		Properties.HEIGHT);
         
-        g.setFont( new Font("Arial",Font.PLAIN, 7*Properties.SCALE));
+        g.setFont(FontControl.ARIAL);
         g.setColor(Color.black);
         
         g.drawImage(ImageControl.getIP(), 
-        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.06)), 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.344)), 
-        		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
-        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
-        g.drawImage(ImageControl.getPlayer1UP(), Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.344)), 
+        		Properties.X_ICON_IP, 
+        		Properties.Y_ICON_IP, 
+        		Properties.ICON_WIDTH, 
+        		Properties.ICON_HEIGHT, null);
+        g.drawImage(ImageControl.getPlayer1UP(), 
+        		Properties.X_INIT_INFO, 
+        		Properties.Y_ICON_IP, 
         		Properties.WIDTH_ELEMENT_STAGE, 
-        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
-        g.drawString("Lifes:", Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.4468)));
+        		Properties.ICON_HEIGHT, null);
+        g.drawString("Lifes:", 
+        		Properties.X_INIT_INFO, 
+        		Properties.Y_LABEL_LIFE_IP );
         g.drawString("Score:", Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.4812)));
+        		Properties.Y_LABEL_SCORE_IP);
         
         g.drawImage(ImageControl.getIIP(), 
-        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.0588)), 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.5155)), 
-        		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
-        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
+        		Properties.X_ICON_IIP, 
+        		Properties.Y_ICON_IIP, 
+        		Properties.ICON_WIDTH, 
+        		Properties.ICON_HEIGHT, null);
         g.drawImage(ImageControl.getPlayer2UP(), 
         		Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.509)), 
+        		Properties.Y_ICON_IIP, 
         		Properties.WIDTH_ELEMENT_STAGE, 
-        		(int) (Properties.HEIGH_ELEMENT_STAGE/2+(Properties.HEIGHT*0.0344)), null);
+        		Properties.ICON_HEIGHT, null);
         g.drawString("Lifes:", Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.619)));
+        		Properties.Y_LABEL_LIFE_IIP);
         g.drawString("Score:", Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_INIT_INFO+(Properties.HEIGHT*0.653)));
+        		Properties.Y_LABEL_SCORE_IIP);
         
-        g.setFont( FC.getFont(Font.PLAIN, 17*Properties.SCALE));
+        g.setFont( FC.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString(""+level, Properties.X_INIT_INFO, 
-        		(int) (Properties.Y_FINAL_INFO+(Properties.HEIGHT*0.06)));
+        		Properties.Y_LEVEL);
         g.drawImage(ImageControl.getFlag(), 
-        		(int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.08)), 
-        		(int) (Properties.Y_FINAL_INFO-(Properties.HEIGHT*0.016)), 
-        		(int) (Properties.WIDTH_ELEMENT_STAGE+(Properties.WIDTH*0.0147)), 
-        		(int) (Properties.HEIGH_ELEMENT_STAGE+(Properties.HEIGHT*0.017)), null);
+        		Properties.X_FLAG, 
+        		Properties.Y_FLAG, 
+        		Properties.FLAG_WIDTH, 
+        		Properties.FLAG_HEIGHT, null);
 
 	}
 	

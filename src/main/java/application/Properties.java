@@ -89,24 +89,56 @@ public final class Properties {
 	public final static int TIME_ANIM = 5;
 	
 	
-	public static final double DELTA = Properties.SIZE_SQUARE/2;
+	public static final double DELTA = SIZE_SQUARE/2;
 	public static final int TIME_UPDATE_IA = 30;
+	public static final int FONT_SIZE = 7*SCALE;
 	
 	//StageGUI
+	
+	public static final int INFO_BACKGROUND_WIDTH = (int) (WIDTH*1.05);
 	public static final int X_INIT_INFO = (int) (X_FINAL_STAGE + (WIDTH*0.07));
 	public static final int Y_INIT_INFO = (int) (HEIGHT * 0.120275);
-	public static final int X_FINAL_INFO = WIDTH -5;
+	public static final int X_FINAL_INFO = (int) (WIDTH*0.99);
 	public static final int Y_FINAL_INFO = Y_FINAL_STAGE;
 	
+	public static final int Y_MINI_ENEMIES = (int) (Y_INIT_INFO-(HEIGHT*0.035));
+	public static final int MINI_ENEMIES_BACKGROUND_HEIGHT = (int) (HEIGHT*0.345);
 	
-	public static final int X_LIFES = X_INIT_INFO+60;
+	public static final int X_LIFES = (int) (X_INIT_INFO+(WIDTH*0.1));
 	public static final int X_SCORE = X_LIFES;
+	public static final int SCORE_LIFE_BACKGROUND_WIDTH = (int) (WIDTH*0.059);
+	public static final int SCORE_LIFE_BACKGROUND_HEIGHT = (int) (HEIGHT*0.035);
+	public static final double DELTA_SCORE_LIFE = HEIGHT*0.025;
+
+	public static final int ICON_WIDTH = (int) (WIDTH_ELEMENT_STAGE+(WIDTH*0.0147));
+	public static final int ICON_HEIGHT = (int) (HEIGH_ELEMENT_STAGE/2+(HEIGHT*0.0344));
 	
-	public static final int Y_IP_LIFES = Y_INIT_INFO+260;
-	public static final int Y_IP_SCORE = Y_IP_LIFES+20;
-		
-	public static final int Y_IIP_LIFES = Y_IP_LIFES+100;
-	public static final int Y_IIP_SCORE = Y_IIP_LIFES+20;
+	public static final int Y_IP_LIFES = (int) (Y_INIT_INFO+(HEIGHT*0.447));
+	public static final int Y_IP_SCORE = (int) (Y_IP_LIFES+(HEIGHT*0.035));
+	public static final int X_ICON_IP = (int) (X_INIT_INFO+(WIDTH*0.06));
+	public static final int Y_ICON_IP = (int) (Y_INIT_INFO+(HEIGHT*0.344));
+	public static final int Y_LABEL_LIFE_IP = (int) (Y_INIT_INFO+(HEIGHT*0.4468));
+	public static final int Y_LABEL_SCORE_IP = (int) (Y_INIT_INFO+(HEIGHT*0.4812));
+	
+	public static final int Y_IIP_LIFES = (int) (Y_IP_LIFES+(HEIGHT*0.172));
+	public static final int Y_IIP_SCORE = (int) (Y_IIP_LIFES+(HEIGHT*0.035));
+	public static final int X_ICON_IIP = (int) (X_INIT_INFO+(WIDTH*0.0588));
+	public static final int Y_ICON_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.5155));
+	public static final int Y_LABEL_LIFE_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.619));
+	public static final int Y_LABEL_SCORE_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.653));
+	
+	public static final int FONT_LEVEL_SIZE = 17*SCALE;
+	public static final int Y_LEVEL = (int) (Y_FINAL_INFO+(HEIGHT*0.06));
+	public static final int X_FLAG = (int) (X_INIT_INFO+(WIDTH*0.08));
+	public static final int Y_FLAG = (int) (Y_FINAL_INFO-(HEIGHT*0.016));
+	public static final int FLAG_WIDTH = ICON_WIDTH;
+	public static final int FLAG_HEIGHT = (int) (HEIGH_ELEMENT_STAGE+(HEIGHT*0.017));
+	
+	//Game Over
+	public static final int X_GO = (int) (WIDTH/2-(WIDTH*0.1325));
+	public static final double Y_GO = HEIGHT_STAGE-(Properties.HEIGHT*0.035);
+	public static final int GO_WIDTH = (int) (WIDTH*0.1765);
+	public static final int GO_HEIGHT = (int) (HEIGHT*0.0605);
 	
 	/*Mistakes
 	birth of items over enemies

@@ -8,7 +8,7 @@ import gameController.ImageControl;
 public class MiniEnemies {
 	
 	public static final int size = Properties.WIDTH_ELEMENT_STAGE/2;
-	public static final int delta = 20;
+	public static final int delta = (int) (Properties.WIDTH*0.03);
 	private int x,y;
 	
 	public MiniEnemies(int x, int y){

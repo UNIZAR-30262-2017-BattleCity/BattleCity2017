@@ -58,7 +58,7 @@ public class StageControl {
     
     
     private static int yMiniE; 
-	private static final int x = Properties.X_INIT_INFO+25;
+	private static final int x = (int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.037));
 	private static final int xB = x + MiniEnemies.delta;
 	private LinkedList<MiniEnemies> miniEnemies;
 	
@@ -387,7 +387,7 @@ public class StageControl {
 	}
 
 	public void loadMiniEnemies(){
-		yMiniE = Properties.Y_INIT_INFO-20;
+		yMiniE = (int) (Properties.Y_INIT_INFO-(Properties.HEIGHT*0.035));
     	
  		for (int i = 0; i < Properties.CANT_ENEMIES_LEVEL; i++) {
  			if (i%2==0) {
@@ -401,7 +401,9 @@ public class StageControl {
 	
 	public void updateMiniEnemies(Graphics g){
 		g.setColor(Color.darkGray);
-        g.fillRect(Properties.X_INIT_INFO, Properties.Y_INIT_INFO-20, Properties.X_FINAL_INFO, 200);
+        g.fillRect(Properties.X_INIT_INFO, 
+        		Properties.Y_MINI_ENEMIES, 
+        		Properties.X_FINAL_INFO, Properties.MINI_ENEMIES_BACKGROUND_HEIGHT);
 	    
 		for(int i=0;i<miniEnemies.size();i++) {
 			miniEnemies.get(i).draw(g);
