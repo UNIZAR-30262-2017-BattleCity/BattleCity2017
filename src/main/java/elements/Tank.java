@@ -23,7 +23,7 @@ public abstract class Tank extends GameElement{
 		
 	public void shoot(Bullet b) {
 		if (bulletsInProgres<Properties.MAX_BULLETS_TANK) {
-			stageControl.spawnElements(b);
+			stageControl.spawnBullets(b);
 			bulletsInProgres++;
 		}
 	}

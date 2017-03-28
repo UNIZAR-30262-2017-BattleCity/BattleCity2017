@@ -96,7 +96,7 @@ public class Wall extends GameElement implements StageElement{
 			maxTimeItemEfect--;
 		}else{
 			
-			stageControl.deleteElement(this);
+			stageControl.deleteWall(this);
 			stageControl.setItemTaked(false);
 			stageControl.eagleIronWallEfect(false);
 		}

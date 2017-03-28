@@ -15,7 +15,7 @@ public class Enemy extends Tank implements StageElement{
     private BufferedImage imgEnemyDowm[] = new BufferedImage[2]; 
     private BufferedImage imgEnemyLeft[] = new BufferedImage[2]; 
     private BufferedImage imgEnemyRight[] = new BufferedImage[2];
-
+    private boolean clockEfect;
     
 	public Enemy(int col, int row, int type, StageControl stageControl) {
 		super(stageControl);
@@ -87,70 +87,95 @@ public class Enemy extends Tank implements StageElement{
 	
 	@Override
 	public void updateDraw() {	
-		
-		switch (dir) {
-		case 1://up
-			posY -= vel;
-			break;
-		case -1://down
-			posY += vel;
-			break;
-		case -2://left
-			posX -= vel;
-			break;
-		case 2://rigth
-			posX += vel;
-			break;
+
+		if (!clockEfect) {
+			switch (dir) {
+			case 1://up
+				posY -= vel;
+				break;
+			case -1://down
+				posY += vel;
+				break;
+			case -2://left
+				posX -= vel;
+				break;
+			case 2://rigth
+				posX += vel;
+				break;
+			}
+
+			Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements());
+
+			if (p!=null) {
+
+				switch (dir) {
+				case 1://up
+					setPosY(p.getY());
+					break;
+				case -1://down
+					setPosY(p.getY()-heigth);
+					break;
+				case -2://left
+					setPosX(p.getX());
+					break;
+				case 2://right
+					setPosX(p.getX()-width);
+					break;
+				}
+			}
+
+			if(getPosX()<xI) setPosX(xI);
+			if(getPosX()>xF) setPosX(xF);
+			if(getPosY()<yI) setPosY(yI);
+			if(getPosY()>yF) setPosY(yF);
+
+			anim();
 		}
-		
-		Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements());
-    	
-    	if (p!=null) {
-    		
-    		switch (dir) {
-    		case 1://up
-    			setPosY(p.getY());
-    			break;
-    		case -1://down
-    			setPosY(p.getY()-heigth);
-    			break;
-    		case -2://left
-    			setPosX(p.getX());
-    			break;
-    		case 2://right
-    			setPosX(p.getX()-width);
-    			break;
-    		}
-		}
-		
-    	if(getPosX()<xI) setPosX(xI);
-    	if(getPosX()>xF) setPosX(xF);
-    	if(getPosY()<yI) setPosY(yI);
-    	if(getPosY()>yF) setPosY(yF);
-    	
-    	anim();
-		
 	}	
 
 	@Override
 	public void draw(Graphics g) {
-		
-		switch (this.dir) {
-		case 1:
-			g.drawImage(imgEnemyUp[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-			break;
-		case -1:
-			g.drawImage(imgEnemyDowm[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-			break;
-		case -2:
-			g.drawImage(imgEnemyLeft[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-			break;
-		case 2:
-			g.drawImage(imgEnemyRight[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-			break;
+
+		if (clockEfect) {
+			switch (this.dir) {
+			case 1:
+				g.drawImage(imgEnemyUp[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			case -1:
+				g.drawImage(imgEnemyDowm[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			case -2:
+				g.drawImage(imgEnemyLeft[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			case 2:
+				g.drawImage(imgEnemyRight[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			}
+		}else{
+			switch (this.dir) {			
+			case 1:
+				g.drawImage(imgEnemyUp[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			case -1:
+				g.drawImage(imgEnemyDowm[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			case -2:
+				g.drawImage(imgEnemyLeft[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			case 2:
+				g.drawImage(imgEnemyRight[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+				break;
+			}
 		}
-		
-		
+
+	}
+
+	public boolean isClockEfect() {
+		return clockEfect;
+	}
+
+	public void setClockEfect(boolean clockEfect) {
+		this.clockEfect = clockEfect;
 	}
 	
 }

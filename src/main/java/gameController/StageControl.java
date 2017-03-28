@@ -19,93 +19,107 @@ import userInterface.MiniEnemies;
 
 public class StageControl {	
 		
-	//items
+	//Items
     private int nItems;
     private int nItemsSimul;
-    private int timeBetweenSpawnIt;
     private int cantItemsLevel;
-    private static final int maxItemsSimul = Properties.MAX_ITEMS_SIMUL;
+    private int timeBetweenSpawnIt;
     private static int maxTimeItemEfect;
-    
-    private LinkedList<StageElement> elements;
-    private LinkedList<StageElement> staticElements;
-    private LinkedList<Enemy> enemies;
-    private LinkedList<Wall> eagleBricks;
-    private LinkedList<Wall> stageWalls;
-    private LinkedList<Forest> stageForest;
-    private StageElement tmpElement;
-    private Enemy tmpEnemy;
-    private Wall tmpWall;
-    
-    private int enemiesKilled;
-    private int maxEnemySimul;
-    private int nEnemies;
-    private int nEnemiesSimul;
-    private int timeBetweenSpawnE;
-    	
     private boolean clockEfect, itemTaked;
     
+    //Enemies
+    private int nEnemies;
+    private int nEnemiesSimul;
+    private int enemiesKilled;
+    private int maxEnemySimul;
+    private int timeBetweenSpawnE;    
+    
+    private Wall tmpWall;
+    private Enemy tmpEnemy;
+    private LinkedList<Item> items;
+    private StageElement tmpElement;
+    private LinkedList<Bullet> bullets;
+    private LinkedList<Enemy> enemies;
+    private LinkedList<Wall> stageWalls;
+    private LinkedList<Wall> eagleBricks;
+    private LinkedList<Forest> stageForest;
+    private LinkedList<MiniEnemies> miniEnemies;
+    private LinkedList<StageElement> staticElements;
+    
     private MazeControl mazeControl;
-    static Player[] players;
+    public static Player[] players;
     private Eagle eagle;
-    private int k,pos,col,row,typeItem,typeEnemy;
+    private int pos,col,row,typeItem,typeEnemy;
     private int timerE, timerIt;
-    private Random r;    
+    private Random random;
     private static final int x1 = Properties.POS1_SPAWN_ENEMY[0];
     private static final int x2 = Properties.POS2_SPAWN_ENEMY[0];
     private static final int x3 = Properties.POS3_SPAWN_ENEMY[0];
     private static final int y1 = Properties.POS1_SPAWN_ENEMY[1];
     private static final int y2 = Properties.POS2_SPAWN_ENEMY[1];
     private static final int y3 = Properties.POS3_SPAWN_ENEMY[1];
-    
-    
+        
     private static int yMiniE; 
 	private static final int x = (int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.037));
 	private static final int xB = x + MiniEnemies.delta;
-	private LinkedList<MiniEnemies> miniEnemies;
 	
-    private IAControl ia;
-	private boolean updateEnemies;
 	private boolean updteBricks;
-	private boolean init;
+	private boolean initDraw;
+	private boolean updateMiniEnemies;
 	
+	private IAControl ia;
 	private GameControl gC;
+	
 	private BufferedImage[] imgBackStage = new BufferedImage[2];
             
     public StageControl(GameControl gC) {
-    	initValues();
+    	initValues(gC.getDifficulty());
     	this.gC= gC;
     	this.ia = gC.getIa();
-    	elements = new LinkedList<>();
-    	staticElements = new LinkedList<>();
-    	stageWalls = new LinkedList<>();
-    	enemies = new LinkedList<>();
-    	miniEnemies = new LinkedList<>();
-    	mazeControl = new MazeControl(this);
-    	stageForest = new LinkedList<>();
-    	loadLevel(gC.getLevel(), gC.getDifficulty(),gC.isPlayer1(),gC.isPlayer2());
+    	loadLevel(gC.getLevel(),gC.isPlayer1(),gC.isPlayer2());
     }
     
-    public void initValues(){
-    	k = 1;
+    public void initValues(int dif){
     	pos = 1;    	
     	nItems= 0;
     	timerE = 0;
-		timerIt = 0;
+		timerIt = 0;		
+		maxTimeItemEfect = 0;
+				
+		players = new Player[2];
+		yMiniE = Properties.Y_INIT_INFO;
+		random = new Random();
+		updateMiniEnemies = true;
+		initDraw = true;			
+    	
+    	//dif: difficulty     	// 1 easy / 2 normal  3 hard
+		maxEnemySimul = Properties.MIN_ENEMY_SIMUL*dif;					
+		timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*50);
+				
+    	cantItemsLevel = Properties.MAX_ITEMS_LEVEL - (dif*5);
+    	timeBetweenSpawnIt = Properties.MIN_TIME_BETWEEN_SPAWN_IT * dif;
+    	
+    	items = new LinkedList<>();
+    	enemies = new LinkedList<>();
+    	bullets = new LinkedList<>();    	
+    	stageWalls = new LinkedList<>();    	
+    	miniEnemies = new LinkedList<>();
+    	stageForest = new LinkedList<>();	
+    	staticElements = new LinkedList<>();
+    	mazeControl = new MazeControl(this);
+    }
+    
+    
+    public void resetVariables(){    	
 		nEnemies = 0;
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
 		enemiesKilled = 0;
-		players = new Player[2];
-		yMiniE = Properties.Y_INIT_INFO;
-		r = new Random();
-		updateEnemies = true;
-		init = true;
-		maxTimeItemEfect  = Properties.MAX_TIME_ITEM_EFECT;
     }
     
-    public void loadLevel(int level, int dif, boolean isPlayer1, boolean isPlayer2){
-    	//dif: difficulty
+    
+    public void loadLevel(int level, boolean isPlayer1, boolean isPlayer2){
+
     	switch (level) {
 		case 1:			
 			
@@ -114,14 +128,9 @@ public class StageControl {
 
 			break;
 		}
-    	// dif = 1 easy / 2 normal  3 hard
-    	
-		maxEnemySimul = Properties.MIN_ENEMY_SIMUL*dif;					
-		timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*50);
-		
-		
-    	cantItemsLevel = Properties.MAX_ITEMS_LEVEL - (dif*5);
-    	timeBetweenSpawnIt = Properties.MIN_TIME_BETWEEN_SPAWN_IT * dif;
+
+
+    	resetVariables();
     	
     	 mazeControl.loadMaze(level,isPlayer1,isPlayer2);
     	 eagleBricks = mazeControl.loadEagleWall(); 
@@ -130,8 +139,8 @@ public class StageControl {
     	 
     }
             
-    public void spawnElements(StageElement e) {
-    	elements.add(e);
+    public void spawnBullets(Bullet e) {
+    	bullets.add(e);
 	}
     
     public void spawnStaticElements(StageElement e) {
@@ -147,9 +156,10 @@ public class StageControl {
 	}
     
     public void spawnEnemys() {	
+    	
 		if (nEnemies<Properties.CANT_ENEMIES_LEVEL) {	
 			if (nEnemiesSimul<maxEnemySimul) {
-				typeEnemy = r.nextInt(3)+1;
+				typeEnemy = random.nextInt(3)+1;
 				if (pos == 1) enemies.add(new Enemy(x1, y1, 4, this));
 				if (pos == 2) enemies.add(new Enemy(x2, y2, typeEnemy, this));
 				if (pos == 3) enemies.add(new Enemy(x3, y3, typeEnemy, this));
@@ -163,11 +173,11 @@ public class StageControl {
     
     public void spawnItems() {
 		if (nItems<cantItemsLevel) {
-			if (nItemsSimul<maxItemsSimul) {
-				col = r.nextInt(Properties.COL_STAGE)+1;
-				row = r.nextInt(Properties.ROW_STAGE)+1;
-				typeItem = r.nextInt(7)+1;
-				elements.add(new Item(col, row, typeItem, this));
+			if (nItemsSimul<Properties.MAX_ITEMS_SIMUL) {
+				col = random.nextInt(Properties.COL_STAGE)+1;
+				row = random.nextInt(Properties.ROW_STAGE)+1;
+				typeItem = random.nextInt(7)+1;
+				items.add(new Item(col, row, typeItem, this));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -188,36 +198,49 @@ public class StageControl {
     		item();
     	}
 
-    	if (!clockEfect) {
-    		
-    		if (timerE < timeBetweenSpawnE) {
-    			timerE++;
-    		}else{
-    			timerE=0;
-    			spawnEnemys();
-    		}
-    		
-    		for (int i = 0; i < enemies.size(); i++) {
-    			tmpEnemy = enemies.get(i);	
-    			if (tmpEnemy.isActive()){
+    	if (timerE < timeBetweenSpawnE) {
+    		timerE++;
+    	}else{
+    		timerE=0;
+    		spawnEnemys();
+    	}
+
+    	for (int i = 0; i < enemies.size(); i++) {
+    		tmpEnemy = enemies.get(i);	
+    		if (tmpEnemy.isActive()){
+
+    			if (clockEfect) {
+    				tmpEnemy.setClockEfect(clockEfect);
+    			}else{
+    				tmpEnemy.setClockEfect(clockEfect);
     				int dir[] = ia.getDir_Shoot(tmpEnemy, this);
     				tmpEnemy.setDir(dir[0]);
     				if (dir[1] == 1) {
     					tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
     				}
-    				tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
-    				tmpEnemy.updateDraw();
     			}
-    			else deleteEnemy(null,tmpEnemy);
+    			
+    			tmpEnemy.updateDraw();
+    		}
+    		else deleteEnemy(null,tmpEnemy);
 
-    		}  		
+    	}
+
+    	if (gC.isPlayer1()) players[0].updateDraw();
+    	if (gC.isPlayer2()) players[1].updateDraw();
+    	
+    	
+    	for(int i=0;i<items.size();i++) {
+    		
+    		if (!items.get(i).isActive()) 
+    			deleteItem(items.get(i));		 
     	}
     	
-    	for(int i=0;i<elements.size();i++) {
-    		tmpElement = elements.get(i);
+    	for(int i=0;i<bullets.size();i++) {
+    		tmpElement = bullets.get(i);
     		if (tmpElement.isActive()){
     			tmpElement.updateDraw();
-    		}else deleteElement(tmpElement);
+    		}else deleteBullet(tmpElement);
     	}
     	
     	if (updteBricks) {
@@ -236,18 +259,26 @@ public class StageControl {
     
     public void draw(Graphics g){    	
     	
-    	g.drawImage(imgBackStage[1], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
-    	    	
-        if (init) {
-			g.drawImage(imgBackStage[0], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
-			init = false;
+        if (initDraw) {
+    		//g.setColor(Color.black);
+            //g.fillRect(Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
+			
+        	//for (StageElement s : staticElements) {
+				//s.draw(g);
+			//}        	
+        	g.drawImage(imgBackStage[0], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
+			initDraw = false;
 		}
-    	    	
-    	for (Wall wall : stageWalls) {
+        ///g.setColor(Color.black);
+        //g.fillRect(Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
+		
+    	g.drawImage(imgBackStage[1], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
+    	
+    	for (Wall wall : eagleBricks) {
 			wall.draw(g);
 		}
     	
-    	for (Wall wall : eagleBricks) {
+    	for (Wall wall : stageWalls) {
 			wall.draw(g);
 		}
     	
@@ -255,23 +286,34 @@ public class StageControl {
 			e.draw(g);
 		}
     	
-    	for(int i=0;i<elements.size();i++) {
-    		tmpElement = elements.get(i);
+    	for(int i=0;i<bullets.size();i++) {
+    		tmpElement = bullets.get(i);
     		if (tmpElement.isActive()) tmpElement.draw(g);
 		}
+    	
+    	if (gC.isPlayer1()) players[0].draw(g);
+    	if (gC.isPlayer2()) players[1].draw(g);
     	
     	for (Forest obs : stageForest) {
 			obs.draw(g);
 		}
     	
-    	if (updateEnemies) {
+    	for (Item item : items) {
+			item.draw(g);
+		}
+    	
+    	if (updateMiniEnemies) {
     		updateMiniEnemies(g);
 		}    	
     	
     }
     
-    public void deleteElement(StageElement e){
-        elements.remove(e);
+    public void deleteBullet(StageElement e){
+        bullets.remove(e);
+    }
+    
+    public void deleteWall(Wall w){
+        stageWalls.remove(w);
     }
     
     public void deleteEnemy(Player p,Enemy e){
@@ -282,14 +324,15 @@ public class StageControl {
         nEnemiesSimul--;
         enemiesKilled++;
         miniEnemies.removeLast();
-        updateEnemies = true;
+        updateMiniEnemies = true;
         if (enemiesKilled==Properties.CANT_ENEMIES_LEVEL) {
-			gC.resultStage(2);
+			gC.resultStage(1);
+			
 		}
     }
     
     public void deleteItem(Item it){
-    	elements.remove(it);
+    	items.remove(it);
     	nItemsSimul--;
     	nItems--;
     }
@@ -310,10 +353,10 @@ public class StageControl {
 	}
 		
 	public void item(){		
-		if(maxTimeItemEfect>0){
-			maxTimeItemEfect--;
+		if(maxTimeItemEfect<Properties.MAX_TIME_ITEM_EFECT){
+			maxTimeItemEfect++;
 		}else{
-			maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
+			maxTimeItemEfect = 0;
 			clockEfect = false;
 			itemTaked = false;
 		}
@@ -348,28 +391,27 @@ public class StageControl {
 			player.gunEfect();
 			break;
 		}
-		deleteElement(it);
+		deleteBullet(it);
     }
 	
 	public void bombEfect() {
-		for (int i = 0; i < enemies.size();i++) {			
+		for (int i = 0; i < enemies.size();i++) {
 			enemies.get(i).setActive(false);
 		}
 	}
 	
 	public LinkedList<StageElement> getElements() {
 		LinkedList<StageElement> clone = new LinkedList<>();
-		clone.addAll(elements);
+		clone.addAll(bullets);
+		clone.addAll(eagleBricks);
 		clone.addAll(enemies);
 		clone.addAll(stageWalls);
 		clone.addAll(staticElements);
+		clone.addAll(items);
+		clone.add(eagle);
 		return clone;
 	}
-	
-	public LinkedList<StageElement> getMaze() {
-		return elements;
-	}
-	
+
 	public LinkedList<StageElement> getMaze_Enemies() {
 		LinkedList<StageElement> clone = new LinkedList<>();
 		clone.addAll(eagleBricks);
@@ -377,6 +419,7 @@ public class StageControl {
 		if (gC.isPlayer1()) clone.add(players[0]);
 		if (gC.isPlayer2()) clone.add(players[1]);
 		clone.addLast(eagle);
+		clone.addAll(staticElements);
 		clone.addAll(stageWalls);
 		return clone;
 	}
@@ -386,6 +429,8 @@ public class StageControl {
 		clone.addAll(eagleBricks);
 		if (gC.isPlayer1()) clone.add(players[0]);
 		if (gC.isPlayer2()) clone.add(players[1]);
+		clone.add(eagle);
+		clone.addAll(staticElements);
 		clone.addAll(stageWalls);
 		return clone;
 	}
@@ -412,7 +457,7 @@ public class StageControl {
 		for(int i=0;i<miniEnemies.size();i++) {
 			miniEnemies.get(i).draw(g);
 		}
-        updateEnemies = false;
+        updateMiniEnemies = false;
 	}
 	
 	public LinkedList<Enemy> getEnemies() {
@@ -425,10 +470,6 @@ public class StageControl {
 
 	public LinkedList<Wall> getStageWalls() {
 		return stageWalls;
-	}
-
-	public void setElements(LinkedList<StageElement> elements) {
-		this.elements = elements;
 	}
 
 	public int getMaxEnemySimul() {
@@ -473,6 +514,22 @@ public class StageControl {
 
 	public void setEagle(Eagle eagle) {
 		this.eagle = eagle;
+	}
+
+	public GameControl getgC() {
+		return gC;
+	}
+
+	public void setgC(GameControl gC) {
+		this.gC = gC;
+	}
+
+	public boolean isInitDraw() {
+		return initDraw;
+	}
+
+	public void setInitDraw(boolean initDraw) {
+		this.initDraw = initDraw;
 	}	
-			
+		
 }

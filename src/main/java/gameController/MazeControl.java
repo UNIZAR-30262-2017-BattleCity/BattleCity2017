@@ -401,10 +401,10 @@ public class MazeControl {
 	}	
 		
 	public void loadIronWall(){
-    	stageControl.spawnElements(new Wall(11.5,5.5,0,3,stageControl,true));
-    	stageControl.spawnElements(new Wall(11.5,6.5,0,3,stageControl,true));
-    	stageControl.spawnElements(new Wall(12,5.5,0,4,stageControl,true));
-    	stageControl.spawnElements(new Wall(12,7,0,4,stageControl,true));
+    	stageControl.spawnWalls(new Wall(11.5,5.5,0,3,stageControl,true));
+    	stageControl.spawnWalls(new Wall(11.5,6.5,0,3,stageControl,true));
+    	stageControl.spawnWalls(new Wall(12,5.5,0,4,stageControl,true));
+    	stageControl.spawnWalls(new Wall(12,7,0,4,stageControl,true));
 	}
 	
 	public LinkedList<Wall> loadEagleWall(){
@@ -425,11 +425,7 @@ public class MazeControl {
 
 		listEagleWall.add(new Wall(12,7,0,1,stageControl, false));
 		listEagleWall.add(new Wall(12,7,2,1,stageControl, false));
-		
-		for (Wall wall : listEagleWall) {
-			stageControl.spawnElements(wall);
-		}
-		
+
 		return listEagleWall;		
 
 	}
@@ -582,9 +578,7 @@ public class MazeControl {
 					break;
 					
 				case 13:
-                	Eagle e = new Eagle(i,j,stageControl);
-					stageControl.spawnStaticElements(e);
-					stageControl.setEagle(e);
+					stageControl.setEagle(new Eagle(i,j,stageControl));
 					break;
 
 				case 14:
@@ -593,12 +587,10 @@ public class MazeControl {
 					
 				case 15:
 					StageControl.players[0] = new Player(i+1, j+1, Properties.INIT_LIFES,1, stageControl);
-					stageControl.spawnElements(StageControl.players[0]);
 					break;
 
 				case 16:
 					StageControl.players[1] = new Player(i+1, j+1, Properties.INIT_LIFES,2, stageControl);
-					stageControl.spawnElements(StageControl.players[1]);
 					break;
 				}
 

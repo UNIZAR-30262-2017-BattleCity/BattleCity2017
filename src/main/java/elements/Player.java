@@ -238,8 +238,8 @@ public class Player extends Tank implements StageElement{
 	public void reduceLifes(){
     	lifes--;
     	updateLifes = true;
-    	if (lifes<0) {
-			
+    	if (lifes<=0) {
+			stageControl.getgC().resultStage(2);
 		}else{
 			if (player==1) {
 				setInitPos(Properties.POS_INIT_PLAYER1[0], Properties.POS_INIT_PLAYER1[1]);

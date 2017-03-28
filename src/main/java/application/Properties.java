@@ -86,6 +86,7 @@ public final class Properties {
 	public final static String PATH_SS_TANK = "/resources/images/SpriteSheet.png";
 	public final static String PATH_SS_MENU = "/resources/images/Menu.png";
 	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
+	public final static String PATH_SS_SCORE = "/resources/images/Config.png";
 	public final static String PATH_SS_CONTROLS = "/resources/images/Controls.png";
 	
 	public static final BufferedImage SSTANK = ImageControl.loadImage(PATH_SS_TANK);
@@ -95,13 +96,13 @@ public final class Properties {
 	public final static int MAX_ITEMS_SIMUL = 3;
 	public final static int MAX_TIME_ITEM_EFECT = 480;
 	public final static int MAX_TIME_ITEM_SHOW = 480;
-	public final static int MIN_TIME_BETWEEN_SPAWN_IT = 240;
+	public final static int MIN_TIME_BETWEEN_SPAWN_IT = 360;
 		
 	
 	public final static int TIME_ANIM = 5;
 	public final static int TIME_TO_INIT_STAGE = 1000;
-	public final static int TIME_TO_SCORE = 2000;
-	public final static int TIME_TO_MENU = 2000;
+	public final static int TIME_TO_SCORE = 1000;
+	public final static int TIME_TO_MENU = 1000;
 	
 	public static final double DELTA = SIZE_SQUARE/2;
 	public static final int TIME_UPDATE_IA = 30;

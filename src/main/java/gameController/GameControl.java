@@ -17,6 +17,7 @@ import userInterface.Configuration;
 import userInterface.Controls;
 import userInterface.Cursor;
 import userInterface.GameOver;
+import userInterface.Score;
 import userInterface.Screen;
 import userInterface.StageGUI;
 
@@ -28,9 +29,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Thread thread;
 	private Player[] players;
 	private boolean isPlayer1,isPlayer2;
-	private boolean next;
+	private boolean isGameOver;
 	private StageControl stageControl;
 	private Screen screen;
+	private Score score;
 	private GameOver gameOver;
 	private StageGUI stageGUI;
 	private Configuration config;
@@ -44,17 +46,23 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	public GameControl(JFrame jf){
 		requestFocus();
+		//jf.setFocusable(true);
 		jf.addKeyListener(this);
 		screen = Screen.MENU;
-		level = 4;
+		level = 1;
 		difficulty = 1;
 		opc = 1;
 		cursor = new Cursor();
 		ia = new IAControl();
+		stageGUI = new StageGUI();
+		score = new Score();
+		timeToNext = 0;
+		
 	}
 	
-	public void initStage(){				
+	public void initStage(){
 		stageControl = new StageControl(this);
+		//stageControl.loadLevel(level, difficulty, isPlayer1, isPlayer2);
 		players = StageControl.getPlayers();
 		level++;
 	}
@@ -121,10 +129,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void resultStage(int result){
 		switch (result) {
 		case 1:
-			screen = Screen.SCORE_STAGE;			
+			screen = Screen.STAGE_WIN;
 			break;
 		case 2:
 			gameOver = new GameOver();
+			isGameOver = true;
+			level = 1;
 			screen = Screen.GAMEOVER;
 			break;
 		}
@@ -164,8 +174,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case PRESENT_STAGE:
 			presentStage(g);
 			break;
-		case INIT_STAGE:
-	        stageGUI = new StageGUI();
+		case INIT_STAGE:	        
 	        stageGUI.draw(level,g);
 	        initStage();
 	        screen = Screen.STAGE_PLAY;
@@ -173,13 +182,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case STAGE_PLAY:
 			stageControl.draw(g);	
 			break;
+		case STAGE_WIN: 
+			stageControl.draw(g);
+			if (next(Properties.TIME_TO_SCORE)) screen = Screen.SCORE_STAGE;
+			break;
 		case STAGE_PAUSED:
 			g.drawImage(ImageControl.getPaused(Properties.SSTANK), 252, 298, 100, 25, null);
 			break;
-		case SCORE_STAGE:
-			g.setColor(Color.darkGray);
-	        g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
-	        if (next(Properties.TIME_TO_MENU)) screen = Screen.MENU;
+		case SCORE_STAGE:			
+			score.draw(g);
+	        if (next(Properties.TIME_TO_MENU)) {
+	        	if (isGameOver) {
+					screen = Screen.MENU;
+				}else screen = Screen.PRESENT_STAGE;
+	        }
 			break;
 		case GAMEOVER:
 			stageControl.draw(g);
@@ -322,13 +338,13 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void menuOptions(){
 		switch (opc) {
 		case 1:
-			screen = Screen.PRESENT_STAGE;
 			isPlayer1 = true;
+			screen = Screen.PRESENT_STAGE;
 			break;
 		case 2:
 			isPlayer1 = true;
 			isPlayer2 = true;
-			screen = Screen.INIT_STAGE;
+			screen = Screen.PRESENT_STAGE;
 			break;
 		case 3:
 			config = new Configuration();
@@ -454,6 +470,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			timeToNext++;
 			return false;
 		}else{
+			timeToNext = 0;
 			return true;
 		}
 	}

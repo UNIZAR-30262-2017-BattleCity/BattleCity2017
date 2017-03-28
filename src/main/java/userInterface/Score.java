@@ -2,12 +2,11 @@ package userInterface;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 import application.Properties;
 import gameController.ImageControl;
 
-public class Configuration {
+public class Score {
 
 	
 	public void draw(Graphics g) {
