@@ -49,10 +49,6 @@ public class PhysicsContol {
 						s.setActive(false);
 						s.getStage().ItemTaked(p,(Item) s);
 					}else{
-						if (s.getClass().equals(Forest.class)) {
-							int o = list.get(i).getType();
-							if (o == 1) return null;
-						}
 						return getIntersection(p,s).getLocation();
 					}
 				}

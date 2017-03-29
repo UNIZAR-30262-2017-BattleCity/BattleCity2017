@@ -61,7 +61,8 @@ public class Item extends GameElement implements StageElement{
 		
 		if(maxTimeItemShow>0){
 			maxTimeItemShow--;
-		}else{			
+		}else{		
+			isActive = false;
 			stageControl.deleteItem(this);
 		}
 	}

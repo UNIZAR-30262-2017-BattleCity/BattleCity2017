@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -25,6 +26,7 @@ import userInterface.StageGUI;
 public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
+	private final BufferedImage IMG_MENU = ImageControl.loadImage("/resources/images/Menu.png");
 	private boolean running;
 	private Thread thread;
 	private Player[] players;
@@ -57,12 +59,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		stageGUI = new StageGUI();
 		score = new Score();
 		timeToNext = 0;
+		stageControl = new StageControl(this);
 		
 	}
 	
 	public void initStage(){
-		stageControl = new StageControl(this);
-		//stageControl.loadLevel(level, difficulty, isPlayer1, isPlayer2);
+		stageControl.loadLevel(level, isPlayer1, isPlayer2);
 		players = StageControl.getPlayers();
 		level++;
 	}
@@ -120,8 +122,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		if (screen.equals(Screen.STAGE_PLAY)) {
 			stageControl.updateDraw();
 		}else if (screen.equals(Screen.GAMEOVER)) {
-			stageControl.updateDraw();
 			gameOver.updateDraw();
+		}else if (screen.equals(Screen.SCORE_STAGE)) {
+			score.updateDraw();
 		}
 		
 	}
@@ -132,14 +135,26 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			screen = Screen.STAGE_WIN;
 			break;
 		case 2:
-			gameOver = new GameOver();
-			isGameOver = true;
-			level = 1;
-			screen = Screen.GAMEOVER;
+			if (!players[0].isActive()&& players[1]==null) {
+				gameOver();				
+			}else{
+				if (players[1]!=null) {
+					if (!players[0].isActive()&&!players[1].isActive()) {
+						gameOver();
+					}
+				}
+			}
 			break;
 		}
 		
-	}	
+	}
+	
+	public void gameOver(){
+		gameOver = new GameOver();
+		isGameOver = true;
+		level = 1;
+		screen = Screen.GAMEOVER;
+	}
 	
 	public void draw(){
 		BufferStrategy bs = this.getBufferStrategy();
@@ -184,13 +199,17 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case STAGE_WIN: 
 			stageControl.draw(g);
-			if (next(Properties.TIME_TO_SCORE)) screen = Screen.SCORE_STAGE;
+			if (next(Properties.TIME_TO_SCORE)) screen = Screen.INIT_SCORE;
 			break;
 		case STAGE_PAUSED:
 			g.drawImage(ImageControl.getPaused(Properties.SSTANK), 252, 298, 100, 25, null);
 			break;
+		case INIT_SCORE:
+			score.initDraw(g, this);
+			screen = Screen.SCORE_STAGE;
+			break;
 		case SCORE_STAGE:			
-			score.draw(g);
+			score.draw(g,this);
 	        if (next(Properties.TIME_TO_MENU)) {
 	        	if (isGameOver) {
 					screen = Screen.MENU;
@@ -200,7 +219,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case GAMEOVER:
 			stageControl.draw(g);
 			gameOver.draw(g);
-			if (next(Properties.TIME_TO_SCORE)) screen = Screen.SCORE_STAGE;
+			if (next(Properties.TIME_TO_SCORE)) screen = Screen.INIT_SCORE;
 			break;
 		default:
 			break;
@@ -339,6 +358,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		switch (opc) {
 		case 1:
 			isPlayer1 = true;
+			isPlayer2 = false;
 			screen = Screen.PRESENT_STAGE;
 			break;
 		case 2:
@@ -409,7 +429,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				players[0].setVel(1);
 				break;
 			case KeyEvent.VK_SPACE :
-				players[0].shoot(new Bullet(players[0].getPosX(),players[0].getPosY(),players[0].getDir(),0,stageControl,players[0]));
+				players[0].shoot(new Bullet(players[0].getPosX(),
+						players[0].getPosY(),players[0].getDir(),0,stageControl,players[0]));
 				break;
 			case KeyEvent.VK_ENTER:
 				screen = Screen.STAGE_PAUSED;
@@ -436,7 +457,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				players[1].setVel(1);
 				break;
 			case KeyEvent.VK_F :
-				players[1].shoot(new Bullet(players[1].getPosX(),players[1].getPosY(),players[1].getDir(),0,stageControl,players[1]));
+				players[1].shoot(new Bullet(players[1].getPosX(),
+						players[1].getPosY(),players[1].getDir(),0,stageControl,players[1]));
 				break;
 			case KeyEvent.VK_G:
 				screen = Screen.STAGE_PAUSED;
@@ -450,8 +472,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private void menu(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
-        g.drawImage(ImageControl.loadImage(Properties.PATH_SS_MENU),
-        		0, 0, Properties.WIDTH, Properties.HEIGHT, null);
+        g.drawImage(IMG_MENU,0, 0, Properties.WIDTH, Properties.HEIGHT, null);
 		
 	}
 
@@ -513,6 +534,14 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 
 	public void setPlayer1(boolean isPlayer1) {
 		this.isPlayer1 = isPlayer1;
+	}
+
+	public StageControl getStageControl() {
+		return stageControl;
+	}
+
+	public void setStageControl(StageControl stageControl) {
+		this.stageControl = stageControl;
 	}
 	
 }

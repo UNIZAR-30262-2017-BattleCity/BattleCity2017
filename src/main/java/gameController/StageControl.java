@@ -52,12 +52,10 @@ public class StageControl {
     private int pos,col,row,typeItem,typeEnemy;
     private int timerE, timerIt;
     private Random random;
-    private static final int x1 = Properties.POS1_SPAWN_ENEMY[0];
-    private static final int x2 = Properties.POS2_SPAWN_ENEMY[0];
-    private static final int x3 = Properties.POS3_SPAWN_ENEMY[0];
-    private static final int y1 = Properties.POS1_SPAWN_ENEMY[1];
-    private static final int y2 = Properties.POS2_SPAWN_ENEMY[1];
-    private static final int y3 = Properties.POS3_SPAWN_ENEMY[1];
+    private static final int ROW_SPAWN_ENEMY = 1;
+    private static final int COL1_SPAWN_ENEMY = 1;
+    private static final int COL2_SPAWN_ENEMY = 7;
+    private static final int COL3_SPAWN_ENEMY = 13;
         
     private static int yMiniE; 
 	private static final int x = (int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.037));
@@ -71,26 +69,19 @@ public class StageControl {
 	private GameControl gC;
 	
 	private BufferedImage[] imgBackStage = new BufferedImage[2];
+	private boolean eagleWallEfect;
             
     public StageControl(GameControl gC) {
     	initValues(gC.getDifficulty());
     	this.gC= gC;
     	this.ia = gC.getIa();
-    	loadLevel(gC.getLevel(),gC.isPlayer1(),gC.isPlayer2());
     }
     
     public void initValues(int dif){
-    	pos = 1;    	
-    	nItems= 0;
-    	timerE = 0;
-		timerIt = 0;		
-		maxTimeItemEfect = 0;
 				
 		players = new Player[2];
 		yMiniE = Properties.Y_INIT_INFO;
-		random = new Random();
-		updateMiniEnemies = true;
-		initDraw = true;			
+		random = new Random();			
     	
     	//dif: difficulty     	// 1 easy / 2 normal  3 hard
 		maxEnemySimul = Properties.MIN_ENEMY_SIMUL*dif;					
@@ -107,19 +98,48 @@ public class StageControl {
     	stageForest = new LinkedList<>();	
     	staticElements = new LinkedList<>();
     	mazeControl = new MazeControl(this);
-    }
+    }    
     
-    
-    public void resetVariables(){    	
+    public void resetVariables(){  	
+		
+		pos = 1;		
+    	nItems= 0;
+    	timerE = 0;
+		timerIt = 0;
 		nEnemies = 0;
 		nItemsSimul = 0;
 		nEnemiesSimul = 0;
 		enemiesKilled = 0;
+		maxTimeItemEfect = 0;
+		
+		items.clear();
+    	enemies.clear();
+    	bullets.clear(); 	
+    	stageWalls.clear();	
+    	miniEnemies.clear();
+    	stageForest.clear();
+    	staticElements.clear();
+    	
+		updateMiniEnemies = true;
+		initDraw = true;
     }
-    
-    
+        
     public void loadLevel(int level, boolean isPlayer1, boolean isPlayer2){
-
+    	
+    	if (isPlayer1) {
+			if (players[0]!=null) {
+				isPlayer1 = false;
+				players[0].resetPlayer();				
+			}
+		}
+    	
+    	if (isPlayer2) {
+			if (players[1]!=null) {
+				isPlayer2 = false;
+				players[1].resetPlayer();
+			}
+		}
+    	
     	switch (level) {
 		case 1:			
 			
@@ -128,7 +148,6 @@ public class StageControl {
 
 			break;
 		}
-
 
     	resetVariables();
     	
@@ -160,9 +179,9 @@ public class StageControl {
 		if (nEnemies<Properties.CANT_ENEMIES_LEVEL) {	
 			if (nEnemiesSimul<maxEnemySimul) {
 				typeEnemy = random.nextInt(3)+1;
-				if (pos == 1) enemies.add(new Enemy(x1, y1, 4, this));
-				if (pos == 2) enemies.add(new Enemy(x2, y2, typeEnemy, this));
-				if (pos == 3) enemies.add(new Enemy(x3, y3, typeEnemy, this));
+				if (pos == 1) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL1_SPAWN_ENEMY, 4, this));
+				if (pos == 2) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL2_SPAWN_ENEMY, typeEnemy, this));
+				if (pos == 3) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL3_SPAWN_ENEMY, typeEnemy, this));
 				if (pos == 3) pos = 0;
 				pos++;
 				nEnemies++;
@@ -185,7 +204,6 @@ public class StageControl {
 	}
 
     public void updateDraw(){
-
     	    	
     	if(timerIt<timeBetweenSpawnIt){
 			timerIt++;
@@ -230,10 +248,9 @@ public class StageControl {
     	if (gC.isPlayer2()) players[1].updateDraw();
     	
     	
-    	for(int i=0;i<items.size();i++) {
-    		
-    		if (!items.get(i).isActive()) 
-    			deleteItem(items.get(i));		 
+    	for(int i=0;i<items.size();i++) {    		
+    		if (items.get(i).isActive()) items.get(i).updateDraw();
+    		else items.remove(items.get(i));
     	}
     	
     	for(int i=0;i<bullets.size();i++) {
@@ -242,6 +259,12 @@ public class StageControl {
     			tmpElement.updateDraw();
     		}else deleteBullet(tmpElement);
     	}
+    	
+    	if (eagleWallEfect) {
+			for (Wall wall : stageWalls) {
+				wall.updateDraw();
+			}
+		}
     	
     	if (updteBricks) {
     		for (int i = 0; i < eagleBricks.size(); i++) {
@@ -319,7 +342,9 @@ public class StageControl {
     public void deleteEnemy(Player p,Enemy e){
     	if (p!=null) {
 			p.addScore(e.getType());
-		} 	
+			p.getEnemyType().add(e.getType());
+		}
+        
         enemies.remove(e);
         nEnemiesSimul--;
         enemiesKilled++;
@@ -340,11 +365,13 @@ public class StageControl {
 	public void eagleIronWallEfect(boolean efect) {
 		if (efect) {
 			mazeControl.loadIronWall();
+			eagleWallEfect = true;
 			for (Wall wall : eagleBricks) {
 				wall.setType(2);
 				wall.setEagleBrick(false);
 			}		
 		}else{
+			eagleWallEfect = false;
 			for (Wall wall : eagleBricks) {
 				wall.setType(1);
 				wall.setEagleBrick(true);
@@ -380,7 +407,7 @@ public class StageControl {
 			player.starEfect();
 			break;
 		case 5://bomb
-			bombEfect();
+			bombEfect(player);
 			break;
 		case 6://tank
 			player.tankEfect();
@@ -394,13 +421,27 @@ public class StageControl {
 		deleteBullet(it);
     }
 	
-	public void bombEfect() {
+	public void bombEfect(Player p) {
 		for (int i = 0; i < enemies.size();i++) {
-			enemies.get(i).setActive(false);
+			Enemy e = enemies.get(i);			
+			p.addScore(e.getType());
+			p.getEnemyType().add(e.getType());
+			e.setActive(false);
 		}
 	}
 	
-	public LinkedList<StageElement> getElements() {
+	public LinkedList<StageElement> getElements_Enemy() {
+		LinkedList<StageElement> clone = new LinkedList<>();
+		clone.addAll(bullets);
+		clone.addAll(eagleBricks);
+		clone.addAll(enemies);
+		clone.addAll(stageWalls);
+		clone.addAll(staticElements);
+		clone.add(eagle);
+		return clone;
+	}
+	
+	public LinkedList<StageElement> getElements_Player() {
 		LinkedList<StageElement> clone = new LinkedList<>();
 		clone.addAll(bullets);
 		clone.addAll(eagleBricks);
@@ -530,6 +571,7 @@ public class StageControl {
 
 	public void setInitDraw(boolean initDraw) {
 		this.initDraw = initDraw;
-	}	
-		
+	}
+	
+	
 }

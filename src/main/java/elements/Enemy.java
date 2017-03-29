@@ -104,7 +104,7 @@ public class Enemy extends Tank implements StageElement{
 				break;
 			}
 
-			Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements());
+			Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements_Enemy());
 
 			if (p!=null) {
 

@@ -152,7 +152,7 @@ public class Player extends Tank implements StageElement{
 			break;
 		}
     	
-    	Point p = PhysicsContol.collisionPlayer(this, stageControl.getElements());
+    	Point p = PhysicsContol.collisionPlayer(this, stageControl.getElements_Player());
     	
     	if (p!=null) {
     		
@@ -239,17 +239,31 @@ public class Player extends Tank implements StageElement{
     	lifes--;
     	updateLifes = true;
     	if (lifes<=0) {
+    		isActive = false;
 			stageControl.getgC().resultStage(2);
 		}else{
-			if (player==1) {
-				setInitPos(Properties.POS_INIT_PLAYER1[0], Properties.POS_INIT_PLAYER1[1]);
-			}else{
-				setInitPos(Properties.POS_INIT_PLAYER2[0], Properties.POS_INIT_PLAYER2[1]);
-			}
+			resetPos();
 			shieldEfect();
 		}
     	
     }
+	
+    public void resetPlayer(){
+    	resetPos();
+    	setUpdateLifes(true);
+		setUpdateScore(true);
+		setVel(0);
+		setDir(1);
+		setBulletsInProgres(0);
+    }
+	
+	public void resetPos(){
+		if (player==1) {
+			setInitPos(Properties.POS_INIT_PLAYER1[0], Properties.POS_INIT_PLAYER1[1]);
+		}else{
+			setInitPos(Properties.POS_INIT_PLAYER2[0], Properties.POS_INIT_PLAYER2[1]);
+		}
+	}
 	
 	public void starEfect(){		
 		addScore(5);
@@ -332,6 +346,22 @@ public class Player extends Tank implements StageElement{
 
 	public void setShieldActivate(boolean shieldActivate) {
 		this.shieldActivate = shieldActivate;
+	}
+
+	public boolean isUpdateLifes() {
+		return updateLifes;
+	}
+
+	public void setUpdateLifes(boolean updateLifes) {
+		this.updateLifes = updateLifes;
+	}
+
+	public boolean isUpdateScore() {
+		return updateScore;
+	}
+
+	public void setUpdateScore(boolean updateScore) {
+		this.updateScore = updateScore;
 	}
 	
 	

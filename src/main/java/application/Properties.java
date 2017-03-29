@@ -44,13 +44,8 @@ public final class Properties {
 	public final static double VEL_ENEMY = 0.33;
 	public final static double VEL_ENEMY_FAST = 0.66;
 	public final static int MIN_ENEMY_SIMUL = 3;
-	public final static int CANT_ENEMIES_LEVEL = 1;
+	public final static int CANT_ENEMIES_LEVEL = 10;
 	public final static int TIME_BETWEEN_SPAWN_E = 350;
-	
-	//Spawn Enemy Points
-	public final static int[] POS1_SPAWN_ENEMY= {1, 1};
-	public final static int[] POS2_SPAWN_ENEMY= {1, 13};
-	public final static int[] POS3_SPAWN_ENEMY= {1, 7};
 	
 	//_STAGE
 	public final static int SIZE_SQUARE_SSC = 16;
@@ -84,7 +79,6 @@ public final class Properties {
 	
 	//Sprite Sheets
 	public final static String PATH_SS_TANK = "/resources/images/SpriteSheet.png";
-	public final static String PATH_SS_MENU = "/resources/images/Menu.png";
 	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
 	public final static String PATH_SS_SCORE = "/resources/images/Config.png";
 	public final static String PATH_SS_CONTROLS = "/resources/images/Controls.png";
