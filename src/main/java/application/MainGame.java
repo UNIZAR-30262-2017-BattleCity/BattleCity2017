@@ -13,7 +13,7 @@ public class MainGame {
 		GameControl game = new GameControl(jf);
 		jf.add(game);
 		//jf.setFocusable(true);
-		jf.setForeground(new Color(30, 30, 30));
+		jf.setForeground(Color.BLUE);
 		jf.setSize(Properties.WIDTH+20, Properties.HEIGHT+20);
         jf.setResizable(false);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

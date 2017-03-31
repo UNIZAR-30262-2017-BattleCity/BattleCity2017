@@ -41,8 +41,9 @@ public final class Properties {
 	public final static int INIT_LIFES = 3;
 	
 	//Enemy
-	public final static double VEL_ENEMY = 0.33;
-	public final static double VEL_ENEMY_FAST = 0.66;
+	public final static double VEL_ENEMY = 0.20*SCALE;
+	public final static double VEL_NORMAL = 0.30*SCALE;
+	public final static double VEL_ENEMY_FAST = 0.50*SCALE;
 	public final static int MIN_ENEMY_SIMUL = 3;
 	public final static int CANT_ENEMIES_LEVEL = 10;
 	public final static int TIME_BETWEEN_SPAWN_E = 350;
@@ -146,7 +147,7 @@ public final class Properties {
 	public static final int GO_HEIGHT = (int) (HEIGHT*0.0605);
 	
 	/*Mistakes
-	birth of items over enemies
+	birth of items over enemies eagle etc 
 	birth of enemies over enemies
 	*/
 	

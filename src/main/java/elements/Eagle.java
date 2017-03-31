@@ -1,5 +1,6 @@
 package elements;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -24,6 +25,8 @@ public class Eagle extends GameElement implements StageElement{
 		if (isActive) {
 			g.drawImage(imgEagle, (int) posX,(int) posY,  width, heigth, null);
 		}else{
+			g.setColor(Color.black);
+	        g.fillRect((int) posX,(int) posY,  width, heigth);			
 			g.drawImage(imgEagleDead, (int) posX,(int) posY,  width, heigth, null);
 		}
 		

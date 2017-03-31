@@ -203,35 +203,35 @@ public final class ImageControl {
 	}
 	
 	public static BufferedImage getEnemy3Up() {
-		return getSprite(Properties.SSTANK,5, 9, w, h);
+		return getSprite(Properties.SSTANK,7, 9, w, h);
 	}
 	
 	public static BufferedImage getEnemy3UpB() {
-		return getSprite(Properties.SSTANK,5, 10, w, h);
+		return getSprite(Properties.SSTANK,7, 10, w, h);
 	}
 
 	public static BufferedImage getEnemy3Dowm() {
-		return getSprite(Properties.SSTANK,5, 13, w, h);
+		return getSprite(Properties.SSTANK,7, 13, w, h);
 	}
 	
 	public static BufferedImage getEnemy3DowmB() {
-		return getSprite(Properties.SSTANK,5, 14, w, h);
+		return getSprite(Properties.SSTANK,7, 14, w, h);
 	}
 
 	public static BufferedImage getEnemy3Left() {
-		return getSprite(Properties.SSTANK,5, 11, w, h);
+		return getSprite(Properties.SSTANK,7, 11, w, h);
 	}
 	
 	public static BufferedImage getEnemy3LeftB() {
-		return getSprite(Properties.SSTANK,5, 12, w, h);
+		return getSprite(Properties.SSTANK,7, 12, w, h);
 	}
 
 	public static BufferedImage getEnemy3Right() {
-		return getSprite(Properties.SSTANK,5, 15, w, h);
+		return getSprite(Properties.SSTANK,7, 15, w, h);
 	}
 	
 	public static BufferedImage getEnemy3RightB() {
-		return getSprite(Properties.SSTANK,5, 16, w, h);
+		return getSprite(Properties.SSTANK,7, 16, w, h);
 	}
 
 	public static BufferedImage getEnemy4Up() {

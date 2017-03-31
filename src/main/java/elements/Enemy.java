@@ -66,7 +66,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[1] = ImageControl.getEnemy3RightB();
 			
 			this.shieldLevel = 3;
-			vel = Properties.VEL_ENEMY;
+			vel = Properties.VEL_NORMAL-.5;
 			break;
 			
 		case 4://armor tank
@@ -80,7 +80,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[1] = ImageControl.getEnemy4RightB();
 			
 			this.shieldLevel = 3;
-			vel = Properties.VEL_ENEMY;
+			vel = Properties.VEL_NORMAL-.5;
 			break;
 		}
 	}

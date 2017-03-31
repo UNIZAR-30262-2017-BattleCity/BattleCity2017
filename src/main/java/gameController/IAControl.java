@@ -36,8 +36,6 @@ public class IAControl {
 		int[] action = {0,0};
 		
 		LinkedList<StageElement> elementsList = stageControl.getElements_Enemy();
-		Player player = stageControl.getPlayers()[0];
-		elementsList.add(player);
 		
 		StageElement element, temElementUP1 = null, temElementDOWN1 = null, 
 				temElementLEFT1 = null, temElementRIGHT1 = null;

@@ -98,10 +98,9 @@ public class PhysicsContol {
 					stageControl.setUpdteBricks(true);
 					s.setActive(false);
 				}
-			}else if (s.getClass().equals(Eagle.class)) {
-				stageControl.setInitDraw(true);
-				stageControl.getgC().resultStage(2);
+			}else if (s.getClass().equals(Eagle.class)) {				
 				s.setActive(false);
+				stageControl.getgC().resultStage(3);
 			}
 
 			if (player) {

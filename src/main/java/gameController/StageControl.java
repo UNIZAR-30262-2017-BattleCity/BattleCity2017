@@ -244,8 +244,8 @@ public class StageControl {
 
     	}
 
-    	if (gC.isPlayer1()) players[0].updateDraw();
-    	if (gC.isPlayer2()) players[1].updateDraw();
+    	if (gC.isPlayer1() && players[0].isActive()) players[0].updateDraw();
+    	if (gC.isPlayer2() && players[1].isActive()) players[1].updateDraw();
     	
     	
     	for(int i=0;i<items.size();i++) {    		
@@ -261,9 +261,9 @@ public class StageControl {
     	}
     	
     	if (eagleWallEfect) {
-			for (Wall wall : stageWalls) {
-				wall.updateDraw();
-			}
+			for (int i = 0; i < stageWalls.size(); i++) {
+				stageWalls.get(i).updateDraw();
+			}			
 		}
     	
     	if (updteBricks) {
@@ -314,8 +314,8 @@ public class StageControl {
     		if (tmpElement.isActive()) tmpElement.draw(g);
 		}
     	
-    	if (gC.isPlayer1()) players[0].draw(g);
-    	if (gC.isPlayer2()) players[1].draw(g);
+		if (gC.isPlayer1() && players[0].isActive()) players[0].draw(g);
+		if (gC.isPlayer2() && players[1].isActive()) players[1].draw(g);
     	
     	for (Forest obs : stageForest) {
 			obs.draw(g);
@@ -327,7 +327,11 @@ public class StageControl {
     	
     	if (updateMiniEnemies) {
     		updateMiniEnemies(g);
-		}    	
+		}
+    	
+    	if (!eagle.isActive()) {
+			eagle.draw(g);
+		}
     	
     }
     
@@ -351,8 +355,7 @@ public class StageControl {
         miniEnemies.removeLast();
         updateMiniEnemies = true;
         if (enemiesKilled==Properties.CANT_ENEMIES_LEVEL) {
-			gC.resultStage(1);
-			
+			gC.resultStage(1);			
 		}
     }
     
@@ -438,6 +441,8 @@ public class StageControl {
 		clone.addAll(stageWalls);
 		clone.addAll(staticElements);
 		clone.add(eagle);
+		if (gC.isPlayer1() && players[0].isActive()) clone.add(players[0]);
+		if (gC.isPlayer2() && players[1].isActive()) clone.add(players[1]);
 		return clone;
 	}
 	
@@ -450,6 +455,8 @@ public class StageControl {
 		clone.addAll(staticElements);
 		clone.addAll(items);
 		clone.add(eagle);
+		if (gC.isPlayer1() && players[0].isActive()) clone.add(players[0]);
+		if (gC.isPlayer2() && players[1].isActive()) clone.add(players[1]);
 		return clone;
 	}
 
@@ -457,10 +464,9 @@ public class StageControl {
 		LinkedList<StageElement> clone = new LinkedList<>();
 		clone.addAll(eagleBricks);
 		clone.addAll(enemies);
-		if (gC.isPlayer1()) clone.add(players[0]);
-		if (gC.isPlayer2()) clone.add(players[1]);
-		clone.addLast(eagle);
-		clone.addAll(staticElements);
+		if (gC.isPlayer1() && players[0].isActive()) clone.add(players[0]);
+		if (gC.isPlayer2() && players[1].isActive()) clone.add(players[1]);
+		clone.add(eagle);
 		clone.addAll(stageWalls);
 		return clone;
 	}
@@ -468,10 +474,9 @@ public class StageControl {
 	public LinkedList<StageElement> getMaze_Players() {
 		LinkedList<StageElement> clone = new LinkedList<>();
 		clone.addAll(eagleBricks);
-		if (gC.isPlayer1()) clone.add(players[0]);
-		if (gC.isPlayer2()) clone.add(players[1]);
+		if (gC.isPlayer1() && players[0].isActive()) clone.add(players[0]);
+		if (gC.isPlayer2() && players[1].isActive()) clone.add(players[1]);
 		clone.add(eagle);
-		clone.addAll(staticElements);
 		clone.addAll(stageWalls);
 		return clone;
 	}

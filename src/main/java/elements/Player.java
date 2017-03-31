@@ -30,6 +30,7 @@ public class Player extends Tank implements StageElement{
 	private boolean gunEfectActivate;
 	private boolean updateLifes;
 	private boolean updateScore;
+	private boolean gameOver;
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
@@ -116,6 +117,15 @@ public class Player extends Tank implements StageElement{
 				updateLifes(g, Properties.Y_IIP_LIFES);
 			}
 		}
+    	
+    	if (gameOver) {
+    		if (player==1) {
+				paintGameOver(g, Properties.Y_IP_LIFES);
+			}else{
+				paintGameOver(g, Properties.Y_IIP_LIFES);
+			}
+		}
+    	
     	if (updateScore) {
     		if (player==1) {
 				updateScore(g, Properties.Y_IP_SCORE);
@@ -137,6 +147,23 @@ public class Player extends Tank implements StageElement{
     @Override
     public void updateDraw(){
     	
+    	anim();
+    	move();    	
+    	collision();
+    	
+    	if (itemTaked) {
+			item();
+		}
+    	
+    	if(shieldActivate){
+			
+		}else{
+			
+		}      
+    	
+    }
+        
+    private void move() {
     	switch (dir) {
 		case 1://up
 			posY -= vel;
@@ -151,7 +178,10 @@ public class Player extends Tank implements StageElement{
 			posX += vel;
 			break;
 		}
-    	
+		
+	}
+
+	private void collision() {
     	Point p = PhysicsContol.collisionPlayer(this, stageControl.getElements_Player());
     	
     	if (p!=null) {
@@ -176,23 +206,10 @@ public class Player extends Tank implements StageElement{
     	if(getPosX()>xF) setPosX(xF);
     	if(getPosY()<yI) setPosY(yI);
     	if(getPosY()>yF) setPosY(yF);
-    	
-    	
-    	if (itemTaked) {
-			item();
-		}
-    	
-    	if(shieldActivate){
-			
-		}else{
-			
-		}
-    	
-		anim();        
-    	
-    }
-        
-    public void addScore(int type){		
+		
+	}
+
+	public void addScore(int type){		
 		updateScore = true;
 		switch (type) {
 		case 1:
@@ -239,14 +256,25 @@ public class Player extends Tank implements StageElement{
     	lifes--;
     	updateLifes = true;
     	if (lifes<=0) {
-    		isActive = false;
-			stageControl.getgC().resultStage(2);
+    		gameOver = true;
 		}else{
 			resetPos();
 			shieldEfect();
 		}
     	
     }
+	
+	public void paintGameOver(Graphics g, int y){
+    	g.setColor(Color.darkGray);
+        g.fillRect(Properties.X_INIT_INFO, (int) (y-Properties.DELTA_SCORE_LIFE), 
+        		Properties.SCORE_LIFE_BACKGROUND_WIDTH, 
+        		Properties.SCORE_LIFE_BACKGROUND_HEIGHT);
+        g.setColor(Color.red);
+		g.setFont( FontControl.ARIAL);
+		g.drawString("GAME OVER", Properties.X_INIT_INFO, y);
+		isActive = false;
+		stageControl.getgC().resultStage(2);
+	}
 	
     public void resetPlayer(){
     	resetPos();
@@ -255,6 +283,7 @@ public class Player extends Tank implements StageElement{
 		setVel(0);
 		setDir(1);
 		setBulletsInProgres(0);
+		setActive(true);
     }
 	
 	public void resetPos(){
@@ -363,6 +392,13 @@ public class Player extends Tank implements StageElement{
 	public void setUpdateScore(boolean updateScore) {
 		this.updateScore = updateScore;
 	}
-	
-	
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+		
 }

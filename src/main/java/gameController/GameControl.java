@@ -52,7 +52,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		jf.addKeyListener(this);
 		screen = Screen.MENU;
 		level = 1;
-		difficulty = 1;
+		difficulty = 3;
 		opc = 1;
 		cursor = new Cursor();
 		ia = new IAControl();
@@ -124,7 +124,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}else if (screen.equals(Screen.GAMEOVER)) {
 			gameOver.updateDraw();
 		}else if (screen.equals(Screen.SCORE_STAGE)) {
-			score.updateDraw();
+			score.updateDraw(this);
 		}
 		
 	}
@@ -144,6 +144,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 					}
 				}
 			}
+			break;
+		case 3:
+			gameOver();
 			break;
 		}
 		
@@ -212,8 +215,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			score.draw(g,this);
 	        if (next(Properties.TIME_TO_MENU)) {
 	        	if (isGameOver) {
-					screen = Screen.MENU;
-				}else screen = Screen.PRESENT_STAGE;
+					//screen = Screen.MENU;
+				}//else// screen = Screen.PRESENT_STAGE;
 	        }
 			break;
 		case GAMEOVER:
@@ -231,7 +234,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		if (screen.equals(Screen.STAGE_PLAY)) {
-			if (isPlayer1) {
+			if (isPlayer1 && players[0].isActive()) {
 				switch (key) {
 				case KeyEvent.VK_UP:
 					players[0].setVel(0);
@@ -247,7 +250,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 					break;
 				}
 			}
-			if (isPlayer2) {
+			if (isPlayer2 && players[1].isActive()) {
 				switch (key) {
 				case KeyEvent.VK_W:
 					players[1].setVel(0);
@@ -334,7 +337,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			}
 			break;
 		case SCORE_STAGE:
-			
+			if (key == KeyEvent.VK_ENTER ||
+					key == KeyEvent.VK_G) {		
+				screen = Screen.PRESENT_STAGE;
+			}			
 			break;
 		default:
 			break;
@@ -409,24 +415,24 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	public void playerMove(int key){
 
-		if (isPlayer1) {
+		if (isPlayer1 && players[0].isActive()) {
 			switch (key) {
 			case KeyEvent.VK_UP:
 				players[0].setDir(1);
-				players[0].setVel(1);
+				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 
 			case KeyEvent.VK_DOWN:
 				players[0].setDir(-1);
-				players[0].setVel(1);
+				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 			case KeyEvent.VK_RIGHT:
 				players[0].setDir(2);
-				players[0].setVel(1);
+				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 			case KeyEvent.VK_LEFT:
 				players[0].setDir(-2);
-				players[0].setVel(1);
+				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 			case KeyEvent.VK_SPACE :
 				players[0].shoot(new Bullet(players[0].getPosX(),
@@ -437,24 +443,24 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				break;
 			}
 		}
-		if (isPlayer2) {
+		if (isPlayer2 && players[1].isActive()) {
 			switch (key) {
 			case KeyEvent.VK_W:
 				players[1].setDir(1);
-				players[1].setVel(1);
+				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 
 			case KeyEvent.VK_S:
 				players[1].setDir(-1);
-				players[1].setVel(1);
+				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 			case KeyEvent.VK_D:
 				players[1].setDir(2);
-				players[1].setVel(1);
+				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 			case KeyEvent.VK_A:
 				players[1].setDir(-2);
-				players[1].setVel(1);
+				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 			case KeyEvent.VK_F :
 				players[1].shoot(new Bullet(players[1].getPosX(),
