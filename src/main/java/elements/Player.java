@@ -295,6 +295,14 @@ public class Player extends Tank implements StageElement{
 		setDir(1);
 		setBulletsInProgres(0);
 		setActive(true);
+		enemyType.clear();
+    }
+    
+    public void resetPlayerGameOver(){
+    	resetPlayer();
+    	score = 0;
+    	lifes = Properties.INIT_LIFES;
+    	gameOver = false;    	
     }
 	
 	public void resetPos(){

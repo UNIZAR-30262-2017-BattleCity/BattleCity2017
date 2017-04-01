@@ -65,7 +65,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[0] = ImageControl.getEnemy3Right();
 			imgEnemyRight[1] = ImageControl.getEnemy3RightB();
 			
-			this.shieldLevel = 3;
+			this.shieldLevel = 1;
 			vel = Properties.VEL_NORMAL-.5;
 			break;
 			
@@ -79,7 +79,7 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[0] = ImageControl.getEnemy4Right();
 			imgEnemyRight[1] = ImageControl.getEnemy4RightB();
 			
-			this.shieldLevel = 3;
+			this.shieldLevel = 4;
 			vel = Properties.VEL_NORMAL-.5;
 			break;
 		}

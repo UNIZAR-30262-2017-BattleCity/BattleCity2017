@@ -59,6 +59,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		stageGUI = new StageGUI();
 		timeToNext = 0;
 		stageControl = new StageControl(this);
+		players = new Player[2];
 		
 	}
 	
@@ -199,7 +200,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case STAGE_PLAY:
 			stageControl.draw(g);	
 			break;
-		case STAGE_WIN: 
+		case STAGE_WIN:
 			stageControl.draw(g);
 			if (next(Properties.TIME_TO_SCORE)) screen = Screen.INIT_SCORE;
 			break;
@@ -217,6 +218,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	        	if (next(Properties.TIME_TO_MENU)) {
 	        		if (isGameOver) {
 	        			screen = Screen.MENU;
+	        			isGameOver = false;
 	        		}else screen = Screen.PRESENT_STAGE;
 	        	}
 	        }
@@ -369,13 +371,30 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void menuOptions(){
 		switch (opc) {
 		case 1:
-			isPlayer1 = true;
-			isPlayer2 = false;
+			if (players[0]==null) {
+				isPlayer1 = true;
+			}else{
+				players[0].resetPlayerGameOver();
+			}	
+			if (players[1]==null) {
+				isPlayer2 = false;
+			}else{
+				StageControl.players[1] = null;
+				isPlayer2 = false;
+			}			
 			screen = Screen.PRESENT_STAGE;
 			break;
 		case 2:
-			isPlayer1 = true;
-			isPlayer2 = true;
+			if (players[0]==null) {
+				isPlayer1 = true;
+			}else{
+				players[0].resetPlayerGameOver();
+			}	
+			if (players[1]==null) {
+				isPlayer2 = true;
+			}else{
+				players[1].resetPlayerGameOver();
+			}
 			screen = Screen.PRESENT_STAGE;
 			break;
 		case 3:

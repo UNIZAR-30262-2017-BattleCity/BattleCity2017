@@ -10,7 +10,7 @@ import gameController.StageControl;
 public class Wall extends GameElement implements StageElement{
 
 	private BufferedImage img;
-	private boolean eagleWall, eagleBrick;
+	private boolean eagleWall, paintBrick;
 	private int maxTimeItemEfect;
 	private static final int k2 = k/2;
 	
@@ -21,7 +21,7 @@ public class Wall extends GameElement implements StageElement{
 		initWall();
 		setInitPos(row+1,col+1,key);
 		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
-		eagleBrick = true;
+		paintBrick = true;
 	}
 	
 	public void initWall(){
@@ -85,7 +85,7 @@ public class Wall extends GameElement implements StageElement{
 	}
 	
 	public void draw(Graphics g) {
-		if (eagleBrick) {
+		if (paintBrick) {
 			g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
 		}		
 	}
@@ -94,7 +94,6 @@ public class Wall extends GameElement implements StageElement{
 		if(maxTimeItemEfect>0){
 			maxTimeItemEfect--;
 		}else{
-			
 			stageControl.deleteWall(this);
 			stageControl.setItemTaked(false);
 			stageControl.eagleIronWallEfect(false);
@@ -102,11 +101,11 @@ public class Wall extends GameElement implements StageElement{
 	}
 
 	public boolean isEagleBrick() {
-		return eagleBrick;
+		return paintBrick;
 	}
 
-	public void setEagleBrick(boolean eagleBrick) {
-		this.eagleBrick = eagleBrick;
+	public void setPaintBrick(boolean eagleBrick) {
+		this.paintBrick = eagleBrick;
 	}
 	
 }

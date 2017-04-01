@@ -45,7 +45,7 @@ public final class Properties {
 	public final static double VEL_NORMAL = 0.30*SCALE;
 	public final static double VEL_ENEMY_FAST = 0.50*SCALE;
 	public final static int MIN_ENEMY_SIMUL = 3;
-	public final static int CANT_ENEMIES_LEVEL = 10;
+	public final static int CANT_ENEMIES_LEVEL = 1;
 	public final static int TIME_BETWEEN_SPAWN_E = 350;
 	
 	//_STAGE

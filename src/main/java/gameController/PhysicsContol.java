@@ -58,7 +58,7 @@ public class PhysicsContol {
 				s = list.get(i);
 				if (!s.equals(t) && !s.equals(b)) {
 					if (isIntersecs(b,s)) {
-						t.setBulletsInProgres(t.getBulletsInProgres()-1);
+						//t.setBulletsInProgres(t.getBulletsInProgres()-1);
 						actionBullet(t,b,true, s, stageControl);						
 					}
 				}
@@ -67,8 +67,7 @@ public class PhysicsContol {
 			list = stageControl.getMaze_Players();
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
-				if (isIntersecs(b,s)) {					
-					t.setBulletsInProgres(t.getBulletsInProgres()-1);
+				if (isIntersecs(b,s)) {
 					actionBullet(t,b,false, s, stageControl);									
 				}
 
@@ -82,6 +81,7 @@ public class PhysicsContol {
 			stageControl.setInitDraw(true);
 		}else{
 			b.setActive(false);
+			t.setBulletsInProgres(t.getBulletsInProgres()-1);
 			if (s.getClass().equals(Wall.class)) {
 				int w = s.getType();
 				if (w !=1) return;

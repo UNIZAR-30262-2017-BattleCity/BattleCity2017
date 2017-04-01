@@ -263,7 +263,7 @@ public class StageControl {
     	if (eagleWallEfect) {
 			for (int i = 0; i < stageWalls.size(); i++) {
 				stageWalls.get(i).updateDraw();
-			}			
+			}
 		}
     	
     	if (updteBricks) {
@@ -371,14 +371,22 @@ public class StageControl {
 			eagleWallEfect = true;
 			for (Wall wall : eagleBricks) {
 				wall.setType(2);
-				wall.setEagleBrick(false);
+				wall.setPaintBrick(false);
 			}		
 		}else{
-			eagleWallEfect = false;
 			for (Wall wall : eagleBricks) {
 				wall.setType(1);
-				wall.setEagleBrick(true);
+				wall.setPaintBrick(true);
 			}
+			boolean d;
+			for (Wall wall : stageWalls) {
+				d = wall.isEagleBrick();
+				if (d) {
+					return;
+				}						
+			}
+			eagleWallEfect = false;
+			
 		}
 	}
 		
