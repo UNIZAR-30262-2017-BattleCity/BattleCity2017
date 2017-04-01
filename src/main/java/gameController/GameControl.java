@@ -216,8 +216,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	        if(score.isScoreFinished()){
 	        	if (next(Properties.TIME_TO_MENU)) {
 	        		if (isGameOver) {
-	        			//screen = Screen.MENU;
-	        		}//else// screen = Screen.PRESENT_STAGE;
+	        			screen = Screen.MENU;
+	        		}else screen = Screen.PRESENT_STAGE;
 	        	}
 	        }
 			break;

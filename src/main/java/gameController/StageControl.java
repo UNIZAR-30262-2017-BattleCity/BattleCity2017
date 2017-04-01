@@ -435,7 +435,6 @@ public class StageControl {
 	
 	public LinkedList<StageElement> getElements_Enemy() {
 		LinkedList<StageElement> clone = new LinkedList<>();
-		clone.addAll(bullets);
 		clone.addAll(eagleBricks);
 		clone.addAll(enemies);
 		clone.addAll(stageWalls);
@@ -448,7 +447,6 @@ public class StageControl {
 	
 	public LinkedList<StageElement> getElements_Player() {
 		LinkedList<StageElement> clone = new LinkedList<>();
-		clone.addAll(bullets);
 		clone.addAll(eagleBricks);
 		clone.addAll(enemies);
 		clone.addAll(stageWalls);

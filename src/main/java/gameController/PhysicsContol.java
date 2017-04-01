@@ -9,7 +9,6 @@ import elements.Eagle;
 import elements.Enemy;
 import elements.GameElement;
 import elements.Item;
-import elements.Forest;
 import elements.Player;
 import elements.StageElement;
 import elements.Tank;
@@ -22,17 +21,9 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (!s.equals(e)&& !s.getClass().equals(Bullet.class)) {
-				if (isIntersecs(e,s)) {
-					if (s.getClass().equals(Item.class)) {
-						return null;
-					}else{
-						if (s.getClass().equals(Forest.class)) {
-							int o = list.get(i).getType();
-							if (o != 1) return null;
-						}
-						return getIntersection(e,s).getLocation();
-					}
+			if (!s.equals(e)) {
+				if (isIntersecs(e,s)) {		
+					return getIntersection(e,s).getLocation();
 				}
 			}		
 		}
@@ -43,7 +34,7 @@ public class PhysicsContol {
 		StageElement s;
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
-			if (!s.equals(p)&& !s.getClass().equals(Bullet.class)) {
+			if (!s.equals(p)) {
 				if (isIntersecs(p,s)) {				
 					if (s.getClass().equals(Item.class)) {
 						s.setActive(false);
