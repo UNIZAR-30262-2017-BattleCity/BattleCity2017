@@ -196,7 +196,7 @@ public class StageControl {
 				col = random.nextInt(Properties.COL_STAGE)+1;
 				row = random.nextInt(Properties.ROW_STAGE)+1;
 				typeItem = random.nextInt(7)+1;
-				items.add(new Item(col, row, 3, this));
+				items.add(new Item(col, row, typeItem, this));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -234,14 +234,13 @@ public class StageControl {
     				int dir[] = ia.getDir_Shoot(tmpEnemy, this);
     				tmpEnemy.setDir(dir[0]);
     				if (dir[1] == 1) {
-    					tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),tmpEnemy.getDir(),0,this,tmpEnemy));
+    					tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),
+    							tmpEnemy.getDir(),tmpEnemy.getTier(),this,tmpEnemy));
     				}
-    			}
-    			
+    			}    			
     			tmpEnemy.updateDraw();
     		}
     		else deleteEnemy(null,tmpEnemy);
-
     	}
 
     	if (gC.isPlayer1() && players[0].isActive()) players[0].updateDraw();

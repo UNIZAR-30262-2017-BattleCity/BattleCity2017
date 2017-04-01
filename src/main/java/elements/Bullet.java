@@ -16,13 +16,12 @@ public class Bullet extends GameElement implements StageElement{
     private Tank t;
     private static final int DELTA = Properties.SIZE_SQUARE/2 -4;
     
-	public Bullet(double posX, double posY, int dir, int type, StageControl stageControl, Tank t) {
+	public Bullet(double posX, double posY, int dir, int tier, StageControl stageControl, Tank t) {
 		super(stageControl);
 		this.posX = posX;
 		this.posY = posY;
 		this.dir = dir;
-		this.type = type;
-		this.velBullet = Properties.VEL_BULLET;
+		this.type = tier;		
 		isActive = true;
 		initBullet();
 		this.t = t;
@@ -30,23 +29,21 @@ public class Bullet extends GameElement implements StageElement{
 	
 	public void initBullet(){
 		switch (type) {
-		case 0://regular bullet
-			imgBulletUp = ImageControl.getBulletUp();
-			imgBulletDowm = ImageControl.getBulletDowm();
-			imgBulletLeft = ImageControl.getBulletLeft();
-			imgBulletRight = ImageControl.getBulletRight();			
+		case 1://regular bullet
+			initImgBullet();
+			velBullet = Properties.VEL_BULLET-1;
 			break;
-		case 1://hard bullet
-			imgBulletUp = ImageControl.getBulletUp();
-			imgBulletDowm = ImageControl.getBulletDowm();
-			imgBulletLeft = ImageControl.getBulletLeft();
-			imgBulletRight = ImageControl.getBulletRight();
+		case 2:
+			initImgBullet();
+			velBullet = Properties.VEL_BULLET;
 			break;
-		default:
-			imgBulletUp = ImageControl.getBulletUp();
-			imgBulletDowm = ImageControl.getBulletDowm();
-			imgBulletLeft = ImageControl.getBulletLeft();
-			imgBulletRight = ImageControl.getBulletRight();
+		case 3:
+			initImgBullet();
+			velBullet = Properties.VEL_BULLET+1;
+			break;
+		case 4://hard bullet
+			initImgBullet();
+			velBullet = Properties.VEL_BULLET;
 			break;
 		}
 		
@@ -77,6 +74,14 @@ public class Bullet extends GameElement implements StageElement{
 		}		
 		
 	}	
+	
+	public void initImgBullet(){
+		imgBulletUp = ImageControl.getBulletUp();
+		imgBulletDowm = ImageControl.getBulletDowm();
+		imgBulletLeft = ImageControl.getBulletLeft();
+		imgBulletRight = ImageControl.getBulletRight();
+	}
+	
 	
     public void draw(Graphics g) {
 		

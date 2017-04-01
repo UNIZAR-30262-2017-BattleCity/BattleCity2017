@@ -10,16 +10,16 @@ public abstract class Tank extends GameElement{
 	protected double vel;
 	protected int dir;
 	protected int shieldLevel;
-    
+	protected int tier;
 	
 	//bullets	
 	protected int bulletsInProgres;
-	protected Bullet tmpBullet;
 	
 	public Tank(StageControl stageControl){
 		super(stageControl);
 		dir = 1;
 		bulletsInProgres = 0;
+		tier = 1;
 	}
 		
 	public void shoot(Bullet b) {
@@ -111,4 +111,12 @@ public abstract class Tank extends GameElement{
 		this.bulletsInProgres = bulletsInProgres;
 	}
 
+	public int getTier() {
+		return tier;
+	}
+
+	public void setTier(int tier) {
+		this.tier = tier;
+	}
+	
 }

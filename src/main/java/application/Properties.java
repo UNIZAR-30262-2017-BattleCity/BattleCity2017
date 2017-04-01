@@ -63,7 +63,7 @@ public final class Properties {
 	public final static int ROW_STAGE = 13;
 	
 	//Bullets
-	public final static int VEL_BULLET = 3;
+	public final static double VEL_BULLET = 0.90*SCALE;
 	public final static int MAX_BULLETS_TANK = 1;
 	public static final int yIB = Y_INIT_STAGE+2;
 	public static final int xIB = X_INIT_STAGE+2;
