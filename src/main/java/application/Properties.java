@@ -107,7 +107,7 @@ public final class Properties {
 	
 	public static final int INFO_BACKGROUND_WIDTH = (int) (WIDTH*1.05);
 	public static final int X_INIT_INFO = (int) (X_FINAL_STAGE + (WIDTH*0.07));
-	public static final int Y_INIT_INFO = (int) (HEIGHT * 0.120275);
+	public static final int Y_INIT_INFO = (int) (HEIGHT * 0.0875);
 	public static final int X_FINAL_INFO = (int) (WIDTH*0.99);
 	public static final int Y_FINAL_INFO = Y_FINAL_STAGE;
 	
@@ -122,21 +122,22 @@ public final class Properties {
 
 	public static final int ICON_WIDTH = (int) (WIDTH_ELEMENT_STAGE+(WIDTH*0.0147));
 	public static final int ICON_HEIGHT = (int) (HEIGH_ELEMENT_STAGE/2+(HEIGHT*0.0344));
-	
-	public static final int Y_IP_LIFES = (int) (Y_INIT_INFO+(HEIGHT*0.447));
-	public static final int Y_IP_SCORE = (int) (Y_IP_LIFES+(HEIGHT*0.035));
+
 	public static final int X_ICON_IP = (int) (X_INIT_INFO+(WIDTH*0.06));
 	public static final int Y_ICON_IP = (int) (Y_INIT_INFO+(HEIGHT*0.344));
-	
-	public static final int Y_IIP_LIFES = (int) (Y_IP_LIFES+(HEIGHT*0.172));
-	public static final int Y_IIP_SCORE = (int) (Y_IIP_LIFES+(HEIGHT*0.035));
+	public static final int Y_IP_LIFES = (int) (Y_ICON_IP+(HEIGHT*0.1));
+	public static final int Y_IP_SCORE = (int) (Y_IP_LIFES+(HEIGHT*0.035));
+
 	public static final int X_ICON_IIP = X_ICON_IP;
-	public static final int Y_ICON_IIP = (int) (Y_INIT_INFO+(HEIGHT*0.5155));
+	public static final int Y_ICON_IIP = (int) (Y_ICON_IP+(HEIGHT*0.172));
+	public static final int Y_IIP_LIFES = (int) (Y_ICON_IIP+(HEIGHT*0.1));
+	public static final int Y_IIP_SCORE = (int) (Y_IIP_LIFES+(HEIGHT*0.035));
 	
-	public static final int FONT_LEVEL_SIZE = 17*SCALE;
-	public static final int Y_LEVEL = (int) (Y_FINAL_INFO+(HEIGHT*0.06));
-	public static final int X_FLAG = (int) (X_INIT_INFO+(WIDTH*0.08));
-	public static final int Y_FLAG = (int) (Y_FINAL_INFO-(HEIGHT*0.016));
+	public static final int FONT_LEVEL_SIZE = 16*SCALE;
+	public static final int X_FLAG = (int) (X_INIT_INFO+(WIDTH*0.035));
+	public static final int Y_FLAG = (int) (Y_FINAL_INFO-(HEIGHT*0.1));
+	public static final int X_LEVEL = X_FLAG;
+	public static final int Y_LEVEL = (int) (Y_FINAL_INFO+(HEIGHT*0.065));
 	public static final int FLAG_WIDTH = ICON_WIDTH;
 	public static final int FLAG_HEIGHT = (int) (HEIGH_ELEMENT_STAGE+(HEIGHT*0.017));
 	

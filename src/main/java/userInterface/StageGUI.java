@@ -55,7 +55,7 @@ public class StageGUI {
         		Properties.Y_IIP_SCORE);
         
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
-        g.drawString(""+level, Properties.X_INIT_INFO, 
+        g.drawString(""+level, Properties.X_LEVEL, 
         		Properties.Y_LEVEL);
         g.drawImage(ImageControl.getFlag(), 
         		Properties.X_FLAG, 
