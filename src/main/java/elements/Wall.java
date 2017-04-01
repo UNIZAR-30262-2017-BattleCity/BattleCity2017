@@ -87,8 +87,7 @@ public class Wall extends GameElement implements StageElement{
 	public void draw(Graphics g) {
 		if (eagleBrick) {
 			g.drawImage(img, (int) posX,(int) posY, width, heigth, null);
-		}	
-		
+		}		
 	}
 	
 	public void item(){		

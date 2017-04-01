@@ -57,7 +57,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		cursor = new Cursor();
 		ia = new IAControl();
 		stageGUI = new StageGUI();
-		score = new Score();
 		timeToNext = 0;
 		stageControl = new StageControl(this);
 		
@@ -152,7 +151,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		
 	}
 	
-	public void gameOver(){
+	public void gameOver(){		
 		gameOver = new GameOver();
 		isGameOver = true;
 		level = 1;
@@ -208,18 +207,22 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			g.drawImage(ImageControl.getPaused(Properties.SSTANK), 252, 298, 100, 25, null);
 			break;
 		case INIT_SCORE:
+			score = new Score();
 			score.initDraw(g, this);
 			screen = Screen.SCORE_STAGE;
 			break;
 		case SCORE_STAGE:			
 			score.draw(g,this);
-	        if (next(Properties.TIME_TO_MENU)) {
-	        	if (isGameOver) {
-					//screen = Screen.MENU;
-				}//else// screen = Screen.PRESENT_STAGE;
+	        if(score.isScoreFinished()){
+	        	if (next(Properties.TIME_TO_MENU)) {
+	        		if (isGameOver) {
+	        			//screen = Screen.MENU;
+	        		}//else// screen = Screen.PRESENT_STAGE;
+	        	}
 	        }
 			break;
 		case GAMEOVER:
+			stageControl.setInitDraw(true);
 			stageControl.draw(g);
 			gameOver.draw(g);
 			if (next(Properties.TIME_TO_SCORE)) screen = Screen.INIT_SCORE;
@@ -334,12 +337,15 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			if (key == KeyEvent.VK_ENTER ||
 					key == KeyEvent.VK_G) {		
 				screen = Screen.STAGE_PLAY;
+				System.out.println("va a play");
 			}
 			break;
 		case SCORE_STAGE:
 			if (key == KeyEvent.VK_ENTER ||
 					key == KeyEvent.VK_G) {		
-				screen = Screen.PRESENT_STAGE;
+        		if (isGameOver) {
+        			screen = Screen.MENU;
+        		}else screen = Screen.PRESENT_STAGE;
 			}			
 			break;
 		default:
@@ -440,6 +446,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				break;
 			case KeyEvent.VK_ENTER:
 				screen = Screen.STAGE_PAUSED;
+				System.out.println("va a pause");
 				break;
 			}
 		}
@@ -468,6 +475,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				break;
 			case KeyEvent.VK_G:
 				screen = Screen.STAGE_PAUSED;
+				System.out.println("va a pause");
 				break;
 			}
 		}

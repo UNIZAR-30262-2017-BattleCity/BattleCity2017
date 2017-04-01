@@ -196,7 +196,7 @@ public class StageControl {
 				col = random.nextInt(Properties.COL_STAGE)+1;
 				row = random.nextInt(Properties.ROW_STAGE)+1;
 				typeItem = random.nextInt(7)+1;
-				items.add(new Item(col, row, typeItem, this));
+				items.add(new Item(col, row, 3, this));
 				nItemsSimul++;
 				nItems++;
 			}
@@ -355,7 +355,7 @@ public class StageControl {
         miniEnemies.removeLast();
         updateMiniEnemies = true;
         if (enemiesKilled==Properties.CANT_ENEMIES_LEVEL) {
-			gC.resultStage(1);			
+			gC.resultStage(1);		
 		}
     }
     

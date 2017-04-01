@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import application.Properties;
 import gameController.PhysicsContol;
@@ -31,6 +32,8 @@ public class Player extends Tank implements StageElement{
 	private boolean updateLifes;
 	private boolean updateScore;
 	private boolean gameOver;
+	private int lifesForScore;
+	private ArrayList<Integer> enemyType;
 	//escudo
     //private int shieldStatus = 0;
     private boolean shieldActivate = false;
@@ -49,8 +52,10 @@ public class Player extends Tank implements StageElement{
 		updateLifes = true;
 		updateScore = true;
 		score = 0;
+		lifesForScore = 10000;
 		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;		
 		this.shieldLevel = 1;
+    	enemyType = new ArrayList<>();
 	}
     
     public void initPlayer(){
@@ -228,6 +233,12 @@ public class Player extends Tank implements StageElement{
 			score = score + 500;
 			break;
 		}
+		
+		if (score>=lifesForScore) {
+			tankEfect();
+			lifesForScore = lifesForScore +10000;
+		}
+		
 	}
     
     public void updateScore(Graphics g, int y){
@@ -400,5 +411,13 @@ public class Player extends Tank implements StageElement{
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-		
+
+	public ArrayList<Integer> getEnemyType() {
+		return enemyType;
+	}
+
+	public void setEnemyType(ArrayList<Integer> enemyType) {
+		this.enemyType = enemyType;
+	}
+
 }

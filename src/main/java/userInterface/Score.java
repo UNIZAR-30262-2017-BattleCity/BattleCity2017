@@ -20,12 +20,13 @@ public class Score {
 	int[] typeEnemyP1, typeEnemyP2;
 	private int timeToNext;
 	private boolean nextEnemy;
+	private boolean scoreFinished;
 	
 	public Score(){
-		yPaintScore = (int)(Properties.HEIGHT*.4);
+		yPaintScore = (int)(Properties.HEIGHT*.35);
 		numEnemy = 1;
 		timeToNext = 0;
-		paintScore = 0;
+		paintScore = 00;
 	}
 	
 	
@@ -54,21 +55,28 @@ public class Score {
 	
 	public void draw(Graphics g, GameControl gC) {       
         
+		g.setColor(Color.red);
+        
+        
 		if (gC.isPlayer1()) {
-	        	g.drawString(""+ paintScoreP1, (int)(Properties.WIDTH*.15), yPaintScore);
+			g.fillRect(0, yPaintScore, xImgEnemies-30, 15);
+			g.setColor(Color.gray);
+	        g.drawString(""+ paintScoreP1, (int)(Properties.WIDTH*.15), yPaintScore+10);
 	    }
 		
 		if (gC.isPlayer2()) {
-        	g.drawString(""+ paintScoreP2, (int)(Properties.WIDTH*.65), yPaintScore);
+			g.fillRect((int)(Properties.WIDTH*.65), yPaintScore, Properties.WIDTH, 15);
+			g.setColor(Color.gray);
+        	g.drawString(""+ paintScoreP2, (int)(Properties.WIDTH*.65), yPaintScore+10);
 		}
-        
+		
         g.drawImage(img(numEnemy),xImgEnemies , yPaintScore,Properties.SIZE_SQUARE,Properties.SIZE_SQUARE, null);
         
 	}
 	
 	public void updateDraw(GameControl gC){
 
-		if (next(60)) {
+		if (next(180)) {
 			if (gC.isPlayer1()) {
 				int s = updateScore(typeEnemyP1);
 				if (s!=000) {
@@ -81,32 +89,55 @@ public class Score {
 				if (s!=000) {
 					paintScoreP2 = s;
 				}
-
 			}
-		}
-		
-        if (updateScore(typeEnemyP1)==000 && updateScore(typeEnemyP1)==000 ) {
-			nextEnemy = true;
-		}
-        
-        if (nextEnemy) {
-			numEnemy++;
-			yPaintScore = yPaintScore + (int)(Properties.WIDTH*.10);
-			nextEnemy=false;
-			
+
+
+			if (updateScore(typeEnemyP1)==000 && updateScore(typeEnemyP1)==000 ) {
+				nextEnemy = true;
+			}
+
+			if (nextEnemy) {
+				if (numEnemy>4) {
+					scoreFinished = true;
+				}else{
+					numEnemy++;
+					yPaintScore = yPaintScore + (int)(Properties.WIDTH*.10);
+				}
+				nextEnemy=false;	
+			}
 		}
 		
 	}
 	
+	public void tmpScore(int[] typeEnemy){
+		switch (numEnemy) {
+		case 1:
+			tmpScore = typeEnemy[0] * 100;//cuantos mato del primero por 100
+			break;
+		case 2:
+			tmpScore = typeEnemy[1] * 200;
+			break;
+		case 3:
+			tmpScore = typeEnemy[2] * 300;
+			break;
+		case 4:
+			tmpScore = typeEnemy[3] * 400;
+			break;
+		}
+	}
 	
 	public int updateScore(int[] typeEnemy){
-		tmpScore = typeEnemy[numEnemy-1] * 100;//cuantos mato del primero por 100		
-		if (paintScore<tmpScore) {
-			paintScore =  paintScore + 100;
-		}else{
-			paintScore = 000;
-		}
 		
+		if (typeEnemy.length>0){
+			
+			tmpScore(typeEnemy);
+			
+			if (paintScore<tmpScore) {
+				paintScore =  paintScore + 100;
+			}else{
+				paintScore = 000;
+			}
+		}
 		return paintScore;
 	}
 	
@@ -156,5 +187,13 @@ public class Score {
 			return true;
 		}
 	}
+
+	public boolean isScoreFinished() {
+		return scoreFinished;
+	}
+
+	public void setScoreFinished(boolean scoreFinished) {
+		this.scoreFinished = scoreFinished;
+	}	
 	
 }

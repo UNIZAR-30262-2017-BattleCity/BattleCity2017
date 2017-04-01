@@ -1,7 +1,5 @@
 package elements;
 
-import java.util.ArrayList;
-
 import application.Properties;
 import gameController.StageControl;
 
@@ -12,7 +10,7 @@ public abstract class Tank extends GameElement{
 	protected double vel;
 	protected int dir;
 	protected int shieldLevel;
-    protected ArrayList<Integer> enemyType;
+    
 	
 	//bullets	
 	protected int bulletsInProgres;
@@ -22,7 +20,6 @@ public abstract class Tank extends GameElement{
 		super(stageControl);
 		dir = 1;
 		bulletsInProgres = 0;
-    	enemyType = new ArrayList<>();
 	}
 		
 	public void shoot(Bullet b) {
@@ -113,13 +110,5 @@ public abstract class Tank extends GameElement{
 	public void setBulletsInProgres(int bulletsInProgres) {
 		this.bulletsInProgres = bulletsInProgres;
 	}
-		
 
-	public ArrayList<Integer> getEnemyType() {
-		return enemyType;
-	}
-
-	public void setEnemyType(ArrayList<Integer> enemyType) {
-		this.enemyType = enemyType;
-	}
 }
