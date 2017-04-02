@@ -15,7 +15,8 @@ public final class Properties {
 	//Menu - Configuration
 	public final static int N_OPC_MENU =  4;
 	public final static int N_OPC_CONFIG =  5;
-	public final static int N_OPC_CONTROLS =  7;
+	public final static int N_OPC_CONTROLS_V =  7;
+	public final static int N_OPC_CONTROLS_H =  2;
 	
 	//Font
 	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
@@ -35,7 +36,16 @@ public final class Properties {
 	//Cursor Controls
 	public final static int X_CURSOR_CT = (int) (WIDTH / 2 - (WIDTH * 0.41));
 	public final static int Y_INIT_CURSOR_CT = (int) (HEIGHT / 2 - (HEIGHT * 0.21));
-	public final static int Y_FINAL_CURSOR_CT =  Y_INIT_CURSOR_CT + DELTA_CURSOR * (N_OPC_CONTROLS-1);
+	public final static int Y_FINAL_CURSOR_CT =  Y_INIT_CURSOR_CT + DELTA_CURSOR * (N_OPC_CONTROLS_V-1);
+	public final static int DELTA_CURSOR_X =  (int) (WIDTH*0.189);
+	public final static int X_INIT_CURSOR_CT = (int) (WIDTH / 2 + (WIDTH * 0.07));
+	public final static int X_FINAL_CURSOR_CT =  X_INIT_CURSOR_CT + DELTA_CURSOR_X * (N_OPC_CONTROLS_H-1);
+	
+	//Controls GUI
+	public final static int Y_INIT_BUTTONS = (int) (Properties.HEIGHT*.335);
+	public final static int DELTA_BUTTONS = (int) (HEIGHT*.074);
+	public final static int X_BUTTONS_IP = (int) (Properties.WIDTH*.64);
+	public final static int X_BUTTONS_IIP = (int) (X_BUTTONS_IP + (WIDTH*.187));
 	
 	//Player
 	public final static int INIT_LIFES = 3;
@@ -45,7 +55,7 @@ public final class Properties {
 	public final static double VEL_NORMAL = 0.30*SCALE;
 	public final static double VEL_ENEMY_FAST = 0.50*SCALE;
 	public final static int MIN_ENEMY_SIMUL = 3;
-	public final static int CANT_ENEMIES_LEVEL = 1;
+	public final static int CANT_ENEMIES_LEVEL = 10;
 	public final static int TIME_BETWEEN_SPAWN_E = 350;
 	
 	//_STAGE

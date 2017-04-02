@@ -32,6 +32,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Player[] players;
 	private boolean isPlayer1,isPlayer2;
 	private boolean isGameOver;
+	private boolean moveX;
 	private StageControl stageControl;
 	private Screen screen;
 	private Score score;
@@ -43,8 +44,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private IAControl ia;
 	private int level;
 	private int difficulty;
-	private int opc;
+	private int opc, opcH;
 	private int timeToNext;
+	private int[][] buttons;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
@@ -54,13 +56,16 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		level = 1;
 		difficulty = 3;
 		opc = 1;
+		opcH = 1;
+		moveX = false;
 		cursor = new Cursor();
 		ia = new IAControl();
 		stageGUI = new StageGUI();
 		timeToNext = 0;
 		stageControl = new StageControl(this);
 		players = new Player[2];
-		
+		controls = new Controls();
+		buttons = controls.getButtons();
 	}
 	
 	public void initStage(){
@@ -317,23 +322,59 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			}
 			break;
 		case CONTROLS:
-			if (key == KeyEvent.VK_UP) {
-				cursorMove(-1,Properties.N_OPC_CONTROLS);				
-			}
-			if (key == KeyEvent.VK_DOWN) {
-				cursorMove(1,Properties.N_OPC_CONTROLS);
-			}
-			if (key == KeyEvent.VK_RIGHT) {
-				
-			}
-			if (key == KeyEvent.VK_LEFT) {
-				
-			}
-			if (key == KeyEvent.VK_ENTER) {				
-				controlsOptions();
+			if (moveX) {
+				if (key == KeyEvent.VK_RIGHT) {
+					cursorMove(1, Properties.N_OPC_CONTROLS_H);
+				}
+				if (key == KeyEvent.VK_LEFT) {
+					cursorMove(-1, Properties.N_OPC_CONTROLS_H);
+				}
+				if (key == KeyEvent.VK_ENTER) {				
+					screen = Screen.BUTTON_PLAYERS;
+				}
+			} else {
+				if (key == KeyEvent.VK_UP) {
+					cursorMove(-1,Properties.N_OPC_CONTROLS_V);				
+				}
+				if (key == KeyEvent.VK_DOWN) {
+					cursorMove(1,Properties.N_OPC_CONTROLS_V);
+				}
+				if (key == KeyEvent.VK_ENTER) {				
+					controlsOptions();
+				}
 			}
 			break;
 		case STAGE_PLAY:
+			if (isPlayer1 && players[0].isActive()) {
+				if (e.getKeyCode() == buttons[0][0]) {
+					key = 11;
+				} else if (e.getKeyCode() == buttons[0][1]) {
+					key = 12;
+				} else if (e.getKeyCode() == buttons[0][2]) {
+					key = 13;
+				} else if (e.getKeyCode() == buttons[0][3]) {
+					key = 14;
+				} else if (e.getKeyCode() == buttons[0][4]) {
+					key = 15;
+				} else if (e.getKeyCode() == buttons[0][5]) {
+					key = 16;
+				}
+			}
+			if (isPlayer2 && players[1].isActive()) {
+				if (e.getKeyCode() == buttons[1][0]) {
+					key = 21;
+				} else if (e.getKeyCode() == buttons[1][1]) {
+					key = 22;
+				} else if (e.getKeyCode() == buttons[1][2]) {
+					key = 23;
+				} else if (e.getKeyCode() == buttons[1][3]) {
+					key = 24;
+				} else if (e.getKeyCode() == buttons[1][4]) {
+					key = 25;
+				} else if (e.getKeyCode() == buttons[1][5]) {
+					key = 26;
+				}
+			}
 			playerMove(key);
 		case STAGE_PAUSED:
 			if (key == KeyEvent.VK_ENTER ||
@@ -350,6 +391,56 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         		}else screen = Screen.PRESENT_STAGE;
 			}			
 			break;
+		case BUTTON_PLAYERS:
+			switch (opc) {
+			case 1:
+				if (opcH == 1) {
+					buttons[0][0] = e.getKeyCode();
+				} else {
+					buttons[1][0] = e.getKeyCode();
+				}
+				break;
+			case 2:
+				if (opcH == 1) {
+					buttons[0][1] = e.getKeyCode();
+				} else {
+					buttons[1][1] = e.getKeyCode();
+				}
+				break;
+			case 3:
+				if (opcH == 1) {
+					buttons[0][3] = e.getKeyCode();
+				} else {
+					buttons[1][3] = e.getKeyCode();
+				}
+				break;
+			case 4:
+				if (opcH == 1) {
+					buttons[0][2] = e.getKeyCode();
+				} else {
+					buttons[1][2] = e.getKeyCode();
+				}
+				break;
+			case 5:
+				if (opcH == 1) {
+					buttons[0][4] = e.getKeyCode();
+				} else {
+					buttons[1][4] = e.getKeyCode();
+				}
+				break;
+			case 6:
+				if (opcH == 1) {
+					buttons[0][5] = e.getKeyCode();
+				} else {
+					buttons[1][5] = e.getKeyCode();
+				}
+				break;
+			default:
+				break;
+			}
+			
+			saveButton(cursor.getY());
+			break;
 		default:
 			break;
 		}		
@@ -357,13 +448,25 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	}
 	
 	public void cursorMove(int move, int max){
-		cursor.setY(cursor.getY()+ Properties.DELTA_CURSOR*move);
-		opc = opc + move;
-		if (opc<1) {
-			opc=max;
-		}
-		if (opc>max) {
-			opc=1;
+		if (moveX) {
+			cursor.setX(cursor.getX()+ Properties.DELTA_CURSOR_X*move);
+			opcH = opcH + move;
+			if (opcH<=0) {
+				opcH=max;
+			}
+			if (opcH>max) {
+				opcH=1;
+			}
+			
+		} else {
+			cursor.setY(cursor.getY()+ Properties.DELTA_CURSOR*move);
+			opc = opc + move;
+			if (opc<1) {
+				opc=max;
+			}
+			if (opc>max) {
+				opc=1;
+			}
 		}
 		
 	}
@@ -413,8 +516,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void configOptions(){
 		switch (opc) {
 		case 1:
-			controls = new Controls();
-			cursor.cursorControls();
+			cursor.cursorControlsV();
+			controls.loadButtons();
 			opc = 1;
 			screen = Screen.CONTROLS;			
 			break;		
@@ -428,7 +531,35 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	public void controlsOptions(){
 		switch (opc) {
-		case 1:			
+		case 1:
+			moveX = true;
+			cursor.setMoveX(moveX);
+			cursor.cursorControlsH();
+			break;
+		case 2:
+			moveX = true;
+			cursor.setMoveX(moveX);
+			cursor.cursorControlsH();
+			break;	
+		case 3:
+			moveX = true;
+			cursor.setMoveX(moveX);
+			cursor.cursorControlsH();
+			break;	
+		case 4:
+			moveX = true;
+			cursor.setMoveX(moveX);
+			cursor.cursorControlsH();
+			break;	
+		case 5:
+			moveX = true;
+			cursor.setMoveX(moveX);
+			cursor.cursorControlsH();
+			break;	
+		case 6:
+			moveX = true;
+			cursor.setMoveX(moveX);
+			cursor.cursorControlsH();
 			break;		
 		case 7:
 			cursor.cursorConfig();
@@ -438,32 +569,43 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}
 	}
 	
+	private void saveButton(int y) {
+		moveX = false;
+		cursor.setMoveX(moveX);
+		cursor.cursorControlsV();
+		cursor.setY(y);
+		controls.setButtons(buttons);
+		controls.loadButtons();
+		screen = Screen.CONTROLS;
+		opcH = 1;
+	}
+	
 	public void playerMove(int key){
 
 		if (isPlayer1 && players[0].isActive()) {
 			switch (key) {
-			case KeyEvent.VK_UP:
+			case 11:
 				players[0].setDir(1);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 
-			case KeyEvent.VK_DOWN:
+			case 12:
 				players[0].setDir(-1);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-			case KeyEvent.VK_RIGHT:
+			case 13:
 				players[0].setDir(2);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-			case KeyEvent.VK_LEFT:
+			case 14:
 				players[0].setDir(-2);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-			case KeyEvent.VK_SPACE :
+			case 15:
 				players[0].shoot(new Bullet(players[0].getPosX(),
-						players[0].getPosY(),players[0].getDir(),0,stageControl,players[0]));
+						players[0].getPosY(),players[0].getDir(),players[0].getTier(),stageControl,players[0]));
 				break;
-			case KeyEvent.VK_ENTER:
+			case 16:
 				screen = Screen.STAGE_PAUSED;
 				System.out.println("va a pause");
 				break;
@@ -471,28 +613,28 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		}
 		if (isPlayer2 && players[1].isActive()) {
 			switch (key) {
-			case KeyEvent.VK_W:
+			case 21:
 				players[1].setDir(1);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 
-			case KeyEvent.VK_S:
+			case 22:
 				players[1].setDir(-1);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
-			case KeyEvent.VK_D:
+			case 23:
 				players[1].setDir(2);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
-			case KeyEvent.VK_A:
+			case 24:
 				players[1].setDir(-2);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
-			case KeyEvent.VK_F :
+			case 25:
 				players[1].shoot(new Bullet(players[1].getPosX(),
-						players[1].getPosY(),players[1].getDir(),0,stageControl,players[1]));
+						players[1].getPosY(),players[1].getDir(),players[1].getTier(),stageControl,players[1]));
 				break;
-			case KeyEvent.VK_G:
+			case 26:
 				screen = Screen.STAGE_PAUSED;
 				System.out.println("va a pause");
 				break;
