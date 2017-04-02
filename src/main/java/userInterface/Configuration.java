@@ -11,6 +11,13 @@ import gameController.ImageControl;
 public class Configuration {
 
 	private final BufferedImage IMG_CONFIG = ImageControl.loadImage("/resources/images/Config.png");
+	private final String[] DIFICULTY = {"FACIL", "NORMAL", "DIFICIL"};
+	private final String[] RESOLUTION = {"PEQUENA", "MEDIANA", "GRANDE"};
+	private final String[] SOUND = {"SI", "NO"};
+	
+	private int opcDificulty = 0;
+	private int opcResolution = 0;
+	private int opcSound = 0;
 	
 	public void draw(Graphics g) {
         g.setColor(Color.black);
@@ -19,12 +26,36 @@ public class Configuration {
         
         g.setColor(Color.white);
 		g.setFont(Properties.FC_PIXEL.getFont(Font.PLAIN, 20));
-        g.drawString("Facil", Properties.X_CONFIG, Properties.Y_CONFIG);
+        g.drawString(DIFICULTY[opcDificulty], Properties.X_CONFIG, Properties.Y_CONFIG);
         
 
-        g.drawString("Mediana", Properties.X_CONFIG, Properties.Y_CONFIG + Properties.DELTA_CONFIG);
+        g.drawString(RESOLUTION[opcResolution], Properties.X_CONFIG, Properties.Y_CONFIG + Properties.DELTA_CONFIG);
         
         
-        g.drawString("Si", Properties.X_CONFIG, Properties.Y_CONFIG + Properties.DELTA_CONFIG*2);
+        g.drawString(SOUND[opcSound], Properties.X_CONFIG, Properties.Y_CONFIG + Properties.DELTA_CONFIG*2);
     }
+
+	public int getOpcDificulty() {
+		return opcDificulty;
+	}
+
+	public void setOpcDificulty(int opcDificulty) {
+		this.opcDificulty = opcDificulty;
+	}
+
+	public int getOpcResolution() {
+		return opcResolution;
+	}
+
+	public void setOpcResolution(int opcResolution) {
+		this.opcResolution = opcResolution;
+	}
+
+	public int getOpcSound() {
+		return opcSound;
+	}
+
+	public void setOpcSound(int opcSound) {
+		this.opcSound = opcSound;
+	}
 }

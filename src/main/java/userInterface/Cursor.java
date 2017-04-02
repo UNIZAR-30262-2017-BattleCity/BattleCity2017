@@ -32,8 +32,7 @@ public class Cursor {
 	}
 	
 	public void cursorConfigH(){
-		initX = Properties.X_INIT_CURSOR_C;
-		x = initX;
+		x = Properties.X_INIT_CURSOR_C;
 	}
 	
 	public void cursorControlsV(){

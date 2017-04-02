@@ -290,11 +290,60 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case CONFIG:
 			if (moveX) {
+				int option = 0;
 				if (key == KeyEvent.VK_RIGHT) {
-					System.out.println("derecha");
+					switch (opc) {
+					case 2:
+						option = config.getOpcDificulty();
+						option++;
+						if (option > 2) option = 0;
+						if (option < 0) option = 2;
+						config.setOpcDificulty(option);
+						break;
+					case 3:
+						option = config.getOpcResolution();
+						option++;
+						if (option > 2) option = 0;
+						if (option < 0) option = 2;
+						config.setOpcResolution(option);
+						break;
+					case 4:
+						option = config.getOpcSound();
+						option++;
+						if (option > 1) option = 0;
+						if (option < 0) option = 1;
+						config.setOpcSound(option);
+						break;
+					default:
+						break;
+					}
 				}
 				if (key == KeyEvent.VK_LEFT) {
-					System.out.println("izquierda");
+					switch (opc) {
+					case 2:
+						option = config.getOpcDificulty();
+						option--;
+						if (option > 2) option = 0;
+						if (option < 0) option = 2;
+						config.setOpcDificulty(option);
+						break;
+					case 3:
+						option = config.getOpcResolution();
+						option--;
+						if (option > 2) option = 0;
+						if (option < 0) option = 2;
+						config.setOpcResolution(option);
+						break;
+					case 4:
+						option = config.getOpcSound();
+						option--;
+						if (option > 1) option = 0;
+						if (option < 0) option = 1;
+						config.setOpcSound(option);
+						break;
+					default:
+						break;
+					}
 				}
 				if (key == KeyEvent.VK_ENTER) {	
 					moveX = false;
