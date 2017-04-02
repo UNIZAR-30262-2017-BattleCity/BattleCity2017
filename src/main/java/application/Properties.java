@@ -135,14 +135,16 @@ public final class Properties {
 	public static final int ICON_HEIGHT = (int) (HEIGH_ELEMENT_STAGE/2+(HEIGHT*0.0344));
 
 	public static final int X_ICON_IP = (int) (X_INIT_INFO+(WIDTH*0.06));
-	public static final int Y_ICON_IP = (int) (Y_INIT_INFO+(HEIGHT*0.344));
+	public static final int Y_ICON_IP = (int) (Y_INIT_INFO+(HEIGHT*0.31));
 	public static final int Y_IP_LIFES = (int) (Y_ICON_IP+(HEIGHT*0.1));
 	public static final int Y_IP_SCORE = (int) (Y_IP_LIFES+(HEIGHT*0.035));
-
+	public static final int Y_IP_GAS = (int) (Y_IP_SCORE+(HEIGHT*0.01));
+	
 	public static final int X_ICON_IIP = X_ICON_IP;
-	public static final int Y_ICON_IIP = (int) (Y_ICON_IP+(HEIGHT*0.172));
+	public static final int Y_ICON_IIP = (int) (Y_ICON_IP+(HEIGHT*0.19));
 	public static final int Y_IIP_LIFES = (int) (Y_ICON_IIP+(HEIGHT*0.1));
 	public static final int Y_IIP_SCORE = (int) (Y_IIP_LIFES+(HEIGHT*0.035));
+	public static final int Y_IIP_GAS = (int) (Y_IIP_SCORE+(HEIGHT*0.01));
 	
 	public static final int FONT_LEVEL_SIZE = 16*SCALE;
 	public static final int X_FLAG = (int) (X_INIT_INFO+(WIDTH*0.035));

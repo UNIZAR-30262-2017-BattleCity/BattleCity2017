@@ -421,13 +421,13 @@ public final class ImageControl {
 	public static BufferedImage getItemGranade() {
 		return getSprite(Properties.SSTANK,8, 21, w, h);
 	}
-
-	public static BufferedImage getItemGas() {
-		return getSprite(Properties.SSTANK,8, 23, w, h);
-	}
-
+	
 	public static BufferedImage getItemTank() {
 		return getSprite(Properties.SSTANK,8, 22, w, h);
+	}
+	
+	public static BufferedImage getItemGas() {
+		return getSprite(Properties.SSTANK,8, 23, w, h);
 	}
 
 	public static BufferedImage getImgHalfBrickV() {
@@ -437,5 +437,40 @@ public final class ImageControl {
 	public static BufferedImage getImgHalfIronV() {
 		return getSprite(Properties.SSTANK,2, 20, w/2, h);
 	}
-		
+	
+	public static BufferedImage getEffectBulletA() {
+		return getSprite(Properties.SSTANK,9, 17, w, h);
+	}
+	
+	public static BufferedImage getEffectBulletB() {
+		return getSprite(Properties.SSTANK,9, 18, w, h);
+	}
+	
+	public static BufferedImage getEffectBulletC() {
+		return getSprite(Properties.SSTANK,9, 19, w, h);
+	}
+	
+	public static BufferedImage getEffectBirdthA() {
+		return getSprite(Properties.SSTANK,7, 17, w, h);
+	}
+	
+	public static BufferedImage getEffectBirdthB() {
+		return getSprite(Properties.SSTANK,7, 18, w, h);
+	}
+	
+	public static BufferedImage getEffectBirdthC() {
+		return getSprite(Properties.SSTANK,7, 19, w, h);
+	}
+	
+	public static BufferedImage getEffectBirdthD() {
+		return getSprite(Properties.SSTANK,7, 20, w, h);
+	}
+	
+	public static BufferedImage getEffectTankA() {
+		return getSprite(Properties.SSTANK,9, 20, w, h);
+	}
+	
+	public static BufferedImage getEffectTankB() {
+		return getSprite(Properties.SSTANK,9, 22, w, h);
+	}
 }

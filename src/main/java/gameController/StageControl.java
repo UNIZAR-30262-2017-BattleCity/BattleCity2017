@@ -53,9 +53,7 @@ public class StageControl {
     private int timerE, timerIt;
     private Random random;
     private static final int ROW_SPAWN_ENEMY = 1;
-    private static final int COL1_SPAWN_ENEMY = 1;
-    private static final int COL2_SPAWN_ENEMY = 7;
-    private static final int COL3_SPAWN_ENEMY = 13;
+    private static final int[] COL_SPAWN_ENEMY = {1,7,13};
         
     private static int yMiniE; 
 	private static final int x = (int) (Properties.X_INIT_INFO+(Properties.WIDTH*0.037));
@@ -176,23 +174,43 @@ public class StageControl {
     	
 		if (nEnemies<Properties.CANT_ENEMIES_LEVEL) {	
 			if (nEnemiesSimul<maxEnemySimul) {
-				typeEnemy = random.nextInt(3)+1;
-				
-				if (cantEnemies1<nEnemies1) {
-					
-					
+				typeEnemy = random.nextInt(3)+1;				
+				switch (typeEnemy) {
+				case 1:
+					if (cantEnemies1<nEnemies1) {
+						setPosEnemies(1);
+						cantEnemies1++;
+					}
+					break;
+				case 2:
+					if (cantEnemies2<nEnemies2) {
+						setPosEnemies(1);
+						cantEnemies2++;
+					}
+					break;
+				case 3:
+					if (cantEnemies3<nEnemies3) {
+						setPosEnemies(1);
+						cantEnemies3++;
+					}
+					break;
+				case 4:
+					if (cantEnemies4<nEnemies4) {
+						setPosEnemies(1);
+						cantEnemies4 ++;
+					}
+					break;
 				}				
-				
-				if (pos == 1) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL1_SPAWN_ENEMY, 4, this));
-				if (pos == 2) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL2_SPAWN_ENEMY, typeEnemy, this));
-				if (pos == 3) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL3_SPAWN_ENEMY, typeEnemy, this));
-				if (pos == 3) pos = 0;
-				pos++;
-				nEnemies++;
-				nEnemiesSimul++;
 			}
 		}
 	}
+    
+    public void setPosEnemies(int typeEnemy){
+    	pos = random.nextInt(3);
+    	enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL_SPAWN_ENEMY[pos], typeEnemy, this));
+    	nEnemies++;
+		nEnemiesSimul++;
+    }
     
     public void spawnItems() {
 		if (nItems<cantItemsLevel) {

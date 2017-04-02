@@ -22,7 +22,7 @@ public class Player extends Tank implements StageElement{
 	private final BufferedImage[] imgPlayer2Up = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer2Dowm = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer2Left = new BufferedImage[2];
-	private final BufferedImage[] imgPlayer2Right = new BufferedImage[2]; 
+	private final BufferedImage[] imgPlayer2Right = new BufferedImage[2];
     private int userName;
 	private int lifes;
 	private int score;
@@ -30,12 +30,14 @@ public class Player extends Tank implements StageElement{
 	private boolean isGas;
 	private boolean updateLifes;
 	private boolean updateScore;
+	private boolean updateGas;
+	private boolean updateMove;
 	private boolean gameOver;
 	private int lifesForScore;
 	private ArrayList<Integer> enemyType;
     private boolean shieldActivate;
 	private boolean freezed;
-	private int gas;	
+	private int gas;		
 	
     public Player(int col, int row, int lifes, int player, StageControl stageControl) {
 		super(stageControl);
@@ -47,9 +49,11 @@ public class Player extends Tank implements StageElement{
 		isGas = true;
 		updateLifes = true;
 		updateScore = true;
+		updateGas = true;
+		updateMove = true;
 		score = 0;
 		tier = 1;
-		gas = 2000;
+		gas = 3000;
 		shieldActivate = true;
 		velBullet = Properties.VEL_BULLET;
 		timeToNext = 0;
@@ -142,6 +146,14 @@ public class Player extends Tank implements StageElement{
 				updateScore(g, Properties.Y_IIP_SCORE);
 			}
 		}
+    	
+    	if (updateGas) {
+    		if (player==1) {
+				updateGas(g, Properties.Y_IP_GAS);
+			}else{
+				updateGas(g, Properties.Y_IIP_GAS);
+			}
+		}
 
 	}
     
@@ -155,9 +167,13 @@ public class Player extends Tank implements StageElement{
     
     @Override
     public void updateDraw(){    	
-    	anim();
-    	move();    	
-    	collision();
+    	
+    	if (updateMove) {
+			anim();
+			move();
+			collision();
+			//updateMove = false;
+		}    	
     	
     	if(shieldActivate){
 			if (next(Properties.MAX_TIME_ITEM_EFECT)) {
@@ -176,9 +192,10 @@ public class Player extends Tank implements StageElement{
 		}else{
 			if (isGas) {				
 				gas -= vel;
+				
 				if (gas<1) {
 					isGas=false;
-				}
+				}else updateGas = true;
 				
 				switch (dir) {
 				case 1://up
@@ -277,6 +294,14 @@ public class Player extends Tank implements StageElement{
 		updateLifes = false;
     }
 	
+    public void updateGas(Graphics g, int y){
+    	g.setColor(Color.black);
+    	g.fillRect(Properties.X_INIT_INFO, y, 100, 20);
+    	g.setColor(Color.green);
+        g.fillRect(Properties.X_INIT_INFO, y, gas/30,20);
+		updateGas = false;
+    }
+    
 	public void reduceLifes(){
 		if (!shieldActivate) {
 			lifes--;
@@ -311,12 +336,15 @@ public class Player extends Tank implements StageElement{
 		setShoot(false);
 		setActive(true);
 		enemyType.clear();
+		gas = gas + 1500;
+		updateGas = true;
+		if (gas>3000) gas = 3000;
     }
     
     public void resetPlayerGameOver(){
     	resetPlayer();
     	tier = 1;
-    	gas = 2000;
+    	gas = 3000;
     	score = 0;
     	lifes = Properties.INIT_LIFES;
     	gameOver = false;    	

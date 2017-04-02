@@ -37,7 +37,7 @@ public class StageGUI {
         		Properties.X_INIT_INFO, 
         		Properties.Y_IP_LIFES );
         g.drawString("Score:", Properties.X_INIT_INFO, 
-        		Properties.Y_IP_SCORE);
+        		Properties.Y_IP_SCORE);        
         
         g.drawImage(ImageControl.getIIP(), 
         		Properties.X_ICON_IIP, 
@@ -62,7 +62,6 @@ public class StageGUI {
         		Properties.Y_FLAG, 
         		Properties.FLAG_WIDTH, 
         		Properties.FLAG_HEIGHT, null);
-
 	}
 	
 }
