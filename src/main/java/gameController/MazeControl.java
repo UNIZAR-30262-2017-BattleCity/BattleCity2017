@@ -599,4 +599,120 @@ public class MazeControl {
     	
     }
 	
+	
+	public int[] loadNumEnemies(int level) {
+		int[] nEnemies = new int[4];  
+		
+    	switch (level) {
+		case 1:			
+			nEnemies[0] = 18; nEnemies[1] = 2;	nEnemies[2] = 0; 	nEnemies[3] = 0;
+			break;
+		case 2:
+			nEnemies[0] = 14; nEnemies[1] = 4;	nEnemies[2] = 2; 	nEnemies[3] = 0;
+			break;
+		case 3:			
+			nEnemies[0] = 14; nEnemies[1] = 4;	nEnemies[2] = 2; 	nEnemies[3] = 0;
+			break;
+		case 4:
+			nEnemies[0] = 2; nEnemies[1] = 5;	nEnemies[2] = 10;	nEnemies[3] = 3;
+			break;
+		case 5:			
+			nEnemies[0] = 8; nEnemies[1] = 5;	nEnemies[2] = 5; 	nEnemies[3] = 2;
+			break;
+		case 6:
+			nEnemies[0] = 9; nEnemies[1] = 2;	nEnemies[2] = 7; 	nEnemies[3] = 2;
+			break;
+		case 7:			
+			nEnemies[0] = 3; nEnemies[1] = 4;	nEnemies[2] = 6; 	nEnemies[3] = 7;
+			break;
+		case 8:
+			nEnemies[0] = 7; nEnemies[1] = 4;	nEnemies[2] = 7; 	nEnemies[3] = 2;
+			break;
+		case 9:			
+			nEnemies[0] = 6; nEnemies[1] = 4;	nEnemies[2] = 7; 	nEnemies[3] = 3;
+			break;
+		case 10:
+			nEnemies[0] = 12; nEnemies[1] = 2;	nEnemies[2] = 4; 	nEnemies[3] = 2;
+			break;
+		case 11:			
+			nEnemies[0] = 0; nEnemies[1] = 10;	nEnemies[2] = 4; 	nEnemies[3] = 6;
+			break;
+		case 12:
+			nEnemies[0] = 0; nEnemies[1] = 6;	nEnemies[2] = 8; 	nEnemies[3] = 6;
+			break;
+		case 13:			
+			nEnemies[0] = 0; nEnemies[1] = 8;	nEnemies[2] = 8; 	nEnemies[3] = 4;
+			break;
+		case 14:
+			nEnemies[0] = 0; nEnemies[1] = 4;	nEnemies[2] = 10; nEnemies[3] = 6;
+			break;
+		case 15:			
+			nEnemies[0] = 2; nEnemies[1] = 10;	nEnemies[2] = 0; 	nEnemies[3] = 8;
+			break;
+		case 16:
+			nEnemies[0] = 16; nEnemies[1] = 2;	nEnemies[2] = 0; 	nEnemies[3] = 2;
+			break;
+		case 17:			
+			nEnemies[0] = 8; nEnemies[1] = 2;	nEnemies[2] = 0; 	nEnemies[3] = 10;
+			break;
+		case 18:
+			nEnemies[0] = 2; nEnemies[1] = 8;	nEnemies[2] = 6; 	nEnemies[3] = 4;
+			break;
+		case 19:			
+			nEnemies[0] = 4; nEnemies[1] = 4;	nEnemies[2] = 4; 	nEnemies[3] = 8;
+			break;
+		case 20:
+			nEnemies[0] = 2; nEnemies[1] = 8;	nEnemies[2] = 2; 	nEnemies[3] = 8;
+			break;
+		case 21:			
+			nEnemies[0] = 6; nEnemies[1] = 2;	nEnemies[2] = 8; 	nEnemies[3] = 4;
+			break;
+		case 22:
+			nEnemies[0] = 6; nEnemies[1] = 8;	nEnemies[2] = 2; 	nEnemies[3] = 4;
+			break;
+		case 23:			
+			nEnemies[0] = 0; nEnemies[1] = 10;	nEnemies[2] = 4; 	nEnemies[3] = 6;
+			break;
+		case 24:
+			nEnemies[0] = 10; nEnemies[1] = 4;	nEnemies[2] = 4; 	nEnemies[3] = 2;
+			break;
+		case 25:			
+			nEnemies[0] = 0; nEnemies[1] = 8;	nEnemies[2] = 2; 	nEnemies[3] = 10;
+			break;
+		case 26:
+			nEnemies[0] = 4; nEnemies[1] = 6;	nEnemies[2] = 4; 	nEnemies[3] = 6;
+			break;
+		case 27:			
+			nEnemies[0] = 2; nEnemies[1] = 8;	nEnemies[2] = 2; 	nEnemies[3] = 8;
+			break;
+		case 28:
+			nEnemies[0] = 15; nEnemies[1] = 2;	nEnemies[2] = 2; 	nEnemies[3] = 1;
+			break;
+		case 29:			
+			nEnemies[0] = 0; nEnemies[1] = 4;	nEnemies[2] = 10; nEnemies[3] = 6;
+			break;
+		case 30:
+			nEnemies[0] = 4; nEnemies[1] = 8;	nEnemies[2] = 4; 	nEnemies[3] = 4;
+			break;
+		case 31:			
+			nEnemies[0] = 0; nEnemies[1] = 8;	nEnemies[2] = 6; 	nEnemies[3] = 6;
+			break;
+		case 32:
+			nEnemies[0] = 6; nEnemies[1] = 4;	nEnemies[2] = 2; 	nEnemies[3] = 8;
+			break;
+		case 33:			
+			nEnemies[0] = 0; nEnemies[1] = 8;	nEnemies[2] = 4; 	nEnemies[3] = 8;
+			break;
+		case 34:
+			nEnemies[0] = 0; nEnemies[1] = 10;	nEnemies[2] = 4; 	nEnemies[3] = 6;
+			break;
+		case 35:			
+			nEnemies[0] = 0; nEnemies[1] = 6;	nEnemies[2] = 4; 	nEnemies[3] = 10;
+			break;
+		}
+    	
+    	return nEnemies;
+	}
+
+	
 }

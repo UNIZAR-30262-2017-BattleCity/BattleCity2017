@@ -30,8 +30,16 @@ public class Bullet extends GameElement implements StageElement{
 	
 	public void initBullet(){
 		switch (type) {//tier
-		case 4://hard bullet
-			initImgBullet();			
+		case 2://fast bullet
+			initImgBullet();
+			velBullet = Properties.VEL_BULLET+1;
+			break;
+		case 3://big bullet
+			initImgBullet();
+			velBullet = Properties.VEL_BULLET+1;
+			break;
+		case 4://big and hard bullet
+			initImgBullet();		
 			break;
 		default:
 			initImgBullet();

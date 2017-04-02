@@ -70,6 +70,7 @@ public class StageControl {
 	
 	private BufferedImage[] imgBackStage = new BufferedImage[2];
 	private boolean eagleWallEfect;
+	private int nEnemies1, nEnemies2, nEnemies3, nEnemies4;
             
     public StageControl(GameControl gC) {
     	initValues(gC.getDifficulty());
@@ -140,15 +141,11 @@ public class StageControl {
 			}
 		}
     	
-    	switch (level) {
-		case 1:			
-			
-			break;
-		case 2:
-
-			break;
-		}
-
+    	int[] nEnemies =  mazeControl.loadNumEnemies(level);
+    	nEnemies1 = nEnemies[0];
+    	nEnemies2 = nEnemies[1];
+    	nEnemies3 = nEnemies[2];
+    	nEnemies4 = nEnemies[3];
     	resetVariables();
     	
     	 mazeControl.loadMaze(level,isPlayer1,isPlayer2);
@@ -158,7 +155,8 @@ public class StageControl {
     	 
     }
             
-    public void spawnBullets(Bullet e) {
+    
+	public void spawnBullets(Bullet e) {
     	bullets.add(e);
 	}
     

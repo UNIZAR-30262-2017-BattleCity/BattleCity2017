@@ -572,7 +572,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				players[0].setDir(1);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-
 			case 1002:
 				players[0].setDir(-1);
 				players[0].setVel(Properties.VEL_NORMAL);
@@ -586,8 +585,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 			case 1005:
-				players[0].shoot(new Bullet(players[0].getPosX(),
-						players[0].getPosY(),players[0].getDir(),players[0].getTier(),stageControl,players[0]));
+				players[0].shoot(new Bullet(players[0].getPosX(),players[0].getPosY(),players[0].getDir(),
+						players[0].getTier(), players[0].getVelBullet(),stageControl,players[0]));
 				break;
 			case 1006:
 				screen = Screen.STAGE_PAUSED;
@@ -614,8 +613,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 			case 2005:
-				players[1].shoot(new Bullet(players[1].getPosX(),
-						players[1].getPosY(),players[1].getDir(),players[1].getTier(),stageControl,players[1]));
+				players[1].shoot(new Bullet(players[1].getPosX(),players[1].getPosY(),players[1].getDir(),
+						players[1].getTier(),players[0].getVelBullet(),stageControl,players[1]));
 				break;
 			case 2006:
 				screen = Screen.STAGE_PAUSED;

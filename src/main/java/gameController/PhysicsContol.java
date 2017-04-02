@@ -83,7 +83,7 @@ public class PhysicsContol {
 			t.setShoot(false);
 			if (s.getClass().equals(Wall.class)) {
 				int w = s.getType();
-				if (w !=1) return;
+				if (w !=1 && b.getType()<4) return;
 				else {
 					stageControl.setUpdteBricks(true);
 					s.setActive(false);

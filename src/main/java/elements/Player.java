@@ -40,7 +40,7 @@ public class Player extends Tank implements StageElement{
     public Player(int col, int row, int lifes, int player, StageControl stageControl) {
 		super(stageControl);
     	this.lifes = lifes;
-		setTypeTank(0);		
+		setTypeTank(0);
 		setInitPos(col, row);
 		this.player = player;
 		initPlayer();
@@ -53,7 +53,7 @@ public class Player extends Tank implements StageElement{
 		shieldActivate = true;
 		velBullet = Properties.VEL_BULLET;
 		timeToNext = 0;
-		lifesForScore = 10000;		
+		lifesForScore = 10000;
 		this.shieldLevel = 1;
     	enemyType = new ArrayList<>();
 	}
@@ -315,6 +315,7 @@ public class Player extends Tank implements StageElement{
     
     public void resetPlayerGameOver(){
     	resetPlayer();
+    	tier = 1;
     	score = 0;
     	lifes = Properties.INIT_LIFES;
     	gameOver = false;    	
