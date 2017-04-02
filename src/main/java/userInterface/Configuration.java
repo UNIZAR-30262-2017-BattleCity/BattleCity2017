@@ -9,10 +9,11 @@ import gameController.ImageControl;
 
 public class Configuration {
 
+	private final BufferedImage IMG_CONFIG = ImageControl.loadImage("/resources/images/Config.png");
 	
 	public void draw(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, Properties.WIDTH, Properties.HEIGHT);
-        g.drawImage(ImageControl.loadImage(Properties.PATH_SS_CONFIG), 0, 0, Properties.WIDTH, Properties.HEIGHT, null);
+        g.drawImage(IMG_CONFIG, 0, 0, Properties.WIDTH, Properties.HEIGHT, null);
     }
 }

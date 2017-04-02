@@ -14,7 +14,7 @@ import gameController.FontControl;
 import gameController.ImageControl;
 
 public class Controls {
-	private static BufferedImage imgControls = ImageControl.loadImage(Properties.PATH_SS_CONTROLS);
+	private final BufferedImage imgControls = ImageControl.loadImage("/resources/images/Controls.png");
 	private int[][] buttons;
 	private String[][] lavelsButtons;
 	

@@ -71,6 +71,7 @@ public class StageControl {
 	private BufferedImage[] imgBackStage = new BufferedImage[2];
 	private boolean eagleWallEfect;
 	private int nEnemies1, nEnemies2, nEnemies3, nEnemies4;
+	private int cantEnemies1, cantEnemies2, cantEnemies3, cantEnemies4;
             
     public StageControl(GameControl gC) {
     	initValues(gC.getDifficulty());
@@ -154,7 +155,6 @@ public class StageControl {
     	 loadMiniEnemies();
     	 
     }
-            
     
 	public void spawnBullets(Bullet e) {
     	bullets.add(e);
@@ -177,6 +177,12 @@ public class StageControl {
 		if (nEnemies<Properties.CANT_ENEMIES_LEVEL) {	
 			if (nEnemiesSimul<maxEnemySimul) {
 				typeEnemy = random.nextInt(3)+1;
+				
+				if (cantEnemies1<nEnemies1) {
+					
+					
+				}				
+				
 				if (pos == 1) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL1_SPAWN_ENEMY, 4, this));
 				if (pos == 2) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL2_SPAWN_ENEMY, typeEnemy, this));
 				if (pos == 3) enemies.add(new Enemy(ROW_SPAWN_ENEMY, COL3_SPAWN_ENEMY, typeEnemy, this));

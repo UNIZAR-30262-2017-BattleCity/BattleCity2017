@@ -49,7 +49,7 @@ public class Player extends Tank implements StageElement{
 		updateScore = true;
 		score = 0;
 		tier = 1;
-		gas = 1000;
+		gas = 2000;
 		shieldActivate = true;
 		velBullet = Properties.VEL_BULLET;
 		timeToNext = 0;
@@ -316,6 +316,7 @@ public class Player extends Tank implements StageElement{
     public void resetPlayerGameOver(){
     	resetPlayer();
     	tier = 1;
+    	gas = 2000;
     	score = 0;
     	lifes = Properties.INIT_LIFES;
     	gameOver = false;    	

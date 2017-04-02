@@ -89,12 +89,7 @@ public final class Properties {
 	public final static int HEIGH_ELEMENT_STAGE =  HEIGHT_STAGE/ROW_STAGE;
 	
 	//Sprite Sheets
-	public final static String PATH_SS_TANK = "/resources/images/SpriteSheet.png";
-	public final static String PATH_SS_CONFIG = "/resources/images/Config.png";
-	public final static String PATH_SS_SCORE = "/resources/images/Config.png";
-	public final static String PATH_SS_CONTROLS = "/resources/images/Controls.png";
-	
-	public static final BufferedImage SSTANK = ImageControl.loadImage(PATH_SS_TANK);
+	public static final BufferedImage SSTANK = ImageControl.loadImage("/resources/images/SpriteSheet.png");
 	
 	//Items
 	public final static int MAX_ITEMS_LEVEL = 20;
