@@ -289,20 +289,29 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			}
 			break;
 		case CONFIG:
-			if (key == KeyEvent.VK_UP) {
-				cursorMove(-1,Properties.N_OPC_CONFIG);				
-			}
-			if (key == KeyEvent.VK_DOWN) {
-				cursorMove(1,Properties.N_OPC_CONFIG);
-			}
-			if (key == KeyEvent.VK_RIGHT) {
-				
-			}
-			if (key == KeyEvent.VK_LEFT) {
-				
-			}
-			if (key == KeyEvent.VK_ENTER) {				
-				configOptions();
+			if (moveX) {
+				if (key == KeyEvent.VK_RIGHT) {
+					System.out.println("derecha");
+				}
+				if (key == KeyEvent.VK_LEFT) {
+					System.out.println("izquierda");
+				}
+				if (key == KeyEvent.VK_ENTER) {	
+					moveX = false;
+					int y = cursor.getY();
+					cursor.cursorConfigV();
+					cursor.setY(y);
+				}
+			} else {
+				if (key == KeyEvent.VK_UP) {
+					cursorMove(-1,Properties.N_OPC_CONFIG);				
+				}
+				if (key == KeyEvent.VK_DOWN) {
+					cursorMove(1,Properties.N_OPC_CONFIG);
+				}
+				if (key == KeyEvent.VK_ENTER) {				
+					configOptions();
+				}
 			}
 			break;
 		case CONTROLS:
@@ -486,7 +495,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case 3:
 			config = new Configuration();
-			cursor.cursorConfig();
+			cursor.cursorConfigV();
 			opc = 1;
 			screen = Screen.CONFIG;
 			break;
@@ -504,7 +513,19 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			controls.loadButtons();
 			opc = 1;
 			screen = Screen.CONTROLS;			
-			break;		
+			break;
+		case 2:
+			moveX = true;
+			cursor.cursorConfigH();
+			break;
+		case 3:
+			moveX = true;
+			cursor.cursorConfigH();
+			break;
+		case 4:
+			moveX = true;
+			cursor.cursorConfigH();
+			break;
 		case 5:
 			cursor.cursorMenu();
 			opc = 1;
@@ -546,7 +567,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			cursor.cursorControlsH();
 			break;		
 		case 7:
-			cursor.cursorConfig();
+			cursor.cursorConfigV();
 			opc = 1;
 			screen = Screen.CONFIG;
 			break;

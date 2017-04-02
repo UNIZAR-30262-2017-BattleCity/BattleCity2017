@@ -24,11 +24,16 @@ public class Cursor {
 		y = initY;
 	}
 	
-	public void cursorConfig(){
+	public void cursorConfigV(){
 		initY = Properties.Y_INIT_CURSOR_C;
 		finalY = Properties.Y_FINAL_CURSOR_C;
 		x = Properties.X_CURSOR_C;
 		y = initY;
+	}
+	
+	public void cursorConfigH(){
+		initX = Properties.X_INIT_CURSOR_C;
+		x = initX;
 	}
 	
 	public void cursorControlsV(){

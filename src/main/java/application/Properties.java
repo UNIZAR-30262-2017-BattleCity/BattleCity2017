@@ -30,6 +30,7 @@ public final class Properties {
 	
 	//Cursor Configuration
 	public final static int X_CURSOR_C = (int) (WIDTH / 2 - (WIDTH * 0.41));
+	public final static int X_INIT_CURSOR_C = (int) (WIDTH / 2 + (WIDTH * 0.07));
 	public final static int Y_INIT_CURSOR_C = (int) (HEIGHT / 2 - (HEIGHT * 0.105));
 	public final static int Y_FINAL_CURSOR_C =  Y_INIT_CURSOR_C + DELTA_CURSOR * (N_OPC_CONFIG-1);
 	
@@ -38,7 +39,7 @@ public final class Properties {
 	public final static int Y_INIT_CURSOR_CT = (int) (HEIGHT / 2 - (HEIGHT * 0.21));
 	public final static int Y_FINAL_CURSOR_CT =  Y_INIT_CURSOR_CT + DELTA_CURSOR * (N_OPC_CONTROLS_V-1);
 	public final static int DELTA_CURSOR_X =  (int) (WIDTH*0.189);
-	public final static int X_INIT_CURSOR_CT = (int) (WIDTH / 2 + (WIDTH * 0.07));
+	public final static int X_INIT_CURSOR_CT = X_INIT_CURSOR_C;
 	public final static int X_FINAL_CURSOR_CT =  X_INIT_CURSOR_CT + DELTA_CURSOR_X * (N_OPC_CONTROLS_H-1);
 	
 	//Controls GUI
@@ -46,6 +47,11 @@ public final class Properties {
 	public final static int DELTA_BUTTONS = (int) (HEIGHT*.074);
 	public final static int X_BUTTONS_IP = (int) (Properties.WIDTH*.64);
 	public final static int X_BUTTONS_IIP = (int) (X_BUTTONS_IP + (WIDTH*.187));
+	
+	//Configuration GUI
+	public final static int Y_CONFIG = (int) (Properties.HEIGHT*.518);
+	public final static int X_CONFIG = (int) (Properties.WIDTH*.65);
+	public final static int DELTA_CONFIG = DELTA_BUTTONS;
 	
 	//Player
 	public final static int INIT_LIFES = 3;

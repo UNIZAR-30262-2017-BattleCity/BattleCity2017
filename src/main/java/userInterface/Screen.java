@@ -5,6 +5,7 @@ public enum Screen {
 	INTRO,
 	MENU,
 	CONFIG,
+	CONFIG_OPTIONS,
 	CONTROLS,
 	PRESENT_STAGE,
 	INIT_STAGE,
