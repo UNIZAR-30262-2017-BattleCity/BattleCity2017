@@ -42,6 +42,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private Controls controls;
 	private Cursor cursor;
 	private IAControl ia;
+	private ReadConfig dataConfig;
 	private int level;
 	private int difficulty;
 	private int opc, opcH;
@@ -54,7 +55,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		jf.addKeyListener(this);
 		screen = Screen.MENU;
 		level = 1;
-		difficulty = 3;
 		opc = 1;
 		opcH = 1;
 		moveX = false;
@@ -64,8 +64,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		timeToNext = 0;
 		stageControl = new StageControl(this);
 		players = new Player[2];
-		controls = new Controls();
-		buttons = controls.getButtons();
+		dataConfig = new ReadConfig();
+		
+		buttons = dataConfig.getButtons();
+		
+		difficulty = dataConfig.getDificulty();
 	}
 	
 	public void initStage(){
@@ -299,6 +302,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 2) option = 0;
 						if (option < 0) option = 2;
 						config.setOpcDificulty(option);
+						dataConfig.setDificulty(option);
+						dataConfig.writeConfig();
 						break;
 					case 3:
 						option = config.getOpcResolution();
@@ -306,6 +311,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 2) option = 0;
 						if (option < 0) option = 2;
 						config.setOpcResolution(option);
+						dataConfig.setResolution(option+2);
+						dataConfig.writeConfig();
 						break;
 					case 4:
 						option = config.getOpcSound();
@@ -313,6 +320,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 1) option = 0;
 						if (option < 0) option = 1;
 						config.setOpcSound(option);
+						dataConfig.setSound(option);
+						dataConfig.writeConfig();
 						break;
 					default:
 						break;
@@ -545,6 +554,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case 3:
 			config = new Configuration();
 			cursor.cursorConfigV();
+			config.setOpcDificulty(difficulty);
+			config.setOpcResolution(dataConfig.getResolution()-2);
+			config.setOpcSound(dataConfig.getSound());
 			opc = 1;
 			screen = Screen.CONFIG;
 			break;
@@ -558,6 +570,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void configOptions(){
 		switch (opc) {
 		case 1:
+			controls = new Controls();
+			controls.setButtons(buttons);
 			cursor.cursorControlsV();
 			controls.loadButtons();
 			opc = 1;
@@ -624,14 +638,16 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	}
 	
 	private void saveButton(int y) {
+		opcH = 1;
 		moveX = false;
 		cursor.setMoveX(moveX);
 		cursor.cursorControlsV();
 		cursor.setY(y);
 		controls.setButtons(buttons);
 		controls.loadButtons();
+		dataConfig.setButtons(buttons);
+		dataConfig.writeConfig();
 		screen = Screen.CONTROLS;
-		opcH = 1;
 	}
 	
 	public void playerMove(int key){

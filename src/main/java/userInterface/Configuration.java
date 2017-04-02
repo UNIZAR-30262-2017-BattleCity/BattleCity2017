@@ -13,11 +13,11 @@ public class Configuration {
 	private final BufferedImage IMG_CONFIG = ImageControl.loadImage("/resources/images/Config.png");
 	private final String[] DIFICULTY = {"FACIL", "NORMAL", "DIFICIL"};
 	private final String[] RESOLUTION = {"PEQUENA", "MEDIANA", "GRANDE"};
-	private final String[] SOUND = {"SI", "NO"};
+	private final String[] SOUND = {"NO", "SI"};
 	
-	private int opcDificulty = 0;
-	private int opcResolution = 0;
-	private int opcSound = 0;
+	private int opcDificulty;
+	private int opcResolution;
+	private int opcSound;
 	
 	public void draw(Graphics g) {
         g.setColor(Color.black);
