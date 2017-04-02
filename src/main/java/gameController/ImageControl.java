@@ -234,37 +234,133 @@ public final class ImageControl {
 		return getSprite(Properties.SSTANK,7, 16, w, h);
 	}
 
-	public static BufferedImage getEnemy4Up() {
+	public static BufferedImage getEnemy4RedUp() {
+		return getSprite(Properties.SSTANK,12, 9, w, h);
+	}
+	
+	public static BufferedImage getEnemy4RedUpB() {
+		return getSprite(Properties.SSTANK,12, 10, w, h);
+	}
+
+	public static BufferedImage getEnemy4RedDowm() {
+		return getSprite(Properties.SSTANK,12, 13, w, h);
+	}
+	
+	public static BufferedImage getEnemy4RedDowmB() {
+		return getSprite(Properties.SSTANK,12, 14, w, h);
+	}
+
+	public static BufferedImage getEnemy4RedLeft() {
+		return getSprite(Properties.SSTANK,12, 11, w, h);
+	}
+	
+	public static BufferedImage getEnemy4RedLeftB() {
+		return getSprite(Properties.SSTANK,12, 12, w, h);
+	}
+
+	public static BufferedImage getEnemy4RedRight() {
+		return getSprite(Properties.SSTANK,12, 15, w, h);
+	}
+	
+	public static BufferedImage getEnemy4RedRightB() {
+		return getSprite(Properties.SSTANK,12, 16, w, h);
+	}
+		
+	public static BufferedImage getEnemy4GreenUp() {
+		return getSprite(Properties.SSTANK,12, 1, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GreenUpB() {
+		return getSprite(Properties.SSTANK,12, 2, w, h);
+	}
+
+	public static BufferedImage getEnemy4GreenDowm() {
+		return getSprite(Properties.SSTANK,12, 5, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GreenDowmB() {
+		return getSprite(Properties.SSTANK,12, 6, w, h);
+	}
+
+	public static BufferedImage getEnemy4GreenLeft() {
+		return getSprite(Properties.SSTANK,12, 3, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GreenLeftB() {
+		return getSprite(Properties.SSTANK,12, 4, w, h);
+	}
+
+	public static BufferedImage getEnemy4GreenRight() {
+		return getSprite(Properties.SSTANK,12, 7, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GreenRightB() {
+		return getSprite(Properties.SSTANK,12, 8, w, h);
+	}	
+	
+	public static BufferedImage getEnemy4GoldUp() {
+		return getSprite(Properties.SSTANK,4, 1, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GoldUpB() {
+		return getSprite(Properties.SSTANK,4, 2, w, h);
+	}
+
+	public static BufferedImage getEnemy4GoldDowm() {
+		return getSprite(Properties.SSTANK,4, 5, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GoldDowmB() {
+		return getSprite(Properties.SSTANK,4, 6, w, h);
+	}
+
+	public static BufferedImage getEnemy4GoldLeft() {
+		return getSprite(Properties.SSTANK,4, 3, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GoldLeftB() {
+		return getSprite(Properties.SSTANK,4, 4, w, h);
+	}
+
+	public static BufferedImage getEnemy4GoldRight() {
+		return getSprite(Properties.SSTANK,4, 7, w, h);
+	}
+	
+	public static BufferedImage getEnemy4GoldRightB() {
+		return getSprite(Properties.SSTANK,4, 8, w, h);
+	}
+		
+	public static BufferedImage getEnemy4GrayUp() {
 		return getSprite(Properties.SSTANK,4, 9, w, h);
 	}
 	
-	public static BufferedImage getEnemy4UpB() {
+	public static BufferedImage getEnemy4GrayUpB() {
 		return getSprite(Properties.SSTANK,4, 10, w, h);
 	}
 
-	public static BufferedImage getEnemy4Dowm() {
+	public static BufferedImage getEnemy4GrayDowm() {
 		return getSprite(Properties.SSTANK,4, 13, w, h);
 	}
 	
-	public static BufferedImage getEnemy4DowmB() {
+	public static BufferedImage getEnemy4GrayDowmB() {
 		return getSprite(Properties.SSTANK,4, 14, w, h);
 	}
 
-	public static BufferedImage getEnemy4Left() {
+	public static BufferedImage getEnemy4GrayLeft() {
 		return getSprite(Properties.SSTANK,4, 11, w, h);
 	}
 	
-	public static BufferedImage getEnemy4LeftB() {
+	public static BufferedImage getEnemy4GrayLeftB() {
 		return getSprite(Properties.SSTANK,4, 12, w, h);
 	}
 
-	public static BufferedImage getEnemy4Right() {
+	public static BufferedImage getEnemy4GrayRight() {
 		return getSprite(Properties.SSTANK,4, 15, w, h);
 	}
 	
-	public static BufferedImage getEnemy4RightB() {
+	public static BufferedImage getEnemy4GrayRightB() {
 		return getSprite(Properties.SSTANK,4, 16, w, h);
-	}
+	}	
 	
 	public static BufferedImage getImgEagle() {
 		return getSprite(Properties.SSTANK,3, 20, w, h);
@@ -272,6 +368,14 @@ public final class ImageControl {
 	
 	public static BufferedImage getImgEagleDead() {
 		return getSprite(Properties.SSTANK,3, 21, w, h);
+	}
+	
+	public static BufferedImage getImgShieldA() {
+		return getSprite(Properties.SSTANK,2, 22, w, h);
+	}
+	
+	public static BufferedImage getImgShieldB() {
+		return getSprite(Properties.SSTANK,3, 22, w, h);
 	}
 	
 	public static BufferedImage getImgForest() {
@@ -318,7 +422,7 @@ public final class ImageControl {
 		return getSprite(Properties.SSTANK,8, 21, w, h);
 	}
 
-	public static BufferedImage getItemGun() {
+	public static BufferedImage getItemGas() {
 		return getSprite(Properties.SSTANK,8, 23, w, h);
 	}
 

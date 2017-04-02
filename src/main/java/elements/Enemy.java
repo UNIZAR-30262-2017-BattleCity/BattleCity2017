@@ -38,8 +38,10 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[0] = ImageControl.getEnemy1Right();
 			imgEnemyRight[1] = ImageControl.getEnemy1RightB();
 			
+			this.tier = 1;
 			this.shieldLevel = 1;
-			vel = Properties.VEL_ENEMY;			
+			vel = Properties.VEL_NORMAL-.70;
+			velBullet = Properties.VEL_BULLET-1;
 			break;
 		case 2://fast
 			imgEnemyUp[0] = ImageControl.getEnemy2Up();
@@ -51,8 +53,10 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[0] = ImageControl.getEnemy2Right();
 			imgEnemyRight[1] = ImageControl.getEnemy2RightB();
 			
+			this.tier = 2;
 			this.shieldLevel = 1;
 			vel = Properties.VEL_ENEMY_FAST;
+			velBullet = Properties.VEL_BULLET;
 			break;
 			
 		case 3://power tank
@@ -65,22 +69,26 @@ public class Enemy extends Tank implements StageElement{
 			imgEnemyRight[0] = ImageControl.getEnemy3Right();
 			imgEnemyRight[1] = ImageControl.getEnemy3RightB();
 			
+			this.tier = 3;
 			this.shieldLevel = 1;
 			vel = Properties.VEL_NORMAL-.5;
+			velBullet = Properties.VEL_BULLET+1;
 			break;
 			
 		case 4://armor tank
-			imgEnemyUp[0] = ImageControl.getEnemy4Up();
-			imgEnemyUp[1] = ImageControl.getEnemy4UpB();
-			imgEnemyDowm[0] = ImageControl.getEnemy4Dowm();
-			imgEnemyDowm[1] = ImageControl.getEnemy4DowmB();
-			imgEnemyLeft[0] = ImageControl.getEnemy4Left();
-			imgEnemyLeft[1] = ImageControl.getEnemy4LeftB();
-			imgEnemyRight[0] = ImageControl.getEnemy4Right();
-			imgEnemyRight[1] = ImageControl.getEnemy4RightB();
+			imgEnemyUp[0] = ImageControl.getEnemy4RedUp();
+			imgEnemyUp[1] = ImageControl.getEnemy4RedUpB();
+			imgEnemyDowm[0] = ImageControl.getEnemy4RedDowm();
+			imgEnemyDowm[1] = ImageControl.getEnemy4RedDowmB();
+			imgEnemyLeft[0] = ImageControl.getEnemy4RedLeft();
+			imgEnemyLeft[1] = ImageControl.getEnemy4RedLeftB();
+			imgEnemyRight[0] = ImageControl.getEnemy4RedRight();
+			imgEnemyRight[1] = ImageControl.getEnemy4RedRightB();
 			
+			this.tier = 4;
 			this.shieldLevel = 4;
 			vel = Properties.VEL_NORMAL-.5;
+			velBullet = Properties.VEL_BULLET;
 			break;
 		}
 	}
@@ -168,6 +176,41 @@ public class Enemy extends Tank implements StageElement{
 			}
 		}
 
+	}
+	
+	public void updateColor(){
+		switch (shieldLevel) {
+		case 1:
+			imgEnemyUp[0] = ImageControl.getEnemy4GrayUp();
+			imgEnemyUp[1] = ImageControl.getEnemy4GrayUpB();
+			imgEnemyDowm[0] = ImageControl.getEnemy4GrayDowm();
+			imgEnemyDowm[1] = ImageControl.getEnemy4GrayDowmB();
+			imgEnemyLeft[0] = ImageControl.getEnemy4GrayLeft();
+			imgEnemyLeft[1] = ImageControl.getEnemy4GrayLeftB();
+			imgEnemyRight[0] = ImageControl.getEnemy4GrayRight();
+			imgEnemyRight[1] = ImageControl.getEnemy4GrayRightB();
+			break;
+		case 2:
+			imgEnemyUp[0] = ImageControl.getEnemy4GoldUp();
+			imgEnemyUp[1] = ImageControl.getEnemy4GoldUpB();
+			imgEnemyDowm[0] = ImageControl.getEnemy4GoldDowm();
+			imgEnemyDowm[1] = ImageControl.getEnemy4GoldDowmB();
+			imgEnemyLeft[0] = ImageControl.getEnemy4GoldLeft();
+			imgEnemyLeft[1] = ImageControl.getEnemy4GoldLeftB();
+			imgEnemyRight[0] = ImageControl.getEnemy4GoldRight();
+			imgEnemyRight[1] = ImageControl.getEnemy4GoldRightB();
+			break;
+		case 3:
+			imgEnemyUp[0] = ImageControl.getEnemy4GreenUp();
+			imgEnemyUp[1] = ImageControl.getEnemy4GreenUpB();
+			imgEnemyDowm[0] = ImageControl.getEnemy4GreenDowm();
+			imgEnemyDowm[1] = ImageControl.getEnemy4GreenDowmB();
+			imgEnemyLeft[0] = ImageControl.getEnemy4GreenLeft();
+			imgEnemyLeft[1] = ImageControl.getEnemy4GreenLeftB();
+			imgEnemyRight[0] = ImageControl.getEnemy4GreenRight();
+			imgEnemyRight[1] = ImageControl.getEnemy4GreenRightB();
+			break;
+		}
 	}
 
 	public boolean isClockEfect() {

@@ -16,34 +16,25 @@ public class Bullet extends GameElement implements StageElement{
     private Tank t;
     private static final int DELTA = Properties.SIZE_SQUARE/2 -4;
     
-	public Bullet(double posX, double posY, int dir, int tier, StageControl stageControl, Tank t) {
+	public Bullet(double posX, double posY, int dir, int tier, double velBullet, StageControl stageControl, Tank t) {
 		super(stageControl);
 		this.posX = posX;
 		this.posY = posY;
 		this.dir = dir;
-		this.type = tier;		
+		this.type = tier;
+		this.velBullet = velBullet;
 		isActive = true;
 		initBullet();
 		this.t = t;
 	}
 	
 	public void initBullet(){
-		switch (type) {
-		case 1://regular bullet
-			initImgBullet();
-			velBullet = Properties.VEL_BULLET-1;
-			break;
-		case 2:
-			initImgBullet();
-			velBullet = Properties.VEL_BULLET;
-			break;
-		case 3:
-			initImgBullet();
-			velBullet = Properties.VEL_BULLET+1;
-			break;
+		switch (type) {//tier
 		case 4://hard bullet
+			initImgBullet();			
+			break;
+		default:
 			initImgBullet();
-			velBullet = Properties.VEL_BULLET;
 			break;
 		}
 		
@@ -122,19 +113,19 @@ public class Bullet extends GameElement implements StageElement{
     	    	
 		if(getPosX()<Properties.xIB) {
 			setActive(false); 
-			t.setBulletsInProgres(t.getBulletsInProgres()-1);
+			t.setShoot(false);
 			return;}
 	    if(getPosX()>Properties.xFB) {
 	    	setActive(false); 
-	    	t.setBulletsInProgres(t.getBulletsInProgres()-1);
+	    	t.setShoot(false);
 	    	return;}
 	    if(getPosY()<Properties.yIB) {
 	    	setActive(false); 
-	    	t.setBulletsInProgres(t.getBulletsInProgres()-1);
+	    	t.setShoot(false);
 	    	return;}
 	    if(getPosY()>Properties.yFB) {
 	    	setActive(false); 
-	    	t.setBulletsInProgres(t.getBulletsInProgres()-1);
+	    	t.setShoot(false);
 	    	return;}
 		   	
     	

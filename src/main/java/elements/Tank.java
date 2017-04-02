@@ -8,24 +8,24 @@ public abstract class Tank extends GameElement{
 	//tank
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
 	protected double vel;
+	protected double velBullet;
 	protected int dir;
 	protected int shieldLevel;
 	protected int tier;
+	protected int timeToNext;
 	
 	//bullets	
-	protected int bulletsInProgres;
+	protected boolean shoot;
 	
 	public Tank(StageControl stageControl){
 		super(stageControl);
 		dir = 1;
-		bulletsInProgres = 0;
-		tier = 1;
 	}
 		
 	public void shoot(Bullet b) {
-		if (bulletsInProgres<Properties.MAX_BULLETS_TANK) {
+		if (!shoot) {
 			stageControl.spawnBullets(b);
-			bulletsInProgres++;
+			shoot = true;
 		}
 	}
 	
@@ -36,6 +36,16 @@ public abstract class Tank extends GameElement{
 		}else{
 			timeAnim = Properties.TIME_ANIM;
 			anim = 1;
+		}
+	}
+	
+	public boolean next(int time){
+		if(timeToNext<time){
+			timeToNext++;
+			return false;
+		}else{
+			timeToNext = 0;
+			return true;
 		}
 	}
 
@@ -102,17 +112,25 @@ public abstract class Tank extends GameElement{
 	public void setH(int h) {
 		this.heigth = h;
 	}
-
-	public int getBulletsInProgres() {
-		return bulletsInProgres;
+	
+	public boolean isShoot() {
+		return shoot;
 	}
 
-	public void setBulletsInProgres(int bulletsInProgres) {
-		this.bulletsInProgres = bulletsInProgres;
+	public void setShoot(boolean shoot) {
+		this.shoot = shoot;
 	}
 
 	public int getTier() {
 		return tier;
+	}
+
+	public double getVelBullet() {
+		return velBullet;
+	}
+
+	public void setVelBullet(double velBullet) {
+		this.velBullet = velBullet;
 	}
 
 	public void setTier(int tier) {

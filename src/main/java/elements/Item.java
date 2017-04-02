@@ -43,7 +43,7 @@ public class Item extends GameElement implements StageElement{
 			imgItem = ImageControl.getItemTank();
 			break;
 		case 7:
-			imgItem = ImageControl.getItemGun();
+			imgItem = ImageControl.getItemGas();
 			break;
 		}
 	}

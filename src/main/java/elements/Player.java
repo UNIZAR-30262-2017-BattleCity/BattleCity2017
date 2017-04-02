@@ -14,46 +14,46 @@ import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
-	private BufferedImage[] imgPlayer1Up = new BufferedImage[2];
-	private BufferedImage[] imgPlayer1Dowm = new BufferedImage[2];
-	private BufferedImage[] imgPlayer1Left = new BufferedImage[2];
-	private BufferedImage[] imgPlayer1Right = new BufferedImage[2];
-	private BufferedImage[] imgPlayer2Up = new BufferedImage[2];
-	private BufferedImage[] imgPlayer2Dowm = new BufferedImage[2];
-	private BufferedImage[] imgPlayer2Left = new BufferedImage[2];
-	private BufferedImage[] imgPlayer2Right = new BufferedImage[2];
+	private static final BufferedImage[] IMG_SHIELD = {ImageControl.getImgShieldA(),ImageControl.getImgShieldB()};
+	private final BufferedImage[] imgPlayer1Up = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer1Dowm = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer1Left = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer1Right = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer2Up = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer2Dowm = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer2Left = new BufferedImage[2];
+	private final BufferedImage[] imgPlayer2Right = new BufferedImage[2]; 
     private int userName;
 	private int lifes;
 	private int score;
 	private int player;
-    private int maxTimeItemEfect;
-	private boolean itemTaked;
-	private boolean gunEfectActivate;
+	private boolean isGas;
 	private boolean updateLifes;
 	private boolean updateScore;
 	private boolean gameOver;
 	private int lifesForScore;
 	private ArrayList<Integer> enemyType;
-	//escudo
-    //private int shieldStatus = 0;
-    private boolean shieldActivate = false;
-	
+    private boolean shieldActivate;
+	private boolean freezed;
+	private int gas;	
 	
     public Player(int col, int row, int lifes, int player, StageControl stageControl) {
 		super(stageControl);
-    	this.setLifes(lifes);
-		this.stageControl = stageControl;
+    	this.lifes = lifes;
 		setTypeTank(0);		
 		setInitPos(col, row);
 		this.player = player;
 		initPlayer();
-		itemTaked= false;
-		gunEfectActivate = false;
+		isGas = true;
 		updateLifes = true;
 		updateScore = true;
 		score = 0;
-		lifesForScore = 10000;
-		maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;		
+		tier = 1;
+		gas = 1000;
+		shieldActivate = true;
+		velBullet = Properties.VEL_BULLET;
+		timeToNext = 0;
+		lifesForScore = 10000;		
 		this.shieldLevel = 1;
     	enemyType = new ArrayList<>();
 	}
@@ -82,7 +82,7 @@ public class Player extends Tank implements StageElement{
     
     @Override
     public void draw(Graphics g) {
-
+    	
     	if (vel!=0) {
     		switch (this.dir) {
     		case 1:
@@ -114,6 +114,10 @@ public class Player extends Tank implements StageElement{
     			break;
     		}
     	}
+    	
+    	if (shieldActivate) {
+    		drawPlayer(g, IMG_SHIELD[anim],IMG_SHIELD[anim]);
+		}
 
     	if (updateLifes) {
     		if (player==1) {
@@ -150,38 +154,48 @@ public class Player extends Tank implements StageElement{
     }
     
     @Override
-    public void updateDraw(){
-    	
+    public void updateDraw(){    	
     	anim();
     	move();    	
     	collision();
     	
-    	if (itemTaked) {
-			item();
-		}
-    	
     	if(shieldActivate){
-			
-		}else{
-			
-		}      
+			if (next(Properties.MAX_TIME_ITEM_EFECT)) {
+				shieldActivate = false;
+			}
+		}    
     	
     }
         
     private void move() {
-    	switch (dir) {
-		case 1://up
-			posY -= vel;
-			break;
-		case -1://down
-			posY += vel;
-			break;
-		case -2://left
-			posX -= vel;
-			break;
-		case 2://right
-			posX += vel;
-			break;
+    	
+    	if (freezed) {
+    		if (next(Properties.MAX_TIME_ITEM_EFECT)) {
+				freezed = false;
+			}
+		}else{
+			if (isGas) {				
+				gas -= vel;
+				if (gas<1) {
+					isGas=false;
+				}
+				
+				switch (dir) {
+				case 1://up
+					posY -= vel;
+					break;
+				case -1://down
+					posY += vel;
+					break;
+				case -2://left
+					posX -= vel;
+					break;
+				case 2://right
+					posX += vel;
+					break;
+				}
+			}
+				
 		}
 		
 	}
@@ -264,15 +278,16 @@ public class Player extends Tank implements StageElement{
     }
 	
 	public void reduceLifes(){
-    	lifes--;
-    	updateLifes = true;
-    	if (lifes<=0) {
-    		gameOver = true;
-		}else{
-			resetPos();
-			shieldEfect();
-		}
-    	
+		if (!shieldActivate) {
+			lifes--;
+			updateLifes = true;
+			if (lifes<=0) {
+				gameOver = true;
+			}else{
+				resetPos();
+				shieldEfect();
+			}
+		}    	
     }
 	
 	public void paintGameOver(Graphics g, int y){
@@ -293,7 +308,7 @@ public class Player extends Tank implements StageElement{
 		setUpdateScore(true);
 		setVel(0);
 		setDir(1);
-		setBulletsInProgres(0);
+		setShoot(false);
 		setActive(true);
 		enemyType.clear();
     }
@@ -315,39 +330,28 @@ public class Player extends Tank implements StageElement{
 	
 	public void starEfect(){		
 		addScore(5);
+		if (tier<4) {
+			tier++;
+		} 
 		updateScore = true;
 	}
 	
-	public void tankEfect(){		
+	public void tankEfect(){
+		addScore(1);
 		lifes++;
 		updateLifes = true;
 	}
 	
-	public void gunEfect(){
-		if (gunEfectActivate) {
-			//TODO
-		}else{
-			//TODO
-		}
+	public void gasEfect(){
+		addScore(1);
+		gas += 500;
 	}
 	
 	public void shieldEfect() {
+		addScore(1);
 		shieldActivate = true;
 	}
 	
-	public void item(){		
-		if(maxTimeItemEfect>0){
-			maxTimeItemEfect--;
-		}else{
-			maxTimeItemEfect = Properties.MAX_TIME_ITEM_EFECT;
-			shieldActivate = false;
-			gunEfectActivate = false;
-			this.itemTaked = false;
-			stageControl.setItemTaked(false);
-			gunEfect();
-		}
-	}
-	    	
 	public int getScore() {
 		return score;
 	}
@@ -370,22 +374,6 @@ public class Player extends Tank implements StageElement{
 
 	public void setUserName(int userName) {
 		this.userName = userName;
-	}
-
-	public boolean isItemTaked() {
-		return itemTaked;
-	}
-
-	public void setItemTaked(boolean itemTaked) {
-		this.itemTaked = itemTaked;
-	}
-
-	public boolean isGunEfectActivate() {
-		return gunEfectActivate;
-	}
-
-	public void setGunEfectActivate(boolean gunEfectActivate) {
-		this.gunEfectActivate = gunEfectActivate;
 	}
 
 	public boolean isShieldActivate() {
@@ -426,6 +414,14 @@ public class Player extends Tank implements StageElement{
 
 	public void setEnemyType(ArrayList<Integer> enemyType) {
 		this.enemyType = enemyType;
+	}
+
+	public boolean isFreezed() {
+		return freezed;
+	}
+
+	public void setFreezed(boolean freezed) {
+		this.freezed = freezed;
 	}
 
 }

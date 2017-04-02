@@ -207,7 +207,7 @@ public class Score {
 		case 3:
 			return ImageControl.getEnemy3Up();
 		case 4:
-			return ImageControl.getEnemy4Up();
+			return ImageControl.getEnemy4RedUp();
 		default:
 			return ImageControl.getEnemy1Up();
 		}

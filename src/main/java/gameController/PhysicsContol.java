@@ -58,8 +58,7 @@ public class PhysicsContol {
 				s = list.get(i);
 				if (!s.equals(t) && !s.equals(b)) {
 					if (isIntersecs(b,s)) {
-						//t.setBulletsInProgres(t.getBulletsInProgres()-1);
-						actionBullet(t,b,true, s, stageControl);						
+						actionBullet(t, b, s, stageControl);						
 					}
 				}
 			}
@@ -68,20 +67,20 @@ public class PhysicsContol {
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
 				if (isIntersecs(b,s)) {
-					actionBullet(t,b,false, s, stageControl);									
+					actionBullet(t, b, s, stageControl);									
 				}
 
 			}
 		}
 	}
 	
-	public static void actionBullet(Tank t, Bullet b, boolean player, StageElement s,StageControl stageControl){
+	public static void actionBullet(Tank t, Bullet b, StageElement s,StageControl stageControl){
 
 		if (s.getClass().equals(Water.class)) {
 			stageControl.setInitDraw(true);
 		}else{
 			b.setActive(false);
-			t.setBulletsInProgres(t.getBulletsInProgres()-1);
+			t.setShoot(false);
 			if (s.getClass().equals(Wall.class)) {
 				int w = s.getType();
 				if (w !=1) return;
@@ -94,12 +93,18 @@ public class PhysicsContol {
 				stageControl.getgC().resultStage(3);
 			}
 
-			if (player) {
-				if (s.getClass().equals(Enemy.class)) {	
-					stageControl.deleteEnemy((Player) t,(Enemy) s);
+			if (t.getTypeTank()==0) {
+				if (s.getClass().equals(Enemy.class)) {					
+					Enemy e = (Enemy) s;
+					e.setShieldLevel(e.getShieldLevel()-b.getType());
+					if (e.getType() == 4 && e.getShieldLevel()>0) e.updateColor();
+					if (e.getShieldLevel()<1) {
+						stageControl.deleteEnemy((Player) t,(Enemy) s);
+					}
 				}
 				if (s.getClass().equals(Player.class)) {
-					//TODO
+					Player p = (Player) s;
+					p.setFreezed(true);
 				}
 			}else{			
 				if (s.getClass().equals(Player.class)) {				

@@ -235,7 +235,7 @@ public class StageControl {
     				tmpEnemy.setDir(dir[0]);
     				if (dir[1] == 1) {
     					tmpEnemy.shoot(new Bullet(tmpEnemy.getPosX(),tmpEnemy.getPosY(),
-    							tmpEnemy.getDir(),tmpEnemy.getTier(),this,tmpEnemy));
+    							tmpEnemy.getDir(),tmpEnemy.getTier(),tmpEnemy.getVelBullet(),this,tmpEnemy));
     				}
     			}    			
     			tmpEnemy.updateDraw();
@@ -403,14 +403,15 @@ public class StageControl {
 		nItemsSimul--;
 		switch (it.getType()) {
 		case 1://shield
-			player.setItemTaked(true);
 			player.shieldEfect();	
 			break;
 		case 2://clock
 			itemTaked = true;
+			player.addScore(1);
 			setClockEfect(true);
 			break;
 		case 3://shovel
+			player.addScore(1);
 			eagleIronWallEfect(true);
 			break;
 		case 4://star
@@ -422,10 +423,8 @@ public class StageControl {
 		case 6://tank
 			player.tankEfect();
 			break;
-		case 7://gun
-			player.setItemTaked(true);
-			player.setGunEfectActivate(true);
-			player.gunEfect();
+		case 7://gas
+			player.gasEfect();
 			break;
 		}
 		deleteBullet(it);
