@@ -245,35 +245,19 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		int key = e.getKeyCode();
 		if (screen.equals(Screen.STAGE_PLAY)) {
 			if (isPlayer1 && players[0].isActive()) {
-				switch (key) {
-				case KeyEvent.VK_UP:
+				if (key == buttons[0][0] 
+						|| key == buttons[0][1]
+								|| key == buttons[0][2]
+										|| key == buttons[0][3]) {
 					players[0].setVel(0);
-					break;
-				case KeyEvent.VK_DOWN:
-					players[0].setVel(0);
-					break;
-				case KeyEvent.VK_RIGHT:
-					players[0].setVel(0);
-					break;
-				case KeyEvent.VK_LEFT:
-					players[0].setVel(0);
-					break;
 				}
 			}
 			if (isPlayer2 && players[1].isActive()) {
-				switch (key) {
-				case KeyEvent.VK_W:
+				if (key == buttons[1][0] 
+						|| key == buttons[1][1]
+								|| key == buttons[1][2]
+										|| key == buttons[1][3]) {
 					players[1].setVel(0);
-					break;
-				case KeyEvent.VK_S:
-					players[1].setVel(0);
-					break;
-				case KeyEvent.VK_D:
-					players[1].setVel(0);
-					break;
-				case KeyEvent.VK_A:
-					players[1].setVel(0);
-					break;
 				}
 			}	
 
@@ -347,43 +331,43 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case STAGE_PLAY:
 			if (isPlayer1 && players[0].isActive()) {
 				if (e.getKeyCode() == buttons[0][0]) {
-					key = 11;
+					key = 1001;
 				} else if (e.getKeyCode() == buttons[0][1]) {
-					key = 12;
+					key = 1002;
 				} else if (e.getKeyCode() == buttons[0][2]) {
-					key = 13;
+					key = 1003;
 				} else if (e.getKeyCode() == buttons[0][3]) {
-					key = 14;
+					key = 1004;
 				} else if (e.getKeyCode() == buttons[0][4]) {
-					key = 15;
+					key = 1005;
 				} else if (e.getKeyCode() == buttons[0][5]) {
-					key = 16;
+					key = 1006;
 				}
 			}
 			if (isPlayer2 && players[1].isActive()) {
 				if (e.getKeyCode() == buttons[1][0]) {
-					key = 21;
+					key = 2001;
 				} else if (e.getKeyCode() == buttons[1][1]) {
-					key = 22;
+					key = 2002;
 				} else if (e.getKeyCode() == buttons[1][2]) {
-					key = 23;
+					key = 2003;
 				} else if (e.getKeyCode() == buttons[1][3]) {
-					key = 24;
+					key = 2004;
 				} else if (e.getKeyCode() == buttons[1][4]) {
-					key = 25;
+					key = 2005;
 				} else if (e.getKeyCode() == buttons[1][5]) {
-					key = 26;
+					key = 2006;
 				}
 			}
 			playerMove(key);
 		case STAGE_PAUSED:
-			if (key == KeyEvent.VK_ENTER ||
-					key == KeyEvent.VK_G) {		
+			if (key == buttons[0][5] ||
+					key == buttons[1][5]) {		
 				screen = Screen.STAGE_PLAY;
-				System.out.println("va a play");
 			}
 			break;
 		case SCORE_STAGE:
+			
 			if (key == KeyEvent.VK_ENTER ||
 					key == KeyEvent.VK_G) {		
         		if (isGameOver) {
@@ -584,59 +568,57 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 
 		if (isPlayer1 && players[0].isActive()) {
 			switch (key) {
-			case 11:
+			case 1001:
 				players[0].setDir(1);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
 
-			case 12:
+			case 1002:
 				players[0].setDir(-1);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-			case 13:
+			case 1003:
 				players[0].setDir(2);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-			case 14:
+			case 1004:
 				players[0].setDir(-2);
 				players[0].setVel(Properties.VEL_NORMAL);
 				break;
-			case 15:
+			case 1005:
 				players[0].shoot(new Bullet(players[0].getPosX(),
 						players[0].getPosY(),players[0].getDir(),players[0].getTier(),stageControl,players[0]));
 				break;
-			case 16:
+			case 1006:
 				screen = Screen.STAGE_PAUSED;
-				System.out.println("va a pause");
 				break;
 			}
 		}
 		if (isPlayer2 && players[1].isActive()) {
 			switch (key) {
-			case 21:
+			case 2001:
 				players[1].setDir(1);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
 
-			case 22:
+			case 2002:
 				players[1].setDir(-1);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
-			case 23:
+			case 2003:
 				players[1].setDir(2);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
-			case 24:
+			case 2004:
 				players[1].setDir(-2);
 				players[1].setVel(Properties.VEL_NORMAL);
 				break;
-			case 25:
+			case 2005:
 				players[1].shoot(new Bullet(players[1].getPosX(),
 						players[1].getPosY(),players[1].getDir(),players[1].getTier(),stageControl,players[1]));
 				break;
-			case 26:
+			case 2006:
 				screen = Screen.STAGE_PAUSED;
-				System.out.println("va a pause");
 				break;
 			}
 		}
