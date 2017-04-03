@@ -7,6 +7,7 @@ import gameController.StageControl;
 public abstract class Tank extends GameElement{
 	
 	//tank
+	protected Effect birthEffect;
 	protected int typeTank;  //tipo de tanque 0 = player, 1 = enemy
 	protected double vel;
 	protected double velBullet;
@@ -14,19 +15,23 @@ public abstract class Tank extends GameElement{
 	protected int shieldLevel;
 	protected int tier;
 	protected int timeToNext;
+	protected boolean isBorn;
 	
 	//bullets	
 	protected boolean shoot;
 	
-	public Tank(StageControl stageControl){
+	public Tank(int col, int row,StageControl stageControl){
 		super(stageControl);
+		setInitPos(col, row);
 		dir = 1;
+		isBorn = false;
 		width = Properties.SIZE_SQUARE-2;
 		heigth = Properties.SIZE_SQUARE-2;
+		birthEffect = new Effect(posX, posY, 3, stageControl);
 	}
 		
 	public void shoot(Bullet b) {
-		if (!shoot) {
+		if (!shoot&&isBorn) {
 			stageControl.spawnBullets(b);
 			SoundControl.playSound("shoot");
 			shoot = true;
@@ -139,6 +144,14 @@ public abstract class Tank extends GameElement{
 
 	public void setTier(int tier) {
 		this.tier = tier;
+	}
+
+	public boolean isBorn() {
+		return isBorn;
+	}
+
+	public void setBorn(boolean isBorn) {
+		this.isBorn = isBorn;
 	}
 	
 }

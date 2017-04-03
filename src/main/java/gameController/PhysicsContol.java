@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import elements.Bullet;
 import elements.Eagle;
+import elements.Effect;
 import elements.Enemy;
 import elements.GameElement;
 import elements.Item;
@@ -88,34 +89,38 @@ public class PhysicsContol {
 					stageControl.setUpdteBricks(true);
 					s.setActive(false);
 				}
-			}else if (s.getClass().equals(Eagle.class)) {				
+			}else if (s.getClass().equals(Eagle.class)) {			
 				s.setActive(false);
 				stageControl.getgC().resultStage(3);
-			}
-
-			if (t.getTypeTank()==0) {
-				if (s.getClass().equals(Enemy.class)) {					
-					Enemy e = (Enemy) s;
-					e.setShieldLevel(e.getShieldLevel()-b.getType());
-					if (e.getType() == 4 && e.getShieldLevel()>0) e.updateColor();
-					if (e.getShieldLevel()<1) {
-						stageControl.deleteEnemy((Player) t,(Enemy) s);
+			}else{	
+				Tank t1 = (Tank) s;
+				if (t1.isBorn()) {								
+					if (t.getTypeTank()==0) {
+						if (s.getClass().equals(Enemy.class)) {
+							stageControl.spawnEffects(new Effect(s.getPosX(), s.getPosY(), 4, stageControl));
+							Enemy e = (Enemy) s;
+							e.setShieldLevel(e.getShieldLevel()-b.getType());
+							if (e.getType() == 4 && e.getShieldLevel()>0) e.updateColor();
+							if (e.getShieldLevel()<1) {
+								stageControl.deleteEnemy((Player) t,(Enemy) s);
+							}
+						}
+						if (s.getClass().equals(Player.class)) {
+							Player p = (Player) s;
+							p.setFreezed(true);
+						}
+					}else{			
+						if (s.getClass().equals(Player.class)) {
+							stageControl.spawnEffects(new Effect(s.getPosX(), s.getPosY(), 4, stageControl));
+							if (s.equals(StageControl.getPlayers()[0])) {
+								StageControl.getPlayers()[0].reduceLifes();
+							}else{
+								StageControl.getPlayers()[1].reduceLifes();
+							}
+						}
 					}
-				}
-				if (s.getClass().equals(Player.class)) {
-					Player p = (Player) s;
-					p.setFreezed(true);
-				}
-			}else{			
-				if (s.getClass().equals(Player.class)) {				
-					if (s.equals(StageControl.getPlayers()[0])) {
-						StageControl.getPlayers()[0].reduceLifes();
-					}else{
-						StageControl.getPlayers()[1].reduceLifes();
-					}
-
-				}
-			}
+				}				
+			}			
 		}
 	}
 

@@ -14,6 +14,7 @@ public enum Screen {
 	BUTTON_PLAYERS,
 	GAMEOVER, 
 	STAGE_WIN, 
-	INIT_SCORE
+	INIT_SCORE, 
+	INIT_MENU
 	
 }

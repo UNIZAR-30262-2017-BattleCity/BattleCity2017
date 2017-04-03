@@ -9,6 +9,7 @@ import java.util.Random;
 import application.Properties;
 import elements.Bullet;
 import elements.Eagle;
+import elements.Effect;
 import elements.Enemy;
 import elements.Item;
 import elements.Forest;
@@ -43,6 +44,7 @@ public class StageControl {
     private LinkedList<Wall> stageWalls;
     private LinkedList<Wall> eagleBricks;
     private LinkedList<Forest> stageForest;
+    private LinkedList<Effect> stageEffects;
     private LinkedList<MiniEnemies> miniEnemies;
     private LinkedList<StageElement> staticElements;
     
@@ -61,6 +63,7 @@ public class StageControl {
 	
 	private boolean updteBricks;
 	private boolean initDraw;
+	private boolean rePaintStageGUI;
 	private boolean updateMiniEnemies;
 	
 	private IAControl ia;
@@ -95,6 +98,7 @@ public class StageControl {
     	bullets = new LinkedList<>();    	
     	stageWalls = new LinkedList<>();    	
     	miniEnemies = new LinkedList<>();
+    	stageEffects = new LinkedList<>();
     	stageForest = new LinkedList<>();	
     	staticElements = new LinkedList<>();
     	mazeControl = new MazeControl(this);
@@ -147,15 +151,19 @@ public class StageControl {
     	nEnemies4 = nEnemies[3];
     	resetVariables();
     	
-    	 mazeControl.loadMaze(level,isPlayer1,isPlayer2);
-    	 eagleBricks = mazeControl.loadEagleWall(); 
-    	 imgBackStage = mazeControl.loadBackground(level);
-    	 loadMiniEnemies();
+    	mazeControl.loadMaze(level,isPlayer1,isPlayer2);
+    	eagleBricks = mazeControl.loadEagleWall(); 
+    	imgBackStage = mazeControl.loadBackground(level);
+    	loadMiniEnemies();
     	 
     }
     
 	public void spawnBullets(Bullet e) {
     	bullets.add(e);
+	}
+	
+	public void spawnEffects(Effect ef) {
+    	stageEffects.add(ef);
 	}
     
     public void spawnStaticElements(StageElement e) {
@@ -267,7 +275,7 @@ public class StageControl {
     		tmpElement = bullets.get(i);
     		if (tmpElement.isActive()){
     			tmpElement.updateDraw();
-    		}else deleteBullet(tmpElement);
+    		}else deleteBullet((Bullet)tmpElement);
     	}
     	
     	if (eagleWallEfect) {
@@ -275,6 +283,11 @@ public class StageControl {
 				stageWalls.get(i).updateDraw();
 			}
 		}
+    	
+    	
+		for (int i = 0; i < stageEffects.size(); i++) {
+				stageEffects.get(i).updateDraw();
+		}		
     	
     	if (updteBricks) {
     		for (int i = 0; i < eagleBricks.size(); i++) {
@@ -292,19 +305,27 @@ public class StageControl {
     
     public void draw(Graphics g){    	
     	
-        if (initDraw) {
-    		//g.setColor(Color.black);
-            //g.fillRect(Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
-			
-        	//for (StageElement s : staticElements) {
-				//s.draw(g);
-			//}        	
+        if (rePaintStageGUI) {
+			gC.getStageGUI().draw(gC.getLevel()-1, g);
+			if (gC.isPlayer1() && players[0].isActive()) {
+				players[0].setUpdateLifes(true);
+				players[0].setUpdateScore(true);
+				players[0].setUpdateGas(true);
+			}
+			if (gC.isPlayer2() && players[1].isActive()){
+				players[1].setUpdateLifes(true);
+				players[1].setUpdateScore(true);
+			}
+			updateMiniEnemies = true;
+			rePaintStageGUI = false;
+			initDraw = true;
+		}
+    	
+    	if (initDraw) {      	
         	g.drawImage(imgBackStage[0], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
 			initDraw = false;
 		}
-        ///g.setColor(Color.black);
-        //g.fillRect(Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2);
-		
+        
     	g.drawImage(imgBackStage[1], Properties.X_INIT_STAGE-1,Properties.Y_INIT_STAGE-2, Properties.WIDTH_STAGE+2, Properties.HEIGHT_STAGE+2, null);
     	
     	for (Wall wall : eagleBricks) {
@@ -330,6 +351,10 @@ public class StageControl {
     	for (Forest obs : stageForest) {
 			obs.draw(g);
 		}
+    	    	
+    	for (Effect ef : stageEffects) {
+			ef.draw(g);
+		}	
     	
     	for (Item item : items) {
 			item.draw(g);
@@ -345,8 +370,13 @@ public class StageControl {
     	
     }
     
-    public void deleteBullet(StageElement e){
-        bullets.remove(e);
+    public void deleteBullet(Bullet e){
+        stageEffects.add(new Effect(e.getPosX(), e.getPosY(), 2,this));
+    	bullets.remove(e);
+    } 
+    
+    public void deleteEffect(Effect ef){
+    	stageEffects.remove(ef);
     }
     
     public void deleteWall(Wall w){
@@ -440,7 +470,7 @@ public class StageControl {
 			player.gasEfect();
 			break;
 		}
-		deleteBullet(it);
+		deleteItem(it);
     }
 	
 	public void bombEfect(Player p) {
@@ -594,6 +624,13 @@ public class StageControl {
 	public void setInitDraw(boolean initDraw) {
 		this.initDraw = initDraw;
 	}
-	
-	
+
+	public boolean isRePaintStageGUI() {
+		return rePaintStageGUI;
+	}
+
+	public void setRePaintStageGUI(boolean rePaintStageGUI) {
+		this.rePaintStageGUI = rePaintStageGUI;
+	}
+		
 }

@@ -52,14 +52,13 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private boolean updateConfig;
 
 	private boolean backgroundMenu;
-
 	private boolean backgroundStage;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
 		//jf.setFocusable(true);
 		jf.addKeyListener(this);
-		screen = Screen.MENU;
+		screen = Screen.INIT_MENU;
 		level = 1;
 		opc = 1;
 		opcH = 1;
@@ -152,7 +151,13 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	public void updateDraw(){	
 		switch (screen) {
-		case INTRO:			
+		case INTRO:
+			break;
+		case INIT_MENU:
+			backgroundMenu = true;
+			backgroundStage = false;
+			sound();
+	        screen = Screen.MENU;
 			break;
 		case MENU:
 			break;
@@ -167,11 +172,17 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case PRESENT_STAGE:
 			break;
 		case INIT_STAGE:
+	        initStage();
+			backgroundMenu = false;
+			backgroundStage = true;
+			sound();
+	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
 			stageControl.updateDraw();
 			break;
 		case STAGE_WIN:
+			if (next(180)) screen = Screen.INIT_SCORE;
 			break;
 		case STAGE_PAUSED:
 			break;
@@ -179,9 +190,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case SCORE_STAGE:
 			score.updateDraw(this);
+	        if(score.isScoreFinished()){
+	        	if (next(120)) {
+	        		if (isGameOver) {
+	        			screen = Screen.INIT_MENU;
+	        			isGameOver = false;
+	        		}else screen = Screen.PRESENT_STAGE;
+	        	}
+	        }
 			break;
 		case GAMEOVER:
 			gameOver.updateDraw();
+			if (next(240)) {
+				screen = Screen.INIT_SCORE;				
+			}
 			break;
 		default:
 			break;
@@ -237,6 +259,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case INTRO:
 			
 			break;
+		case INIT_MENU:
+
+			break;
 		case MENU:
 			menu(g);
 			cursor.draw(g);
@@ -254,18 +279,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case INIT_STAGE:	        
 	        stageGUI.draw(level,g);
-	        initStage();
-			backgroundMenu = false;
-			backgroundStage = true;
-			sound();
-	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
 			stageControl.draw(g);	
 			break;
 		case STAGE_WIN:
-			stageControl.draw(g);
-			if (next(Properties.TIME_TO_SCORE)) screen = Screen.INIT_SCORE;
+			stageControl.draw(g);			
 			break;
 		case STAGE_PAUSED:
 			g.drawImage(ImageControl.getPaused(Properties.SSTANK), 252, 298, 100, 25, null);
@@ -277,20 +296,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case SCORE_STAGE:			
 			score.draw(g,this);
-	        if(score.isScoreFinished()){
-	        	if (next(Properties.TIME_TO_MENU)) {
-	        		if (isGameOver) {
-	        			screen = Screen.MENU;
-	        			isGameOver = false;
-	        		}else screen = Screen.PRESENT_STAGE;
-	        	}
-	        }
 			break;
 		case GAMEOVER:
 			stageControl.setInitDraw(true);
 			stageControl.draw(g);
-			gameOver.draw(g);
-			if (next(Properties.TIME_TO_SCORE)) screen = Screen.INIT_SCORE;
+			gameOver.draw(g);			
 			break;
 		default:
 			break;
@@ -485,17 +495,22 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			}
 			playerMove(key);
 		case STAGE_PAUSED:
-			if (key == buttons[0][5] ||
-					key == buttons[1][5]) {		
-				screen = Screen.STAGE_PLAY;
+			if (isPlayer1) {
+				if (key == buttons[0][5]){
+					screen = Screen.STAGE_PLAY;
+				}
+			}			
+			if (isPlayer2) {
+				if	(key == buttons[1][5]) {	
+					screen = Screen.STAGE_PLAY;
+				}
 			}
 			break;
-		case SCORE_STAGE:
-			
+		case SCORE_STAGE:			
 			if (key == KeyEvent.VK_ENTER ||
 					key == KeyEvent.VK_G) {		
         		if (isGameOver) {
-        			screen = Screen.MENU;
+        			screen = Screen.INIT_MENU;
         		}else screen = Screen.PRESENT_STAGE;
 			}			
 			break;
@@ -876,6 +891,14 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 
 	public void setStageControl(StageControl stageControl) {
 		this.stageControl = stageControl;
+	}
+
+	public StageGUI getStageGUI() {
+		return stageGUI;
+	}
+
+	public void setStageGUI(StageGUI stageGUI) {
+		this.stageGUI = stageGUI;
 	}
 	
 }

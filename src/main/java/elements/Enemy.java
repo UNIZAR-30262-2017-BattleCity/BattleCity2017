@@ -18,8 +18,7 @@ public class Enemy extends Tank implements StageElement{
     private boolean clockEfect;
     
 	public Enemy(int col, int row, int type, StageControl stageControl) {
-		super(stageControl);
-		setInitPos(col, row);
+		super(col,row,stageControl);
 		setTypeTank(1);
 		this.type = type;
 		dir=-1;
@@ -96,86 +95,105 @@ public class Enemy extends Tank implements StageElement{
 	@Override
 	public void updateDraw() {	
 
-		if (!clockEfect) {
-			switch (dir) {
-			case 1://up
-				posY -= vel;
-				break;
-			case -1://down
-				posY += vel;
-				break;
-			case -2://left
-				posX -= vel;
-				break;
-			case 2://rigth
-				posX += vel;
-				break;
+		if (isBorn) {
+			if (!clockEfect) {
+				move();
+				collision();
+				anim();
 			}
-
-			Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements_Enemy());
-
-			if (p!=null) {
-
-				switch (dir) {
-				case 1://up
-					setPosY(p.getY());
-					break;
-				case -1://down
-					setPosY(p.getY()-heigth);
-					break;
-				case -2://left
-					setPosX(p.getX());
-					break;
-				case 2://right
-					setPosX(p.getX()-width);
-					break;
-				}
+		}else{
+			birthEffect.setPosX(posX);
+			birthEffect.setPosY(posY);
+			birthEffect.updateDraw();
+			if (next(120)) {
+				isBorn = true;
 			}
-
-			if(getPosX()<xI) setPosX(xI);
-			if(getPosX()>xF) setPosX(xF);
-			if(getPosY()<yI) setPosY(yI);
-			if(getPosY()>yF) setPosY(yF);
-
-			anim();
 		}
 	}	
+	
+	public void move(){
+		switch (dir) {
+		case 1://up
+			posY -= vel;
+			break;
+		case -1://down
+			posY += vel;
+			break;
+		case -2://left
+			posX -= vel;
+			break;
+		case 2://rigth
+			posX += vel;
+			break;
+		}
+	}
+	
+	public void collision(){
+		Point p = PhysicsContol.collisionEnemy(this, stageControl.getElements_Enemy());
+
+		if (p!=null) {
+
+			switch (dir) {
+			case 1://up
+				setPosY(p.getY());
+				break;
+			case -1://down
+				setPosY(p.getY()-heigth);
+				break;
+			case -2://left
+				setPosX(p.getX());
+				break;
+			case 2://right
+				setPosX(p.getX()-width);
+				break;
+			}
+		}
+
+		if(getPosX()<xI) setPosX(xI);
+		if(getPosX()>xF) setPosX(xF);
+		if(getPosY()<yI) setPosY(yI);
+		if(getPosY()>yF) setPosY(yF);
+
+	}
 
 	@Override
 	public void draw(Graphics g) {
 
-		if (clockEfect) {
-			switch (this.dir) {
-			case 1:
-				g.drawImage(imgEnemyUp[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			case -1:
-				g.drawImage(imgEnemyDowm[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			case -2:
-				g.drawImage(imgEnemyLeft[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			case 2:
-				g.drawImage(imgEnemyRight[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
+		if (isBorn) {
+			if (clockEfect) {
+				switch (this.dir) {
+				case 1:
+					g.drawImage(imgEnemyUp[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				case -1:
+					g.drawImage(imgEnemyDowm[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				case -2:
+					g.drawImage(imgEnemyLeft[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				case 2:
+					g.drawImage(imgEnemyRight[0], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				}
+			}else{
+				switch (this.dir) {			
+				case 1:
+					g.drawImage(imgEnemyUp[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				case -1:
+					g.drawImage(imgEnemyDowm[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				case -2:
+					g.drawImage(imgEnemyLeft[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				case 2:
+					g.drawImage(imgEnemyRight[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
+					break;
+				}
 			}
 		}else{
-			switch (this.dir) {			
-			case 1:
-				g.drawImage(imgEnemyUp[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			case -1:
-				g.drawImage(imgEnemyDowm[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			case -2:
-				g.drawImage(imgEnemyLeft[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			case 2:
-				g.drawImage(imgEnemyRight[anim], (int) getPosX(), (int)getPosY(),  getW(), getH(), null);
-				break;
-			}
+			birthEffect.draw(g);
 		}
-
 	}
 	
 	public void updateColor(){
@@ -212,7 +230,7 @@ public class Enemy extends Tank implements StageElement{
 			break;
 		}
 	}
-
+	
 	public boolean isClockEfect() {
 		return clockEfect;
 	}

@@ -467,10 +467,10 @@ public final class ImageControl {
 	}
 	
 	public static BufferedImage getEffectTankA() {
-		return getSprite(Properties.SSTANK,9, 20, w, h);
+		return getSprite(Properties.SSTANK,9, 20, w*2, h*2);
 	}
 	
 	public static BufferedImage getEffectTankB() {
-		return getSprite(Properties.SSTANK,9, 22, w, h);
+		return getSprite(Properties.SSTANK,9, 22, w*2, h*2);
 	}
 }

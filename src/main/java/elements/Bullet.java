@@ -32,11 +32,11 @@ public class Bullet extends GameElement implements StageElement{
 		switch (type) {//tier
 		case 2://fast bullet
 			initImgBullet();
-			velBullet = Properties.VEL_BULLET+1;
+			velBullet = Properties.VEL_BULLET+0.3;
 			break;
 		case 3://big bullet
 			initImgBullet();
-			velBullet = Properties.VEL_BULLET+1;
+			velBullet = Properties.VEL_BULLET+0.5;
 			break;
 		case 4://big and hard bullet
 			initImgBullet();		
@@ -134,9 +134,16 @@ public class Bullet extends GameElement implements StageElement{
 	    if(getPosY()>Properties.yFB) {
 	    	setActive(false); 
 	    	t.setShoot(false);
-	    	return;}
-		   	
+	    	return;}		   	
     	
     }
+
+	public int getDir() {
+		return dir;
+	}
+
+	public void setDir(int dir) {
+		this.dir = dir;
+	}
     
 }

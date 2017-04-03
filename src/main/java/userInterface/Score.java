@@ -96,7 +96,7 @@ public class Score {
 	
 	public void updateDraw(GameControl gC){
 
-		if (next(30)) {
+		if (next(20)) {
 			if (gC.isPlayer1()) {
 				int s = updateScore(typeEnemyP1[numEnemy-1]);				
 				if (s > 0 && !stopScoreP1) {

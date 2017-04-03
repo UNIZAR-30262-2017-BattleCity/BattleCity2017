@@ -14,7 +14,6 @@ import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
 	
-	private static final BufferedImage[] IMG_SHIELD = {ImageControl.getImgShieldA(),ImageControl.getImgShieldB()};
 	private final BufferedImage[] imgPlayer1Up = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer1Dowm = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer1Left = new BufferedImage[2];
@@ -23,6 +22,8 @@ public class Player extends Tank implements StageElement{
 	private final BufferedImage[] imgPlayer2Dowm = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer2Left = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer2Right = new BufferedImage[2];
+	private static Effect shieldEffect;
+	private final int initGas = 4000;
     private int userName;
 	private int lifes;
 	private int score;
@@ -31,7 +32,6 @@ public class Player extends Tank implements StageElement{
 	private boolean updateLifes;
 	private boolean updateScore;
 	private boolean updateGas;
-	private boolean updateMove;
 	private boolean gameOver;
 	private int lifesForScore;
 	private ArrayList<Integer> enemyType;
@@ -40,21 +40,20 @@ public class Player extends Tank implements StageElement{
 	private int gas;		
 	
     public Player(int col, int row, int lifes, int player, StageControl stageControl) {
-		super(stageControl);
+		super(col,row,stageControl);
     	this.lifes = lifes;
 		setTypeTank(0);
-		setInitPos(col, row);
 		this.player = player;
 		initPlayer();
 		isGas = true;
 		updateLifes = true;
 		updateScore = true;
 		updateGas = true;
-		updateMove = true;
 		score = 0;
 		tier = 1;
-		gas = 3000;
+		gas = initGas;
 		shieldActivate = true;
+		shieldEffect = new Effect(posX, posY, 1,stageControl);
 		velBullet = Properties.VEL_BULLET;
 		timeToNext = 0;
 		lifesForScore = 10000;
@@ -87,55 +86,62 @@ public class Player extends Tank implements StageElement{
     @Override
     public void draw(Graphics g) {
     	
-    	if (vel!=0) {
-    		switch (this.dir) {
-    		case 1:
-    			drawPlayer(g, imgPlayer1Up[anim],imgPlayer2Up[anim]);
-    			break;
-    		case -1:
-    			drawPlayer(g, imgPlayer1Dowm[anim],imgPlayer2Dowm[anim]);
-    			break;
-    		case -2:
-    			drawPlayer(g, imgPlayer1Left[anim],imgPlayer2Left[anim]);
-    			break;
-    		case 2:
-    			drawPlayer(g, imgPlayer1Right[anim],imgPlayer2Right[anim]);
-    			break;
+    	if (isBorn) {
+    		if (vel!=0) {
+        		switch (this.dir) {
+        		case 1:
+        			drawPlayer(g, imgPlayer1Up[anim],imgPlayer2Up[anim]);
+        			break;
+        		case -1:
+        			drawPlayer(g, imgPlayer1Dowm[anim],imgPlayer2Dowm[anim]);
+        			break;
+        		case -2:
+        			drawPlayer(g, imgPlayer1Left[anim],imgPlayer2Left[anim]);
+        			break;
+        		case 2:
+        			drawPlayer(g, imgPlayer1Right[anim],imgPlayer2Right[anim]);
+        			break;
+        		}
+        	}else{
+        		switch (this.dir) {
+        		case 1:
+        			drawPlayer(g, imgPlayer1Up[0],imgPlayer2Up[0]);
+        			break;
+        		case -1:
+        			drawPlayer(g, imgPlayer1Dowm[0],imgPlayer2Dowm[0]);
+        			break;
+        		case -2:
+        			drawPlayer(g, imgPlayer1Left[0],imgPlayer2Left[0]);
+        			break;
+        		case 2:
+        			drawPlayer(g, imgPlayer1Right[0],imgPlayer2Right[0]);
+        			break;
+        		}
+        	}
+        	
+        	if (shieldActivate) {
+        		shieldEffect.draw(g);
     		}
-    	}else{
-    		switch (this.dir) {
-    		case 1:
-    			drawPlayer(g, imgPlayer1Up[0],imgPlayer2Up[0]);
-    			break;
-    		case -1:
-    			drawPlayer(g, imgPlayer1Dowm[0],imgPlayer2Dowm[0]);
-    			break;
-    		case -2:
-    			drawPlayer(g, imgPlayer1Left[0],imgPlayer2Left[0]);
-    			break;
-    		case 2:
-    			drawPlayer(g, imgPlayer1Right[0],imgPlayer2Right[0]);
-    			break;
-    		}
-    	}
-    	
-    	if (shieldActivate) {
-    		drawPlayer(g, IMG_SHIELD[anim],IMG_SHIELD[anim]);
+        	
+        	if (gameOver) {
+        		updateLifes = false;
+        		updateScore = false;
+        		if (player==1) {
+    				paintGameOver(g, Properties.Y_IP_LIFES);
+    			}else{
+    				paintGameOver(g, Properties.Y_IIP_LIFES);
+    			}
+    		}        	
+        	
+		}else{
+			birthEffect.draw(g);
 		}
-
+    	
     	if (updateLifes) {
     		if (player==1) {
 				updateLifes(g, Properties.Y_IP_LIFES);
 			}else{
 				updateLifes(g, Properties.Y_IIP_LIFES);
-			}
-		}
-    	
-    	if (gameOver) {
-    		if (player==1) {
-				paintGameOver(g, Properties.Y_IP_LIFES);
-			}else{
-				paintGameOver(g, Properties.Y_IIP_LIFES);
 			}
 		}
     	
@@ -168,25 +174,35 @@ public class Player extends Tank implements StageElement{
     @Override
     public void updateDraw(){    	
     	
-    	if (updateMove) {
-			anim();
-			move();
-			collision();
-			//updateMove = false;
-		}    	
-    	
-    	if(shieldActivate){
-			if (next(Properties.MAX_TIME_ITEM_EFECT)) {
-				shieldActivate = false;
+    	if (isBorn) {
+
+    		anim();
+    		move();
+    		collision();
+
+        	if(shieldActivate){
+        		shieldEffect.setPosX(posX);
+        		shieldEffect.setPosY(posY);
+        		shieldEffect.updateDraw();
+    			if (next(Properties.MAX_TIME_ITEM_EFECT)) {
+    				shieldActivate = false;
+    			}
+    		}
+		}else{
+			birthEffect.setPosX(posX);
+			birthEffect.setPosY(posY);
+			birthEffect.updateDraw();
+			if (next(120)) {
+				isBorn = true;
 			}
-		}    
+		}
     	
     }
-        
-    private void move() {
+
+	private void move() {
     	
     	if (freezed) {
-    		if (next(Properties.MAX_TIME_ITEM_EFECT)) {
+    		if (next(240)) {
 				freezed = false;
 			}
 		}else{
@@ -298,7 +314,7 @@ public class Player extends Tank implements StageElement{
     	g.setColor(Color.black);
     	g.fillRect(Properties.X_INIT_INFO, y, 100, 20);
     	g.setColor(Color.green);
-        g.fillRect(Properties.X_INIT_INFO, y, gas/30,20);
+        g.fillRect(Properties.X_INIT_INFO, y, gas/40,20);
 		updateGas = false;
     }
     
@@ -329,22 +345,24 @@ public class Player extends Tank implements StageElement{
 	
     public void resetPlayer(){
     	resetPos();
-    	setUpdateLifes(true);
-		setUpdateScore(true);
 		setVel(0);
 		setDir(1);
 		setShoot(false);
 		setActive(true);
-		enemyType.clear();
-		gas = gas + 1500;
+		enemyType.clear();		
+		isBorn = false;
 		updateGas = true;
-		if (gas>3000) gas = 3000;
+		updateLifes = true;
+		updateScore = true;
+		shieldActivate=true;
+		gas += initGas/2;
+		if (gas>initGas) gas = initGas;
     }
     
     public void resetPlayerGameOver(){
     	resetPlayer();
     	tier = 1;
-    	gas = 3000;
+    	gas = initGas;
     	score = 0;
     	lifes = Properties.INIT_LIFES;
     	gameOver = false;    	
@@ -362,8 +380,7 @@ public class Player extends Tank implements StageElement{
 		addScore(5);
 		if (tier<4) {
 			tier++;
-		} 
-		updateScore = true;
+		}
 	}
 	
 	public void tankEfect(){
@@ -374,7 +391,8 @@ public class Player extends Tank implements StageElement{
 	
 	public void gasEfect(){
 		addScore(1);
-		gas += 500;
+		gas += initGas/2;
+		if (gas>initGas) gas = initGas;
 	}
 	
 	public void shieldEfect() {
@@ -452,6 +470,14 @@ public class Player extends Tank implements StageElement{
 
 	public void setFreezed(boolean freezed) {
 		this.freezed = freezed;
+	}
+
+	public boolean isUpdateGas() {
+		return updateGas;
+	}
+
+	public void setUpdateGas(boolean updateGas) {
+		this.updateGas = updateGas;
 	}
 
 }
