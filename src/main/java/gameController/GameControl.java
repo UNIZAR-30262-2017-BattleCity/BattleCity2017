@@ -68,11 +68,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		ia = new IAControl();
 		stageGUI = new StageGUI();
 		timeToNext = 0;
-		stageControl = new StageControl(this);
 		players = new Player[2];
 		dataConfig = new ReadConfig();
 		buttons = dataConfig.getButtons();		
 		difficulty = dataConfig.getDificulty();
+		stageControl = new StageControl(this);
 		backgroundMenu = true;
 		sound();
 	}
@@ -357,7 +357,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 2) option = 0;
 						if (option < 0) option = 2;
 						config.setOpcDificulty(option);
-						dataConfig.setDificulty(option);
+						dataConfig.setDificulty(option+1);
 						break;
 					case 3:
 						option = config.getOpcResolution();
@@ -387,7 +387,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 2) option = 0;
 						if (option < 0) option = 2;
 						config.setOpcDificulty(option);
-						dataConfig.setDificulty(option);
+						dataConfig.setDificulty(option+1);
 						break;
 					case 3:
 						option = config.getOpcResolution();
@@ -611,7 +611,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case 3:
 			config = new Configuration();
 			cursor.cursorConfigV();
-			config.setOpcDificulty(difficulty);
+			config.setOpcDificulty(difficulty-1);
 			config.setOpcResolution(dataConfig.getResolution()-2);
 			config.setOpcSound(dataConfig.getSound());
 			opc = 1;
@@ -781,6 +781,27 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         g.setColor(Color.black);
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString("NIVEL "+level, Properties.WIDTH/2-180, Properties.HEIGHT/2);
+        if (level == 1) {
+            g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 20));
+        	g.drawString("PLAYER 1", (int) (Properties.WIDTH/2-Properties.WIDTH*.235), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
+        	g.drawString("PLAYER 2", (int) (Properties.WIDTH/2+Properties.WIDTH*.206), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
+        	
+        	g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 12));
+        	g.drawString("ARRIBA", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.2));
+        	g.drawString("ABAJ0", (int) (Properties.WIDTH/2-Properties.WIDTH*.4054), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.24));
+        	g.drawString("IZQUIERDA", (int) (Properties.WIDTH/2-Properties.WIDTH*.4406), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.28));
+        	g.drawString("DERECHA", (int) (Properties.WIDTH/2-Properties.WIDTH*.423), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.32));
+        	g.drawString("DISPARAR", (int) (Properties.WIDTH/2-Properties.WIDTH*.4348), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.36));
+        	g.drawString("PAUSAR", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.4));
+		}
         if (next(Properties.TIME_TO_INIT_STAGE)) screen = Screen.INIT_STAGE;
 		
 	}
