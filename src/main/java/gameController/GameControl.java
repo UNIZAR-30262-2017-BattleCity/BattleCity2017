@@ -780,7 +780,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
         g.setColor(Color.black);
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
-        g.drawString("NIVEL "+level, Properties.WIDTH/2-180, Properties.HEIGHT/2);
+        g.drawString("NIVEL "+level, (int) (Properties.WIDTH/2-Properties.WIDTH*.25), Properties.HEIGHT/2);
         if (level == 1) {
             g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 20));
         	g.drawString("PLAYER 1", (int) (Properties.WIDTH/2-Properties.WIDTH*.235), 
@@ -801,6 +801,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.36));
         	g.drawString("PAUSAR", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
         			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.4));
+        	
+        	g.setFont(new Font("Arial", Font.PLAIN, 16));
+        	g.setColor(Color.white);
+        	for (int i = 0; i < buttons.length; i++) {
+    			for (int j = 0; j < buttons[0].length; j++) {
+    				if (i == 0) {
+    					g.drawString(KeyEvent.getKeyText(buttons[i][j]), Properties.X_BUTTONS_IP_PS, 
+    							Properties.Y_INIT_BUTTONS_PS + (Properties.DELTA_BUTTONS_PS*j));
+    				} else {
+    					g.drawString(KeyEvent.getKeyText(buttons[i][j]), Properties.X_BUTTONS_IIP_PS, 
+    							Properties.Y_INIT_BUTTONS_PS + (Properties.DELTA_BUTTONS_PS*j));
+    				}
+    			}
+    		}
 		}
         if (next(Properties.TIME_TO_INIT_STAGE)) screen = Screen.INIT_STAGE;
 		

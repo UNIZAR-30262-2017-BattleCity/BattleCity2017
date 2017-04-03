@@ -53,6 +53,12 @@ public final class Properties {
 	public final static int X_CONFIG = (int) (Properties.WIDTH*.65);
 	public final static int DELTA_CONFIG = DELTA_BUTTONS;
 	
+	//Present Stage 1 Buttons
+	public final static int Y_INIT_BUTTONS_PS = (int) (Properties.HEIGHT*.697);
+	public final static int DELTA_BUTTONS_PS = (int) (HEIGHT*.04125);
+	public final static int X_BUTTONS_IP_PS = (int) (Properties.WIDTH*.345);
+	public final static int X_BUTTONS_IIP_PS = (int) (X_BUTTONS_IP + (WIDTH*.177));
+	
 	//Player
 	public final static int INIT_LIFES = 3;
 	
