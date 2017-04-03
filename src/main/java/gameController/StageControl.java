@@ -49,7 +49,7 @@ public class StageControl {
     private MazeControl mazeControl;
     public static Player[] players;
     private Eagle eagle;
-    private int pos,col,row,typeItem,typeEnemy;
+    private int pos,col,row,typeItem;
     private int timerE, timerIt;
     private Random random;
     private static final int ROW_SPAWN_ENEMY = 1;
@@ -170,37 +170,26 @@ public class StageControl {
     	stageForest.add(o);
 	}
     
-    public void spawnEnemys() {	
+    public void spawnEnemys() {
     	
 		if (nEnemies<Properties.CANT_ENEMIES_LEVEL) {	
 			if (nEnemiesSimul<maxEnemySimul) {
-				typeEnemy = random.nextInt(3)+1;				
-				switch (typeEnemy) {
-				case 1:
 					if (cantEnemies1<nEnemies1) {
 						setPosEnemies(1);
 						cantEnemies1++;
-					}
-					break;
-				case 2:
+					}else
 					if (cantEnemies2<nEnemies2) {
-						setPosEnemies(1);
+						setPosEnemies(2);
 						cantEnemies2++;
-					}
-					break;
-				case 3:
+					}else
 					if (cantEnemies3<nEnemies3) {
-						setPosEnemies(1);
+						setPosEnemies(3);
 						cantEnemies3++;
-					}
-					break;
-				case 4:
+					}else
 					if (cantEnemies4<nEnemies4) {
-						setPosEnemies(1);
+						setPosEnemies(4);
 						cantEnemies4 ++;
 					}
-					break;
-				}				
 			}
 		}
 	}
@@ -294,7 +283,7 @@ public class StageControl {
     		}
     		for (int i = 0; i < stageWalls.size(); i++) {
     			tmpWall = stageWalls.get(i);
-    			if (!tmpWall.isActive()) stageWalls.remove(tmpWall);
+    			if (!tmpWall.isActive()) deleteWall(tmpWall);
     		}
     		updteBricks = false;
     	}
@@ -361,10 +350,12 @@ public class StageControl {
     }
     
     public void deleteWall(Wall w){
+    	SoundControl.playSound("explotionWallBrick");
         stageWalls.remove(w);
     }
     
     public void deleteEnemy(Player p,Enemy e){
+    	SoundControl.playSound("explotionTank");
     	if (p!=null) {
 			p.addScore(e.getType());
 			p.getEnemyType().add(e.getType());

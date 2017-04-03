@@ -26,14 +26,14 @@ import userInterface.StageGUI;
 public class GameControl extends Canvas implements Runnable, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
-	private final BufferedImage IMG_MENU = ImageControl.loadImage("/resources/images/Menu.png");
+	private final BufferedImage IMG_MENU = ImageControl.loadImage("/resources/images/Menu.png");	
 	private boolean running;
 	private Thread thread;
 	private Player[] players;
 	private boolean isPlayer1,isPlayer2;
 	private boolean isGameOver;
 	private boolean moveX;
-	private StageControl stageControl;
+	private StageControl stageControl;	
 	private Screen screen;
 	private Score score;
 	private GameOver gameOver;
@@ -48,6 +48,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private int opc, opcH;
 	private int timeToNext;
 	private int[][] buttons;
+	private int isSound;
+	private boolean updateConfig;
+
+	private boolean backgroundMenu;
+
+	private boolean backgroundStage;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
@@ -65,10 +71,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		stageControl = new StageControl(this);
 		players = new Player[2];
 		dataConfig = new ReadConfig();
-		
-		buttons = dataConfig.getButtons();
-		
+		buttons = dataConfig.getButtons();		
 		difficulty = dataConfig.getDificulty();
+		backgroundMenu = true;
+		sound();
 	}
 	
 	public void initStage(){
@@ -126,13 +132,59 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		stop();		
 	}
 		
-	public void updateDraw(){
-		if (screen.equals(Screen.STAGE_PLAY)) {
+	public void sound(){
+		isSound = dataConfig.getSound();
+		if (isSound==1) {
+			if (SoundControl.isPlay) {
+				SoundControl.stopBackgroundSound();
+			}
+			if (backgroundMenu) {
+				SoundControl.playBackgroundSound("presentation");
+			}else
+				if (backgroundStage) {
+					SoundControl.playBackgroundSound("stageBackground");
+				}			
+			
+		}else if (SoundControl.isPlay) {
+			SoundControl.stopBackgroundSound();
+		}
+	}
+	
+	public void updateDraw(){	
+		switch (screen) {
+		case INTRO:			
+			break;
+		case MENU:
+			break;
+		case CONFIG:
+			if (updateConfig) {
+				sound();
+				updateConfig=false;
+			}
+			break;
+		case CONTROLS:
+			break;
+		case PRESENT_STAGE:
+			break;
+		case INIT_STAGE:
+			break;
+		case STAGE_PLAY:
 			stageControl.updateDraw();
-		}else if (screen.equals(Screen.GAMEOVER)) {
-			gameOver.updateDraw();
-		}else if (screen.equals(Screen.SCORE_STAGE)) {
+			break;
+		case STAGE_WIN:
+			break;
+		case STAGE_PAUSED:
+			break;
+		case INIT_SCORE:
+			break;
+		case SCORE_STAGE:
 			score.updateDraw(this);
+			break;
+		case GAMEOVER:
+			gameOver.updateDraw();
+			break;
+		default:
+			break;
 		}
 		
 	}
@@ -203,6 +255,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case INIT_STAGE:	        
 	        stageGUI.draw(level,g);
 	        initStage();
+			backgroundMenu = false;
+			backgroundStage = true;
+			sound();
 	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
@@ -303,7 +358,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option < 0) option = 2;
 						config.setOpcDificulty(option);
 						dataConfig.setDificulty(option);
-						dataConfig.writeConfig();
 						break;
 					case 3:
 						option = config.getOpcResolution();
@@ -312,7 +366,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option < 0) option = 2;
 						config.setOpcResolution(option);
 						dataConfig.setResolution(option+2);
-						dataConfig.writeConfig();
 						break;
 					case 4:
 						option = config.getOpcSound();
@@ -320,8 +373,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 1) option = 0;
 						if (option < 0) option = 1;
 						config.setOpcSound(option);
-						dataConfig.setSound(option);
-						dataConfig.writeConfig();
+						dataConfig.setSound(option);						
 						break;
 					default:
 						break;
@@ -335,6 +387,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 2) option = 0;
 						if (option < 0) option = 2;
 						config.setOpcDificulty(option);
+						dataConfig.setDificulty(option);
 						break;
 					case 3:
 						option = config.getOpcResolution();
@@ -342,6 +395,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 2) option = 0;
 						if (option < 0) option = 2;
 						config.setOpcResolution(option);
+						dataConfig.setResolution(option+2);
 						break;
 					case 4:
 						option = config.getOpcSound();
@@ -349,6 +403,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						if (option > 1) option = 0;
 						if (option < 0) option = 1;
 						config.setOpcSound(option);
+						dataConfig.setSound(option);
 						break;
 					default:
 						break;
@@ -359,6 +414,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 					int y = cursor.getY();
 					cursor.cursorConfigV();
 					cursor.setY(y);
+					dataConfig.writeConfig();
+					updateConfig=true;
 				}
 			} else {
 				if (key == KeyEvent.VK_UP) {

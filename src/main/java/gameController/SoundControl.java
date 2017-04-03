@@ -9,11 +9,12 @@ import javax.sound.sampled.Clip;
 
 public class SoundControl {
 
-	private Clip backgroundSound;    
+	public static Clip backgroundSound;
+	public static boolean isPlay;
 
-	public void playBackgroundSound(int nameSound){
-		String route = "sounds/" + nameSound + ".wav";
-		InputStream path = getClass().getResourceAsStream(route);
+	public static void playBackgroundSound(String nameSound){
+		String route = "/resources/sounds/" + nameSound + ".wav";
+		InputStream path = SoundControl.class.getResourceAsStream(route);
 		try{
 			InputStream bufferedIn = new BufferedInputStream(path);
 			AudioInputStream audioStream =  AudioSystem.getAudioInputStream(bufferedIn);
@@ -21,19 +22,20 @@ public class SoundControl {
 			backgroundSound.open(audioStream);
 			backgroundSound.loop(Clip.LOOP_CONTINUOUSLY);
 			backgroundSound.start();
+			isPlay=true;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	public void stopBackgroundSound(){
+	public static void stopBackgroundSound(){
 		backgroundSound.stop();
 		backgroundSound.close();
+		isPlay = false;
 	}
 	
-	public void playSound(int nameSound) {
-		String route = "sounds/" + nameSound + ".wav";
+	public static void playSound(String nameSound) {
+		String route = "/resources/sounds/" + nameSound + ".wav";
         SoundThread t = new SoundThread("Thread",route);
         t.start();
-    }
-
+    }	
 }

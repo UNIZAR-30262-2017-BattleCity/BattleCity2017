@@ -39,7 +39,6 @@ public abstract class GameElement {
 		return new Rectangle((int) getPosX()+2, (int) getPosY()+2, width-2, heigth-2);
 	}
 
-
 	public double getPosX() {
 		return posX;
 	}

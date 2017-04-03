@@ -1,6 +1,7 @@
 package elements;
 
 import application.Properties;
+import gameController.SoundControl;
 import gameController.StageControl;
 
 public abstract class Tank extends GameElement{
@@ -20,11 +21,14 @@ public abstract class Tank extends GameElement{
 	public Tank(StageControl stageControl){
 		super(stageControl);
 		dir = 1;
+		width = Properties.SIZE_SQUARE-2;
+		heigth = Properties.SIZE_SQUARE-2;
 	}
 		
 	public void shoot(Bullet b) {
 		if (!shoot) {
 			stageControl.spawnBullets(b);
+			SoundControl.playSound("shoot");
 			shoot = true;
 		}
 	}
