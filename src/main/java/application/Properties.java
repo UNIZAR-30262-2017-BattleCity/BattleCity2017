@@ -120,8 +120,8 @@ public final class Properties {
 	
 	public static final double DELTA = SIZE_SQUARE/2;
 	public static final int TIME_UPDATE_IA = 120;
-	public static final int TIME_UPDATE_IA_RANDOM = 480;
-	public static final int TIME_UPDATE_COLLISION = 90;
+	public static final int TIME_UPDATE_IA_RANDOM = 60;
+	public static final int TIME_UPDATE_COLLISION = 30;
 	public static final int FONT_SIZE = 7*SCALE;
 		
 	//Font

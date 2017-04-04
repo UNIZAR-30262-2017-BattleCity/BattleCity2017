@@ -240,9 +240,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	}
 
 	public void resultStage(int result){
+		level++;
 		switch (result) {
 		case 1:
-			level++;
 			sound(3);
 			screen = Screen.STAGE_WIN;
 			break;

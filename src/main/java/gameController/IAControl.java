@@ -111,27 +111,21 @@ public class IAControl {
 		inputIA[2] = generateInputValue(temElementLEFT1);
 		
 		inputIA[3] = generateInputValue(temElementRIGHT1);
-		
-		if (inputIA[0] == 0 && inputIA[1] == 0
-				&& inputIA[2] == 0 && inputIA[3] == 0) {					
-			if (e.isUpdateIARandom()) {				
-				e.updateIARamdon();
-				e.updateCollision();
-				action[0] = e.getDir();
-			}else{
-				action = randomMove(e);
-			}			
-			
-		} else {
-			if (e.isUpdateIA()) {				
-				e.updateIA();
-				e.updateCollision();
-				action[0] = e.getDir();
-			}else{
-				e.setUpdateIARandom(false);
-				e.setTimeUpdateIARandom(Properties.TIME_UPDATE_IA_RANDOM);
-				action = calculateIA(neuralNetworkMultiLayer, inputIA, e);
-			}
+						
+		if (e.isUpdateIARandom()) {				
+			e.updateIARamdon();
+			if (e.isCollision()) e.updateCollision();
+			action[0] = e.getDir();
+		}else{
+			action = randomMove(e);
+		}		
+		if (e.isUpdateIA()) {				
+			e.updateIA();
+			e.updateCollision();
+			if (e.isCollision()) e.updateCollision();
+			action[0] = e.getDir();
+		}else{
+			action = calculateIA(neuralNetworkMultiLayer, inputIA, e);
 		}
 		return action;
 		//return borderController(action, posX-Properties.DELTA, posY-Properties.DELTA);
@@ -177,6 +171,7 @@ public class IAControl {
 			}
 		}
 
+		e.setUpdateIA(true);
 		return action;
 	}
 	
