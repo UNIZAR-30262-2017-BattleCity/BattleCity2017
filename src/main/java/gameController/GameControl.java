@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import application.Properties;
 import elements.Bullet;
@@ -53,6 +54,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 
 	private boolean backgroundMenu;
 	private boolean backgroundStage;
+	private boolean player1OnIce,player2OnIce;
 	
 	public GameControl(JFrame jf){
 		requestFocus();
@@ -67,19 +69,17 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		ia = new IAControl();
 		stageGUI = new StageGUI();
 		timeToNext = 0;
-		players = new Player[2];
 		dataConfig = new ReadConfig();
-		buttons = dataConfig.getButtons();		
+		buttons = dataConfig.getButtons();
 		difficulty = dataConfig.getDificulty();
 		stageControl = new StageControl(this);
+		players = StageControl.getPlayers();
 		backgroundMenu = true;
 		sound();
 	}
 	
 	public void initStage(){
-		stageControl.loadLevel(level, isPlayer1, isPlayer2);
-		players = StageControl.getPlayers();
-		level++;
+		stageControl.loadLevel(level, isPlayer1, isPlayer2);		
 	}
 
 	public synchronized void start(){
@@ -164,6 +164,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case CONFIG:
 			if (updateConfig) {
 				sound();
+				difficulty = dataConfig.getDificulty();
 				updateConfig=false;
 			}
 			break;
@@ -172,13 +173,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case PRESENT_STAGE:
 			break;
 		case INIT_STAGE:
-	        initStage();
-			backgroundMenu = false;
-			backgroundStage = true;
-			sound();
-	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
+			onIce();
 			stageControl.updateDraw();
 			break;
 		case STAGE_WIN:
@@ -211,9 +208,32 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		
 	}
 		
+	private void onIce() {
+		if (player1OnIce) {
+			if (next(30)) {
+				players[0].setVel(0);
+				player1OnIce = false;
+				players[0].setIce(false);
+			}else{
+				players[0].setVel(Properties.VEL_NORMAL);
+			}
+		}
+		if (player2OnIce) {
+			if (next(30)) {
+				players[1].setVel(0);
+				player2OnIce = false;
+				players[1].setIce(false);
+			}else{
+				players[1].setVel(Properties.VEL_NORMAL);
+			}				
+		}
+		
+	}
+
 	public void resultStage(int result){
 		switch (result) {
 		case 1:
+			level++;
 			screen = Screen.STAGE_WIN;
 			break;
 		case 2:
@@ -253,7 +273,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		bs.show();
 	}
 	
-	
 	public void draw(Graphics g){
 		switch (screen) {
 		case INTRO:
@@ -278,7 +297,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			presentStage(g);
 			break;
 		case INIT_STAGE:	        
-	        stageGUI.draw(level,g);
+	        stageGUI.draw(this,g);
+	        initStage();
+			backgroundMenu = false;
+			backgroundStage = true;
+			sound();
+	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
 			stageControl.draw(g);	
@@ -306,7 +330,6 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		}
 	}
-
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -317,7 +340,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						|| key == buttons[0][1]
 								|| key == buttons[0][2]
 										|| key == buttons[0][3]) {
-					players[0].setVel(0);
+					if (players[0].isIce()) {
+						player1OnIce = true;
+					}else{
+						players[0].setVel(0);
+					}
 				}
 			}
 			if (isPlayer2 && players[1].isActive()) {
@@ -325,7 +352,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 						|| key == buttons[1][1]
 								|| key == buttons[1][2]
 										|| key == buttons[1][3]) {
-					players[1].setVel(0);
+					if (players[1].isIce()) {
+						player2OnIce = true;
+					}else{
+						players[1].setVel(0);
+					}
 				}
 			}	
 
@@ -357,87 +388,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			}
 			break;
 		case CONFIG:
-			if (moveX) {
-				int option = 0;
-				if (key == KeyEvent.VK_RIGHT) {
-					switch (opc) {
-					case 2:
-						option = config.getOpcDificulty();
-						option++;
-						if (option > 2) option = 0;
-						if (option < 0) option = 2;
-						config.setOpcDificulty(option);
-						dataConfig.setDificulty(option+1);
-						break;
-					case 3:
-						option = config.getOpcResolution();
-						option++;
-						if (option > 2) option = 0;
-						if (option < 0) option = 2;
-						config.setOpcResolution(option);
-						dataConfig.setResolution(option+2);
-						break;
-					case 4:
-						option = config.getOpcSound();
-						option++;
-						if (option > 1) option = 0;
-						if (option < 0) option = 1;
-						config.setOpcSound(option);
-						dataConfig.setSound(option);						
-						break;
-					default:
-						break;
-					}
-				}
-				if (key == KeyEvent.VK_LEFT) {
-					switch (opc) {
-					case 2:
-						option = config.getOpcDificulty();
-						option--;
-						if (option > 2) option = 0;
-						if (option < 0) option = 2;
-						config.setOpcDificulty(option);
-						dataConfig.setDificulty(option+1);
-						break;
-					case 3:
-						option = config.getOpcResolution();
-						option--;
-						if (option > 2) option = 0;
-						if (option < 0) option = 2;
-						config.setOpcResolution(option);
-						dataConfig.setResolution(option+2);
-						break;
-					case 4:
-						option = config.getOpcSound();
-						option--;
-						if (option > 1) option = 0;
-						if (option < 0) option = 1;
-						config.setOpcSound(option);
-						dataConfig.setSound(option);
-						break;
-					default:
-						break;
-					}
-				}
-				if (key == KeyEvent.VK_ENTER) {	
-					moveX = false;
-					int y = cursor.getY();
-					cursor.cursorConfigV();
-					cursor.setY(y);
-					dataConfig.writeConfig();
-					updateConfig=true;
-				}
-			} else {
-				if (key == KeyEvent.VK_UP) {
-					cursorMove(-1,Properties.N_OPC_CONFIG);				
-				}
-				if (key == KeyEvent.VK_DOWN) {
-					cursorMove(1,Properties.N_OPC_CONFIG);
-				}
-				if (key == KeyEvent.VK_ENTER) {				
-					configOptions();
-				}
-			}
+			keyPressedConfig(key);
 			break;
 		case CONTROLS:
 			if (moveX) {
@@ -570,7 +521,94 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		
 	}
 	
-	public void cursorMove(int move, int max){
+	private void keyPressedConfig(int key) {
+		if (moveX) {
+			int option = 0;
+			if (key == KeyEvent.VK_RIGHT) {
+				switch (opc) {
+				case 2:
+					option = config.getOpcDificulty();
+					option++;
+					if (option > 2) option = 0;
+					if (option < 0) option = 2;
+					config.setOpcDificulty(option);
+					dataConfig.setDificulty(option+1);
+					break;
+				case 3:
+					option = config.getOpcResolution();
+					option++;
+					if (option > 2) option = 0;
+					if (option < 0) option = 2;
+					config.setOpcResolution(option);
+					dataConfig.setResolution(option+2);
+					break;
+				case 4:
+					option = config.getOpcSound();
+					option++;
+					if (option > 1) option = 0;
+					if (option < 0) option = 1;
+					config.setOpcSound(option);
+					dataConfig.setSound(option);						
+					break;
+				default:
+					break;
+				}
+			}
+			if (key == KeyEvent.VK_LEFT) {
+				switch (opc) {
+				case 2:
+					option = config.getOpcDificulty();
+					option--;
+					if (option > 2) option = 0;
+					if (option < 0) option = 2;
+					config.setOpcDificulty(option);
+					dataConfig.setDificulty(option+1);
+					break;
+				case 3:
+					option = config.getOpcResolution();
+					option--;
+					if (option > 2) option = 0;
+					if (option < 0) option = 2;
+					config.setOpcResolution(option);
+					dataConfig.setResolution(option+2);
+					break;
+				case 4:
+					option = config.getOpcSound();
+					option--;
+					if (option > 1) option = 0;
+					if (option < 0) option = 1;
+					config.setOpcSound(option);
+					dataConfig.setSound(option);
+					break;
+				default:
+					break;
+				}
+			}
+			if (key == KeyEvent.VK_ENTER) {	
+				moveX = false;
+				int y = cursor.getY();
+				cursor.cursorConfigV();
+				cursor.setY(y);
+				dataConfig.writeConfig();
+				updateConfig=true;
+				JOptionPane.showMessageDialog(this, "Para visualizar cambios en la Resolucion se debe reiniciar la applicacion");
+			}
+		} else {
+			if (key == KeyEvent.VK_UP) {
+				cursorMove(-1,Properties.N_OPC_CONFIG);				
+			}
+			if (key == KeyEvent.VK_DOWN) {
+				cursorMove(1,Properties.N_OPC_CONFIG);
+			}
+			if (key == KeyEvent.VK_ENTER) {				
+				configOptions();
+			}
+		}
+		
+	}
+
+	public void cursorMove(int move, int max){		
+		SoundControl.playSound("cursor");
 		if (moveX) {
 			cursor.setX(cursor.getX()+ Properties.DELTA_CURSOR_X*move);
 			opcH = opcH + move;
@@ -794,6 +832,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		g.setColor(Color.darkGray);
         g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
         g.setColor(Color.black);
+        g.drawString("proque hptassss", 10,10);
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString("NIVEL "+level, (int) (Properties.WIDTH/2-Properties.WIDTH*.25), Properties.HEIGHT/2);
         if (level == 1) {

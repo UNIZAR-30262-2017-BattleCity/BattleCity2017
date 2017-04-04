@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import application.Properties;
 import gameController.PhysicsContol;
 import gameController.StageControl;
-import gameController.FontControl;
 import gameController.ImageControl;
 
 public class Player extends Tank implements StageElement{
@@ -37,6 +36,7 @@ public class Player extends Tank implements StageElement{
 	private ArrayList<Integer> enemyType;
     private boolean shieldActivate;
 	private boolean freezed;
+	private boolean isIce;
 	private int gas;		
 	
     public Player(int col, int row, int lifes, int player, StageControl stageControl) {
@@ -294,7 +294,7 @@ public class Player extends Tank implements StageElement{
         		Properties.SCORE_LIFE_BACKGROUND_WIDTH, 
         		Properties.SCORE_LIFE_BACKGROUND_HEIGHT);
         g.setColor(Color.black);
-		g.setFont( FontControl.ARIAL);
+		g.setFont( Properties.ARIAL);
 		g.drawString(""+score, Properties.X_SCORE, y);
 		updateScore = false;
     }
@@ -305,7 +305,7 @@ public class Player extends Tank implements StageElement{
         		Properties.SCORE_LIFE_BACKGROUND_WIDTH, 
         		Properties.SCORE_LIFE_BACKGROUND_HEIGHT);
         g.setColor(Color.black);
-		g.setFont( FontControl.ARIAL);
+		g.setFont( Properties.ARIAL);
 		g.drawString(""+lifes, Properties.X_LIFES, y);
 		updateLifes = false;
     }
@@ -326,7 +326,7 @@ public class Player extends Tank implements StageElement{
 				gameOver = true;
 			}else{
 				resetPos();
-				shieldEfect();
+				shieldActivate=true;
 			}
 		}    	
     }
@@ -337,7 +337,7 @@ public class Player extends Tank implements StageElement{
         		Properties.SCORE_LIFE_BACKGROUND_WIDTH, 
         		Properties.SCORE_LIFE_BACKGROUND_HEIGHT);
         g.setColor(Color.red);
-		g.setFont( FontControl.ARIAL);
+		g.setFont( Properties.ARIAL);
 		g.drawString("GAME OVER", Properties.X_INIT_INFO, y);
 		isActive = false;
 		stageControl.getgC().resultStage(2);
@@ -351,6 +351,7 @@ public class Player extends Tank implements StageElement{
 		setActive(true);
 		enemyType.clear();		
 		isBorn = false;
+		isGas = true;
 		updateGas = true;
 		updateLifes = true;
 		updateScore = true;
@@ -478,6 +479,14 @@ public class Player extends Tank implements StageElement{
 
 	public void setUpdateGas(boolean updateGas) {
 		this.updateGas = updateGas;
+	}
+
+	public boolean isIce() {
+		return isIce;
+	}
+
+	public void setIce(boolean isIce) {
+		this.isIce = isIce;
 	}
 
 }

@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import application.Properties;
-import gameController.FontControl;
 import gameController.ImageControl;
 
 public class Controls {
@@ -24,7 +23,7 @@ public class Controls {
         g.drawImage(imgControls, 0, 0, Properties.WIDTH, Properties.HEIGHT, null);
         
         g.setColor(Color.white);
-		g.setFont(FontControl.ARIAL);
+		g.setFont(Properties.ARIAL);
 		for (int i = 0; i < buttons.length; i++) {
 			for (int j = 0; j < buttons[0].length; j++) {
 				if (i == 0) {

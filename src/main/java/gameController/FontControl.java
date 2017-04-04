@@ -3,11 +3,9 @@ package gameController;
 import java.awt.Font;
 import java.io.InputStream;
 
-import application.Properties;
 
 public class FontControl {
 
-	public static Font ARIAL = new Font("Arial", Font.PLAIN, Properties.FONT_SIZE);
 	private static Font font;
 
 	public FontControl(String fontName) {    	

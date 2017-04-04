@@ -73,7 +73,16 @@ public class Effect extends GameElement implements StageElement{
 			maxTimeEffect--;
 		}else{
 			isActive = false;
-			stageControl.setRePaintStageGUI(true);
+			if (type==2||type == 4) {
+				double xR = posX - Properties.X_INIT_STAGE;
+				double xL = posX - Properties.X_FINAL_STAGE;
+				double yUP = posY - Properties.Y_INIT_STAGE;
+				double yDown = posY - Properties.Y_FINAL_STAGE;
+				if (xR<Properties.SIZE_SQUARE || xL>(-Properties.SIZE_SQUARE) ||
+						yUP<Properties.SIZE_SQUARE || yDown>(-Properties.SIZE_SQUARE)) {
+					stageControl.setRePaintStageGUI(true);
+				}				
+			}
 			stageControl.deleteEffect(this);
 		}
 		

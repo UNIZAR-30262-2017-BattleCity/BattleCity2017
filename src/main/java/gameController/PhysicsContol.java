@@ -9,6 +9,7 @@ import elements.Eagle;
 import elements.Effect;
 import elements.Enemy;
 import elements.GameElement;
+import elements.Ice;
 import elements.Item;
 import elements.Player;
 import elements.StageElement;
@@ -36,15 +37,20 @@ public class PhysicsContol {
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
 			if (!s.equals(p)) {
-				if (isIntersecs(p,s)) {				
+				if (isIntersecs(p,s)) {	
 					if (s.getClass().equals(Item.class)) {
 						s.setActive(false);
 						s.getStage().ItemTaked(p,(Item) s);
+						SoundControl.playSound("itemTaken");
 					}else{
-						return getIntersection(p,s).getLocation();
+						if (s.getClass().equals(Ice.class)) {
+							p.setIce(true);
+						}else{						
+							return getIntersection(p,s).getLocation();
+						}
 					}
 				}
-			}		
+			}
 		}
 		return null;
 	}
@@ -112,6 +118,7 @@ public class PhysicsContol {
 					}else{			
 						if (s.getClass().equals(Player.class)) {
 							stageControl.spawnEffects(new Effect(s.getPosX(), s.getPosY(), 4, stageControl));
+							SoundControl.playSound("explotionTank");
 							if (s.equals(StageControl.getPlayers()[0])) {
 								StageControl.getPlayers()[0].reduceLifes();
 							}else{
@@ -128,7 +135,7 @@ public class PhysicsContol {
 		 return gE.getBounds(gE.getWidth(),gE.getHeigth()).intersects(
 				 		e.getBounds(e.getWidth(),e.getHeigth()));
 	}
-		
+	
 	public static Rectangle getIntersection(GameElement gE,  StageElement e2){		
 		return  gE.getBounds(gE.getWidth(),gE.getHeigth()).intersection(
 						e2.getBounds(e2.getWidth(),e2.getHeigth()));		

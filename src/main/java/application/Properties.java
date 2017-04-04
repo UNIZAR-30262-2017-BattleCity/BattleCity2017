@@ -1,26 +1,28 @@
 package application;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 import gameController.FontControl;
 import gameController.ImageControl;
+import gameController.ReadConfig;
 
 public final class Properties {
 
+	
+	public final static ReadConfig DATA_CONFIG = new ReadConfig();
+	
 	//Frame
-	public final static int SCALE = 3;
+	public final static int SCALE = DATA_CONFIG.getResolution();
 	public final static int WIDTH = 227 * SCALE;
 	public final static int HEIGHT = 194 * SCALE;
-		
+	
 	//Menu - Configuration
 	public final static int N_OPC_MENU =  4;
 	public final static int N_OPC_CONFIG =  5;
 	public final static int N_OPC_CONTROLS_V =  7;
 	public final static int N_OPC_CONTROLS_H =  2;
 	
-	//Font
-	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
-	public static final FontControl FC_PIXEL= new FontControl(Properties.FONT_PIXEL);
 	
 	//Cursor Menu
 	public final static int X_CURSOR_M =  (int) (WIDTH / 2 - (WIDTH * 0.14));;
@@ -67,8 +69,8 @@ public final class Properties {
 	public final static double VEL_NORMAL = 0.30*SCALE;
 	public final static double VEL_ENEMY_FAST = 0.50*SCALE;
 	public final static int MIN_ENEMY_SIMUL = 3;
-	public final static int CANT_ENEMIES_LEVEL = 10;
-	public final static int TIME_BETWEEN_SPAWN_E = 350;
+	public final static int CANT_ENEMIES_LEVEL = 20;
+	public final static int TIME_BETWEEN_SPAWN_E = 500;
 	
 	//_STAGE
 	public final static int SIZE_SQUARE_SSC = 16;
@@ -119,6 +121,11 @@ public final class Properties {
 	public static final double DELTA = SIZE_SQUARE/2;
 	public static final int TIME_UPDATE_IA = 30;
 	public static final int FONT_SIZE = 7*SCALE;
+		
+	//Font
+	public final static String FONT_PIXEL = "/resources/fonts/BattleCity.ttf";
+	public static final FontControl FC_PIXEL= new FontControl(Properties.FONT_PIXEL);
+	public static final Font ARIAL = new Font("Arial", Font.PLAIN, FONT_SIZE);
 	
 	//StageGUI
 	
@@ -133,7 +140,7 @@ public final class Properties {
 	
 	public static final int X_LIFES = (int) (X_INIT_INFO+(WIDTH*0.1));
 	public static final int X_SCORE = X_LIFES;
-	public static final int SCORE_LIFE_BACKGROUND_WIDTH = (int) (WIDTH*0.059);
+	public static final int SCORE_LIFE_BACKGROUND_WIDTH = (int) (WIDTH*0.090);
 	public static final int SCORE_LIFE_BACKGROUND_HEIGHT = (int) (HEIGHT*0.035);
 	public static final double DELTA_SCORE_LIFE = HEIGHT*0.025;
 

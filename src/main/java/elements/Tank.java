@@ -16,6 +16,8 @@ public abstract class Tank extends GameElement{
 	protected int tier;
 	protected int timeToNext;
 	protected boolean isBorn;
+	protected boolean shootSucces;
+	protected int nShoots;
 	
 	//bullets	
 	protected boolean shoot;

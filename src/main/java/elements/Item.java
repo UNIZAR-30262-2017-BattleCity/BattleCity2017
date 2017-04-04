@@ -9,7 +9,7 @@ import gameController.StageControl;
 
 public class Item extends GameElement implements StageElement{
 
-	private boolean isTake;
+	private boolean isTake, gas;
 	private BufferedImage imgItem;
     private int maxTimeItemShow;
 			
@@ -44,6 +44,7 @@ public class Item extends GameElement implements StageElement{
 			break;
 		case 7:
 			imgItem = ImageControl.getItemGas();
+			gas= true;
 			break;
 		}
 	}
@@ -54,7 +55,9 @@ public class Item extends GameElement implements StageElement{
 	}
 	
 	public void updateDraw(){
-		itemSpawned();
+		if (!gas) {
+			itemSpawned();
+		}		
 	}
 	
 	public void itemSpawned(){
