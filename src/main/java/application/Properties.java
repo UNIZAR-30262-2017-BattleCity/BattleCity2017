@@ -63,15 +63,14 @@ public final class Properties {
 	
 	//Player
 	public final static int INIT_LIFES = 3;
-	public final static int UPDATE_GAS = (int) (Properties.WIDTH*.059);
 	
 	//Enemy
 	public final static double VEL_ENEMY = 0.20*SCALE;
 	public final static double VEL_NORMAL = 0.30*SCALE;
-	public final static double VEL_ENEMY_FAST = 0.40*SCALE;
+	public final static double VEL_ENEMY_FAST = 0.35*SCALE;
 	public final static int MIN_ENEMY_SIMUL = 3;
 	public final static int CANT_ENEMIES_LEVEL = 20;
-	public final static int TIME_BETWEEN_SPAWN_E = 500;
+	public final static int TIME_BETWEEN_SPAWN_E = 780;
 	
 	//_STAGE
 	public final static int SIZE_SQUARE_SSC = 16;
@@ -107,10 +106,10 @@ public final class Properties {
 	public static final BufferedImage SSTANK = ImageControl.loadImage("/resources/images/SpriteSheet.png");
 	
 	//Items
-	public final static int MAX_ITEMS_LEVEL = 20;
+	public final static int MAX_ITEMS_LEVEL = 25;
 	public final static int MAX_ITEMS_SIMUL = 3;
-	public final static int MAX_TIME_ITEM_EFECT = 480;
-	public final static int MAX_TIME_ITEM_SHOW = 480;
+	public final static int MAX_TIME_ITEM_EFECT = 720;
+	public final static int MAX_TIME_ITEM_SHOW = 780;
 	public final static int MIN_TIME_BETWEEN_SPAWN_IT = 360;
 		
 	
@@ -120,9 +119,9 @@ public final class Properties {
 	public final static int TIME_TO_MENU = 1000;
 	
 	public static final double DELTA = SIZE_SQUARE/2;
-	public static final int TIME_UPDATE_IA = 180;
+	public static final int TIME_UPDATE_IA = 120;
 	public static final int TIME_UPDATE_IA_RANDOM = 480;
-	public static final int TIME_UPDATE_COLLISION = 120;
+	public static final int TIME_UPDATE_COLLISION = 90;
 	public static final int FONT_SIZE = 7*SCALE;
 		
 	//Font

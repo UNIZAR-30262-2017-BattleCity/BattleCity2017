@@ -92,7 +92,7 @@ public class StageControl {
     	
     	//dif: difficulty     	// 1 easy / 2 normal  3 hard
 		maxEnemySimul = Properties.MIN_ENEMY_SIMUL*dif;					
-		timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*50);
+		timeBetweenSpawnE = Properties.TIME_BETWEEN_SPAWN_E - (dif*180);
 				
     	cantItemsLevel = Properties.MAX_ITEMS_LEVEL - (dif*5);
     	timeBetweenSpawnIt = Properties.MIN_TIME_BETWEEN_SPAWN_IT * dif;
@@ -488,7 +488,7 @@ public class StageControl {
 			break;
 		case 2://clock
 			itemTaked = true;
-			player.addScore(1);
+			player.addScore(2);
 			setClockEfect(true);
 			break;
 		case 3://shovel

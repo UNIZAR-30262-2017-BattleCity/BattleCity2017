@@ -22,7 +22,8 @@ public class Player extends Tank implements StageElement{
 	private final BufferedImage[] imgPlayer2Left = new BufferedImage[2];
 	private final BufferedImage[] imgPlayer2Right = new BufferedImage[2];
 	private static Effect shieldEffect;
-	private final int initGas = (int) (Properties.WIDTH*5.8738);
+	private final int initGas = 2000 * Properties.SCALE;
+	private final int deltaGas = 20 * Properties.SCALE;
     private int userName;
 	private int lifes;
 	private int score;
@@ -184,7 +185,7 @@ public class Player extends Tank implements StageElement{
         		shieldEffect.setPosX(posX);
         		shieldEffect.setPosY(posY);
         		shieldEffect.updateDraw();
-    			if (next(Properties.MAX_TIME_ITEM_EFECT)) {
+    			if (next(480)) {
     				shieldActivate = false;
     			}
     		}
@@ -315,7 +316,7 @@ public class Player extends Tank implements StageElement{
     	g.fillRect(Properties.X_INIT_INFO, y, (int) (Properties.WIDTH*.147), 
     			(int) (Properties.HEIGHT*.03451));
     	g.setColor(Color.green);
-        g.fillRect(Properties.X_INIT_INFO, y, gas/Properties.UPDATE_GAS,
+        g.fillRect(Properties.X_INIT_INFO, y, gas/deltaGas,
         		(int) (Properties.HEIGHT*.03451));
 		updateGas = false;
     }
@@ -387,7 +388,7 @@ public class Player extends Tank implements StageElement{
 	}
 	
 	public void tankEfect(){
-		addScore(1);
+		addScore(2);
 		lifes++;
 		updateLifes = true;
 	}

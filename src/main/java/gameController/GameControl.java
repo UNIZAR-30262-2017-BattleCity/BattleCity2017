@@ -50,10 +50,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private int timeToNext;
 	private int[][] buttons;
 	private int isSound;
+	private int hiScore;
 	private boolean updateConfig;
-
-	private boolean backgroundMenu;
-	private boolean backgroundStage;
 	private boolean player1OnIce,player2OnIce;
 	
 	public GameControl(JFrame jf){
@@ -72,10 +70,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		dataConfig = new ReadConfig();
 		buttons = dataConfig.getButtons();
 		difficulty = dataConfig.getDificulty();
+		hiScore = dataConfig.getHiScore();
 		stageControl = new StageControl(this);
 		players = StageControl.getPlayers();
-		backgroundMenu = true;
-		sound();
+		sound(1);
 	}
 	
 	public void initStage(){
@@ -131,19 +129,26 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		stop();		
 	}
 		
-	public void sound(){
+	public void sound(int sound){
 		isSound = dataConfig.getSound();
 		if (isSound==1) {
 			if (SoundControl.isPlay) {
 				SoundControl.stopBackgroundSound();
-			}
-			if (backgroundMenu) {
+			}			
+			switch (sound) {
+			case 1://menu
 				SoundControl.playBackgroundSound("presentation");
-			}else
-				if (backgroundStage) {
-					SoundControl.playBackgroundSound("stageBackground");
-				}			
-			
+				break;
+			case 2://stagePlay
+				SoundControl.playBackgroundSound("stageBackground");
+				break;
+			case 3://stageWin
+				SoundControl.playBackgroundSound("stageWin");
+				break;
+			case 4://GameOver
+				SoundControl.playBackgroundSound("stageLose");
+				break;
+			}	
 		}else if (SoundControl.isPlay) {
 			SoundControl.stopBackgroundSound();
 		}
@@ -154,16 +159,14 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case INTRO:
 			break;
 		case INIT_MENU:
-			backgroundMenu = true;
-			backgroundStage = false;
-			sound();
+			sound(1);
 	        screen = Screen.MENU;
 			break;
 		case MENU:
 			break;
 		case CONFIG:
 			if (updateConfig) {
-				sound();
+				sound(0);
 				difficulty = dataConfig.getDificulty();
 				updateConfig=false;
 			}
@@ -234,6 +237,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		switch (result) {
 		case 1:
 			level++;
+			sound(3);
 			screen = Screen.STAGE_WIN;
 			break;
 		case 2:
@@ -251,6 +255,22 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			gameOver();
 			break;
 		}
+		
+		if (isPlayer1) {
+			if (hiScore<players[0].getScore()) {
+				hiScore = players[0].getScore();
+				dataConfig.setHiScore(hiScore);
+				dataConfig.writeConfig();
+			}
+		}
+		if (isPlayer2) {
+			if (hiScore<players[1].getScore()) {
+				hiScore = players[1].getScore();
+				dataConfig.setHiScore(hiScore);
+				dataConfig.writeConfig();
+			} 
+		}
+		
 		
 	}
 	
@@ -299,9 +319,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		case INIT_STAGE:	        
 	        stageGUI.draw(this,g);
 	        initStage();
-			backgroundMenu = false;
-			backgroundStage = true;
-			sound();
+			sound(2);
 	        screen = Screen.STAGE_PLAY;
 			break;
 		case STAGE_PLAY:
@@ -833,8 +851,10 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	private void presentStage(Graphics g) {
 		g.setColor(Color.darkGray);
         g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
+        g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE-25));     
+		g.setColor(Color.red);
+		g.drawString("HI-SCORE: "+hiScore, Properties.WIDTH/2-20, 60);
         g.setColor(Color.black);
-        g.drawString("proque hptassss", 10,10);
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString("NIVEL "+level, (int) (Properties.WIDTH/2-Properties.WIDTH*.25), Properties.HEIGHT/2);
         if (level == 1) {
@@ -941,5 +961,12 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 	public void setStageGUI(StageGUI stageGUI) {
 		this.stageGUI = stageGUI;
 	}
-	
+
+	public int getHiScore() {
+		return hiScore;
+	}
+
+	public void setHiScore(int hiScore) {
+		this.hiScore = hiScore;
+	}			
 }

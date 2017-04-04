@@ -11,6 +11,7 @@ public class ReadConfig {
 	private int dificulty;
 	private int resolution;
 	private int sound;
+	private int hiScore;
 	
 	public ReadConfig() {
 		buttons = new int[2][6];
@@ -63,6 +64,12 @@ public class ReadConfig {
 					
 					sound = Integer.parseInt(S);
 				}
+				if (line.contains("SCORE")) {
+					String[] data = line.split("/");
+					String S = data[1];
+					
+					hiScore = Integer.parseInt(S);
+				}
 			}
 			reader.close(); 
 		} catch (Exception e) { 
@@ -102,6 +109,9 @@ public class ReadConfig {
 			writer.write("\nSOUND/");
 			writer.write(String.valueOf(sound));
 			
+			writer.write("\nSCORE/");
+			writer.write(String.valueOf(hiScore));
+			
 			writer.close();
 		} catch (Exception e) { 
 			e.printStackTrace(); 
@@ -139,4 +149,13 @@ public class ReadConfig {
 	public void setSound(int sound) {
 		this.sound = sound;
 	}
+
+	public int getHiScore() {
+		return hiScore;
+	}
+
+	public void setHiScore(int hiScore) {
+		this.hiScore = hiScore;
+	}
+	
 }

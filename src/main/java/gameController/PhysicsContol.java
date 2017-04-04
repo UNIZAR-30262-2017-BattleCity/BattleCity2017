@@ -98,7 +98,10 @@ public class PhysicsContol {
 			t.setShoot(false);
 			if (s.getClass().equals(Wall.class)) {
 				int w = s.getType();
-				if (w !=1 && b.getType()<4) return;
+				if (w !=1 && b.getType()<4){
+					SoundControl.playSound("explotionWallIron");
+					return;
+				}
 				else {
 					stageControl.setUpdteBricks(true);
 					s.setActive(false);
@@ -108,7 +111,7 @@ public class PhysicsContol {
 				stageControl.getgC().resultStage(3);
 			}else{	
 				Tank t1 = (Tank) s;
-				if (t1.isBorn()) {								
+				if (t1.isBorn()) {							
 					if (t.getTypeTank()==0) {
 						if (s.getClass().equals(Enemy.class)) {
 							stageControl.spawnEffects(new Effect(s.getPosX(), s.getPosY(), 4, stageControl));

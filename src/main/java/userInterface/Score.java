@@ -62,7 +62,7 @@ public class Score {
 	public void draw(Graphics g, GameControl gC) { 
         
 		g.setColor(Color.black);
-		g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 22));        
+		g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 7*Properties.SCALE));       
         
 		if (gC.isPlayer1()) {
 			g.fillRect(0, yPaintScore, xImgEnemies-30, 30);
@@ -76,7 +76,7 @@ public class Score {
 		
 		if (gC.isPlayer2()) {
 			g.setColor(Color.black);
-			g.fillRect((int)(Properties.WIDTH*.65), yPaintScore, Properties.WIDTH, 30);
+			g.fillRect((int)(Properties.WIDTH*.65), yPaintScore, Properties.WIDTH, 10*Properties.SCALE);
 			g.setColor(Color.gray);
         	g.drawString(paintScoreP2+"00", (int)(Properties.WIDTH*.65), yPaintScore+26);
         	
