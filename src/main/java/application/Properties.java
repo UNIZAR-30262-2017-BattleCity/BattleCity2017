@@ -63,11 +63,12 @@ public final class Properties {
 	
 	//Player
 	public final static int INIT_LIFES = 3;
+	public final static int UPDATE_GAS = (int) (Properties.WIDTH*.059);
 	
 	//Enemy
 	public final static double VEL_ENEMY = 0.20*SCALE;
 	public final static double VEL_NORMAL = 0.30*SCALE;
-	public final static double VEL_ENEMY_FAST = 0.50*SCALE;
+	public final static double VEL_ENEMY_FAST = 0.40*SCALE;
 	public final static int MIN_ENEMY_SIMUL = 3;
 	public final static int CANT_ENEMIES_LEVEL = 20;
 	public final static int TIME_BETWEEN_SPAWN_E = 500;
