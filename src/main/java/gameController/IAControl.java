@@ -16,9 +16,7 @@ public class IAControl {
 	
 	private NeuralNetwork<?> neuralNetworkMultiLayer;
 	
-	private static final double delta2 = Properties.DELTA/2;    
-    private static int timeUpdateIA;
-	private boolean updateIA;
+	private static final double delta2 = Properties.DELTA/2;
 	
 	public IAControl() {			
 		neuralNetworkMultiLayer = NeuralNetwork.createFromFile("enemy_IA.nnet");
@@ -116,31 +114,30 @@ public class IAControl {
 		
 		if (inputIA[0] == 0 && inputIA[1] == 0
 				&& inputIA[2] == 0 && inputIA[3] == 0) {					
-			if (updateIA) {				
-				updateIA();	
+			if (e.isUpdateIARandom()) {				
+				e.updateIARamdon();
+				e.updateCollision();
 				action[0] = e.getDir();
 			}else{
-				action = randomMove();
+				action = randomMove(e);
 			}			
 			
 		} else {
-			action = calculateIA(neuralNetworkMultiLayer, inputIA);
+			if (e.isUpdateIA()) {				
+				e.updateIA();
+				e.updateCollision();
+				action[0] = e.getDir();
+			}else{
+				e.setUpdateIARandom(false);
+				e.setTimeUpdateIARandom(Properties.TIME_UPDATE_IA_RANDOM);
+				action = calculateIA(neuralNetworkMultiLayer, inputIA, e);
+			}
 		}
 		return action;
 		//return borderController(action, posX-Properties.DELTA, posY-Properties.DELTA);
 	}
 	
-	
-	public void updateIA(){		
-		if(timeUpdateIA>0){
-			timeUpdateIA--;
-		}else{
-			timeUpdateIA = Properties.TIME_UPDATE_IA;
-			updateIA = false;
-		}
-	}
-	
-	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input) {
+	public int[] calculateIA(NeuralNetwork<?> nnet, double[] input, Enemy e) {
 		int[] action = {0,0};
 		
 		nnet.setInput(input);
@@ -179,7 +176,7 @@ public class IAControl {
 				}
 			}
 		}
-		
+
 		return action;
 	}
 	
@@ -203,24 +200,27 @@ public class IAControl {
 		return value;
 	}
 
-	public int[] randomMove() {
+	public int[] randomMove(Enemy e) {
 		int[] move = {-1,0};
 		
 		Random random = new Random();
-		int valor = random.nextInt(2) + 1; 
-		int direction = random.nextInt(2);
+		int valor = -1; 
+		int direction = random.nextInt(3);
 		
 		switch (direction) {
 			case 0:
-				valor = valor*(-1);
+				valor = -1;
 				break;
 			case 1:
-				valor = valor*(1);
+				valor = 2;
+				break;
+			case 2:
+				valor = 2*(-1);
 				break;
 		}
 		
 		move[0] = valor;
-		updateIA = true;
+		e.setUpdateIARandom(true);
 		return move;
 	}
 }

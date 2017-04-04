@@ -24,7 +24,15 @@ public class PhysicsContol {
 		for (int i = 0; i < list.size(); i++) {
 			s = list.get(i);
 			if (!s.equals(e)) {
-				if (isIntersecs(e,s)) {		
+				if (isIntersecs(e,s)) {	
+					if ((s.getClass().equals(Wall.class) && s.getType() != 1)
+							|| s.getClass().equals(Water.class)) {
+						if (!e.isCollision()) {
+							e.setUpdateIA(true);
+							e.setUpdateIARandom(true);
+							e.avoidElements();
+						}
+					}
 					return getIntersection(e,s).getLocation();
 				}
 			}		

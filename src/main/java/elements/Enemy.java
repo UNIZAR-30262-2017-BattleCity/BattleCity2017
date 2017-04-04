@@ -3,6 +3,7 @@ package elements;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import application.Properties;
 import gameController.PhysicsContol;
@@ -16,6 +17,12 @@ public class Enemy extends Tank implements StageElement{
     private BufferedImage imgEnemyLeft[] = new BufferedImage[2]; 
     private BufferedImage imgEnemyRight[] = new BufferedImage[2];
     private boolean clockEfect;
+    private int timeUpdateIA;
+    private int timeUpdateIARandom;
+    private int timeUpdateCollision;
+	private boolean updateIA;
+	private boolean updateIARandom;
+	private boolean collision;
     
 	public Enemy(int col, int row, int type, StageControl stageControl) {
 		super(col,row,stageControl);
@@ -23,6 +30,12 @@ public class Enemy extends Tank implements StageElement{
 		this.type = type;
 		dir=-1;
 		initEnemy();
+		timeUpdateIA = Properties.TIME_UPDATE_IA;
+		timeUpdateIARandom = Properties.TIME_UPDATE_IA_RANDOM;
+		timeUpdateCollision = Properties.TIME_UPDATE_COLLISION;
+		updateIARandom = false;
+		updateIA = false;
+		collision = false;
 	}
 	
 	public void initEnemy(){
@@ -125,6 +138,54 @@ public class Enemy extends Tank implements StageElement{
 		case 2://rigth
 			posX += vel;
 			break;
+		}
+	}
+	
+	public void avoidElements() {
+		Random random = new Random();
+		int valor = random.nextInt(2); 
+		
+		switch (dir) {
+		case 1://up
+			if (valor == 1) setDir(2);
+			else setDir(-2);
+			break;
+		case -1://down
+			if (valor == 1) setDir(2);
+			else setDir(-2);
+			break;
+		default://right or left
+			setDir(-1);
+			break;
+		}
+		collision = true;
+	}
+	
+	public void updateIA(){		
+		if(timeUpdateIA>0){
+			timeUpdateIA--;
+		}else{
+			timeUpdateIA = Properties.TIME_UPDATE_IA;
+			updateIA = false;
+			collision = false;
+		}
+	}
+	
+	public void updateIARamdon(){		
+		if(timeUpdateIARandom>0){
+			timeUpdateIARandom--;
+		}else{
+			timeUpdateIARandom = Properties.TIME_UPDATE_IA_RANDOM;
+			updateIARandom = false;
+		}
+	}
+	
+	public void updateCollision(){		
+		if(timeUpdateCollision>0){
+			timeUpdateCollision--;
+		}else{
+			timeUpdateCollision = Properties.TIME_UPDATE_COLLISION;
+			updateIARandom = false;
 		}
 	}
 	
@@ -237,6 +298,54 @@ public class Enemy extends Tank implements StageElement{
 
 	public void setClockEfect(boolean clockEfect) {
 		this.clockEfect = clockEfect;
+	}
+
+	public boolean isUpdateIARandom() {
+		return updateIARandom;
+	}
+
+	public void setUpdateIARandom(boolean updateIA) {
+		this.updateIARandom = updateIA;
+	}
+
+	public boolean isUpdateIA() {
+		return updateIA;
+	}
+
+	public void setUpdateIA(boolean updateIA) {
+		this.updateIA = updateIA;
+	}
+
+	public boolean isCollision() {
+		return collision;
+	}
+
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	public int getTimeUpdateIA() {
+		return timeUpdateIA;
+	}
+
+	public void setTimeUpdateIA(int timeUpdateIA) {
+		this.timeUpdateIA = timeUpdateIA;
+	}
+
+	public int getTimeUpdateIARandom() {
+		return timeUpdateIARandom;
+	}
+
+	public void setTimeUpdateIARandom(int timeUpdateIARandom) {
+		this.timeUpdateIARandom = timeUpdateIARandom;
+	}
+
+	public int getTimeUpdateCollision() {
+		return timeUpdateCollision;
+	}
+
+	public void setTimeUpdateCollision(int timeUpdateCollision) {
+		this.timeUpdateCollision = timeUpdateCollision;
 	}
 	
 }

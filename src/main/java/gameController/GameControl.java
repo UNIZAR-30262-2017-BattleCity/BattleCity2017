@@ -525,6 +525,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		if (moveX) {
 			int option = 0;
 			if (key == KeyEvent.VK_RIGHT) {
+				SoundControl.playSound("cursor");
 				switch (opc) {
 				case 2:
 					option = config.getOpcDificulty();
@@ -555,6 +556,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				}
 			}
 			if (key == KeyEvent.VK_LEFT) {
+				SoundControl.playSound("cursor");
 				switch (opc) {
 				case 2:
 					option = config.getOpcDificulty();
@@ -836,13 +838,13 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
         g.drawString("NIVEL "+level, (int) (Properties.WIDTH/2-Properties.WIDTH*.25), Properties.HEIGHT/2);
         if (level == 1) {
-            g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 20));
+            g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 6*Properties.SCALE));
         	g.drawString("PLAYER 1", (int) (Properties.WIDTH/2-Properties.WIDTH*.235), 
         			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
         	g.drawString("PLAYER 2", (int) (Properties.WIDTH/2+Properties.WIDTH*.206), 
         			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
         	
-        	g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 12));
+        	g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 4*Properties.SCALE));
         	g.drawString("ARRIBA", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
         			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.2));
         	g.drawString("ABAJ0", (int) (Properties.WIDTH/2-Properties.WIDTH*.4054), 
@@ -856,7 +858,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         	g.drawString("PAUSAR", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
         			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.4));
         	
-        	g.setFont(new Font("Arial", Font.PLAIN, 16));
+        	g.setFont(new Font("Arial", Font.PLAIN, 5*Properties.SCALE));
         	g.setColor(Color.white);
         	for (int i = 0; i < buttons.length; i++) {
     			for (int j = 0; j < buttons[0].length; j++) {

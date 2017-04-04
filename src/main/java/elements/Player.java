@@ -312,9 +312,11 @@ public class Player extends Tank implements StageElement{
 	
     public void updateGas(Graphics g, int y){
     	g.setColor(Color.black);
-    	g.fillRect(Properties.X_INIT_INFO, y, 100, 20);
+    	g.fillRect(Properties.X_INIT_INFO, y, (int) (Properties.WIDTH*.147), 
+    			(int) (Properties.HEIGHT*.03451));
     	g.setColor(Color.green);
-        g.fillRect(Properties.X_INIT_INFO, y, gas/40,20);
+        g.fillRect(Properties.X_INIT_INFO, y, gas/40,
+        		(int) (Properties.HEIGHT*.03451));
 		updateGas = false;
     }
     

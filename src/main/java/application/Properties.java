@@ -119,7 +119,9 @@ public final class Properties {
 	public final static int TIME_TO_MENU = 1000;
 	
 	public static final double DELTA = SIZE_SQUARE/2;
-	public static final int TIME_UPDATE_IA = 30;
+	public static final int TIME_UPDATE_IA = 180;
+	public static final int TIME_UPDATE_IA_RANDOM = 480;
+	public static final int TIME_UPDATE_COLLISION = 120;
 	public static final int FONT_SIZE = 7*SCALE;
 		
 	//Font

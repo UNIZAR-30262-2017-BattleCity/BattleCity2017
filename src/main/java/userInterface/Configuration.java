@@ -25,7 +25,7 @@ public class Configuration {
         g.drawImage(IMG_CONFIG, 0, 0, Properties.WIDTH, Properties.HEIGHT, null);
         
         g.setColor(Color.white);
-		g.setFont(Properties.FC_PIXEL.getFont(Font.PLAIN, 20));
+		g.setFont(Properties.FC_PIXEL.getFont(Font.PLAIN, 6*Properties.SCALE));
         g.drawString(DIFICULTY[opcDificulty], Properties.X_CONFIG, Properties.Y_CONFIG);
         
 
