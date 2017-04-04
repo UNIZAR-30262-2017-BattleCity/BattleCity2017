@@ -30,6 +30,8 @@ public abstract class Tank extends GameElement{
 		width = Properties.SIZE_SQUARE-2;
 		heigth = Properties.SIZE_SQUARE-2;
 		birthEffect = new Effect(posX, posY, 3, stageControl);
+		nShoots=0;
+		shootSucces = true;
 	}
 		
 	public void shoot(Bullet b) {
@@ -37,6 +39,13 @@ public abstract class Tank extends GameElement{
 			stageControl.spawnBullets(b);
 			SoundControl.playSound("shoot");
 			shoot = true;
+			nShoots++;
+			if (nShoots>3) {
+				nShoots=0;
+				if (!shootSucces) {
+					shoot=true;
+				}
+			}
 		}
 	}
 	
@@ -155,5 +164,14 @@ public abstract class Tank extends GameElement{
 	public void setBorn(boolean isBorn) {
 		this.isBorn = isBorn;
 	}
+
+	public boolean isShootSucces() {
+		return shootSucces;
+	}
+
+	public void setShootSucces(boolean shootSucces) {
+		this.shootSucces = shootSucces;
+	}
+	
 	
 }

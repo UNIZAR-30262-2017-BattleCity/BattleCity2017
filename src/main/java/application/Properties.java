@@ -56,7 +56,7 @@ public final class Properties {
 	public final static int DELTA_CONFIG = DELTA_BUTTONS;
 	
 	//Present Stage 1 Buttons
-	public final static int Y_INIT_BUTTONS_PS = (int) (Properties.HEIGHT*.697);
+	public final static int Y_INIT_BUTTONS_PS = (int) (Properties.HEIGHT*.647);
 	public final static int DELTA_BUTTONS_PS = (int) (HEIGHT*.04125);
 	public final static int X_BUTTONS_IP_PS = (int) (Properties.WIDTH*.345);
 	public final static int X_BUTTONS_IIP_PS = (int) (X_BUTTONS_IP + (WIDTH*.177));
@@ -114,7 +114,7 @@ public final class Properties {
 		
 	
 	public final static int TIME_ANIM = 5;
-	public final static int TIME_TO_INIT_STAGE = 1000;
+	public final static int TIME_TO_INIT_STAGE = 500;
 	public final static int TIME_TO_SCORE = 1000;
 	public final static int TIME_TO_MENU = 1000;
 	

@@ -106,8 +106,8 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		double delta=0;
 		//double frames=0;
 		//double hz=0;
-		long timer = System.currentTimeMillis();
-		int s=1000;
+		//long timer = System.currentTimeMillis();
+		//int s=1000;
 		while(running){
 			long now = System.nanoTime();
 			delta += (now - lastime)/ns;
@@ -118,13 +118,19 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				delta--;				
 			}			
 			draw();
+			
 			//frames++;			
-			if (System.currentTimeMillis() - timer > s) {
-				timer += s;
+			//if (System.currentTimeMillis() - timer > s) {
+				//timer += s;
 				//System.out.println("Hz: "+ hz + " FPS: " + frames);
 				//hz=0;
 				//frames=0;			
-			}			
+			//}
+			try {
+				Thread.sleep(8);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		stop();		
 	}
@@ -166,7 +172,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			break;
 		case CONFIG:
 			if (updateConfig) {
-				sound(0);
+				sound(1);
 				difficulty = dataConfig.getDificulty();
 				updateConfig=false;
 			}
@@ -278,6 +284,7 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 		gameOver = new GameOver();
 		isGameOver = true;
 		level = 1;
+		sound(4);
 		screen = Screen.GAMEOVER;
 	}
 	
@@ -404,6 +411,20 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 			if (key == KeyEvent.VK_ENTER) {		
 				menuOptions();
 			}
+			if (key == KeyEvent.VK_Q) {		
+				if (level<35) {
+					level++;
+				}else{
+					level=1;
+				}
+			}
+			if (key == KeyEvent.VK_Z) {		
+				if (level>1) {
+					level--;
+				}else{
+					level=35;
+				}
+			}
 			break;
 		case CONFIG:
 			keyPressedConfig(key);
@@ -429,6 +450,11 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
 				if (key == KeyEvent.VK_ENTER) {				
 					controlsOptions();
 				}
+			}
+			break;
+		case PRESENT_STAGE:
+			if (key == KeyEvent.VK_ENTER) {				
+				screen = Screen.INIT_STAGE;
 			}
 			break;
 		case STAGE_PLAY:
@@ -845,38 +871,46 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
         g.setColor(Color.black);
         g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
         g.drawImage(IMG_MENU,0, 0, Properties.WIDTH, Properties.HEIGHT, null);
-		
+        
+        g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_SIZE));     
+		g.setColor(Color.white);
+		g.drawString(""+ level, 20, 25);	
 	}
 
 	private void presentStage(Graphics g) {
 		g.setColor(Color.darkGray);
         g.fillRect(0, 0, Properties.WIDTH+20, Properties.HEIGHT);
-        g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE-25));     
-		g.setColor(Color.red);
-		g.drawString("HI-SCORE: "+hiScore, Properties.WIDTH/2-20, 60);
+        g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_SIZE));     
+		g.setColor(Color.white);
+		g.drawString("HI-SCORE: "+hiScore,(int) (Properties.WIDTH/2-(Properties.WIDTH*.2)), (int) (Properties.HEIGHT*.105));
         g.setColor(Color.black);
         g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, Properties.FONT_LEVEL_SIZE));
-        g.drawString("NIVEL "+level, (int) (Properties.WIDTH/2-Properties.WIDTH*.25), Properties.HEIGHT/2);
-        if (level == 1) {
+        g.drawString("NIVEL "+level, (int) (Properties.WIDTH/2-Properties.WIDTH*.225), Properties.HEIGHT/2);
+        if (level == 1) {        	
+        	g.setColor(Color.white);
+        	g.setFont(Properties.ARIAL); 
+        	g.drawString("Para continuar presione enter", (int) (Properties.WIDTH/2-Properties.WIDTH*.20),
+        			(int)(Properties.HEIGHT/2-(Properties.HEIGHT*.2)));
+        	g.setColor(Color.black);
             g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 6*Properties.SCALE));
         	g.drawString("PLAYER 1", (int) (Properties.WIDTH/2-Properties.WIDTH*.235), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.1));
         	g.drawString("PLAYER 2", (int) (Properties.WIDTH/2+Properties.WIDTH*.206), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.1));
         	
         	g.setFont( Properties.FC_PIXEL.getFont(Font.PLAIN, 4*Properties.SCALE));
         	g.drawString("ARRIBA", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.2));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.15));
         	g.drawString("ABAJ0", (int) (Properties.WIDTH/2-Properties.WIDTH*.4054), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.24));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.19));
         	g.drawString("IZQUIERDA", (int) (Properties.WIDTH/2-Properties.WIDTH*.4406), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.28));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.23));
         	g.drawString("DERECHA", (int) (Properties.WIDTH/2-Properties.WIDTH*.423), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.32));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.27));
         	g.drawString("DISPARAR", (int) (Properties.WIDTH/2-Properties.WIDTH*.4348), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.36));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.31));
         	g.drawString("PAUSAR", (int) (Properties.WIDTH/2-Properties.WIDTH*.414), 
-        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.4));
+        			(int) (Properties.HEIGHT/2+Properties.HEIGHT*.35));
         	
         	g.setFont(new Font("Arial", Font.PLAIN, 5*Properties.SCALE));
         	g.setColor(Color.white);
@@ -892,7 +926,9 @@ public class GameControl extends Canvas implements Runnable, KeyListener{
     			}
     		}
 		}
-        if (next(Properties.TIME_TO_INIT_STAGE)) screen = Screen.INIT_STAGE;
+        if (level!=1) {
+			if (next(Properties.TIME_TO_INIT_STAGE)) screen = Screen.INIT_STAGE;
+		}
 		
 	}
 

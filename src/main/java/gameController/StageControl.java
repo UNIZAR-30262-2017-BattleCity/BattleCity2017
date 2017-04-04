@@ -121,6 +121,11 @@ public class StageControl {
 		enemiesKilled = 0;
 		maxTimeItemEfect = 0;
 		
+		cantEnemies1 = 0;
+		cantEnemies2 = 0;
+		cantEnemies3 = 0;
+		cantEnemies4 = 0;
+		
 		items.clear();
     	enemies.clear();
     	bullets.clear(); 	
@@ -417,8 +422,7 @@ public class StageControl {
     	stageEffects.remove(ef);
     }
     
-    public void deleteWall(Wall w){
-    	SoundControl.playSound("explotionWallBrick");
+    public void deleteWall(Wall w){    	
         stageWalls.remove(w);
     }
     

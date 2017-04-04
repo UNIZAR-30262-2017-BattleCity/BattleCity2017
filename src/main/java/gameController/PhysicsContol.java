@@ -27,6 +27,7 @@ public class PhysicsContol {
 				if (isIntersecs(e,s)) {	
 					if ((s.getClass().equals(Wall.class) && s.getType() != 1)
 							|| s.getClass().equals(Water.class)) {
+						e.setShoot(false);
 						if (!e.isCollision()) {
 							e.setUpdateIA(true);
 							e.setUpdateIARandom(true);
@@ -103,6 +104,7 @@ public class PhysicsContol {
 					return;
 				}
 				else {
+					SoundControl.playSound("explotionWallBrick");
 					stageControl.setUpdteBricks(true);
 					s.setActive(false);
 				}
@@ -126,7 +128,12 @@ public class PhysicsContol {
 							Player p = (Player) s;
 							p.setFreezed(true);
 						}
-					}else{			
+					}else{	
+						
+						if (s.getClass().equals(Wall.class)&& s.getType() != 1) {
+								t.setShootSucces(false);
+							}
+						
 						if (s.getClass().equals(Player.class)) {
 							stageControl.spawnEffects(new Effect(s.getPosX(), s.getPosY(), 4, stageControl));
 							SoundControl.playSound("explotionTank");
